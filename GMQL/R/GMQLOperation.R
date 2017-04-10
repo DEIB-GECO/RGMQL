@@ -31,30 +31,29 @@ prova <- function()
 }
 
 #call rscala, create my enviroment?
+#delete debug now
 startGMQLServer <- function()
 {
   #-Xmx4096m or --driver-memory 4g
-  scalaCompiler <- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
+  scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
   frappeR$SetSparkContext()
   frappeR$runGMQLServer()
 }
 
-readDataset <- function(Dataset)
+readDataset <- function(DatasetPathFolder)
 {
-  if(!is.character(Dataset))
+  if(!is.character(DatasetPathFolder))
     stop("path must be string")
 
-  dataset <- paste0(Dataset,"/files")
-
-  frappeR$readDataset(dataset)
-  return(Dataset)
+  pointer <- frappeR$readDataset(DatasetPathFolder)
+  return(pointer)
 }
 
-materialize <- function(input, dir_out = "")
+materialize <- function(input_data, dir_out = "")
 {
-  dir_out = "/Users/simone/Downloads/res/"
-  frappeR$materialize(input,dir_out)
+  dir_out = "/Users/simone/Downloads/res"
+  frappeR$materialize(input_data,dir_out)
 }
 
 #dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp' AND antibody_target == 'TEAD4'
@@ -134,10 +133,30 @@ difference <- function(joinBy = NULL,left_data_input_path = "",right_data_input_
 
 }
 
-cover <- function(flag,minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
-{
-  fl <- check(coverFlag,flag)
+#COVER methods and variant
 
+flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+{
+  variantMethod("flat",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+}
+
+cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+{
+  variantMethod("cover",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+}
+
+histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+{
+  variantMethod("histogram",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+}
+
+summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+{
+  variantMethod("summit",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+}
+
+variantMethod <- function(flag,minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+{
   if(!is.numeric(minAcc) || !is.numeric(maxAcc))
     stop("minAcc and maxAcc must be numeric")
 
@@ -154,7 +173,12 @@ cover <- function(flag,minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
   aggrList <- scalaCompiler$do('List')$'apply[Array[String]]'(c("nuovoP","SUM","pvalue"),
                                                               c("aaaa","COUNT"))
 
-  frappeR$cover(fl,min,max,groupBy,aggrList,input)
+  fl <- check(coverFlag,flag)
+
+  switch(fl,"COVER" = frappeR$cover(min,max,groupBy,aggrList,input),
+         "FLAT" = frappeR$flat(min,max,groupBy,aggrList,input),
+         "SUMMIT" = frappeR$summit(min,max,groupBy,aggrList,input),
+         "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrList,input))
 }
 
 map <- function()

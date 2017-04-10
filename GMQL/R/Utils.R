@@ -23,6 +23,7 @@ check.coverFlag <- function(obj, text)
     stop("the second parameter must be a string ")
 }
 
+
 #S3 class fileOutput used as Enum
 fileOutput <- list(GTF = "GTF",
                   TAB = "TAB")
