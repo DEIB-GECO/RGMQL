@@ -37,6 +37,8 @@ startGMQLServer <- function()
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
+
+  #TODO: change...now keep for better debugging
   frappeR$SetSparkContext()
   frappeR$runGMQLServer()
 }
@@ -50,32 +52,27 @@ readDataset <- function(DatasetPathFolder)
   return(pointer)
 }
 
-materialize <- function(input_data, dir_out = "")
+materialize <- function(input_data, dir_out = "/Users/simone/Downloads/res")
 {
-  dir_out = "/Users/simone/Downloads/res"
   frappeR$materialize(input_data,dir_out)
 }
 
 #dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp' AND antibody_target == 'TEAD4'
 select <- function(predicate = "(dataType == 'ChipSeq' AND view == 'Peaks'
                    AND setType == 'exp' AND antibody_target == 'TEAD4')", region = NULL,
-                   semijoin = NULL,from)
+                   semijoin = NULL,input_data)
 {
   if(!is(semijoin,"SemiJoinParam") && !is.null(semijoin))
     stop("semijoin must be a SemiJoinParam")
-
-
-  dir_in = "/Users/simone/Downloads/job_filename_guest_new14_20170316_162715_DATA_SET_VAR/files/"
-  dir_out = "/Users/simone/Downloads/res/"
 
   list_attribute_semiJoin <- semijoin@semiJoinMeta
   operation <- semijoin@operation_in
   dataset_semijoin <- semijoin@dataset_path_join_IN
 
-  frappeR$select(predicate,region,list_attribute_semiJoin,
-                 operation,dataset_semijoin,from, "dir_out")
+  out <- frappeR$select(predicate,region,list_attribute_semiJoin,
+                 operation,dataset_semijoin,input_data)
 
-  return(dir_out)
+  return(out)
 }
 
 project <-function()
@@ -83,15 +80,12 @@ project <-function()
 
 }
 
-extend <-function(metadata = NULL, dir_input = "", dir_output = "")
+extend <-function(metadata = NULL, input = "")
 {
   #TODO: decide what R data structure use for aggregates
   aggrList <- scalaCompiler$do('List')$'apply[Array[String]]'(c("nuovoP","SUM","pvalue"),
                                                               c("aaaa","COUNT"))
-
-  dir_in = "/Users/simone/Downloads/job_filename_guest_new14_20170316_162715_DATA_SET_VAR/files/"
-  dir_out = "/Users/simone/Downloads/res/"
-  frappeR$extend(aggrList,dir_in,dir_out)
+  frappeR$extend(aggrList,input)
 }
 
 group <-function()
@@ -99,12 +93,12 @@ group <-function()
 
 }
 
-merge <- function(groupBy = NULL)
+merge <- function(groupBy = NULL,input_data)
 {
   if(!is.character(groupBy) && !is.null(groupBy))
     stop("groupBy can be only null, single string or an array of string")
 
-  frappeR$merge(groupBy,dir_in,dir_out)
+  frappeR$merge(groupBy,input_data)
 }
 
 order <- function()
@@ -137,25 +131,25 @@ difference <- function(joinBy = NULL,left_data_input_path = "",right_data_input_
 
 flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
 {
-  variantMethod("flat",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+  variantMethod("flat",minAcc,maxAcc,groupBy,aggregates,input)
 }
 
 cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
 {
-  variantMethod("cover",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+  variantMethod("cover",minAcc,maxAcc,groupBy,aggregates,input)
 }
 
 histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
 {
-  variantMethod("histogram",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+  variantMethod("histogram",minAcc,maxAcc,groupBy,aggregates,input)
 }
 
 summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
 {
-  variantMethod("summit",minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+  variantMethod("summit",minAcc,maxAcc,groupBy,aggregates,input)
 }
 
-variantMethod <- function(flag,minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+variantMethod <- function(flag,minAcc,maxAcc,groupBy,aggregates,input)
 {
   if(!is.numeric(minAcc) || !is.numeric(maxAcc))
     stop("minAcc and maxAcc must be numeric")
@@ -179,6 +173,7 @@ variantMethod <- function(flag,minAcc,maxAcc,groupBy = NULL,aggregates = NULL, i
          "FLAT" = frappeR$flat(min,max,groupBy,aggrList,input),
          "SUMMIT" = frappeR$summit(min,max,groupBy,aggrList,input),
          "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrList,input))
+
 }
 
 map <- function()

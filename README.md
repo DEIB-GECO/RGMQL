@@ -40,12 +40,13 @@ don-t worry is ok!
 
 ## for local "compiling"
 
-I don't put the jar file in repository cause are ~ 100MB
+I didn't put the jar file in repository cause are ~ 100MB
 after cloned or downloaded the git create a folder "inst" inside GMQL then create folder "java" inside it
 we should have this structure:
 
 GMQL
- |__ inst
-       |__ java
+ |-->inst
+      |-->java
 
-then copy the jar file inside "java" or create a symbolic link
+then copy the "uber-GMQL-R-1.0.jar" file inside "java".
+rename it to GMQL.jar or create a symbolic link GMQL.jar
