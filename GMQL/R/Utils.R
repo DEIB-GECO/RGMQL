@@ -39,13 +39,18 @@ check.fileOutput <- function(obj, text)
     if(idx %in% names(coverFlag))
       return(obj[[idx]])
     else
-      stop("coverflag name not prensent in list only: TAB,GTF")
+      stop("output not prensent in list only: TAB,GTF")
   }
   else
     stop("the second parameter must be a string ")
 }
 
 #S4 class Samples in Dataset
+
+
+
+
+
 
 
 
@@ -118,15 +123,3 @@ readGTF <- function(files)
 
 }
 
-
-
-prova <- function()
-{
-  x <<- data.frame(a = 1:10, b = sample(x = ".",size = 10,replace = T), c = 2:11, d = sample(x = c(".",";"),size = 10,replace = T))
-  l <<- which(sapply(x, function(x) any(x == ".")))
-
-  df <<- data.frame(col1 = c(letters[1:4],"a"),col2 = 1:5,col3 = letters[10:14])
-  which(sapply(df, function(x) any(x == "a")))
-
-
-}

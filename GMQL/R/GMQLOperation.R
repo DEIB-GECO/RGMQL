@@ -1,4 +1,4 @@
-#' Retrieve a Java instance of
+#' Run GMQL Server
 #'
 #' Retrieve a Java instance of SpellCorrector, with the training file
 #' specified. Language model is trained before the instance is returned.
@@ -9,38 +9,21 @@
 #' @export
 #'
 
-#java works
-prova <- function()
+runGMQLJava <- function()
 {
   .jinit()
-  .jaddClassPath('./instr/java/prova.jar')
-  aa <- .jfloat(10.4)
-  myExchange <- .jnew("prova/prova2/myExchange",aa)
-  myExchange2 <- .jnew("prova/prova2/myExchange",564.9999)
-  myExchange3 <- .jnew("prova/prova2/myExchange",as.integer(3))
-  stringTest <- .jcall(myExchange, "S", "getS")
-  floatB <- .jcall(myExchange, "F", "getF")
-  DoubleD <- .jcall(myExchange2, "D", "getD")
-  integerI <- .jcall(myExchange3, "I", "getI")
-  type <- .jcall(myExchange, "S", "getLastType")
-  type2 <- .jcall(myExchange2, "S", "getLastType")
-  type3 <- .jcall(myExchange3, "S", "getLastType")
-  stringArrayTest <- .jcall(myExchange, "[S", "getStringArray")
-  print(stringTest)
-  stringArrayTest
+  .jaddClassPath('./inst/java/GMQL.jar')
+  myExchange <- .jnew('it.polimi.genomics.r.Wrapper')
 }
 
 #call rscala, create my enviroment?
 #delete debug now
-startGMQLServer <- function()
+runGMQL <- function()
 {
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
-
-  #TODO: change...now keep for better debugging
-  frappeR$SetSparkContext()
-  frappeR$runGMQLServer()
+  frappeR$runGMQL()
 }
 
 readDataset <- function(DatasetPathFolder)
@@ -57,7 +40,6 @@ materialize <- function(input_data, dir_out = "/Users/simone/Downloads/res")
   frappeR$materialize(input_data,dir_out)
 }
 
-#dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp' AND antibody_target == 'TEAD4'
 select <- function(predicate = "(dataType == 'ChipSeq' AND view == 'Peaks'
                    AND setType == 'exp' AND antibody_target == 'TEAD4')", region = NULL,
                    semijoin = NULL,input_data)
@@ -80,7 +62,7 @@ project <-function()
 
 }
 
-extend <-function(metadata = NULL, input = "")
+extend <-function(metadata = NULL, input_data = "")
 {
   #TODO: decide what R data structure use for aggregates
   aggrList <- scalaCompiler$do('List')$'apply[Array[String]]'(c("nuovoP","SUM","pvalue"),
@@ -101,55 +83,47 @@ merge <- function(groupBy = NULL,input_data)
   frappeR$merge(groupBy,input_data)
 }
 
-order <- function()
+order <- function(input_data)
 {
 
 }
-#  def union(right_data_input_path: String, right_name: String,
-# left_data_input_path: String, left_name: String, data_output_path: String)
-union <- function(right_data_input_path ="", right_prefix = "",
-                  left_data_input_path ="",left_prefix = "", dir_out)
-{
-  left_data_input_path = "/Users/simone/Downloads/job_filename_guest_new14_20170316_162715_DATA_SET_VAR/files/"
-  right_data_input_path = "/Users/simone/Downloads/res/"
-  dir_out = "/Users/simone/Downloads/"
 
-  frappeR$union(right_data_input_path,right_prefix,left_data_input_path,left_prefix,dir_out)
-  return(dir_out)
+union <- function(right_input_data, right_prefix = "",left_input_datat,left_prefix = "")
+{
+  frappeR$union(right_input_data,right_prefix,left_input_datat,left_prefix)
 }
 
-difference <- function(joinBy = NULL,left_data_input_path = "",right_data_input_path ="", dir_out = "")
+difference <- function(joinBy = NULL,left_input_data,right_input_data)
 {
   if(!is.character(joinBy) && !is.null(joinBy))
     stop("joinBy can be only null, single string or an array of string")
 
-  frappeR$difference(joinBy,right_data_input_path,left_data_input_path,dir_out)
-
+  frappeR$difference(joinBy,right_input_data,left_input_data)
 }
 
 #COVER methods and variant
 
-flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  variantMethod("flat",minAcc,maxAcc,groupBy,aggregates,input)
+  doVariant("flat",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
-cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = list(), input_data)
 {
-  variantMethod("cover",minAcc,maxAcc,groupBy,aggregates,input)
+  doVariant("cover",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
-histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  variantMethod("histogram",minAcc,maxAcc,groupBy,aggregates,input)
+  doVariant("histogram",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
-summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input)
+summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  variantMethod("summit",minAcc,maxAcc,groupBy,aggregates,input)
+  doVariant("summit",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
-variantMethod <- function(flag,minAcc,maxAcc,groupBy,aggregates,input)
+doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
 {
   if(!is.numeric(minAcc) || !is.numeric(maxAcc))
     stop("minAcc and maxAcc must be numeric")
@@ -163,26 +137,35 @@ variantMethod <- function(flag,minAcc,maxAcc,groupBy,aggregates,input)
   if(!is.character(groupBy) && !is.null(groupBy))
     stop("groupBy can be only null, single string or an array of string")
 
+
   #TODO: decide what R data structure use for aggregates
   aggrList <- scalaCompiler$do('List')$'apply[Array[String]]'(c("nuovoP","SUM","pvalue"),
                                                               c("aaaa","COUNT"))
 
   fl <- check(coverFlag,flag)
 
-  switch(fl,"COVER" = frappeR$cover(min,max,groupBy,aggrList,input),
-         "FLAT" = frappeR$flat(min,max,groupBy,aggrList,input),
-         "SUMMIT" = frappeR$summit(min,max,groupBy,aggrList,input),
-         "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrList,input))
+  switch(fl,"COVER" = frappeR$cover(min,max,groupBy,aggrList,input_data),
+         "FLAT" = frappeR$flat(min,max,groupBy,aggrList,input_data),
+         "SUMMIT" = frappeR$summit(min,max,groupBy,aggrList,input_data),
+         "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrList,input_data))
 
 }
 
-map <- function()
+map <- function(aggregates = NULL, right_input_data,exp_name = "",
+                left_input_data,ref_name ="",count_name = "")
+{
+  pointer <- frappeR$map(aggregates,right_input_data,exp_name,left_input_data,ref_name,count_name)
+  return(pointer)
+}
+
+join <- function(input_data)
 {
 
 }
 
-join <- function()
-{
 
+call <- function(data)
+{
+  frappeR$prova(data)
 }
 
