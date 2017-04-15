@@ -46,21 +46,12 @@ materialize <- function(input_data, dir_out = "/Users/simone/Downloads/res")
   frappeR$materialize(input_data,dir_out)
 }
 
-select <- function(predicate = "(dataType == 'ChipSeq' AND view == 'Peaks'
-                   AND setType == 'exp' AND antibody_target == 'TEAD4')", region = NULL,
-                   semijoin = NULL,input_data)
+select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
 {
-  if(!is(semijoin,"SemiJoinParam") && !is.null(semijoin))
-    stop("semijoin must be a SemiJoinParam")
+  prdicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
+  AND antibody_target == 'TEAD4')"
 
-  list_attribute_semiJoin <- semijoin@semiJoinMeta
-  operation <- semijoin@operation_in
-  dataset_semijoin <- semijoin@dataset_path_join_IN
 
-  out <- frappeR$select(predicate,region,list_attribute_semiJoin,
-                 operation,dataset_semijoin,input_data)
-
-  return(out)
 }
 
 project <-function()
@@ -81,7 +72,10 @@ extend <-function(metadata = NULL, input_data = "")
   else
     aggrMatrix <- t(sapply(metadata, function(x) as(x,"character")))
 
-  frappeR$extend(aggrMatrix,input)
+  out <- frappeR$extend(aggrMatrix,input)
+
+  if(grep("missing",out,ignore.case = T))
+    stop(out)
 }
 
 group <-function()
@@ -102,9 +96,9 @@ order <- function(input_data)
 
 }
 
-union <- function(right_input_data, right_prefix = "",left_input_datat,left_prefix = "")
+union <- function(right_input_data, right_prefix = "",left_input_data,left_prefix = "")
 {
-  frappeR$union(right_input_data,right_prefix,left_input_datat,left_prefix)
+  frappeR$union(right_input_data,right_prefix,left_input_data,left_prefix)
 }
 
 difference <- function(joinBy = NULL,left_input_data,right_input_data)
@@ -166,7 +160,9 @@ doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
                      "FLAT" = frappeR$flat(min,max,groupBy,aggrMatrix,input_data),
                      "SUMMIT" = frappeR$summit(min,max,groupBy,aggrMatrix,input_data),
                      "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrMatrix,input_data))
-#wchich value return on error?
+
+  if(grep("missing",out,ignore.case = T))
+    stop(out)
 }
 
 map <- function(aggregates = NULL, right_input_data,exp_name = "",
@@ -181,10 +177,11 @@ join <- function(input_data)
 }
 
 
-prova <- function(l)
+prova <- function(out = "The value ... is missing")
 {
-  if(all(sapply(l, function(x) class(x) == "Aggregates")))
-    print("OK")
+  if(grepl("missing",out,ignore.case = T))
+    return("OK")
   else
-    print("NO")
+    stop("Error")
+
 }
