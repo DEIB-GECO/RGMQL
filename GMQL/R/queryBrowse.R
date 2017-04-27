@@ -4,12 +4,11 @@
 #' with username and password
 #'
 #'
-#'
+#' @param url server address
 #'
 
-myQueries <- function()
+myQueries <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query")
 {
-  url <- "http://genomic.elet.polimi.it/gmql-rest/query"
   h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
   #req <<- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(url, add_headers(h))
@@ -30,15 +29,16 @@ myQueries <- function()
 #'
 #'
 #'
-#' @param nameQuery name of query
-#' @param queryTxt text of query
+#' @param nameQuery query name
+#' @param url server address
+#' @param queryTxt query text
 
-saveQuery <- function(nameQuery,queryTxt)
+saveQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query/",nameQuery,queryTxt)
 {
-  url <- paste0("http://genomic.elet.polimi.it/gmql-rest/query/",nameQuery,"/save")
+  URL <- paste0(url,nameQuery,"/save")
   h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
   #req <<- POST(url, add_headers(h),verbose(data_in = TRUE,info = TRUE),body = queryTxt)
-  req <- POST(url, add_headers(h),body = queryTxt)
+  req <- POST(URL, add_headers(h),body = queryTxt)
   content <- httr::content(req)
 
   if(req$status_code==200)

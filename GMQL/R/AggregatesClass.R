@@ -10,7 +10,9 @@ class(AggregatesFunction) <- "AggregatesFunction"
 
 #S4 class of aggregates List idnetify the triple of aggregates
 
-Aggregates <- setClass("Aggregates",
+setOldClass("Aggregates")
+
+setClass("Aggregates",
   representation(
     outputName = "character",
     aggrFunction  = "character",

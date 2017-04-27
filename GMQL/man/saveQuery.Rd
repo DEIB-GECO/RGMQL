@@ -4,12 +4,15 @@
 \alias{saveQuery}
 \title{GMQL API web Service}
 \usage{
-saveQuery(nameQuery, queryTxt)
+saveQuery(url = "http://genomic.elet.polimi.it/gmql-rest/query/", nameQuery,
+  queryTxt)
 }
 \arguments{
-\item{nameQuery}{name of query}
+\item{url}{server address}
 
-\item{queryTxt}{text of query}
+\item{nameQuery}{query name}
+
+\item{queryTxt}{query text}
 }
 \description{
 Allow access to web service GMQL as guest or registered user

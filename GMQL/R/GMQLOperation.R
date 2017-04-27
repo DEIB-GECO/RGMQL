@@ -1,20 +1,11 @@
-#' Run GMQL Server
-#'
-#' Retrieve a Java instance of SpellCorrector, with the training file
-#' specified. Language model is trained before the instance is returned.
-#' The spell corrector is adapted from Peter Norvig's demonstration.
-#'
-#' @param no param
-#' @return a Java instance
-#' @export
-#'
 
-runGMQLJava <- function()
-{
-  .jinit()
-  .jaddClassPath('./inst/java/GMQL.jar')
-  myExchange <- .jnew('it.polimi.genomics.r.Wrapper')
-}
+#runGMQLJava <- function()
+#{
+#  .jinit()
+# .jaddClassPath('./inst/java/GMQL.jar')
+# myExchange <- .jnew('it.polimi.genomics.r.Wrapper')
+#}
+#
 
 debug <- function()
 {
@@ -22,16 +13,29 @@ debug <- function()
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
 }
 
-#call rscala, create my enviroment?
-#delete debug now
+
+#' Run GMQL Server
+#'
+#' Run GMQL Server
+#'
+#'
 runGMQL <- function()
 {
+  #call rscala, create my enviroment?
+  #delete debug now
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
   frappeR$runGMQL()
 }
 
+#' Read Dataset from Disk
+#'
+#' Allow to read a GMQL Dataset from disk
+#'
+#' @param DatasetPathFolder folder path (e.g /Users/../../foldername)
+#' @return string "pointer" to dataset
+#'
 readDataset <- function(DatasetPathFolder)
 {
   if(!is.character(DatasetPathFolder))
@@ -41,19 +45,46 @@ readDataset <- function(DatasetPathFolder)
   return(pointer)
 }
 
+#' Materialize new dataset
+#'
+#'
+#'
+#'
+#' @param input_data string pointer taken from GMQL function
+#' @param dir_out out folder path (e.g /Users/../../foldername)
+#'
 materialize <- function(input_data, dir_out = "/Users/simone/Downloads/res")
 {
   frappeR$materialize(input_data,dir_out)
 }
 
+#' GMQL Operation: SELECT
+#'
+#'
+#'
+#'
+#' @param predicate string made up by logical oepration: AND,OR,NOT
+#' @param region region
+#' @param semijoin semijoin
+#' @param input_data string pointer taken from GMQL function
+#'
 select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
 {
-  prdicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
+  predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
   AND antibody_target == 'TEAD4')"
-
-
 }
 
+#' GMQL Operation: PROJECT
+#'
+#'
+#'
+#'
+#' @param predicate string made up by logical oepration: AND,OR,NOT
+#' @param region region
+#' @param semijoin semijoin
+#' @param input_data string pointer taken from GMQL function
+#'
+#'
 project <-function()
 {
 
@@ -72,10 +103,12 @@ extend <-function(metadata = NULL, input_data = "")
   else
     aggrMatrix <- t(sapply(metadata, function(x) as(x,"character")))
 
-  out <- frappeR$extend(aggrMatrix,input)
+  out <- frappeR$extend(aggrMatrix,input_data)
 
-  if(grep("missing",out,ignore.case = T))
+  if(grepl("missing",out,ignore.case = T))
     stop(out)
+  else
+    out
 }
 
 group <-function()
@@ -156,10 +189,11 @@ doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
   else
     aggrMatrix <- t(sapply(aggregates, function(x) as(x,"character")))
 
-  out <- switch(flag,"COVER" = frappeR$cover(min,max,groupBy,aggrMatrix,input_data),
-                     "FLAT" = frappeR$flat(min,max,groupBy,aggrMatrix,input_data),
-                     "SUMMIT" = frappeR$summit(min,max,groupBy,aggrMatrix,input_data),
-                     "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrMatrix,input_data))
+  out <- switch(flag,
+                "COVER" = frappeR$cover(min,max,groupBy,aggrMatrix,input_data),
+                "FLAT" = frappeR$flat(min,max,groupBy,aggrMatrix,input_data),
+                "SUMMIT" = frappeR$summit(min,max,groupBy,aggrMatrix,input_data),
+                "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrMatrix,input_data))
 
   if(grep("missing",out,ignore.case = T))
     stop(out)

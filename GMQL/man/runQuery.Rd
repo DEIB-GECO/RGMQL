@@ -4,7 +4,8 @@
 \alias{runQuery}
 \title{GMQL API web Service}
 \usage{
-runQuery(fileName, query, output)
+runQuery(url = "http://genomic.elet.polimi.it/gmql-rest/queries/run",
+  fileName, query, output)
 }
 \arguments{
 \item{username}{user name}

@@ -4,7 +4,8 @@
 \alias{compileQuery}
 \title{GMQL API web Service}
 \usage{
-compileQuery(query)
+compileQuery(url = "http://genomic.elet.polimi.it/gmql-rest/queries/compile",
+  query)
 }
 \arguments{
 \item{username}{user name}

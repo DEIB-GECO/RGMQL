@@ -4,7 +4,7 @@
 \alias{allJobs}
 \title{GMQL API web Service}
 \usage{
-allJobs(datasetName)
+allJobs(url = "http://genomic.elet.polimi.it/gmql-rest/jobs", datasetName)
 }
 \arguments{
 \item{username}{user name}

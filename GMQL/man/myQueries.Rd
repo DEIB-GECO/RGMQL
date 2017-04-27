@@ -4,7 +4,10 @@
 \alias{myQueries}
 \title{GMQL API web Service}
 \usage{
-myQueries()
+myQueries(url = "http://genomic.elet.polimi.it/gmql-rest/query")
+}
+\arguments{
+\item{url}{server address}
 }
 \description{
 Allow access to web service GMQL as guest or registered user

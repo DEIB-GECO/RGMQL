@@ -8,7 +8,7 @@
 #'
 #' @param username user name
 #' @param password user password
-
+#' @import httr
 
 GMQLlogin <- function(username = NULL, password = NULL)#,as_guest = TRUE)
 {

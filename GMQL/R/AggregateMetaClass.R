@@ -15,7 +15,9 @@ class(AggregatesMetaFunction) <- "AggregatesMetaFunction"
 
 #S4 class of aggregates List idnetify the triple of aggregates
 
-Aggregates <- setClass("AggregatesMeta",
+setOldClass("AggregatesMeta")
+
+setClass("AggregatesMeta",
                        representation(
                          outputName = "character",
                          aggrFunction  = "character",
@@ -55,11 +57,21 @@ AggrMeta<- function(outName,aggrFunction,value = NULL)
   else
     stop("aggregates function not prensent in list only: SUM,MIN,MAX,AVG,BAG,COUNT,STD,MEDIAN,Q1,Q2,Q3")
 
-  if((is.null(value) || value=="") && func != AggregatesMetaFunction$COUNT)
+  if((is.null(value) || value=="") && func !=AggregatesMetaFunction$COUNT)
     stop("value cannot be null or empty:\n Only with COUNT can be null or empty")
+
+  if(func == AggregatesMetaFunction$SUM || func == AggregatesMetaFunction$MIN ||
+     func == AggregatesMetaFunction$MAX || func == AggregatesMetaFunction$AVG ||
+     func == AggregatesMetaFunction$STD || func == AggregatesMetaFunction$MEDIAN
+     && !is.numeric(value))
+  {
+    stop("value must be numeric type with that function")
+  }
+
+  val <- as.character(value)
 
   if(func == AggregatesMetaFunction$COUNT)
     value = ""
 
-  new("AggregatesMeta",outputName = outName, aggrFunction = func,value = value)
+  new("AggregatesMeta",outputName = outName, aggrFunction = func,value = val)
 }
