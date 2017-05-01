@@ -8,9 +8,8 @@
 #'
 #'
 
-allDatasets <- function()
+allDatasets <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets")
 {
-  url <- "http://genomic.elet.polimi.it/gmql-rest/datasets"
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(url, add_headers(h))
@@ -34,12 +33,12 @@ allDatasets <- function()
 #'
 #'
 
-samplesFromDataset <- function(datasetName)
+samplesFromDataset <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets/",datasetName)
 {
-  url <- paste0("http://genomic.elet.polimi.it/gmql-rest/datasets/","public.",datasetName)
+  URL <- paste0(url,datasetName)
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(url, add_headers(h))
+  req <- GET(URL, add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)

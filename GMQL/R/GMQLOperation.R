@@ -36,7 +36,7 @@ runGMQL <- function()
 #' @param DatasetPathFolder folder path (e.g /Users/../../foldername)
 #' @return string "pointer" to dataset
 #'
-readDataset <- function(DatasetPathFolder)
+read <- function(DatasetPathFolder)
 {
   if(!is.character(DatasetPathFolder))
     stop("input must be string")
@@ -89,8 +89,16 @@ project <-function()
 {
 
 }
-
-extend <-function(metadata = NULL, input_data = "")
+#' GMQL Operation: EXTEND
+#'
+#'
+#'
+#'
+#' @param metadata a list of MetaAggregatesClass object
+#' @param input_data string pointer taken from GMQL function
+#'
+#'
+extend <-function(metadata = NULL, input_data)
 {
   if(!is.null(metadata) && !is.list(metadata))
     stop("Aggregates must be a list")
@@ -146,22 +154,22 @@ difference <- function(joinBy = NULL,left_input_data,right_input_data)
 
 flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  doVariant(coverFlag$FLAT,minAcc,maxAcc,groupBy,aggregates,input_data)
+  doVariant("FLAT",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
 cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  doVariant(coverFlag$COVER,minAcc,maxAcc,groupBy,aggregates,input_data)
+  doVariant("COVER",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
 histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  doVariant(coverFlag$HISTOGRAM,minAcc,maxAcc,groupBy,aggregates,input_data)
+  doVariant("HISTOGRAM",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
 summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {
-  doVariant(coverFlag$SUMMIT,minAcc,maxAcc,groupBy,aggregates,input_data)
+  doVariant("SUMMIT",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
 
 doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)

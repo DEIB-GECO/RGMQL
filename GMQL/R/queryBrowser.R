@@ -33,6 +33,8 @@ myQueries <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query")
 #' @param url server address
 #' @param queryTxt query text
 
+
+# TODO: testo preso anche da file?
 saveQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query/",nameQuery,queryTxt)
 {
   URL <- paste0(url,nameQuery,"/save")

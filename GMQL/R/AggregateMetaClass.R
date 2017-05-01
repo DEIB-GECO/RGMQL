@@ -60,16 +60,6 @@ AggrMeta<- function(outName,aggrFunction,value = NULL)
   if((is.null(value) || value=="") && func !=AggregatesMetaFunction$COUNT)
     stop("value cannot be null or empty:\n Only with COUNT can be null or empty")
 
-  if(func == AggregatesMetaFunction$SUM || func == AggregatesMetaFunction$MIN ||
-     func == AggregatesMetaFunction$MAX || func == AggregatesMetaFunction$AVG ||
-     func == AggregatesMetaFunction$STD || func == AggregatesMetaFunction$MEDIAN
-     && !is.numeric(value))
-  {
-    stop("value must be numeric type with that function")
-  }
-
-  val <- as.character(value)
-
   if(func == AggregatesMetaFunction$COUNT)
     value = ""
 

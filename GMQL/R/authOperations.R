@@ -10,7 +10,8 @@
 #' @param password user password
 #' @import httr
 
-GMQLlogin <- function(username = NULL, password = NULL)#,as_guest = TRUE)
+GMQLlogin <- function(url = "http://genomic.elet.polimi.it/gmql-rest",
+                      username = NULL, password = NULL)#,as_guest = TRUE)
 {
   as_guest <- TRUE
 
@@ -20,17 +21,17 @@ GMQLlogin <- function(username = NULL, password = NULL)#,as_guest = TRUE)
   if(as_guest)
   {
     h <- c('Accept' = "Application/json")
-    url <- "http://genomic.elet.polimi.it/gmql-rest/guest"
+    URL <- paste0(url,"/guest")
     #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-    req <- GET(url, add_headers(h))
+    req <- GET(URL, add_headers(h))
   }
   else
   {
     h <- c('Accept' = "Application/json",'Content-Type' = 'Application/json')
-    url <- "http://genomic.elet.polimi.it/gmql-rest/login"
+    URL <- paste0(url,"/login")
     body <- list('username'=username,'password'=password)
    # req <- POST(url,add_headers(h),body = body,verbose(data_in = T,info = T),encode = "json")
-    req <- POST(url,add_headers(h),body = body,encode = "json")
+    req <- POST(URL,add_headers(h),body = body,encode = "json")
   }
 
   content <- httr::content(req)
@@ -55,9 +56,8 @@ GMQLlogin <- function(username = NULL, password = NULL)#,as_guest = TRUE)
 #'
 #'
 
-GMQLlogout <- function()
+GMQLlogout <- function(url = "http://genomic.elet.polimi.it/gmql-rest/logout")
 {
-  url <- "http://genomic.elet.polimi.it/gmql-rest/logout"
   h <- c('X-Auth-Token' = authToken)
   req <- GET(url, add_headers(h))
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
@@ -77,9 +77,9 @@ GMQLlogout <- function()
 #'
 #'
 
-GMQLregister <- function(name,lastname,mail,username,password)
+GMQLregister <- function(url = "http://genomic.elet.polimi.it/gmql-rest/register", name, lastname,
+                         mail, username, password)
 {
-  url <- "http://genomic.elet.polimi.it/gmql-rest/register"
   info <- list('firstName'=name,
                'lastName'=lastname,
                'username'=username,
