@@ -7,7 +7,7 @@
 #' @param url server address
 #'
 
-myQueries <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query")
+showQueries <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query")
 {
   h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
   #req <<- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
@@ -29,15 +29,15 @@ myQueries <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query")
 #'
 #'
 #'
-#' @param nameQuery query name
+#' @param queryName query name
 #' @param url server address
 #' @param queryTxt query text
 
 
 # TODO: testo preso anche da file?
-saveQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query/",nameQuery,queryTxt)
+saveQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/query/",queryName,queryTxt)
 {
-  URL <- paste0(url,nameQuery,"/save")
+  URL <- paste0(url,queryName,"/save")
   h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
   #req <<- POST(url, add_headers(h),verbose(data_in = TRUE,info = TRUE),body = queryTxt)
   req <- POST(URL, add_headers(h),body = queryTxt)

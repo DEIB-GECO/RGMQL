@@ -1,16 +1,12 @@
 
-#runGMQLJava <- function()
-#{
-#  .jinit()
-# .jaddClassPath('./inst/java/GMQL.jar')
-# myExchange <- .jnew('it.polimi.genomics.r.Wrapper')
-#}
-#
+textQueryEnv <- new.env()
+textQueryEnv$a = "asdas"
+textQueryEnv$b = "sa"
 
 debug <- function()
 {
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
-  frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
+  frappeR <<- scalaCompiler$.it.polimi.genomics.r.Wrapper
 }
 
 
@@ -19,14 +15,14 @@ debug <- function()
 #' Run GMQL Server
 #'
 #'
-runGMQL <- function()
+startGMQL <- function()
 {
   #call rscala, create my enviroment?
   #delete debug now
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
-  frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
-  frappeR$runGMQL()
+  frappeR <<- scalaCompiler$.it.polimi.genomics.r.Wrapper
+  frappeR$startGMQL()
 }
 
 #' Read Dataset from Disk
@@ -38,12 +34,33 @@ runGMQL <- function()
 #'
 read <- function(DatasetPathFolder)
 {
-  if(!is.character(DatasetPathFolder))
+  if(!is.character(DatasetPathFolder) && length(DatasetPathFolder)>1)
     stop("input must be string")
 
   pointer <- frappeR$readDataset(DatasetPathFolder)
   return(pointer)
 }
+
+#' Execute GMQL query
+#'
+#'
+#'
+#'
+#'
+execute <- function()
+{
+  start <- Sys.time()
+  exe <- frappeR$execute()
+  if(grepl("OK",out,ignore.case = T))
+    invisible(exe)
+  else
+    stop(exe)
+  end <- Sys.time()
+  diff <- end - start
+  print(diff)
+
+}
+
 
 #' Materialize new dataset
 #'
@@ -68,10 +85,17 @@ materialize <- function(input_data, dir_out = "/Users/simone/Downloads/res")
 #' @param semijoin semijoin
 #' @param input_data string pointer taken from GMQL function
 #'
+#'
+
 select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
 {
   predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
   AND antibody_target == 'TEAD4')"
+  if(!is.character(predicate))
+    stop("prdicate must be a string")
+
+  if(!is.character(region))
+    stop("region must be a string")
 }
 
 #' GMQL Operation: PROJECT
@@ -89,6 +113,8 @@ project <-function()
 {
 
 }
+
+
 #' GMQL Operation: EXTEND
 #'
 #'
@@ -103,8 +129,8 @@ extend <-function(metadata = NULL, input_data)
   if(!is.null(metadata) && !is.list(metadata))
     stop("Aggregates must be a list")
 
-  if(!is.null(metadata) && !all(sapply(metadata, function(x) class(x) == "AggregatesMeta")))
-    stop("aggregates must be a list of Class AggregatesMeta Object")
+  if(!is.null(metadata) && !all(sapply(metadata, function(x) class(x) == "MetaAggregates")))
+    stop("aggregates must be a list of Class MetaAggregates Object")
 
   if(is.null(metadata))
     aggrMatrix <- NULL
@@ -137,9 +163,9 @@ order <- function(input_data)
 
 }
 
-union <- function(right_input_data, right_prefix = "",left_input_data,left_prefix = "")
+union <- function(right_input_data,left_input_data)
 {
-  frappeR$union(right_input_data,right_prefix,left_input_data,left_prefix)
+  frappeR$union(right_input_data,left_input_data)
 }
 
 difference <- function(joinBy = NULL,left_input_data,right_input_data)
@@ -203,8 +229,10 @@ doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
                 "SUMMIT" = frappeR$summit(min,max,groupBy,aggrMatrix,input_data),
                 "HISTOGRAM" = frappeR$histogram(min,max,groupBy,aggrMatrix,input_data))
 
-  if(grep("missing",out,ignore.case = T))
+  if(grepl("missing",out,ignore.case = T))
     stop(out)
+  else
+    out
 }
 
 map <- function(aggregates = NULL, right_input_data,exp_name = "",
@@ -218,12 +246,3 @@ join <- function(input_data)
 
 }
 
-
-prova <- function(out = "The value ... is missing")
-{
-  if(grepl("missing",out,ignore.case = T))
-    return("OK")
-  else
-    stop("Error")
-
-}

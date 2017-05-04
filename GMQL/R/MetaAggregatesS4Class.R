@@ -1,5 +1,5 @@
 #S3 class Aggregates used as Enum
-AggregatesMetaFunction <- list(
+MetaAggregatesFunction <- list(
   SUM = "SUM",
   MIN = "MIN",
   MAX = "MAX",
@@ -11,20 +11,20 @@ AggregatesMetaFunction <- list(
   Q1 = "Q1",
   Q3 = "Q3",
   COUNT = "COUNT")
-class(AggregatesMetaFunction) <- "AggregatesMetaFunction"
+class(MetaAggregatesFunction) <- "MetaAggregatesFunction"
 
 #S4 class of aggregates List idnetify the triple of aggregates
 
-setOldClass("AggregatesMeta")
+setOldClass("MetaAggregates")
 
-setClass("AggregatesMeta",
+setClass("MetaAggregates",
                        representation(
                          outputName = "character",
                          aggrFunction  = "character",
                          value ="character"
                        ),
                        setMethod("show",
-                                 "AggregatesMeta",
+                                 "MetaAggregates",
                                  function(object)
                                  {
                                    cat('output:', object@outputName, "\n")
@@ -35,7 +35,7 @@ setClass("AggregatesMeta",
                                      cat("value:", object@value, "\n")
                                  }
                        ),
-                       setAs("AggregatesMeta", "character",
+                       setAs("MetaAggregates", "character",
                              function(from)
                              {
                                vec <- c(from@outputName, from@aggrFunction, from@value)
@@ -46,22 +46,22 @@ setClass("AggregatesMeta",
 
 #Constructor
 
-AggrMeta<- function(outName,aggrFunction,value = NULL)
+MetaAggr<- function(outName,aggrFunction,value = NULL)
 {
   if (!is.character(aggrFunction))
     stop("the parameter must be a string ")
 
   aggr <- toupper(aggrFunction)
-  if (aggr %in% names(AggregatesFunction))
-    func <- AggregatesFunction[[aggr]]
+  if (aggr %in% names(MetaAggregatesFunction))
+    func <- MetaAggregatesFunction[[aggr]]
   else
     stop("aggregates function not prensent in list only: SUM,MIN,MAX,AVG,BAG,COUNT,STD,MEDIAN,Q1,Q2,Q3")
 
-  if((is.null(value) || value=="") && func !=AggregatesMetaFunction$COUNT)
+  if((is.null(value) || value=="") && func !=MetaAggregatesFunction$COUNT)
     stop("value cannot be null or empty:\n Only with COUNT can be null or empty")
 
-  if(func == AggregatesMetaFunction$COUNT)
+  if(func == MetaAggregatesFunction$COUNT)
     value = ""
 
-  new("AggregatesMeta",outputName = outName, aggrFunction = func,value = val)
+  new("MetaAggregates",outputName = outName, aggrFunction = func,value = value)
 }

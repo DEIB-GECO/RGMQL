@@ -4,7 +4,8 @@
 \alias{GMQLlogin}
 \title{GMQL API web Service}
 \usage{
-GMQLlogin(username = NULL, password = NULL)
+GMQLlogin(url = "http://genomic.elet.polimi.it/gmql-rest", username = NULL,
+  password = NULL)
 }
 \arguments{
 \item{username}{user name}
