@@ -1,12 +1,7 @@
-
-textQueryEnv <- new.env()
-textQueryEnv$a = "asdas"
-textQueryEnv$b = "sa"
-
 debug <- function()
 {
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
-  frappeR <<- scalaCompiler$.it.polimi.genomics.r.Wrapper
+  frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
 }
 
 
@@ -18,10 +13,9 @@ debug <- function()
 startGMQL <- function()
 {
   #call rscala, create my enviroment?
-  #delete debug now
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <<- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g" )
-  frappeR <<- scalaCompiler$.it.polimi.genomics.r.Wrapper
+  frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
   frappeR$startGMQL()
 }
 
@@ -34,8 +28,11 @@ startGMQL <- function()
 #'
 read <- function(DatasetPathFolder)
 {
-  if(!is.character(DatasetPathFolder) && length(DatasetPathFolder)>1)
-    stop("input must be string")
+  if(!is.character(DatasetPathFolder))
+    stop("input must be string and not empty")
+
+  if(!dir.exists(DatasetPathFolder))
+    stop("folder does not exist")
 
   pointer <- frappeR$readDataset(DatasetPathFolder)
   return(pointer)
@@ -52,7 +49,7 @@ execute <- function()
   start <- Sys.time()
   exe <- frappeR$execute()
   if(grepl("OK",out,ignore.case = T))
-    invisible(exe)
+    invisible("")
   else
     stop(exe)
   end <- Sys.time()
@@ -91,11 +88,16 @@ select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
 {
   predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
   AND antibody_target == 'TEAD4')"
+
   if(!is.character(predicate))
     stop("prdicate must be a string")
 
   if(!is.character(region))
     stop("region must be a string")
+
+
+
+
 }
 
 #' GMQL Operation: PROJECT
@@ -235,10 +237,10 @@ doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
     out
 }
 
-map <- function(aggregates = NULL, right_input_data,exp_name = "",
-                left_input_data,ref_name ="",count_name = "")
+map <- function(aggregates = NULL, right_input_data,
+                left_input_data,count_name = "")
 {
-  frappeR$map(aggregates,right_input_data,exp_name,left_input_data,ref_name,count_name)
+  frappeR$map(aggregates,right_input_data,left_input_data)
 }
 
 join <- function(input_data)
