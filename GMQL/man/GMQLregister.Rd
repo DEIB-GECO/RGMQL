@@ -4,10 +4,28 @@
 \alias{GMQLregister}
 \title{GMQL API web Service}
 \usage{
-GMQLregister(url = "http://genomic.elet.polimi.it/gmql-rest/register", name,
-  lastname, mail, username, password)
+GMQLregister(url, name, lastname, mail, username, password)
+}
+\arguments{
+\item{url}{server address}
+
+\item{name}{user name}
+
+\item{lastname}{user lastname}
+
+\item{mail}{user mail}
+
+\item{username}{user username}
+
+\item{password}{user password}
+}
+\value{
+autentication Token
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+Register to web Service Provider
+}
+\examples{
+GMQLregister(url = http://...../...)
+
 }

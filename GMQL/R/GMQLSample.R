@@ -1,68 +1,62 @@
+
 #assume that all files only one type of files and check the first file extension
-readSample <- function(datasetName = "DATA_SET_VAR/files")
+readSamples <- function(datasetName = "DATA_SET_VAR_GTF/files")
 {
-  path <- paste0("/Users/simone/Downloads/",datasetName)
-  files <- list.files(path, pattern = "\\.gdm")
-  if(length(files) != 0)
-    readGDM(files)
-  else
-    readGTF(files)
+  datasetName <- paste0("/Users/simone/Downloads/",datasetName)
+
+  if(!dir.exists(datasetName))
+    stop("Directory does not exists")
+
+  if(length(list.files(datasetName))==0)
+    stop("no samples present in this dataset")
+
+  start <- Sys.time()
+
+  regions <- list.files(datasetName, pattern = "*.gtf$",full.names = T)
+  name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
+  if(length(regions) != 0)
+  {
+    sampleList <- lapply(regions, import.gff2)
+    names(sampleList) <- name_samples
+    gRange_list <- GRangesList(sampleList)
+  }
+
+  meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = T)
+  if(length(meta) != 0)
+  {
+    meta_list <- lapply(meta, add_metadata)
+    names(meta_list) <- name_samples
+  }
+
+  metadata(gRange_list) <- meta_list
+  end <- Sys.time()
+  diff <- end - start
+  print(diff)
+  return(gRange_list)
 }
 
-#TODO: implement data structure of samples
-readGDM2 <- function(files)
+add_metadata <- function(files)
 {
-  sampleList <- list()
-  for(i in seq_along(files))
-  {
-    path_file <- paste0(path,"/",files[[i]])
-    ext <- tools::file_ext(path_file)
-    if(ext == "meta")
-    {
-      x <- scan(path_file, what="", sep="\n")
-      y <- strsplit(x, "\t")
-      names(y) <- sapply(y, `[[`, 1)
-      listMeta <- lapply(y, `[`, -1)
-    }
-    else{
-      regionDf <- read.delim(path_file)
-      nameSample <- files[[i]]
-    }
-
-    c(sampleList, list())
-  }
+  x <- scan(files, what="", sep="\n")
+  y <- strsplit(x, "\t")
+  names(y) <- sapply(y, `[[`, 1)
+  listMeta <- lapply(y, `[`, -1)
 }
 
 readGDM <- function()
 {
   start <- Sys.time()
   path = "/Users/simone/Downloads/DATA_SET_VAR/files/S_00000.gdm"
-  df = read.delim(path)
-  print(class(df))
+  df = read.delim(path,col.names = c("a","b","c","d","e","f","g","h","j","k","l","m"))
   end <- Sys.time()
   diff <- end - start
   print(diff)
+  return(df)
 }
 
-readGTF2 <- function()
-{
-  start <- Sys.time()
-  path = "/Users/simone/Downloads/RESULT_DS/files/S_00000.gtf"
-  gr = readGFFAsGRanges(path)
-  print(class(gr))
-  end <- Sys.time()
-  diff <- end - start
-  print(diff)
-}
 
-readGTF <- function()
-{
-  start <- Sys.time()
-  path = "/Users/simone/Downloads/RESULT_DS/files/S_00000.gtf"
-  gr = import.gff(path)
-  print(class(gr))
-  end <- Sys.time()
-  diff <- end - start
-  print(diff)
-}
+
+
+
+
 

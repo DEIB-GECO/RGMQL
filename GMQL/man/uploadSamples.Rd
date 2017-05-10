@@ -4,7 +4,8 @@
 \alias{uploadSamples}
 \title{GMQL API web Service}
 \usage{
-uploadSamples()
+uploadSamples(url = "http://genomic.elet.polimi.it/gmql-rest/datasets",
+  datasetName, schemaName = NULL, ...)
 }
 \description{
 Allow access to web service GMQL as guest or registered user

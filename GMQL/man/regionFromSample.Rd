@@ -4,9 +4,15 @@
 \alias{regionFromSample}
 \title{GMQL API web Service}
 \usage{
-regionFromSample()
+regionFromSample(url = "http://genomic.elet.polimi.it/gmql-rest/datasets/",
+  datasetName, sampleName)
 }
 \description{
 Allow access to web service GMQL as guest or registered user
 with username and password
+}
+\details{
+start.time <- Sys.time()
+end.time <- Sys.time()
+time.taken <- end.time - start.time
 }

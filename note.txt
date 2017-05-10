@@ -1,0 +1,10 @@
+NOTE:
+
+UNION cosa fare dei prefissi? lascio quelli di default?
+come li gestisco coi path?
+
+togliere GDM?
+
+se errore di cartella già esistente —> spark si disattiva
+
+non legge file gtf

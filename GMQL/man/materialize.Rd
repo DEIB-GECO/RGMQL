@@ -2,15 +2,24 @@
 % Please edit documentation in R/GMQLOperation.R
 \name{materialize}
 \alias{materialize}
-\title{Materialize new dataset}
+\title{GMQL Operation: MATERIALIZE}
 \usage{
-materialize(input_data, dir_out = "/Users/simone/Downloads/res")
+materialize(input_data, dir_out)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
-\item{dir_out}{out folder path (e.g /Users/../../foldername)}
+\item{dir_out}{out path folder for default is working directory}
 }
 \description{
-Materialize new dataset
+The materialize operation saved dataset in the system to make it usable in other GMQL queries.
+To preserve the content of any dataset generated during a GMQL query,
+the dataset must be materialized.
+Any dataset can be materialized, however the operation is time expensive;
+for best performance materialize the relevant data only.
+}
+\examples{
+materialize(input_data = c, dir_out = "/.../foldername")
+materialize(c,"/.../foldername")
+
 }

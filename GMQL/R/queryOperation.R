@@ -9,11 +9,12 @@
 #' @param username user name
 #' @param password user password
 
-allJobs <- function(url ="http://genomic.elet.polimi.it/gmql-rest/jobs" , datasetName)
+showJobs <- function(url, dataset_name)
 {
+  URL <- paste0(url,"/jobs")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(url, add_headers(h))
+  req <- GET(URL, add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -32,9 +33,17 @@ allJobs <- function(url ="http://genomic.elet.polimi.it/gmql-rest/jobs" , datase
 #' @param username user name
 #' @param password user password
 
-logJob <- function()
+showJobLog <- function(url,job_id)
 {
-
+  URL <- paste0(url,"/jobs/",job_id,"/log")
+  h <- c('X-Auth-Token' = authToken,'Accept'= 'Application/json')
+  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
+  req <- GET(URL, add_headers(h))
+  content <- httr::content(req,"parsed")
+  if(req$status_code !=200)
+    stop(content$error)
+  else
+    return(unlist(content))
 }
 
 #' GMQL API web Service
@@ -48,9 +57,17 @@ logJob <- function()
 #' @param username user name
 #' @param password user password
 
-stopJob <- function()
+stopJob <- function(url,job_id)
 {
-
+  URL <- paste0(url,"/jobs/",job_id,"/stop")
+  h <- c('X-Auth-Token' = authToken,'Accept'= 'text/plain')
+  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
+  req <- GET(URL, add_headers(h))
+  content <- httr::content(req,"parsed")
+  if(req$status_code !=200)
+    stop(content)
+  else
+    return(content)
 }
 
 #' GMQL API web Service
@@ -64,8 +81,19 @@ stopJob <- function()
 #' @param username user name
 #' @param password user password
 
-traceJob <- function()
-{}
+traceJob <- function(url, job_id)
+{
+  URL <- paste0(url,"/jobs/",job_id,"/trace")
+  h <- c('X-Auth-Token' = authToken,'Accept'= 'Application/json')
+  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
+  req <- GET(URL, add_headers(h))
+  content <- httr::content(req,"parsed")
+  if(req$status_code !=200)
+    stop(content$error)
+  else
+    return(content)
+
+}
 
 
 #' GMQL API web Service
@@ -82,16 +110,15 @@ traceJob <- function()
 
 
 
-runQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/queries/run",fileName,query,output)
+runQuery <- function(url,fileName,query,output)
 {
   out <- check(fileOutput,output)
 
-  URL <- paste0(url,"/",fileName,"/",out)
+  URL <- paste0(url,"/queries/run/",fileName,"/",out)
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
 
-  req <- POST(URL,body = query ,add_headers(h),encode = "json",verbose(data_in = T,info = T))
-  #req <- GET(url,add_headers(h),verbose(data_in = TRUE,info = TRUE))
+  req <- POST(URL,body = query ,add_headers(h),encode = "json",verbose(data_in = T,data_out = T))
   #req <- GET(URL,add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
@@ -113,13 +140,14 @@ runQuery <- function(url = "http://genomic.elet.polimi.it/gmql-rest/queries/run"
 #' @return authentication token
 
 
-compileQuery <- function(url ="http://genomic.elet.polimi.it/gmql-rest/queries/compile" ,query)
+compileQuery <- function(url ,query)
 {
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
+  URL <- paste0(url,"/queries/compile")
 
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <<- POST(url,body = query ,add_headers(h),encode = "json")
+  req <<- POST(URL,body = query ,add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)

@@ -2,10 +2,11 @@
 % Please edit documentation in R/GMQLOperation.R
 \name{startGMQL}
 \alias{startGMQL}
-\title{Run GMQL Server}
+\title{start GMQL Server}
 \usage{
 startGMQL()
 }
 \description{
-Run GMQL Server
+Set Spark configuration and context.
+set GMQL spark executor and run GMQL server
 }

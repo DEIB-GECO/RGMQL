@@ -4,9 +4,17 @@
 \alias{GMQLlogout}
 \title{GMQL API web Service}
 \usage{
-GMQLlogout(url = "http://genomic.elet.polimi.it/gmql-rest/logout")
+GMQLlogout(url)
+}
+\arguments{
+\item{url}{server address}
 }
 \description{
 Allow access to web service GMQL as guest or registered user
 with username and password
+}
+\examples{
+GMQLlogin(url = http://...../...)
+GMQLlogin(url, username="pippo",password="baudo")
+
 }

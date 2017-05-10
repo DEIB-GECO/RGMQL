@@ -1,3 +1,7 @@
+
+GenomicPolimiUrl <- "http://genomic.elet.polimi.it/gmql-rest"
+
+
 #' GMQL API web Service
 #'
 #' Allow access to web service GMQL as guest or registered user
@@ -5,13 +9,17 @@
 #'
 #'
 #'
-#'
+#' @param url server address
 #' @param username user name
 #' @param password user password
+#' @return autentication Token
 #' @import httr
+#' @examples
+#' GMQLlogin(url = http://...../...)
+#' GMQLlogin(url, username="pippo",password="baudo")
+#'
 
-GMQLlogin <- function(url = "http://genomic.elet.polimi.it/gmql-rest",
-                      username = NULL, password = NULL)#,as_guest = TRUE)
+GMQLlogin <- function(url,username = NULL, password = NULL)
 {
   as_guest <- TRUE
 
@@ -53,10 +61,13 @@ GMQLlogin <- function(url = "http://genomic.elet.polimi.it/gmql-rest",
 #' with username and password
 #'
 #'
+#' @param url server address
+#' @import httr
+#' @examples
+#' GMQLlogin(url = http://...../...)
+#' GMQLlogin(url, username="pippo",password="baudo")
 #'
-#'
-
-GMQLlogout <- function(url = "http://genomic.elet.polimi.it/gmql-rest/logout")
+GMQLlogout <- function(url)
 {
   h <- c('X-Auth-Token' = authToken)
   req <- GET(url, add_headers(h))
@@ -65,20 +76,32 @@ GMQLlogout <- function(url = "http://genomic.elet.polimi.it/gmql-rest/logout")
   if(req$status_code !=200)
     stop(content$error)
   else
+  {
     print(content)
+    #delete token from environment
+    rm(authToken, envir = .GlobalEnv)
+  }
 }
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+#' Register to web Service Provider
 #'
 #'
+#' @param url server address
+#' @param name user name
+#' @param lastname user lastname
+#' @param mail user mail
+#' @param username user username
+#' @param password user password
 #'
+#' @return autentication Token
+#' @import httr
+#' @examples
+#' GMQLregister(url = http://...../...)
 #'
 
-GMQLregister <- function(url = "http://genomic.elet.polimi.it/gmql-rest/register", name, lastname,
-                         mail, username, password)
+GMQLregister <- function(url, name, lastname, mail, username, password)
 {
   info <- list('firstName'=name,
                'lastName'=lastname,
@@ -86,9 +109,10 @@ GMQLregister <- function(url = "http://genomic.elet.polimi.it/gmql-rest/register
                'email'=mail,
                'password'=password
                )
+  URL <- paste0(url,"/register")
   h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
   #req <<- POST(url,body = info ,add_headers(h),encode = "multipart",verbose(data_in = TRUE,info = TRUE))
-  req <<- POST(url,body = info ,add_headers(h),encode = "json")
+  req <<- POST(URL,body = info ,add_headers(h),encode = "json")
 
   content <- httr::content(req)
 

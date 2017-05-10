@@ -7,10 +7,20 @@
 extend(metadata = NULL, input_data)
 }
 \arguments{
-\item{metadata}{a list of MetaAggregatesClass object}
+\item{metadata}{a list of MetaAggregate object}
 
-\item{input_data}{string pointer taken from GMQL function}
+\item{input_data}{string pointer returned from all GMQL function}
 }
 \description{
-GMQL Operation: EXTEND
+It generates new metadata attributes Am as result of aggregate
+functions g applied to region attributes;
+aggregate functions are applied sample by sample,
+resulting tuples are triples with the sample identifier,
+the attribute name Am, and the computed aggregate value.
+}
+\examples{
+r = read(path)
+e = extend(metadata = list(),input_data = r)
+e = extena(input_data = r)
+
 }
