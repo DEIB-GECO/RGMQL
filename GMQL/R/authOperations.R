@@ -1,5 +1,4 @@
 
-GenomicPolimiUrl <- "http://genomic.elet.polimi.it/gmql-rest"
 
 
 #' GMQL API web Service

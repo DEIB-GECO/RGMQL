@@ -53,7 +53,6 @@ execute <- function()
 
 }
 
-
 #' GMQL Operation: MATERIALIZE
 #'
 #'The materialize operation saved dataset in the system to make it usable in other GMQL queries.
@@ -71,7 +70,6 @@ execute <- function()
 #'
 materialize <- function(input_data, dir_out)
 {
-  dir_out = "/Users/simone/Downloads/res"
   frappeR$materialize(input_data,dir_out)
 }
 
@@ -87,7 +85,7 @@ materialize <- function(input_data, dir_out)
 #'
 #'
 
-select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
+select <- function(predicate = NULL, region = NULL,semijoin = NULL,semi_join_dataset = NULL,input_data)
 {
   predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp'
   AND antibody_target == 'TEAD4')"
@@ -98,6 +96,22 @@ select <- function(predicate = NULL, region = NULL,semijoin = NULL,input_data)
   if(!is.character(region))
     stop("region must be a string")
 
+  if(!is.list(semijoin))
+    stop("semijoin must be a list")
+
+
+  if(length(semijoin)!=0 || !is.null(semijoin))
+  {
+    value <- names(semijoin)
+    attributeStrategy <- unlist(semijoin)
+  }
+
+
+
+
+
+
+  frapper$select()
 }
 
 #' GMQL Operation: PROJECT
@@ -136,10 +150,13 @@ project <-function()
 extend <-function(metadata = NULL, input_data)
 {
   if(!is.null(metadata) && !is.list(metadata))
-    stop("Aggregates must be a list")
+    stop("metadata must be a list")
 
-  if(!is.null(metadata) && !all(sapply(metadata, function(x) class(x) == "MetaAggregates")))
-    stop("aggregates must be a list of Class MetaAggregates Object")
+ # if(!is.null(metadata) && !all(sapply(metadata, function(x) class(x) == "MetaAggregates")))
+  #  stop("aggregates must be a list of Class MetaAggregates Object")
+
+
+
 
   if(is.null(metadata))
     aggrMatrix <- NULL
