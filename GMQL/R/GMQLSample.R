@@ -35,6 +35,17 @@ readSamples <- function(datasetName = "DATA_SET_VAR_GTF/files")
   return(gRange_list)
 }
 
+prova <- function(m,name)
+{
+  all_meta <- m
+  list <- lapply(all_meta,function(x,name){
+    if(name %in% names(x))
+    {
+      print(x$"name")
+    }
+    },name)
+}
+
 add_metadata <- function(files)
 {
   x <- scan(files, what="", sep="\n")
@@ -46,12 +57,13 @@ add_metadata <- function(files)
 readGDM <- function()
 {
   start <- Sys.time()
-  path = "/Users/simone/Downloads/DATA_SET_VAR/files/S_00000.gdm"
-  df = read.delim(path,col.names = c("a","b","c","d","e","f","g","h","j","k","l","m"))
+  path <- "/Users/simone/Downloads/DATA_SET_VAR/files/S_00000.gdm"
+  df <- read.delim(path,col.names = c("a","b","c","d","e","f","g","h","j","k","l","m"))
+  g <- makeGRangesFromDataFrame(df)
   end <- Sys.time()
   diff <- end - start
   print(diff)
-  return(df)
+  return(g)
 }
 
 
