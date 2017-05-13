@@ -16,7 +16,7 @@ The materialize operation saved dataset in the system to make it usable in other
 To preserve the content of any dataset generated during a GMQL query,
 the dataset must be materialized.
 Any dataset can be materialized, however the operation is time expensive;
-for best performance materialize the relevant data only.
+for best performance, materialize the relevant data only.
 }
 \examples{
 materialize(input_data = c, dir_out = "/.../foldername")

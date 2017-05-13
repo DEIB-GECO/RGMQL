@@ -9,7 +9,7 @@ merge(groupBy = NULL, input_data)
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
-\item{metadata}{a list of MetaAggregate object}
+\item{metadata}{a vector of metadata}
 }
 \description{
 It builds a dataset consisting of a single sample having as regions
@@ -23,7 +23,7 @@ yielding to one sample in the result for each group.
 }
 \examples{
 r = read(path)
-m = merge(groupBy = c(),input_data = r)
+m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 m = merge(input_data = r)
 
 }

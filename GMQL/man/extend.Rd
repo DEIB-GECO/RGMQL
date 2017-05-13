@@ -7,7 +7,7 @@
 extend(metadata = NULL, input_data)
 }
 \arguments{
-\item{metadata}{a list of MetaAggregate object}
+\item{metadata}{a list of element key = value, where value is c("aggregate function","value")}
 
 \item{input_data}{string pointer returned from all GMQL function}
 }
@@ -20,7 +20,8 @@ the attribute name Am, and the computed aggregate value.
 }
 \examples{
 r = read(path)
-e = extend(metadata = list(),input_data = r)
+e = extend(metadata = list(regionsCount = c("COUNT","")),input_data = r)
+e = extend(metadata = list(sumValue = c("SUM","pvalue")),input_data = r)
 e = extena(input_data = r)
 
 }

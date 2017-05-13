@@ -4,7 +4,7 @@
 \alias{stopJob}
 \title{GMQL API web Service}
 \usage{
-stopJob()
+stopJob(url, job_id)
 }
 \arguments{
 \item{username}{user name}

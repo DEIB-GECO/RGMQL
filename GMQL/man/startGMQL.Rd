@@ -7,6 +7,5 @@
 startGMQL()
 }
 \description{
-Set Spark configuration and context.
-set GMQL spark executor and run GMQL server
+Set and run GMQL server
 }

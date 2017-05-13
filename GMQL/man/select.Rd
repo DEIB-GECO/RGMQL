@@ -4,17 +4,28 @@
 \alias{select}
 \title{GMQL Operation: SELECT}
 \usage{
-select(predicate = NULL, region = NULL, semijoin = NULL, input_data)
+select(predicate = NULL, region_predicate = NULL, semi_join = NULL,
+  semi_join_dataset = NULL, input_data)
 }
 \arguments{
-\item{predicate}{string made up by logical oepration: AND,OR,NOT}
+\item{predicate}{string made up by logical oepration: AND,OR,NOT on metadata values}
 
-\item{region}{region}
+\item{region_predicate}{string made up by logical oepration: AND,OR,NOT on region values}
 
-\item{semijoin}{semijoin}
+\item{semi_join_dataset}{string pointer taken from GMQL function needed for semijoining}
 
 \item{input_data}{string pointer taken from GMQL function}
+
+\item{semijoin}{vector of metadata attribute consider for semijoining}
+
+\item{semi_join_in}{logical value}
 }
 \description{
-GMQL Operation: SELECT
+It keeps in the result all the samples which existentially satisfy the predicate on metadata
+and then selects those regions of selected samples which satisfy the predicate on regions.
+A sample is legal also when it contains no regions as result of a selection.
+Semi-join clauses are used to further select samples;
+A semi-join clause can be constructed as the conjunction of the simple metadata predicates
+that refer to the same dataset.
+Semi-joins are used to connect variables
 }

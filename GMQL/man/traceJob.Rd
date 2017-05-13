@@ -4,7 +4,7 @@
 \alias{traceJob}
 \title{GMQL API web Service}
 \usage{
-traceJob()
+traceJob(url, job_id)
 }
 \arguments{
 \item{username}{user name}

@@ -4,8 +4,7 @@
 \alias{saveQuery}
 \title{GMQL API web Service}
 \usage{
-saveQuery(url = "http://genomic.elet.polimi.it/gmql-rest/query/", queryName,
-  queryTxt)
+saveQuery(url, queryName, queryTxt)
 }
 \arguments{
 \item{url}{server address}

@@ -4,7 +4,7 @@
 \alias{showQueries}
 \title{GMQL API web Service}
 \usage{
-showQueries(url = "http://genomic.elet.polimi.it/gmql-rest/query")
+showQueries(url)
 }
 \arguments{
 \item{url}{server address}

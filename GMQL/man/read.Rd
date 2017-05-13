@@ -2,7 +2,7 @@
 % Please edit documentation in R/GMQLOperation.R
 \name{read}
 \alias{read}
-\title{Read Dataset from Disk}
+\title{GMQL Function: READ}
 \usage{
 read(DatasetPathFolder)
 }
@@ -13,5 +13,5 @@ read(DatasetPathFolder)
 string "pointer" to dataset
 }
 \description{
-Allow to read a GMQL Dataset from disk
+Read a GMQL Dataset from disk
 }
