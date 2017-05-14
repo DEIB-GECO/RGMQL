@@ -1,0 +1,33 @@
+#' GMQL Operation: DIFFERENCE
+#'
+#'This operation produces a sample in the result for each sample of the first operand S1,
+#'with identical identifier and metadata. It considers all the regions of the second operand,
+#'that we denote as negative regions; for each sample s1 of S1, it includes in the corresponding
+#'result sample those regions which do not intersect with any negative region.
+#'When the JOINBY clause is present, for each sample s1 of the first dataset S1
+#'we consider as negative regions only the regions of the samples s2 of S2 that satisfy the join condition.
+#'Syntactically, the clause consists of a list of attribute names,
+#'which are homonyms from the schemas of S1 and of S2;
+#'the strings LEFT or RIGHT that may be present as prefixes of attribute names
+#'as result of binary operators are not considered for detecting homonyms.
+#'We formally define a simple equi-join predicate ai == aj ,
+#'but the generalization to conjunctions of simple predicates is straightforward.
+#'The predicate is true for given samples s1 and s2 iff the two attributes share at least one value,
+#'e.g.: p(ai,aj) ⇐⇒ ∃ (ai,vi) ∈ M1,(aj,vj) ∈ M2 : vi = vj The operation:
+#'
+#' @param joinBy a vector of metadata
+#' @param right_input_data string pointer taken from GMQL function
+#' @param left_input_data string pointer taken from GMQL function
+#' @examples
+#'
+difference <- function(joinBy = NULL,left_input_data,right_input_data)
+{
+  if(!is.character(joinBy) && !is.null(joinBy))
+    stop("joinBy can be NULL, single string or an array of string")
+
+  out <- frappeR$difference(joinBy,right_input_data,left_input_data)
+  if(grepl("No",out,ignore.case = T))
+    stop(out)
+  else
+    out
+}

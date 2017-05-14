@@ -1,10 +1,8 @@
 NOTE:
 
-UNION cosa fare dei prefissi? lascio quelli di default?
+UNION cosa fare dei prefissi? metto “right” e “left” come default?
 come li gestisco coi path?
-
-togliere GDM?
 
 se errore di cartella già esistente —> spark si disattiva
 
-non legge file gtf
+errore nell’esecuzione di dataset con sample in formato GTF
