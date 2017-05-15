@@ -1,10 +1,9 @@
-
 #'
 #'
 #'create GrangesList from sample in GTF format file
 #'
 #'
-GRangesListFromGMQL.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
+GMQLtoGRangesList.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
 {
   datasetName <- paste0("/Users/simone/Downloads/",datasetName)
 
@@ -43,7 +42,7 @@ GRangesListFromGMQL.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
 #'create GrangesList from sample in GDM (delimited / tabulated) format file
 #'
 #'
-GRangesListFromGMQL.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
+GMQLtoGRangesList.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
 {
   datasetName <- paste0("/Users/simone/Downloads/",datasetName)
 
@@ -86,17 +85,6 @@ GRangesListFromGMQL.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
 }
 
 
-prova <- function(m,name)
-{
-  all_meta <- m
-  list <- lapply(all_meta,function(x,name){
-    if(name %in% names(x))
-    {
-      print(x$"name")
-    }
-    },name)
-}
-
 add_metadata <- function(files)
 {
   x <- scan(files, what="", sep="\n")
@@ -105,4 +93,13 @@ add_metadata <- function(files)
   listMeta <- lapply(y, `[`, -1)
 }
 
-
+prova <- function(m,name)
+{
+  all_meta <- m
+  list <- lapply(all_meta,function(x,name){
+    if(name %in% names(x))
+    {
+      print(x$"name")
+    }
+  },name)
+}

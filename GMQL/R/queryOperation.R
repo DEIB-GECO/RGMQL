@@ -110,9 +110,12 @@ traceJob <- function(url, job_id)
 
 
 
-runQuery <- function(url,fileName,query,output)
+runQuery <- function(url,fileName,query,output_gtf = T)
 {
-  out <- check(fileOutput,output)
+  if(output_gtf)
+    out <- "GTF"
+  else
+    out <- "TAB"
 
   URL <- paste0(url,"/queries/run/",fileName,"/",out)
   h <- c('Accept' = "Application/json",

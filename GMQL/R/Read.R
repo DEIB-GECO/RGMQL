@@ -3,12 +3,17 @@
 #' Set and run GMQL server
 #'
 #'
+#'
+
+#scala_env <- new.env(parent = .GlobalEnv)
+
 startGMQL <- function()
 {
   #call rscala, create my enviroment?
   #-Xmx4096m or --driver-memory 4g
   scalaCompiler <- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
   frappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
+  #assign("frappeR", scalaCompiler$do('it.polimi.genomics.r.Wrapper'),envir = scala_env)
   frappeR$startGMQL()
 }
 
@@ -29,6 +34,7 @@ read <- function(DatasetPathFolder)
   if(!dir.exists(DatasetPathFolder))
     stop("folder does not exist")
 
+  #frappeR <- get("frappeR",envir = scala_env)
   out <- frappeR$readDataset(DatasetPathFolder)
   if(grepl("File",out,ignore.case = T))
     stop(out)

@@ -33,7 +33,7 @@ select <- function(predicate = NULL, region_predicate = NULL,semi_join = NULL,
     #trick, if we call it like that
   }
   else if(is.null(semi_join) || is.null(semi_join_dataset)){
-    warning("You did not set correctly semijoin parameters.\n Select function will be invoked without semijoin expression")
+    warning("You did not set correctly semijoin parameters.\nAll parameters have to be set.\nSelect function will be invoked without semijoin expression")
     semi_join=NULL
     semi_join_dataset=NULL
   }
@@ -47,7 +47,7 @@ select <- function(predicate = NULL, region_predicate = NULL,semi_join = NULL,
   }
 
   out <- frappeR$select(predicate,region_predicate,semi_join,semi_join_dataset,input_data)
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = T) || grepl("expected",out,ignore.case = T))
     stop(out)
   else
     out
