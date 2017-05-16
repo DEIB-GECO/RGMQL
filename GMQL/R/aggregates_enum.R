@@ -65,3 +65,26 @@ check.Ordering <- function(object)
     stop("Order ASC or DESC")
 }
 
+
+#S3 class RegionBuilder used as Enum
+RegionBuilder <- list(
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
+  CONTIG = "CONTIG",
+  INTERSECTION = "INTERSECTION")
+class(RegionBuilder) <- "RegionBuilder"
+
+check <- function(object) {
+  UseMethod("check")
+}
+
+check.Ordering <- function(object)
+{
+  ord <- toupper(object)
+  if (ord %in% names(RegionBuilder))
+    func <- RegionBuilder[[ord]]
+  else
+    stop("only: RIGHT,LEFT,CONTIG,INTERSECTION")
+}
+
+
