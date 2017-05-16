@@ -17,10 +17,28 @@ GRangesToGMQL <- function(..., dir_out,file_ouput_gtf = T)
     #names(dots) <- as.character(c(1:length(dots)))
   else
     dots <- ...
-
+  c = counter()
   if(file_ouput_gtf)
-    sapply(dots,function(x){
-      #export.gff2(x,)
-    },files_sub_dir)
+  {
+    apply(dots, function(x){
+      sample_name = paste0("S_",c())
+      export.gff2(x,sample_name)
+    })
+  }
+  else
+  {
+    apply(dots, function(x){
+
+    })
+  }
 
 }
+
+counter <- function() {
+  i <- 0
+  function() {
+    i <<- i + 1
+    toString <- as.character(i)
+  }
+}
+
