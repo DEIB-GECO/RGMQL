@@ -4,7 +4,7 @@
 \alias{runQuery}
 \title{GMQL API web Service}
 \usage{
-runQuery(url, fileName, query, output)
+runQuery(url, fileName, query, output_gtf = T)
 }
 \arguments{
 \item{username}{user name}

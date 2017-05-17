@@ -13,3 +13,13 @@ SELECT: manca check valore usate nel predicato region: se presente nello schema,
 	in R controllare il vettore semi_join con c[!c %in% "" & duplicated(c)]
 
 PROJECT: 
+
+
+
+add output GDm or GTF
+
+add parser to read
+
+iddm stazione Grangte e Grangeslist
+
+TFAmr come fare?

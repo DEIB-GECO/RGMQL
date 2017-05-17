@@ -7,21 +7,21 @@
 extend(metadata = NULL, input_data)
 }
 \arguments{
-\item{metadata}{a list of element key = value, where value is c("aggregate function","value")}
+\item{metadata}{a list of element key = value. value is an object of class OPERATOR.
+The functions aggregate available for extend function are: MIN,MAX,SUM,BAG,AVG,COUNT
+every operator accept a string value}
 
-\item{input_data}{string pointer returned from all GMQL function}
+\item{input_data}{url-like "string" pointer returned from GMQL function}
 }
 \description{
-It generates new metadata attributes Am as result of aggregate
-functions g applied to region attributes;
-aggregate functions are applied sample by sample,
-resulting tuples are triples with the sample identifier,
-the attribute name Am, and the computed aggregate value.
+It generates new metadata attributes as result of aggregate functions applied to region attributes;
+aggregate functions are applied sample by sample.
 }
 \examples{
+
+startGMQL()
+path = /.../dataset_name
 r = read(path)
-e = extend(metadata = list(regionsCount = c("COUNT","")),input_data = r)
-e = extend(metadata = list(sumValue = c("SUM","pvalue")),input_data = r)
-e = extena(input_data = r)
+e = extend(somma = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
 
 }

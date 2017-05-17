@@ -7,5 +7,5 @@
 startGMQL()
 }
 \description{
-Set and run GMQL server
+Set and run GMQL server for executing GMQl query
 }

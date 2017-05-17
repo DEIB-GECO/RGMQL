@@ -4,16 +4,16 @@
 \alias{project}
 \title{GMQL Operation: PROJECT}
 \usage{
-project()
+project(metadata = NULL, regions = NULL, input_data)
 }
 \arguments{
+\item{input_data}{string pointer taken from GMQL function}
+
 \item{predicate}{string made up by logical oepration: AND,OR,NOT}
 
 \item{region}{region}
 
 \item{semijoin}{semijoin}
-
-\item{input_data}{string pointer taken from GMQL function}
 }
 \description{
 GMQL Operation: PROJECT

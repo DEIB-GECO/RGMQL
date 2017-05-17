@@ -7,14 +7,13 @@
 merge(groupBy = NULL, input_data)
 }
 \arguments{
-\item{input_data}{string pointer taken from GMQL function}
+\item{input_data}{url-like string "pointer" taken from GMQL function}
 
-\item{metadata}{a vector of metadata}
+\item{metadata}{a character, a vector of metadata}
 }
 \description{
 It builds a dataset consisting of a single sample having as regions
-all the regions of the input data (without altering their
-coordinates, even when overlapping) and as metadata the union of all
+all the regions of the input data and as metadata the union of all
 the attribute-values of the input samples.
 When a groupBy clause is present, the samples are partitioned by groups,
 each with distinct values of grouping metadata attributes.
@@ -22,8 +21,12 @@ The merge operation is separately applied to each group,
 yielding to one sample in the result for each group.
 }
 \examples{
+
+startGMQL()
 r = read(path)
+s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
-m = merge(input_data = r)
+m = merge(c("antibody_targer","cell_karyotype"),s)
+m = merge(input_data = s)
 
 }

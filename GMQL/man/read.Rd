@@ -7,11 +7,18 @@
 read(DatasetPathFolder)
 }
 \arguments{
-\item{DatasetPathFolder}{folder path (e.g /Users/../../foldername)}
+\item{DatasetPathFolder}{folder path for GMQL dataset}
 }
 \value{
-string "pointer" to dataset
+url-like string "pointer" to dataset
 }
 \description{
-Read a GMQL Dataset from disk
+Read a GMQL dataset from disk
+}
+\examples{
+startGMQL()
+path = /.../dataset_name
+r = read(path)
+
+
 }
