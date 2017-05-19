@@ -8,25 +8,48 @@ order(metadata_order = NULL, mtop = 0, mtopg = 0, regions_order = NULL,
   rtop = 0, rtopg = 0, input_data)
 }
 \arguments{
-\item{metadata_order}{aaa}
+\item{metadata_order}{list of ORDER object. the possbililty are ASC or DESC,
+every order class accept one string}
 
 \item{mtop}{0 is default meand that we not use it}
 
 \item{mtopg}{0 is default meand that we not use it}
 
-\item{regions_order}{aaa}
+\item{regions_order}{list of ORDER object. the possbililty are ASC or DESC,
+every order class accept one string}
 
 \item{rtop}{0 is default meand that we not use it}
 
 \item{rtopg}{0 is default meand that we not use it}
 
-\item{input_data}{aaaa}
+\item{input_data}{url-like "string" pointer taken from GMQL function}
 }
 \description{
-It orders either samples, or regions, or both of them; order is ascending and or descending.
-Sorted samples or regions have a new attribute Order, added to either metadata, or regions,
-or both of them; the value of Order reflects the result of the sorting.
+Used to orders either samples, sample regions or both of them
+according to a set of metadata and/or region attributes, and/or region coordinates
+Order is ascending and / or descending.
+The number of samples and their regions in the output is as in the input dataset,
+but a new ordering metadata and/or region attribute is added with the sample or region ordering value,
+respectively.
+Sorted samples or regions have a new attribute "order", added to either metadata, or regions,
+or both of them; the value of order reflects the result of the sorting.
 The input mtop = k extracts the first k samples or regions, the clause mtopg = k implicitly
 considers the grouping by identical values of the first n − 1 ordering attributes
 and then selects the first k samples or regions of each group
+}
+\examples{
+
+startGMQL()
+path = /.../dataset_name
+r = read(path)
+c = cover(2,3,input_data = r)
+s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
+s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
+semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
+
+o = order(DESC(Region_Count), mtop = 2, input_data = s)
+o = order(list(DESC(Region_Count)),regions_order = list(DESC(MutationCount),ASC(pvalue)),
+mtop = 5,rtopg = 1, input_data = c)
+
+
 }

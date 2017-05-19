@@ -8,24 +8,36 @@ select(predicate = NULL, region_predicate = NULL, semi_join = NULL,
   semi_join_dataset = NULL, input_data)
 }
 \arguments{
-\item{predicate}{string made up by logical oepration: AND,OR,NOT on metadata values}
+\item{predicate}{string predicate made up by logical oepration: AND,OR,NOT on metadata values}
 
-\item{region_predicate}{string made up by logical oepration: AND,OR,NOT on region values}
+\item{region_predicate}{string predicate made up by logical oepration: AND,OR,NOT on schema region values}
 
-\item{semi_join_dataset}{string pointer taken from GMQL function needed for semijoining}
+\item{semi_join_dataset}{url-like "string" pointer taken from GMQL function used in semijoin}
 
-\item{input_data}{string pointer taken from GMQL function}
+\item{input_data}{url-like "string" pointer taken from GMQL function}
 
-\item{semijoin}{vector of metadata attribute consider for semijoining}
-
-\item{semi_join_in}{logical value}
+\item{semijoin}{list of CONDITION object using metadata as value. The CONDITION available are
+EXACT,FULLNAME,DEFAULT. Every condition accept a string value.}
 }
 \description{
-It keeps in the result all the samples which existentially satisfy the predicate on metadata
-and then selects those regions of selected samples which satisfy the predicate on regions.
-A sample is legal also when it contains no regions as result of a selection.
-Semi-join clauses are used to further select samples;
-A semi-join clause can be constructed as the conjunction of the simple metadata predicates
-that refer to the same dataset.
-Semi-joins are used to connect variables
+Extract a subset of samples from the input dataset.
+It returns all the samples which satisfy the predicate on metadata
+and / or returns those regions which satisfy the predicate on regions.
+Also semijoin clause are used to further select samples;
+When semijoin is defined it extract,
+based on the existence of certain metadata attributes defined in semijoin clause,
+those sample that are associated with at least one sample in an semijoin dataset
+}
+\examples{
+startGMQL()
+path = /.../dataset_name
+r = read(path)
+c = cover(2,3,input_data = r)
+s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
+s = select("NOT(Patient_age < 70)",region_predicate = "NOT(variant_type == 'SNP' OR pValue < 0.01)",
+semi_join = list(DEFAULT("cell_type"),FULLNAME("age")),semi_join_dataset = c,input_data = r )
+s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
+semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
+
+
 }

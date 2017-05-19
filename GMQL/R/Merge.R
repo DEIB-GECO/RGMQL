@@ -1,15 +1,15 @@
 #' GMQL Operation: MERGE
 #'
-#'It builds a dataset consisting of a single sample having as regions
-#'all the regions of the input data and as metadata the union of all
-#'the attribute-values of the input samples.
-#'When a groupBy clause is present, the samples are partitioned by groups,
-#'each with distinct values of grouping metadata attributes.
-#'The merge operation is separately applied to each group,
-#'yielding to one sample in the result for each group.
+#' It builds a dataset consisting of a single sample having as regions
+#' all the regions of the input data and as metadata the union of all
+#' the attribute-values of the input samples.
+#' A groupby clause can be specified on metadata:the samples are then partitioned in groups,
+#' each with a distinct value of the grouping metadata attributes, and the operation is separately
+#' applied to each group, yielding to one sample in the result for each group.
+#' Samples without the grouping metadata attributes are disregarded.
 #'
 #'
-#' @param metadata a character, a vector of metadata
+#' @param metadata a vector of metadata as string
 #' @param input_data url-like string "pointer" taken from GMQL function
 #' @examples
 #'

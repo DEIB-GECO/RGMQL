@@ -1,0 +1,47 @@
+General
+-------
+- In metajoin condition (for all operators that include such condition), EXACT(metadata_attribute_name) and FULLNAME(metadata_attribute_name) can be used
+
+
+
+PROJECT
+-------
+- To express which set of region attributes should be considered the wildcard "?" can be used (at most one per attribute); the syntax is:. PROJECT(S.?, ?.att, S.?.att) no PROJECT(?.S.?)
+
+- default PROJECT() :
+	-it applies the project only on the regions and removes all the region fields; only the coordinates (chr, start, stop, strand) are kept.
+
+
+
+MAP
+---
+- count is always performed and saved in the attribute named count_S1_S2 by default; to rename it to myCountName use the following syntax:
+Z = MAP(count_name: myCountName) X Y;
+
+
+
+JOIN
+----
+- default JOIN(): DISTANCE < 0.
+
+
+
+DIFFERENCE
+----------
+- DIFFERENCE operates in two different modes based on region intersection (default), or exact matching; to use the latter one specify the parameter "exact: true"
+
+
+
+ORDER
+-----
+- default ORDER():
+  - order do not have a default form (the above statement does not compile). At least one parameter is required.
+
+
+
+COVER/FLAT/SUMMIT/HISTOGRAM
+---------------------------
+- default COVER/FLAT/SUMMIT/HISTOGRAM():
+  - NOW should not have a default ... [BEFORE: the default behaviour was as COVER/FLAT/SUMMIT/HISTOGRAM(1,ANY)]
+
+

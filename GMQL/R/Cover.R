@@ -37,6 +37,7 @@ histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data
 }
 
 #' GMQL Operation: SUMMIT
+#'
 #' returns regions that start from a position
 #' where the number of intersecting regions is not increasing afterwards and stops
 #' at a position where either the number of intersecting regions decreases,

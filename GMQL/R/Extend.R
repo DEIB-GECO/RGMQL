@@ -1,12 +1,15 @@
 #' GMQL Operation: EXTEND
 #'
-#' It generates new metadata attributes as result of aggregate functions applied to region attributes;
+#' It generates new metadata attributes as result of aggregate functions applied to sample region attributes
+#' and adds them to the existing metadata of the sample
 #' aggregate functions are applied sample by sample.
 #'
 #'
 #' @param metadata a list of element key = value. value is an object of class OPERATOR.
-#' The functions aggregate available for extend function are: MIN,MAX,SUM,BAG,AVG,COUNT
-#' every operator accept a string value
+#' The functions aggregate available for extend function are: MIN,MAX,SUM,BAG,AVG,COUNT.
+#' Every operator accept a string value. only COUNT cannot have a value
+#' The key of list is mandatory; if all missed we create that based on function you choose
+#'
 #'
 #' @param input_data url-like "string" pointer returned from GMQL function
 #' @examples

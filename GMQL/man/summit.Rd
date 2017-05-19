@@ -2,16 +2,11 @@
 % Please edit documentation in R/Cover.R
 \name{summit}
 \alias{summit}
-\title{GMQL Operation: SUMMIT
-returns regions that start from a position
-where the number of intersecting regions is not increasing afterwards and stops
-at a position where either the number of intersecting regions decreases,
-or it violates the max accumulation index).}
+\title{GMQL Operation: SUMMIT}
 \usage{
 summit(minAcc, maxAcc, groupBy = NULL, aggregates = NULL, input_data)
 }
 \description{
-GMQL Operation: SUMMIT
 returns regions that start from a position
 where the number of intersecting regions is not increasing afterwards and stops
 at a position where either the number of intersecting regions decreases,

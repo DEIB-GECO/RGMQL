@@ -1,11 +1,17 @@
+#' Create GrangesList from dataset GMQL in GTF format file
 #'
 #'
-#'create GrangesList from sample in GTF format file
 #'
 #'
-GMQLtoGRangesList.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
+#' @param datasetName dataset folder path
+#'
+#' @examples
+#' path <- "/..../..../..../DATA_SET_VAR_GTF"
+#' grl <- importGMQL.gtf(path)
+#'
+importGMQL.gtf <- function(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GTF")
 {
-  datasetName <- paste0("/Users/simone/Downloads/",datasetName)
+  datasetName <- paste0(datasetName,"/files")
 
   if(!dir.exists(datasetName))
     stop("Directory does not exists")
@@ -27,7 +33,7 @@ GMQLtoGRangesList.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
   meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = T)
   if(length(meta) != 0)
   {
-    meta_list <- lapply(meta, add_metadata)
+    meta_list <- lapply(meta, .add_metadata)
     names(meta_list) <- name_samples
   }
   else
@@ -37,14 +43,21 @@ GMQLtoGRangesList.gtf <- function(datasetName = "DATA_SET_VAR_GTF/files")
   return(gRange_list)
 }
 
+
+#' Create GrangesList from dataset GMQL in GDM (delimited / tabulated) format file
 #'
 #'
-#'create GrangesList from sample in GDM (delimited / tabulated) format file
 #'
 #'
-GMQLtoGRangesList.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
+#' @param datasetName dataset folder path
+#'
+#' @examples
+#' path <- "/..../..../..../DATA_SET_VAR_GDM"
+#' grl <- importGMQL.gdm(path)
+#'
+importGMQL.gdm <- function(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GDM")
 {
-  datasetName <- paste0("/Users/simone/Downloads/",datasetName)
+  datasetName <- paste0(datasetName,"/files")
 
   if(!dir.exists(datasetName))
     stop("Directory does not exists")
@@ -74,7 +87,7 @@ GMQLtoGRangesList.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
   meta <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = T)
   if(length(meta) != 0)
   {
-    meta_list <- lapply(meta, add_metadata)
+    meta_list <- lapply(meta, .add_metadata)
     names(meta_list) <- name_samples
   }
   else
@@ -85,7 +98,8 @@ GMQLtoGRangesList.gdm <- function(datasetName = "DATA_SET_VAR_GDM/files")
 }
 
 
-add_metadata <- function(files)
+#move to internals
+.add_metadata <- function(files)
 {
   x <- scan(files, what="", sep="\n")
   y <- strsplit(x, "\t")

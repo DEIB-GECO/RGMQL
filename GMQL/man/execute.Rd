@@ -7,9 +7,18 @@
 execute()
 }
 \description{
-execute GMQL query
+execute GMQL query.
+The function works only after invoking at least one materialize
 }
 \examples{
+
+startGMQL()
+r = read(path)
+r2 = read(path2)
+s = select(input_data = r)
+m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
+materialize(input_data = m, dir_out = "/.../foldername")
+materialize(s,"/.../foldername")
 execute()
 
 }

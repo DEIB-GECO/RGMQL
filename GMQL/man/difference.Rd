@@ -7,28 +7,33 @@
 difference(joinBy = NULL, left_input_data, right_input_data)
 }
 \arguments{
-\item{joinBy}{a vector of metadata}
+\item{joinBy}{list of CONDITION object using metadata as value. The CONDITION available are
+EXACT,FULLNAME,DEFAULT. Every condition accept a string value.}
 
 \item{left_input_data}{string pointer taken from GMQL function}
 
 \item{right_input_data}{string pointer taken from GMQL function}
 }
 \description{
-This operation produces a sample in the result for each sample of the first operand S1,
-with identical identifier and metadata. It considers all the regions of the second operand,
-that we denote as negative regions; for each sample s1 of S1, it includes in the corresponding
-result sample those regions which do not intersect with any negative region.
-When the JOINBY clause is present, for each sample s1 of the first dataset S1
-we consider as negative regions only the regions of the samples s2 of S2 that satisfy the join condition.
-Syntactically, the clause consists of a list of attribute names,
-which are homonyms from the schemas of S1 and of S2;
-the strings LEFT or RIGHT that may be present as prefixes of attribute names
-as result of binary operators are not considered for detecting homonyms.
-We formally define a simple equi-join predicate ai == aj ,
-but the generalization to conjunctions of simple predicates is straightforward.
-The predicate is true for given samples s1 and s2 iff the two attributes share at least one value,
-e.g.: p(ai,aj) ⇐⇒ ∃ (ai,vi) ∈ M1,(aj,vj) ∈ M2 : vi = vj The operation:
+produces one sample in the result for each sample of the left operand,
+by keeping the same metadata of the left operand sample and only those regions
+(with their schema and values) of the left operand sample which do not intersect with any region
+in the right operand sample.
+The optional joinby clause is used to extract a subset of couples
+from the cartesian product of two dataset Dleft x Dright
+on which to apply the DIFFERENCE operator:
+only those samples that have the same value for each attribute
+are considered when performing the difference.
 }
 \examples{
 
+\dontrun{
+startGMQL()
+path = /.../dataset_name
+r = read(path)
+c = cover(2,3,input_data = r)
+s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
+d = difference(left_input_data = r, right_input_data = c)
+d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
+}
 }

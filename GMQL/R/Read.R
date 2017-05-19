@@ -1,8 +1,9 @@
 #' start GMQL Server
 #'
-#' Set and run GMQL server for executing GMQl query
+#' Set and run GMQL server for executing GMQL query
 #'
-#'
+#' @examples
+#' startGMQL()
 
 startGMQL <- function()
 {
@@ -21,6 +22,7 @@ startGMQL <- function()
 #' @param DatasetPathFolder folder path for GMQL dataset
 #' @return url-like string "pointer" to dataset
 #' @examples
+#'
 #' startGMQL()
 #' path = /.../dataset_name
 #' r = read(path)
@@ -62,5 +64,5 @@ read.files <- function(DatasetPathFolder)
 
 stopGMQL <- function()
 {
-  close(scalaCompiler)
+
 }

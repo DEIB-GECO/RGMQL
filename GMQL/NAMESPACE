@@ -1,4 +1,4 @@
-exportPattern("^[[:alpha:]]+")
+exportPattern("^[^\\.]")
 #' Class definitions need to be imported, just like functions, generics, and methods.
 #' So in the NAMESPACE file say
 #' importClassesFrom("DESeq2", "DESeqDataSet")
