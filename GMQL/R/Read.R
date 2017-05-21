@@ -16,7 +16,7 @@ startGMQL <- function()
 
 #' GMQL Function: READ
 #'
-#' Read a GMQL dataset from disk
+#' Read a GMQL dataset from disk saving in Scala memory that can be referenced in R
 #'
 #'
 #' @param DatasetPathFolder folder path for GMQL dataset

@@ -7,23 +7,31 @@
 extend(metadata = NULL, input_data)
 }
 \arguments{
-\item{metadata}{a list of element key = value. value is an object of class OPERATOR.
-The functions aggregate available for extend function are: MIN,MAX,SUM,BAG,AVG,COUNT.
-Every operator accept a string value. only COUNT cannot have a value
-The key of list is mandatory; if all missed we create that based on function you choose}
+\item{metadata}{a list of element in the form key = 'function_aggregate'.
+'function_aggregate' is an object of class OPERATOR
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+Every operator accepts a string value, execpt for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist in schema
+Two style are allowed:
+a) list of key-value pairs: e.g. sum = SUM("pvalue")
+b) list of values: e.g. SUM("pvalue")
+"mixed syntax" is not allowed}
 
-\item{input_data}{url-like "string" pointer returned from GMQL function}
+\item{input_data}{"url-like" string returned from GMQL function}
 }
 \description{
 It generates new metadata attributes as result of aggregate functions applied to sample region attributes
-and adds them to the existing metadata of the sample
-aggregate functions are applied sample by sample.
+and adds them to the existing metadata attributes of the sample.
+Aggregate functions are applied sample by sample.
 }
 \examples{
 
 startGMQL()
-path = /.../dataset_name
+path = "/path_to_your_folder/your_dataset_name"
 r = read(path)
-e = extend(somma = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
+e = extend(sum = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
+
+}
+\seealso{
 
 }

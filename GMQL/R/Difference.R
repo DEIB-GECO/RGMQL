@@ -1,6 +1,6 @@
 #' GMQL Operation: DIFFERENCE
 #'
-#' produces one sample in the result for each sample of the left operand,
+#' It produces one sample in the result for each sample of the left operand,
 #' by keeping the same metadata of the left operand sample and only those regions
 #' (with their schema and values) of the left operand sample which do not intersect with any region
 #' in the right operand sample.
@@ -11,13 +11,13 @@
 #' are considered when performing the difference.
 #'
 #'
-#' @param joinBy list of CONDITION object using metadata as value. The CONDITION available are
-#' EXACT,FULLNAME,DEFAULT. Every condition accept a string value.
-#' @param right_input_data string pointer taken from GMQL function
-#' @param left_input_data string pointer taken from GMQL function
+#' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in joinBy
+#' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
+#' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
+#' @param right_input_data "url-like" string taken from GMQL function
+#' @param left_input_data "url-like" string taken from GMQL function
 #' @examples
 #'
-#' \dontrun{
 #' startGMQL()
 #' path = /.../dataset_name
 #' r = read(path)
@@ -25,7 +25,7 @@
 #' s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
 #' d = difference(left_input_data = r, right_input_data = c)
 #' d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
-#' }
+#'
 difference <- function(joinBy = NULL,left_input_data,right_input_data)
 {
 

@@ -8,34 +8,44 @@ order(metadata_order = NULL, mtop = 0, mtopg = 0, regions_order = NULL,
   rtop = 0, rtopg = 0, input_data)
 }
 \arguments{
-\item{metadata_order}{list of ORDER object. the possbililty are ASC or DESC,
-every order class accept one string}
+\item{metadata_order}{list of ORDER objects where every object contains the name of metadata
+The ORDER's available are: ASC, DESC.
+Every condition accepts only one string value. (e.g. ASC("cell_type") )}
 
-\item{mtop}{0 is default meand that we not use it}
+\item{mtop}{integer value specifying the first k samples.
+default is 0 that means every sample must be considered}
 
-\item{mtopg}{0 is default meand that we not use it}
+\item{mtopg}{integer value specifying the first j samples in each group.
+default is 0 that means every sample must be considered}
 
-\item{regions_order}{list of ORDER object. the possbililty are ASC or DESC,
-every order class accept one string}
+\item{regions_order}{list of ORDER objects where every object contains the name of region schema value
+The ORDER's available are: ASC, DESC.
+Every condition accepts only one string value. (e.g. DESC("pvalue") )}
 
-\item{rtop}{0 is default meand that we not use it}
+\item{rtop}{integer value specifying the first m samples in each group.
+default is 0 that means every sample must be considered}
 
-\item{rtopg}{0 is default meand that we not use it}
+\item{rtopg}{integer value specifying the first i samples in each group.
+default is 0 that means every sample must be considered}
 
-\item{input_data}{url-like "string" pointer taken from GMQL function}
+\item{input_data}{"url-like" string taken from GMQL function}
 }
 \description{
-Used to orders either samples, sample regions or both of them
-according to a set of metadata and/or region attributes, and/or region coordinates
-Order is ascending and / or descending.
-The number of samples and their regions in the output is as in the input dataset,
-but a new ordering metadata and/or region attribute is added with the sample or region ordering value,
-respectively.
+It is used to order either samples or sample regions or both,
+according to a set of metadata and/or region attributes, and/or region coordinates.
+Order can be specified as ascending / descending for every attribute
+The number of samples and their regions remain the same (unless mtop/rtop parameters specified)
+but a new ordering metadata and/or region attribute is added.
 Sorted samples or regions have a new attribute "order", added to either metadata, or regions,
-or both of them; the value of order reflects the result of the sorting.
-The input mtop = k extracts the first k samples or regions, the clause mtopg = k implicitly
-considers the grouping by identical values of the first \dontrun{n − 1} ordering attributes
+or both of them as specified in input
+The input mtop = k and rtop = m extracts the first k samples and m regions respectively,
+the clause mtopg = k and rtopg = m performs grouping operation,
+grouping by identical values of ordering attributes
 and then selects the first k samples or regions of each group
+}
+\details{
+mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
+only the first element will be used
 }
 \examples{
 

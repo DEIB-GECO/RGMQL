@@ -1,25 +1,18 @@
-
 #' GMQL Operation: COVER
 #'
-#' responds to the need of computing properties that reflect region’s intersections,
-#' the operation with no grouping produces a single output sample,
-#' and all the metadata attributes of the contributing input samples in result dataset
-#' are assigned to the resulting single sample in input dataset
-#' Regions of the result sample are built from the regions of samples in input dataset
-#' according to the following condition:
+#' it takes as input a dataset and returns another dataset (with a single sample, if no groupby option is specified)
+#' by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
+#' The attributes of the output regions are the same as input_dataset:
+#' if aggregate functions are specified, new attributes with aggregate values over schema region values
+#' Output metadata are the union of the input ones, plus the metadata attributes JaccardIntersect and JaccardResult,
+#' representing global Jaccard Indexes for the considered dataset,
+#' computed as the correspondent region Jaccard Indexes but on the whole sample regions.
+#' If groupby clause is specified, the input samples are partitioned in groups,
+#' each with distinct values of the grouping metadata attributes, and the COVER operation is separately
+#' applied to each group, yielding to one sample in the result for each group.
+#' Input samples that do not satisfy the groupby condition are disregarded.
 #'
-#' Each resulting region r in input dataset is the contiguous intersection of at least minAcc
-#' and at most maxAcc contributing regions in the samples of result dataset;
-#' minAcc and maxAcc are called accumulation indexes.
 #'
-#' Resulting regions may have new attributes, calculated by means of aggregate expressions over
-#' the attributes of the contributing regions.
-#' Jaccard Indexes are standard measures of similarity of the contributing regions,
-#' added as default region attributes.
-#' with grouping define instead, the samples are partitioned by groups,
-#' each with distinct values of grouping metadata attributes (i.e., homonym attributes in the operand schemas)
-#' and the cover operation is separately applied to each group,
-#' yielding to one sample in the result for each group
 #'
 cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 {

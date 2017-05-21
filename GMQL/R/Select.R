@@ -1,22 +1,24 @@
 #' GMQL Operation: SELECT
 #'
-#' Extract a subset of samples from the input dataset.
-#' It returns all the samples which satisfy the predicate on metadata
-#' and / or returns those regions which satisfy the predicate on regions.
-#' Also semijoin clause are used to further select samples;
-#' When semijoin is defined it extract,
-#' based on the existence of certain metadata attributes defined in semijoin clause,
-#' those sample that are associated with at least one sample in an semijoin dataset
+#' It extracts a subset of samples from the input dataset.
+#' It returns all the samples satisfying the predicate on metadata.
+#' If regions are specified, returns regions satisfying the predicate on regions.
+#' If semijoin clauses are specified they are applied, too.
+#' When semijoin is defined, it extracts those samples containing all metadata attribute defined in semijoin clause
+#' with at least one metadata value in common with semi join dataset
+#' If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
+#'
 #'
 #' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
 #' @param region_predicate string predicate made up by logical oepration: AND,OR,NOT on schema region values
-#' @param semijoin list of CONDITION object using metadata as value.
-#' The CONDITION available are: EXACT,FULLNAME,DEFAULT.
-#' Every condition accept a string value.
-#' @param semi_join_dataset url-like "string" pointer taken from GMQL function used in semijoin
-#' @param input_data url-like "string" pointer taken from GMQL function
+#' @param semijoin list of CONDITION objects where every object contains the name of metadata to be used in semijoin
+#' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
+#' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
+#' @param semi_join_dataset "url-like" string taken from GMQL function used in semijoin
+#' @param input_data "url-like" string taken from GMQL function
 #'
 #' @seealso  \code{\link{EXACT}} \code{\link{FULLNAME}} \code{\link{DEFAULT}}
+#' @seealso  \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #' startGMQL()

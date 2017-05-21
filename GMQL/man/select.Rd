@@ -8,25 +8,26 @@ select(predicate = NULL, region_predicate = NULL, semi_join = NULL,
   semi_join_dataset = NULL, input_data)
 }
 \arguments{
-\item{predicate}{string predicate made up by logical oepration: AND,OR,NOT on metadata values}
+\item{predicate}{string predicate made up by logical oepration: AND,OR,NOT on metadata attribute}
 
 \item{region_predicate}{string predicate made up by logical oepration: AND,OR,NOT on schema region values}
 
-\item{semi_join_dataset}{url-like "string" pointer taken from GMQL function used in semijoin}
+\item{semi_join_dataset}{"url-like" string taken from GMQL function used in semijoin}
 
-\item{input_data}{url-like "string" pointer taken from GMQL function}
+\item{input_data}{"url-like" string taken from GMQL function}
 
-\item{semijoin}{list of CONDITION object using metadata as value. The CONDITION available are
-EXACT,FULLNAME,DEFAULT. Every condition accept a string value.}
+\item{semijoin}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin
+The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
+Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
 }
 \description{
-Extract a subset of samples from the input dataset.
-It returns all the samples which satisfy the predicate on metadata
-and / or returns those regions which satisfy the predicate on regions.
-Also semijoin clause are used to further select samples;
-When semijoin is defined it extract,
-based on the existence of certain metadata attributes defined in semijoin clause,
-those sample that are associated with at least one sample in an semijoin dataset
+It extracts a subset of samples from the input dataset.
+It returns all the samples satisfying the predicate on metadata.
+If regions are specified, returns regions satisfying the predicate on regions.
+If semijoin clauses are specified they are applied, too.
+When semijoin is defined, it extracts those samples containing all metadata attribute defined in semijoin clause
+with at least one metadata value in common with semi join dataset
+If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 }
 \examples{
 startGMQL()
@@ -40,4 +41,9 @@ s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
 semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
 
 
+}
+\seealso{
+\code{\link{EXACT}} \code{\link{FULLNAME}} \code{\link{DEFAULT}}
+
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

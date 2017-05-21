@@ -25,16 +25,15 @@ execute <- function()
 
 #' GMQL Operation: MATERIALIZE
 #'
-#' It saved the content of a dataset,whose name can be specified,
-#' that contains samples metadata and samples regions.
-#' To preserve the content of any dataset generated during a GMQL query,
-#' the dataset must be materialized.
-#' Any dataset can be materialized, however the operation is time expensive;
-#' for best performance, materialize the relevant data only.
+#' It saves the contents of a dataset that contains samples metadata and samples regions.
+#' It is normally used to persist the contents of any dataset generated during a GMQL query.
+#' Any dataset can be materialized, but the operation can be very time-consuming.
+#' For best performance, materialize the relevant data only.
 #'
 #'
-#' @param input_data string pointer taken from GMQL function
-#' @param dir_out out path folder for default is working directory
+#' @param input_data "url-like" string taken from GMQL function
+#' @param dir_out destination folder path.
+#' by default the working directory is set by R environment
 #' @examples
 #'
 #' startGMQL()
@@ -45,7 +44,7 @@ execute <- function()
 #' materialize(input_data = m, dir_out = "/.../foldername")
 #' materialize(s,"/.../foldername")
 #'
-materialize <- function(input_data, dir_out)
+materialize <- function(input_data, dir_out = getwd())
 {
   out <- frappeR$materialize(input_data,dir_out)
   if(grepl("No",out,ignore.case = T))

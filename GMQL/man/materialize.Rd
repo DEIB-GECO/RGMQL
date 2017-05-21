@@ -4,20 +4,19 @@
 \alias{materialize}
 \title{GMQL Operation: MATERIALIZE}
 \usage{
-materialize(input_data, dir_out)
+materialize(input_data, dir_out = getwd())
 }
 \arguments{
-\item{input_data}{string pointer taken from GMQL function}
+\item{input_data}{"url-like" string taken from GMQL function}
 
-\item{dir_out}{out path folder for default is working directory}
+\item{dir_out}{destination folder path.
+by default the working directory is set by R environment}
 }
 \description{
-It saved the content of a dataset,whose name can be specified,
-that contains samples metadata and samples regions.
-To preserve the content of any dataset generated during a GMQL query,
-the dataset must be materialized.
-Any dataset can be materialized, however the operation is time expensive;
-for best performance, materialize the relevant data only.
+It saves the contents of a dataset that contains samples metadata and samples regions.
+It is normally used to persist the contents of any dataset generated during a GMQL query.
+Any dataset can be materialized, but the operation can be very time-consuming.
+For best performance, materialize the relevant data only.
 }
 \examples{
 
