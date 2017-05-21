@@ -11,4 +11,5 @@ Set and run GMQL server for executing GMQL query
 }
 \examples{
 startGMQL()
+
 }

@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' startGMQL()
-#' path = /.../dataset_name
+#' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
 #' s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
@@ -32,21 +32,21 @@
 #' semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
 #'
 #'
-select <- function(predicate = NULL, region_predicate = NULL,semi_join = NULL,
-                   semi_join_dataset = NULL,input_data)
+select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
+                   semi_join_dataset = NULL)
 {
   if(!is.null(predicate))
     if(!is.character(predicate))
-      stop("prdicate must be a string predicate")
+      stop("predicate must be a single string")
 
   if(!is.null(region_predicate))
     if(!is.character(region_predicate))
-      stop("region must be a string predicate")
+      stop("region_predicate must be a single string ")
 
-  if(is.null(semi_join) && is.null(semi_join_dataset)){
+  if(is.null(semi_join) && is.null(semi_join_dataset)) {
     #trick, if we call it like that
   }
-  else if(is.null(semi_join) || is.null(semi_join_dataset)){
+  else if(is.null(semi_join) || is.null(semi_join_dataset)) {
     warning("You did not set correctly semijoin parameters.\nAll parameters have to be set.\nSelect function will be invoked without semijoin expression")
     semi_join_dataset=NULL
     join_condition_matrix = NULL
@@ -62,7 +62,7 @@ select <- function(predicate = NULL, region_predicate = NULL,semi_join = NULL,
     }
 
     if(!is.character(semi_join_dataset))
-      stop("must be a string")
+      stop("semi_join_dataset must be a single string")
 
     join_condition_matrix <- t(sapply(semi_join, function(x) {
       new_value = as.character(x)

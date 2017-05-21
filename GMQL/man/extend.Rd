@@ -8,14 +8,16 @@ extend(metadata = NULL, input_data)
 }
 \arguments{
 \item{metadata}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of class OPERATOR
-The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
-Every operator accepts a string value, execpt for COUNT that cannot have a value.
+'function_aggregate' is an object of class META_OPERATOR
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, STD, MEDIAN, Q1, Q1, Q3.
+Every operator accepts a string value, execet for COUNT that cannot have a value.
 Argument of 'function_aggregate' must exist in schema
 Two style are allowed:
-a) list of key-value pairs: e.g. sum = SUM("pvalue")
-b) list of values: e.g. SUM("pvalue")
-"mixed syntax" is not allowed}
+\itemize{
+\item list of key-value pairs: e.g. sum = SUM("pvalue")
+\item list of values: e.g. SUM("pvalue")
+}
+"mixed style" is not allowed}
 
 \item{input_data}{"url-like" string returned from GMQL function}
 }
@@ -26,12 +28,15 @@ Aggregate functions are applied sample by sample.
 }
 \examples{
 
+\dontrun{
 startGMQL()
-path = "/path_to_your_folder/your_dataset_name"
+path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 e = extend(sum = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
-
+}
 }
 \seealso{
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 
+\code{\link{META_OPERATOR}}
 }

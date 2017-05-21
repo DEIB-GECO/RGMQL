@@ -13,7 +13,7 @@ read(DatasetPathFolder)
 url-like string "pointer" to dataset
 }
 \description{
-Read a GMQL dataset from disk
+Read a GMQL dataset from disk saving in Scala memory that can be referenced in R
 }
 \examples{
 

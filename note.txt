@@ -1,18 +1,18 @@
 NOTE:
 
-UNION cosa fare dei prefissi? metto “right” e “left” come default?
-come li gestisco coi path?
-
 se errore di cartella già esistente —> spark si disattiva
 
 errore nell’esecuzione di dataset con sample in formato GTF
 
 ———————————
 
-SELECT: manca check valore usate nel predicato region: se presente nello schema,
-	in R controllare il vettore semi_join con c[!c %in% "" & duplicated(c)]
+SELECT: manca controllo sulle regioni nel predicato (controllare parser)
 
 PROJECT: 
+
+GROUP: non implementata
+
+UNION: inserito left e right come prefisso, no il dataset
 
 
 
@@ -20,6 +20,6 @@ add output GDm or GTF
 
 add parser to read
 
-iddm stazione Grangte e Grangeslist
+idem funzione Grangte e Grangeslist
 
 TFAmr come fare?

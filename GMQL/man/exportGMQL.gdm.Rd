@@ -2,15 +2,37 @@
 % Please edit documentation in R/GRangesToGMQL.R
 \name{exportGMQL.gdm}
 \alias{exportGMQL.gdm}
-\title{Create GMQL dataset from Granges or GrangesList}
+\title{Create GMQL dataset from GrangesList}
 \usage{
-exportGMQL.gdm(..., dir_out)
+exportGMQL.gdm(samples, dir_out)
 }
 \arguments{
-\item{...}{set of Granges or a single GrangesList}
+\item{samples}{GrangesList}
 
 \item{dir_out}{folder path where create a folder and write all the sample files}
 }
 \description{
-Create GMQL dataset from Granges or GrangesList
+It create Gmql dataset from GRangesList
+All sample are in GDM (tab-separated values) file format
+}
+\details{
+The GMQL dataset is made up by two differet file type
+\itemize{
+\item{metadata files: contains metadata associated to corrisponding sample}
+\item{region files: contains many chromosome regions }
+\item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+}
+regions sample file and metadata file are associated through file name:
+for example S_0001.gdm for regions file and S_0001.gdm.meta for its metadata
+}
+\examples{
+
+\dontrun{
+g = Granges()
+g1 = Granges()
+grl = GRangesList(g,g1)
+path = "<path_folder_output>"
+exportGMQL.gdm(grl,path)
+}
+
 }

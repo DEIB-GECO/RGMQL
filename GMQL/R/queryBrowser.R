@@ -1,10 +1,7 @@
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
-#' @param url server address
 #'
 
 showQueries <- function(url)
@@ -25,14 +22,9 @@ showQueries <- function(url)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
-#' @param queryName query name
-#' @param url server address
-#' @param queryTxt query text
 
 
 # TODO: testo preso anche da file?

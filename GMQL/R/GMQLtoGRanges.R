@@ -1,15 +1,21 @@
-#' Create GrangesList from dataset GMQL in GTF format file
+#' Create GRangesList from GMQL Dataset
 #'
+#' It create a GrangesList from GMQL samples in dataset
+#' It reads only sample files in GTF format
 #'
+#' @param datasetName GMQL dataset folder path
 #'
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
 #'
-#' @param datasetName dataset folder path
 #'
 #' @examples
-#' path <- "/..../..../..../DATA_SET_VAR_GTF"
-#' grl <- importGMQL.gtf(path)
 #'
-importGMQL.gtf <- function(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GTF")
+#' \dontrun{
+#' path = "<path_folder_input>"
+#' grl = importGMQL.gtf(path)
+#' }
+#'
+importGMQL.gtf <- function(datasetName)
 {
   datasetName <- paste0(datasetName,"/files")
 
@@ -47,15 +53,25 @@ importGMQL.gtf <- function(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_G
 #' Create GrangesList from dataset GMQL in GDM (delimited / tabulated) format file
 #'
 #'
+#' It create a GrangesList from GMQL samples in dataset
+#' It reads only sample files in GDM format
 #'
 #'
-#' @param datasetName dataset folder path
+#'
+#' @param datasetName GMQL dataset folder path
+#'
+#'
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
+#'
 #'
 #' @examples
-#' path <- "/..../..../..../DATA_SET_VAR_GDM"
-#' grl <- importGMQL.gdm(path)
 #'
-importGMQL.gdm <- function(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GDM")
+#' \dontrun{
+#' path = "<path_folder_input>"
+#' grl = importGMQL.gdm(path)
+#' }
+#'
+importGMQL.gdm <- function(datasetName)
 {
   datasetName <- paste0(datasetName,"/files")
 

@@ -4,29 +4,35 @@
 \alias{merge}
 \title{GMQL Operation: MERGE}
 \usage{
-merge(groupBy = NULL, input_data)
+merge(input_data, groupBy = NULL)
 }
 \arguments{
-\item{input_data}{url-like string "pointer" taken from GMQL function}
+\item{input_data}{"url-like" string taken from GMQL function}
 
-\item{metadata}{a vector of metadata as string}
+\item{groupBy}{a vector of strings specifying grouping criteria}
 }
 \description{
-It builds a dataset consisting of a single sample having as regions
-all the regions of the input data and as metadata the union of all
-the attribute-values of the input samples.
-A groupby clause can be specified on metadata:the samples are then partitioned in groups,
-each with a distinct value of the grouping metadata attributes, and the operation is separately
-applied to each group, yielding to one sample in the result for each group.
-Samples without the grouping metadata attributes are disregarded.
+It builds a dataset consisting of a single sample having as many regions
+as the numebr of regions of the input data and as many metadata as the union of
+the 'attribute-value' tuples of the input samples.
+A groupby clause can be specified on metadata: the samples are then partitioned in groups,
+each with a distinct value of the grouping metadata attributes.
+The operation is separately applied to each group, yielding one sample in the result for each group.
+Samples whose names are not present in the grouping metadata parameter are disregarded.
 }
 \examples{
 
+\dontrun{
 startGMQL()
+path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
-m = merge(c("antibody_targer","cell_karyotype"),s)
-m = merge(input_data = s)
-
+m1 = merge(s,"antibody_targer")
+m2 = merge(input_data = s)
+m3 = merge(s)
+}
+}
+\seealso{
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

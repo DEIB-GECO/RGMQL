@@ -12,16 +12,20 @@
 #' @param input_data "url-like" string taken from GMQL function
 #' @param groupBy a vector of strings specifying grouping criteria
 #'
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
 #' @examples
 #'
+#' \dontrun{
 #' startGMQL()
+#' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
-#' m = merge(s,c("antibody_targer","cell_karyotype"))
-#' m = merge(input_data = s)
-#' m = merge(s)
-#'
+#' m1 = merge(s,"antibody_targer")
+#' m2 = merge(input_data = s)
+#' m3 = merge(s)
+#' }
 merge <- function(input_data, groupBy = NULL)
 {
   if(!is.character(groupBy) && !is.null(groupBy))

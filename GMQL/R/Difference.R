@@ -11,11 +11,14 @@
 #' are considered when performing the difference.
 #'
 #'
+#' @param right_input_data "url-like" string taken from GMQL function
+#' @param left_input_data "url-like" string taken from GMQL function
 #' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in joinBy
 #' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
-#' @param right_input_data "url-like" string taken from GMQL function
-#' @param left_input_data "url-like" string taken from GMQL function
+#'
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
 #' @examples
 #'
 #' startGMQL()
@@ -26,9 +29,8 @@
 #' d = difference(left_input_data = r, right_input_data = c)
 #' d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
 #'
-difference <- function(joinBy = NULL,left_input_data,right_input_data)
+difference <- function(left_input_data, right_input_data, joinBy = NULL)
 {
-
   if(!is.null(joinBy))
   {
     if(!is.list(joinBy))

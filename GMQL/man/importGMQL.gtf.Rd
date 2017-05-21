@@ -13,7 +13,5 @@ importGMQL.gtf(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GTF")
 Create GrangesList from dataset GMQL in GTF format file
 }
 \examples{
-path <- "/..../..../..../DATA_SET_VAR_GTF"
-grl <- importGMQL.gtf(path)
 
 }

@@ -1,13 +1,9 @@
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
 #'
-#' @param username user name
-#' @param password user password
 
 showJobs <- function(url, dataset_name)
 {
@@ -24,14 +20,10 @@ showJobs <- function(url, dataset_name)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
 #'
-#' @param username user name
-#' @param password user password
 
 showJobLog <- function(url,job_id)
 {
@@ -48,8 +40,6 @@ showJobLog <- function(url,job_id)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -98,15 +88,10 @@ traceJob <- function(url, job_id)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
-#'
-#' si predilige il testo della query
 #'
 #'
-#' @param username user name
-#' @param password user password
-#' @return authentication token
+#'
+#'
 
 
 
@@ -132,15 +117,11 @@ runQuery <- function(url,fileName,query,output_gtf = T)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
-#'
-#' si predilige il testo della query
 #'
 #'
-#' @param username user name
-#' @param password user password
-#' @return authentication token
+#'
+#'
+#'
 
 
 compileQuery <- function(url ,query)

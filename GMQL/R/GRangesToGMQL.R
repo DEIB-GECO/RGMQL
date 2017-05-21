@@ -1,32 +1,81 @@
+#' Create GMQL dataset from GrangesList
 #'
-#' Create GMQL dataset from Granges or GrangesList
+#' It create Gmql dataset from GRangesList
+#' All sample are in GDM (tab-separated values) file format
 #'
 #'
+#' @param samples GrangesList
+#' @param dir_out folder path where create a folder and write all the sample files
 #'
-#'@param ... set of Granges or a single GrangesList
-#'@param dir_out folder path where create a folder and write all the sample files
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gtf} }
 #'
-exportGMQL.gdm <- function(..., dir_out)
+#'
+#' @details
+#' The GMQL dataset is made up by two differet file type
+#' \itemize{
+#' \item{metadata files: contains metadata associated to corrisponding sample}
+#' \item{region files: contains many chromosome regions }
+#' \item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+#' }
+#' regions sample file and metadata file are associated through file name:
+#' for example S_0001.gdm for regions file and S_0001.gdm.meta for its metadata
+#'
+#'
+#' @examples
+#'
+#' \dontrun{
+#' g = Granges()
+#' g1 = Granges()
+#' grl = GRangesList(g,g1)
+#' path = "<path_folder_output>"
+#' exportGMQL.gdm(grl,path)
+#' }
+#'
+exportGMQL.gdm <- function(samples, dir_out)
 {
-  .exportGMQL(...,dir_out,to_GTF = F)
+  .exportGMQL(samples,dir_out,to_GTF = F)
 }
 
+#' Create GMQL dataset from GrangesList
 #'
-#' Create GMQL dataset from Granges or GrangesList
+#' It create Gmql dataset from GRangesList
+#' All sample are in GTF file format
 #'
 #'
+#' @param samples GrangesList
+#' @param dir_out folder path where create a folder and write all the sample files
 #'
-#'@param ... set of Granges or a single GrangesList
-#'@param dir_out folder path where create a folder and write all the sample files
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
 #'
-exportGMQL.gtf <- function(..., dir_out)
+#' @details
+#' The GMQL dataset is made up by two differet file type
+#' \itemize{
+#' \item{metadata files: contains metadata associated to corrisponding sample}
+#' \item{region files: contains many chromosome regions }
+#' \item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+#' }
+#' regions sample file and metadata file are associated through file name:
+#' for example S_0001.gtf for regions file and S_0001.gtf.meta for its metadata
+#'
+#'
+#' @examples
+#' \dontrun{
+#' g = Granges()
+#' g1 = Granges()
+#' grl = GRangesList(g,g1)
+#' path = "<path_folder_output>"
+#' exportGMQL.gtf(grl,path)
+#' }
+#'
+#'
+exportGMQL.gtf <- function(samples, dir_out)
 {
-  .exportGMQL(...,dir_out,to_GTF = T)
+  .exportGMQL(samples,dir_out,to_GTF = T)
 }
 
 
 
-.exportGMQL <- function(..., dir_out,to_GTF)
+.exportGMQL <- function(samples, dir_out,to_GTF)
 {
   if(dir.exists(dir_out))
     stop("Directory already exists")
@@ -63,7 +112,7 @@ exportGMQL.gtf <- function(..., dir_out)
       .write_metadata(meta_list,sample_name)
     })
   }
-  .write_schema(col_names,files_sub_dir)
+  #.write_schema(col_names,files_sub_dir)
   c = .counter(0)
 }
 

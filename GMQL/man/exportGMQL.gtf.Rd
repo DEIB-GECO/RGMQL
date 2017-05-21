@@ -2,15 +2,37 @@
 % Please edit documentation in R/GRangesToGMQL.R
 \name{exportGMQL.gtf}
 \alias{exportGMQL.gtf}
-\title{Create GMQL dataset from Granges or GrangesList}
+\title{Create GMQL dataset from GrangesList}
 \usage{
-exportGMQL.gtf(..., dir_out)
+exportGMQL.gtf(samples, dir_out)
 }
 \arguments{
-\item{...}{set of Granges or a single GrangesList}
+\item{samples}{GrangesList}
 
 \item{dir_out}{folder path where create a folder and write all the sample files}
 }
 \description{
-Create GMQL dataset from Granges or GrangesList
+It create Gmql dataset from GRangesList
+All sample are in GTF file format
+}
+\details{
+The GMQL dataset is made up by two differet file type
+\itemize{
+\item{metadata files: contains metadata associated to corrisponding sample}
+\item{region files: contains many chromosome regions }
+\item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+}
+regions sample file and metadata file are associated through file name:
+for example S_0001.gtf for regions file and S_0001.gtf.meta for its metadata
+}
+\examples{
+\dontrun{
+g = Granges()
+g1 = Granges()
+grl = GRangesList(g,g1)
+path = "<path_folder_output>"
+exportGMQL.gtf(grl,path)
+}
+
+
 }

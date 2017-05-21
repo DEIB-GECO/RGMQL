@@ -4,17 +4,17 @@
 \alias{select}
 \title{GMQL Operation: SELECT}
 \usage{
-select(predicate = NULL, region_predicate = NULL, semi_join = NULL,
-  semi_join_dataset = NULL, input_data)
+select(input_data, predicate = NULL, region_predicate = NULL,
+  semi_join = NULL, semi_join_dataset = NULL)
 }
 \arguments{
+\item{input_data}{"url-like" string taken from GMQL function}
+
 \item{predicate}{string predicate made up by logical oepration: AND,OR,NOT on metadata attribute}
 
 \item{region_predicate}{string predicate made up by logical oepration: AND,OR,NOT on schema region values}
 
 \item{semi_join_dataset}{"url-like" string taken from GMQL function used in semijoin}
-
-\item{input_data}{"url-like" string taken from GMQL function}
 
 \item{semijoin}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin
 The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
@@ -31,7 +31,7 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 }
 \examples{
 startGMQL()
-path = /.../dataset_name
+path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 c = cover(2,3,input_data = r)
 s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)

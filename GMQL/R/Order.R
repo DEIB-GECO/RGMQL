@@ -32,8 +32,11 @@
 #' @details
 #' mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
 #' only the first element will be used
+#' mtop and mtopg are mutalbe exclusive, so rtop and rtopg
+#' if you specified both, only mtop (rtop) is taken
 #'
-#'
+#' @seealso  \code{\link{DESC}} \code{\link{ASC}}
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #'
@@ -50,17 +53,17 @@
 #' mtop = 5,rtopg = 1, input_data = c)
 #'
 #'
-order <- function(metadata_order = NULL, mtop = 0, mtopg = 0,
-                  regions_order = NULL,rtop = 0,rtopg = 0, input_data)
+order <- function(input_data, metadata_order = NULL, mtop = 0, mtopg = 0,
+                  regions_order = NULL,rtop = 0,rtopg = 0)
 {
   if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg))
     stop("mtop, rtop, rtopg and mtopg must be numeric")
 
   if(!is.null(metadata_order) && !is.list(metadata_order))
-    stop("metadata must be a list")
+    stop("metadata_order must be a list")
 
   if(!is.null(regions_order) && !is.list(regions_order))
-    stop("metadata must be a list")
+    stop("regions_order must be a list")
 
   if(all(sapply(metadata_order, function(x) is(x,"ORDER") )))
   {

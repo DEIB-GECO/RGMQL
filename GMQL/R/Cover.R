@@ -13,8 +13,39 @@
 #' Input samples that do not satisfy the groupby condition are disregarded.
 #'
 #'
+#' @param input_data "url-like" string taken from GMQL function
+#' @param minAcc minimum number of overlapping regions to be considered during execution
+#' Normally must be > 0, we admit value 0 and -1 as special value:
+#' \itemize{
+#' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
+#' }
+#' @param maxAcc maximum number of overlapping regions to be considered during execution
+#' \itemize{
+#' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
+#' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
+#' }
+#' @param groupBy a vector of strings specifying grouping criteria
+#' @param aggregates a list of element in the form key = 'function_aggregate'.
+#' 'function_aggregate' is an object of class OPERATOR
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+#' Every operator accepts a string value, execet for COUNT that cannot have a value.
+#' Argument of 'function_aggregate' must exist in schema
+#' Two style are allowed:
 #'
-cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{OPERATOR}}
+#'
+#'
+#' @examples
+#'
+#' \dontrun{
+#' startGMQL()
+#' path = "/<path_to_your_folder>/<your_dataset_name>"
+#' r = read(path)
+#' r2 = read(path2)
+#' c = cover(2,3,input_data = r)
+#' }
+cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
   .doVariant("COVER",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
@@ -24,7 +55,30 @@ cover <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 #' returns the non-overlapping regions contributing to the cover,
 #' each with its accumulation index value, which is assigned to the AccIndex region attribute.
 #'
-histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
+#' @param input_data "url-like" string taken from GMQL function
+#' @param minAcc minimum number of overlapping regions to be considered during execution
+#' Normally must be > 0, we admit value 0 and -1 as special value:
+#' \itemize{
+#' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
+#' }
+#' @param maxAcc maximum number of overlapping regions to be considered during execution
+#' \itemize{
+#' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
+#' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
+#' }
+#' @param groupBy a vector of strings specifying grouping criteria
+#' @param aggregates a list of element in the form key = 'function_aggregate'.
+#' 'function_aggregate' is an object of class OPERATOR
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+#' Every operator accepts a string value, execet for COUNT that cannot have a value.
+#' Argument of 'function_aggregate' must exist in schema
+#' Two style are allowed:
+#'
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{OPERATOR}}
+#'
+#'
+histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
   .doVariant("HISTOGRAM",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
@@ -36,7 +90,30 @@ histogram <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data
 #' at a position where either the number of intersecting regions decreases,
 #' or it violates the max accumulation index).
 #'
-summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
+#' @param input_data "url-like" string taken from GMQL function
+#' @param minAcc minimum number of overlapping regions to be considered during execution
+#' Normally must be > 0, we admit value 0 and -1 as special value:
+#' \itemize{
+#' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
+#' }
+#' @param maxAcc maximum number of overlapping regions to be considered during execution
+#' \itemize{
+#' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
+#' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
+#' }
+#' @param groupBy a vector of strings specifying grouping criteria
+#' @param aggregates a list of element in the form key = 'function_aggregate'.
+#' 'function_aggregate' is an object of class OPERATOR
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+#' Every operator accepts a string value, execet for COUNT that cannot have a value.
+#' Argument of 'function_aggregate' must exist in schema
+#' Two style are allowed:
+#'
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{OPERATOR}}
+#'
+#'
+summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
   .doVariant("SUMMIT",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
@@ -46,7 +123,30 @@ summit <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
 #' returns the contiguous region that starts from the first end and stops at
 #' the last end of the regions which would contribute to each region of the COVER
 #'
-flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
+#' @param input_data "url-like" string taken from GMQL function
+#' @param minAcc minimum number of overlapping regions to be considered during execution
+#' Normally must be > 0, we admit value 0 and -1 as special value:
+#' \itemize{
+#' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
+#' }
+#' @param maxAcc maximum number of overlapping regions to be considered during execution
+#' \itemize{
+#' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
+#' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
+#' }
+#' @param groupBy a vector of strings specifying grouping criteria
+#' @param aggregates a list of element in the form key = 'function_aggregate'.
+#' 'function_aggregate' is an object of class OPERATOR
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+#' Every operator accepts a string value, execet for COUNT that cannot have a value.
+#' Argument of 'function_aggregate' must exist in schema
+#' Two style are allowed:
+#'
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{OPERATOR}}
+#'
+#'
+flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
   .doVariant("FLAT",minAcc,maxAcc,groupBy,aggregates,input_data)
 }
@@ -57,7 +157,10 @@ flat <- function(minAcc,maxAcc,groupBy = NULL,aggregates = NULL, input_data)
   if(!is.numeric(minAcc) || !is.numeric(maxAcc))
     stop("minAcc and maxAcc must be numeric")
 
-  if(minAcc < -1 || maxAcc < -1)
+  if(minAcc < -1 || minAcc == 0)
+    stop("only -1 or any positive value")
+
+  if(maxAcc < -1)
     stop("only 0,-1 or any positive value")
 
   min = as.integer(minAcc)

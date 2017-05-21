@@ -4,7 +4,7 @@
 #'
 #' @examples
 #' startGMQL()
-
+#'
 startGMQL <- function()
 {
   #call rscala, create my enviroment?
@@ -43,23 +43,6 @@ read <- function(DatasetPathFolder)
   else
     out
 }
-
-
-read.files <- function(DatasetPathFolder)
-{
-  if(!is.character(DatasetPathFolder))
-    stop("input must be string")
-
-  if(!dir.exists(DatasetPathFolder))
-    stop("folder does not exist")
-
-  out <- frappeR$readDataset(DatasetPathFolder)
-  if(grepl("File",out,ignore.case = T))
-    stop(out)
-  else
-    out
-}
-
 
 
 stopGMQL <- function()

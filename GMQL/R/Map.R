@@ -14,25 +14,25 @@
 #' The clause consists of a list of metadata attribute names that must be present with equal values
 #' in both M1 and  M2
 #'
-#' @seealso
 #'
 #' @param left_input_data "url-like" string taken from GMQL function
 #' @param right_input_data "url-like" string taken from GMQL function
-#' @examples
 #'
-#' r = read(path)
-#' r2 = read(path2)
-#' c = cover(2,3,input_data = r)
-#' u = union(r2,c)
+#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
+#'
+#' @examples
+#'\dontrun{
+#'}
 #'
 
 map <- function(left_input_data, right_input_data, output, aggregates = NULL, joinBy = NULL)
 {
 
-  out<-frappeR$map(aggregates,left_input_data,right_input_data)
+  #out<-frappeR$map(aggregates,left_input_data,right_input_data)
 
-  if(grepl("No",out,ignore.case = T))
-    stop(out)
-  else
-    out
+  #if(grepl("No",out,ignore.case = T))
+  #  stop(out)
+  #else
+  #  out
 }

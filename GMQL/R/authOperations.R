@@ -8,13 +8,13 @@
 #' @param url server address
 #' @param username user name used on registration
 #' @param password password used on registration
-#' @import httr
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #' @examples
 #'
 #' \dontrun{
-#' login.GMQL(url = http://...../...)
+#' login.GMQL(url = <http_server_address>)
+#' url <- <http_server_address>)
 #' login.GMQL(url, username="pippo",password="baudo")
 #' }
 
@@ -57,19 +57,16 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #'
 #' Log out to GMQL web service
 #' After this operation you will not be able to call any services.
-#' You log in first
 #'
 #'
 #' @param url server address
-#' @import httr
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #' @examples
 #'
 #' \dontrun{
-#' login.GMQL(url = http://...../...)
+#' url <- <http_server_address>)
 #' login.GMQL(url, username="pippo",password="baudo")
-#'
 #' logout.GMQL()
 #' }
 logout.GMQL <- function(url)
@@ -90,7 +87,7 @@ logout.GMQL <- function(url)
 
 #' GMQL API web Service
 #'
-#' Register to web Service Provider
+#' Register to Web Service Provider
 #'
 #'
 #' @param url server address
@@ -98,15 +95,17 @@ logout.GMQL <- function(url)
 #' @param lastname user lastname
 #' @param mail user mail
 #' @param username user username
-#' @param password user password
+#' @param password user password, unfortunatley the password is not encrypted and not hide
 #'
-#' @import httr
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
+#'
 #' @examples
 #' \dontrun{
-#' register.GMQL(url = http://...../...)
+#' url <- <http_server_address>)
+
+#' register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")
 #' }
 
 register.GMQL <- function(url, name, lastname, mail, username, password)

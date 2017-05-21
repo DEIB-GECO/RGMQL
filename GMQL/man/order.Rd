@@ -4,10 +4,12 @@
 \alias{order}
 \title{GMQL operation: ORDER}
 \usage{
-order(metadata_order = NULL, mtop = 0, mtopg = 0, regions_order = NULL,
-  rtop = 0, rtopg = 0, input_data)
+order(input_data, metadata_order = NULL, mtop = 0, mtopg = 0,
+  regions_order = NULL, rtop = 0, rtopg = 0)
 }
 \arguments{
+\item{input_data}{"url-like" string taken from GMQL function}
+
 \item{metadata_order}{list of ORDER objects where every object contains the name of metadata
 The ORDER's available are: ASC, DESC.
 Every condition accepts only one string value. (e.g. ASC("cell_type") )}
@@ -27,8 +29,6 @@ default is 0 that means every sample must be considered}
 
 \item{rtopg}{integer value specifying the first i samples in each group.
 default is 0 that means every sample must be considered}
-
-\item{input_data}{"url-like" string taken from GMQL function}
 }
 \description{
 It is used to order either samples or sample regions or both,
@@ -46,6 +46,8 @@ and then selects the first k samples or regions of each group
 \details{
 mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
 only the first element will be used
+mtop and mtopg are mutalbe exclusive, so rtop and rtopg
+if you specified both, only mtop (rtop) is taken
 }
 \examples{
 
@@ -62,4 +64,9 @@ o = order(list(DESC(Region_Count)),regions_order = list(DESC(MutationCount),ASC(
 mtop = 5,rtopg = 1, input_data = c)
 
 
+}
+\seealso{
+\code{\link{DESC}} \code{\link{ASC}}
+
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

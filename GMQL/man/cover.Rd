@@ -4,27 +4,57 @@
 \alias{cover}
 \title{GMQL Operation: COVER}
 \usage{
-cover(minAcc, maxAcc, groupBy = NULL, aggregates = NULL, input_data)
+cover(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
+}
+\arguments{
+\item{input_data}{"url-like" string taken from GMQL function}
+
+\item{minAcc}{minimum number of overlapping regions to be considered during execution
+Normally must be > 0, we admit value 0 and -1 as special value:
+\itemize{
+\item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
+}}
+
+\item{maxAcc}{maximum number of overlapping regions to be considered during execution
+\itemize{
+\item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
+\item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
+}}
+
+\item{groupBy}{a vector of strings specifying grouping criteria}
+
+\item{aggregates}{a list of element in the form key = 'function_aggregate'.
+'function_aggregate' is an object of class OPERATOR
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+Every operator accepts a string value, execet for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist in schema
+Two style are allowed:}
 }
 \description{
-responds to the need of computing properties that reflect region’s intersections,
-the operation with no grouping produces a single output sample,
-and all the metadata attributes of the contributing input samples in result dataset
-are assigned to the resulting single sample in input dataset
-Regions of the result sample are built from the regions of samples in input dataset
-according to the following condition:
+it takes as input a dataset and returns another dataset (with a single sample, if no groupby option is specified)
+by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
+The attributes of the output regions are the same as input_dataset:
+if aggregate functions are specified, new attributes with aggregate values over schema region values
+Output metadata are the union of the input ones, plus the metadata attributes JaccardIntersect and JaccardResult,
+representing global Jaccard Indexes for the considered dataset,
+computed as the correspondent region Jaccard Indexes but on the whole sample regions.
+If groupby clause is specified, the input samples are partitioned in groups,
+each with distinct values of the grouping metadata attributes, and the COVER operation is separately
+applied to each group, yielding to one sample in the result for each group.
+Input samples that do not satisfy the groupby condition are disregarded.
 }
-\details{
-Each resulting region r in input dataset is the contiguous intersection of at least minAcc
-and at most maxAcc contributing regions in the samples of result dataset;
-minAcc and maxAcc are called accumulation indexes.
+\examples{
 
-Resulting regions may have new attributes, calculated by means of aggregate expressions over
-the attributes of the contributing regions.
-Jaccard Indexes are standard measures of similarity of the contributing regions,
-added as default region attributes.
-with grouping define instead, the samples are partitioned by groups,
-each with distinct values of grouping metadata attributes (i.e., homonym attributes in the operand schemas)
-and the cover operation is separately applied to each group,
-yielding to one sample in the result for each group
+\dontrun{
+startGMQL()
+path = "/<path_to_your_folder>/<your_dataset_name>"
+r = read(path)
+r2 = read(path2)
+c = cover(2,3,input_data = r)
+}
+}
+\seealso{
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+
+\code{\link{OPERATOR}}
 }

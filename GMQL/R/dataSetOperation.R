@@ -1,8 +1,6 @@
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -25,8 +23,6 @@ showDatasets <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -73,8 +69,6 @@ showSchemaFromDataset <- function(datasetName)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -103,8 +97,6 @@ uploadSamples <- function(url = "http://genomic.elet.polimi.it/gmql-rest/dataset
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -129,8 +121,6 @@ deleteDataset <- function(url = "http://genomic.elet.polimi.it/gmql-rest/dataset
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
@@ -150,8 +140,7 @@ downloadDataset <- function(datasetName,path = getwd())
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+
 #'
 #'
 #'
@@ -180,16 +169,16 @@ metadataFromSample <- function(url="http://genomic.elet.polimi.it/gmql-rest/data
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+#'
+#'
 #'
 #'
 
 
 
-#'start.time <- Sys.time()
-#'end.time <- Sys.time()
-#' time.taken <- end.time - start.time
+# start.time <- Sys.time()
+# end.time <- Sys.time()
+#  time.taken <- end.time - start.time
 
 regionFromSample <- function(url="http://genomic.elet.polimi.it/gmql-rest/datasets/", datasetName,sampleName)
 {
