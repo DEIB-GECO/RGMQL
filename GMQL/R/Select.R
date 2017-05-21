@@ -8,12 +8,15 @@
 #' based on the existence of certain metadata attributes defined in semijoin clause,
 #' those sample that are associated with at least one sample in an semijoin dataset
 #'
-#' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata values
+#' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
 #' @param region_predicate string predicate made up by logical oepration: AND,OR,NOT on schema region values
-#' @param semijoin list of CONDITION object using metadata as value. The CONDITION available are
-#' EXACT,FULLNAME,DEFAULT. Every condition accept a string value.
+#' @param semijoin list of CONDITION object using metadata as value.
+#' The CONDITION available are: EXACT,FULLNAME,DEFAULT.
+#' Every condition accept a string value.
 #' @param semi_join_dataset url-like "string" pointer taken from GMQL function used in semijoin
 #' @param input_data url-like "string" pointer taken from GMQL function
+#'
+#' @seealso  \code{\link{EXACT}} \code{\link{FULLNAME}} \code{\link{DEFAULT}}
 #'
 #' @examples
 #' startGMQL()
@@ -30,7 +33,6 @@
 select <- function(predicate = NULL, region_predicate = NULL,semi_join = NULL,
                    semi_join_dataset = NULL,input_data)
 {
-
   if(!is.null(predicate))
     if(!is.character(predicate))
       stop("prdicate must be a string predicate")

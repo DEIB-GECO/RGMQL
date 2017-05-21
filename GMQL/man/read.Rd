@@ -16,6 +16,7 @@ url-like string "pointer" to dataset
 Read a GMQL dataset from disk
 }
 \examples{
+
 startGMQL()
 path = /.../dataset_name
 r = read(path)

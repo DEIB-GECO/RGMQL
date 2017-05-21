@@ -1,6 +1,5 @@
 #' GMQL operation: ORDER
 #'
-#'
 #' Used to orders either samples, sample regions or both of them
 #' according to a set of metadata and/or region attributes, and/or region coordinates
 #' Order is ascending and / or descending.
@@ -10,7 +9,7 @@
 #' Sorted samples or regions have a new attribute "order", added to either metadata, or regions,
 #' or both of them; the value of order reflects the result of the sorting.
 #' The input mtop = k extracts the first k samples or regions, the clause mtopg = k implicitly
-#' considers the grouping by identical values of the first n − 1 ordering attributes
+#' considers the grouping by identical values of the first \dontrun{n − 1} ordering attributes
 #' and then selects the first k samples or regions of each group
 #'
 #'

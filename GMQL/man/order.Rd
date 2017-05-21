@@ -34,7 +34,7 @@ respectively.
 Sorted samples or regions have a new attribute "order", added to either metadata, or regions,
 or both of them; the value of order reflects the result of the sorting.
 The input mtop = k extracts the first k samples or regions, the clause mtopg = k implicitly
-considers the grouping by identical values of the first n − 1 ordering attributes
+considers the grouping by identical values of the first \dontrun{n − 1} ordering attributes
 and then selects the first k samples or regions of each group
 }
 \examples{

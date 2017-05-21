@@ -1,24 +1,24 @@
-
-
-
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+#' Log in to GMQL web service as guest or registered user
+#' trough username and password
 #'
 #'
 #'
 #' @param url server address
-#' @param username user name
-#' @param password user password
-#' @return autentication Token
+#' @param username user name used on registration
+#' @param password password used on registration
 #' @import httr
-#' @examples
-#' GMQLlogin(url = http://...../...)
-#' GMQLlogin(url, username="pippo",password="baudo")
 #'
+#' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @examples
+#'
+#' \dontrun{
+#' login.GMQL(url = http://...../...)
+#' login.GMQL(url, username="pippo",password="baudo")
+#' }
 
-GMQLlogin <- function(url,username = NULL, password = NULL)
+login.GMQL <- function(url,username = NULL, password = NULL)
 {
   as_guest <- TRUE
 
@@ -50,23 +50,29 @@ GMQLlogin <- function(url,username = NULL, password = NULL)
     authToken <<- content$authToken
     print(paste("your Token is",authToken))
   }
-
 }
 
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+#' Log out to GMQL web service
+#' After this operation you will not be able to call any services.
+#' You log in first
 #'
 #'
 #' @param url server address
 #' @import httr
-#' @examples
-#' GMQLlogin(url = http://...../...)
-#' GMQLlogin(url, username="pippo",password="baudo")
 #'
-GMQLlogout <- function(url)
+#' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @examples
+#'
+#' \dontrun{
+#' login.GMQL(url = http://...../...)
+#' login.GMQL(url, username="pippo",password="baudo")
+#'
+#' logout.GMQL()
+#' }
+logout.GMQL <- function(url)
 {
   h <- c('X-Auth-Token' = authToken)
   req <- GET(url, add_headers(h))
@@ -94,13 +100,16 @@ GMQLlogout <- function(url)
 #' @param username user username
 #' @param password user password
 #'
-#' @return autentication Token
 #' @import httr
-#' @examples
-#' GMQLregister(url = http://...../...)
 #'
+#' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#'
+#' @examples
+#' \dontrun{
+#' register.GMQL(url = http://...../...)
+#' }
 
-GMQLregister <- function(url, name, lastname, mail, username, password)
+register.GMQL <- function(url, name, lastname, mail, username, password)
 {
   info <- list('firstName'=name,
                'lastName'=lastname,
