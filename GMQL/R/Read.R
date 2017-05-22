@@ -40,6 +40,8 @@ startGMQL <- function()
 #' startGMQL()
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
+#' r = read(path,BedParser())
+#' r = read(path,RnaSeqParser())
 #' }
 #'
 read <- function(DatasetPathFolder, parser = CustomParser())
@@ -61,8 +63,3 @@ read <- function(DatasetPathFolder, parser = CustomParser())
     out
 }
 
-
-stopGMQL <- function()
-{
-
-}

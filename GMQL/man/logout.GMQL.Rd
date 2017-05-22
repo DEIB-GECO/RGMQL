@@ -11,7 +11,11 @@ logout.GMQL(url)
 }
 \description{
 Log out to GMQL web service
-After this operation you will not be able to call any services.
+After this operation
+}
+\details{
+After logout you will not be able to call any services.
+The authneticated token is removed from environment
 }
 \examples{
 

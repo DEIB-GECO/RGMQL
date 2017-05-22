@@ -17,13 +17,18 @@ login.GMQL(url, username = NULL, password = NULL)
 Log in to GMQL web service as guest or registered user
 trough username and password
 }
-\examples{
+\details{
+After login you receive an authenticated token.
+This token is saved in Global environment and used to perform the other REST call
 
 \dontrun{
 login.GMQL(url = <http_server_address>)
 url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
 }
+}
+\examples{
+
 }
 \seealso{
 \code{\link{register.GMQL}} \code{\link{logout.GMQL}}

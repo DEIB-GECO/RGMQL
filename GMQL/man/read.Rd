@@ -33,6 +33,8 @@ the parser defined without reading any XML schema
 startGMQL()
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
+r = read(path,BedParser())
+r = read(path,RnaSeqParser())
 }
 
 }

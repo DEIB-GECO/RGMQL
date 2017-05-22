@@ -9,20 +9,25 @@ register.GMQL(url, name, lastname, mail, username, password)
 \arguments{
 \item{url}{server address}
 
-\item{name}{user name}
+\item{name}{first name}
 
-\item{lastname}{user lastname}
+\item{lastname}{lastname}
 
-\item{mail}{user mail}
+\item{mail}{email}
 
-\item{username}{user username}
+\item{username}{username}
 
-\item{password}{user password, unfortunatley the password is not encrypted and not hide}
+\item{password}{password}
 }
 \description{
 Register to Web Service Provider
 }
+\details{
+After registration you receive an authenticated token.
+This token is saved in Global environment and used to perform the other REST call
+}
 \examples{
+
 \dontrun{
 url <- <http_server_address>)
 register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")

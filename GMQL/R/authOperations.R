@@ -12,6 +12,10 @@
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #' @examples
 #'
+#' @details
+#' After login you receive an authenticated token.
+#' This token is saved in Global environment and used to perform the other REST call
+#'
 #' \dontrun{
 #' login.GMQL(url = <http_server_address>)
 #' url <- <http_server_address>)
@@ -56,12 +60,17 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' GMQL API web Service
 #'
 #' Log out to GMQL web service
-#' After this operation you will not be able to call any services.
+#' After this operation
 #'
 #'
 #' @param url server address
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#'
+#' @details
+#' After logout you will not be able to call any services.
+#' The authneticated token is removed from environment
+#'
 #' @examples
 #'
 #' \dontrun{
@@ -92,20 +101,23 @@ logout.GMQL <- function(url)
 #'
 #'
 #' @param url server address
-#' @param name user name
-#' @param lastname user lastname
-#' @param mail user mail
-#' @param username user username
-#' @param password user password, unfortunatley the password is not encrypted and not hide
+#' @param name first name
+#' @param lastname lastname
+#' @param mail email
+#' @param username username
+#' @param password password
 #'
 #'
-#' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
+#' @details
+#' After registration you receive an authenticated token.
+#' This token is saved in Global environment and used to perform the other REST call
 #'
 #' @examples
+#'
 #' \dontrun{
 #' url <- <http_server_address>)
-
 #' register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")
 #' }
 

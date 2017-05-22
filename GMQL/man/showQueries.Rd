@@ -6,6 +6,28 @@
 \usage{
 showQueries(url)
 }
+\arguments{
+\item{url}{server address}
+}
+\value{
+list of queries
+}
 \description{
-GMQL API web Service
+It show all the query saved to repository
+}
+\details{
+if error occured print the content error
+}
+\examples{
+
+\dontrun{
+url <- <http_server_address>)
+login.GMQL(url, username="pippo",password="baudo")
+showQueries(url)
+logout.GMQL()
+}
+
+}
+\seealso{
+\code{\link{saveQuery}}
 }

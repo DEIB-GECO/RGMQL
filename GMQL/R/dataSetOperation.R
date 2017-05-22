@@ -17,7 +17,6 @@ showDatasets <- function(url)
     stop(content$error)
   else
   {
-   # dataSetList <- Reduce(c, content)
     return(content)
   }
 }
@@ -178,8 +177,6 @@ regionFromSample <- function(url, datasetName,sampleName)
   content <- httr::content(req, 'text',encoding = "UTF-8")
 
   #trasform text to Granges
-  region <- strsplit(content, "\n")
-  region <- strsplit(unlist(region), "\t")
 
   if(req$status_code !=200)
     stop(content$error)

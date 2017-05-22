@@ -6,6 +6,30 @@
 \usage{
 saveQuery(url, queryName, queryTxt)
 }
+\arguments{
+\item{url}{server address}
+
+\item{queryName}{name of query}
+
+\item{queryTxt}{text of GMQL queries}
+}
 \description{
-GMQL API web Service
+It save the GMQL queries to repository
+}
+\details{
+if error occured print the content error
+}
+\examples{
+
+\dontrun{
+url <- <http_server_address>)
+login.GMQL(url, username="pippo",password="baudo")
+saveQuery(url,"prova1","<query_text>")
+showQueries(url)
+logout.GMQL()
+}
+
+}
+\seealso{
+\code{\link{showQueries}}
 }

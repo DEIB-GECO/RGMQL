@@ -8,18 +8,15 @@ errore nell’esecuzione di dataset con sample in formato GTF
 
 SELECT: manca controllo sulle regioni nel predicato (controllare parser)
 
-PROJECT: 
+PROJECT: metadata update non implementata
 
 GROUP: non implementata
 
 UNION: inserito left e right come prefisso, no il dataset
 
 
+WEB SERVICE: manca regioni to Granges e upload function
 
-add output GDm or GTF
-
-add parser to read
-
-idem funzione Grangte e Grangeslist
+MATERIALIZE: dove setto formato uscita 
 
 TFAmr come fare?

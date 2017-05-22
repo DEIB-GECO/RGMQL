@@ -84,35 +84,50 @@ exportGMQL.gtf <- function(samples, dir_out)
   files_sub_dir <- paste0(dir_out,"/files")
   dir.create(files_sub_dir)
 
-  dots <- list(...)
-  if(length(dots)==1 && class(dots[[1]])=="GRangesList") #prendo solo un Grangeslist
-    dots <- dots[[1]]
+  if(!is(samples,"GRangesList"))
+    stop("samples must be a GrangesList")
 
   c = .counter()
 
-  region_frame <- data.frame(dots[[1]]) # first regions to get column names
-  col_names <- names(region_frame)
+  col_names <- .get_schema_names(samples)
 
   if(to_GTF)
   {
-    apply(dots, function(x,dir){
+   #write region
+    lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gtf")
       export.gff2(x,sample_name)
-      meta_list <- metadata(x)
-      .write_metadata(meta_list,sample_name)
+    },files_sub_dir)
+
+    c = .counter(0)
+    meta <- metadata(samples)
+
+    #write metadata
+    lapply(meta,function(x,dir){
+      sample_name = paste0(dir,"/S_",c(),".gtf")
+      .write_metadata(x,sample_name)
     },files_sub_dir)
   }
   else
   {
-    apply(dots, function(x){
+    #write region
+    lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gdm")
       region_frame <- data.frame(x)
-      write.table(region_frame,sample_name,col.names = F,row.names = F)
-      meta_list <- metadata(x)
-      .write_metadata(meta_list,sample_name)
-    })
+      write.table(region_frame,sample_name,col.names = F,row.names = F, sep = '\t',quote = F)
+    },files_sub_dir)
+
+    c = .counter(0)
+    meta <- metadata(samples)
+
+    #write metadata
+    lapply(meta,function(x,dir){
+      sample_name = paste0(dir,"/S_",c(),".gdm")
+      .write_metadata(x,sample_name)
+    },files_sub_dir)
   }
-  #.write_schema(col_names,files_sub_dir)
+
+  .write_schema(col_names,files_sub_dir)
   c = .counter(0)
 }
 
@@ -129,22 +144,41 @@ exportGMQL.gtf <- function(samples, dir_out)
 }
 
 
-
 .write_metadata <- function(meta_list,sample_name)
 {
+  #create my own list if metadata empty
   if(length(meta_list)==0){
-    #crea lista con metadati
+    meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
   }
   names_list <- names(meta_list)
   value_list <- unlist(meta_list)
   file_meta_name = paste0(sample_name,".meta")
   data <- data.frame(names_list,value_list)
-  write.table(data,file_meta_name)
+  names(data) <- NULL
+  write.table(data,file_meta_name,row.names = F,col.names = F, quote = F,sep = '\t')
 }
 
 
-.write_schema <- function(schema_names,sample_name)
+.get_schema_names <- function(samples)
 {
+  region_frame <- data.frame(samples[[1]]) # first regions to get column names
+  col_names <- names(region_frame)
+  col_names[!col_names %in% "width"] # elimino width
+}
 
+.write_schema <- function(node_list,directory)
+{
+  schema <- paste0(directory,"/test.schema")
+  root <- xml_new_root("gmqlSchemaCollection")
+  xml_attr(root,"name") <- "DatasetName_SCHEMAS"
+  xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
+  xml_add_child(root,"gmqlSchema")
+  gmqlSchema <- xml_child(root,1)
+
+  lapply(node_list, function(x,gmqlSchema){
+    field <- xml_add_child(gmqlSchema,"field")
+    xml_text(field) <- x
+  },gmqlSchema)
+  write_xml(root,schema)
 }
 

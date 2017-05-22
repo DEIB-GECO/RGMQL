@@ -30,3 +30,6 @@ materialize(input_data = m, dir_out = "/.../foldername")
 materialize(s,"/.../foldername")
 }
 }
+\references{
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+}

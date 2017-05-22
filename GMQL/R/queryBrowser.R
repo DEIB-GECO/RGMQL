@@ -1,9 +1,24 @@
 #' GMQL API web Service
 #'
+#' It show all the query saved to repository
 #'
 #'
+#' @param url server address
+#' @return list of queries
 #'
+#' @seealso \code{\link{saveQuery}}
 #'
+#' @details
+#' if error occured print the content error
+#'
+#' @examples
+#'
+#' \dontrun{
+#' url <- <http_server_address>)
+#' login.GMQL(url, username="pippo",password="baudo")
+#' showQueries(url)
+#' logout.GMQL()
+#' }
 #'
 showQueries <- function(url)
 {
@@ -23,13 +38,26 @@ showQueries <- function(url)
 
 #' GMQL API web Service
 #'
+#' It save the GMQL queries to repository
 #'
+#' @param url server address
+#' @param queryName name of query
+#' @param queryTxt text of GMQL queries
 #'
+#' @seealso \code{\link{showQueries}}
 #'
+#' @details
+#' if error occured print the content error
 #'
+#' @examples
 #'
-#'
-#'
+#' \dontrun{
+#' url <- <http_server_address>)
+#' login.GMQL(url, username="pippo",password="baudo")
+#' saveQuery(url,"prova1","<query_text>")
+#' showQueries(url)
+#' logout.GMQL()
+#' }
 #'
 saveQuery <- function(url,queryName,queryTxt)
 {
