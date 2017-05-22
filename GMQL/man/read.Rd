@@ -4,22 +4,35 @@
 \alias{read}
 \title{GMQL Function: READ}
 \usage{
-read(DatasetPathFolder)
+read(DatasetPathFolder, parser = CustomParser())
 }
 \arguments{
 \item{DatasetPathFolder}{folder path for GMQL dataset}
+
+\item{parser}{\code{\link{PARSER}} objects used to parsing dataset files
+The PARSER's available are: BedParser, ANNParser, BroadProjParser, BasicParser,
+NarrowPeakParser, RnaSeqParser, CustomParser.
+Default is CustomParser.}
 }
 \value{
-url-like string "pointer" to dataset
+"url-like" string to dataset
 }
 \description{
-Read a GMQL dataset from disk saving in Scala memory that can be referenced in R
+Read a GMQL dataset or any other folder containig some homogenus sample
+from disk, saving in Scala memory that can be referenced in R
+}
+\details{
+Normally a GMQL dataset contains an XML schema file that contains
+name of column header. (e.g chr, start, stop, strand)
+The CustomParser read this XML schema; if you already know what kind of schema your files are use one of
+the parser defined without reading any XML schema
 }
 \examples{
 
+\dontrun{
 startGMQL()
-path = /.../dataset_name
+path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
-
+}
 
 }

@@ -4,16 +4,20 @@
 \alias{importGMQL.gdm}
 \title{Create GrangesList from dataset GMQL in GDM (delimited / tabulated) format file}
 \usage{
-importGMQL.gdm(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GDM")
+importGMQL.gdm(datasetName)
 }
 \arguments{
-\item{datasetName}{dataset folder path}
+\item{datasetName}{GMQL dataset folder path}
 }
 \description{
-Create GrangesList from dataset GMQL in GDM (delimited / tabulated) format file
+It create a GrangesList from GMQL samples in dataset
+It reads only sample files in GDM format
 }
 \examples{
-path <- "/..../..../..../DATA_SET_VAR_GDM"
-grl <- importGMQL.gdm(path)
+
+\dontrun{
+path = "<path_folder_input>"
+grl = importGMQL.gdm(path)
+}
 
 }

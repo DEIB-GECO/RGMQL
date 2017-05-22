@@ -4,10 +4,8 @@
 \alias{metadataFromSample}
 \title{GMQL API web Service}
 \usage{
-metadataFromSample(url = "http://genomic.elet.polimi.it/gmql-rest/datasets/",
-  datasetName, sampleName)
+metadataFromSample(url, datasetName, sampleName)
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

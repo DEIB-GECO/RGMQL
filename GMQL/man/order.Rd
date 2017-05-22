@@ -4,14 +4,14 @@
 \alias{order}
 \title{GMQL operation: ORDER}
 \usage{
-order(input_data, metadata_order = NULL, mtop = 0, mtopg = 0,
-  regions_order = NULL, rtop = 0, rtopg = 0)
+order(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
+  regions_ordering = NULL, rtop = 0, rtopg = 0)
 }
 \arguments{
 \item{input_data}{"url-like" string taken from GMQL function}
 
-\item{metadata_order}{list of ORDER objects where every object contains the name of metadata
-The ORDER's available are: ASC, DESC.
+\item{metadata_ordering}{list of ORDER objects where every object contains the name of metadata
+The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
 Every condition accepts only one string value. (e.g. ASC("cell_type") )}
 
 \item{mtop}{integer value specifying the first k samples.
@@ -20,7 +20,7 @@ default is 0 that means every sample must be considered}
 \item{mtopg}{integer value specifying the first j samples in each group.
 default is 0 that means every sample must be considered}
 
-\item{regions_order}{list of ORDER objects where every object contains the name of region schema value
+\item{regions_ordering}{list of ORDER objects where every object contains the name of region schema value
 The ORDER's available are: ASC, DESC.
 Every condition accepts only one string value. (e.g. DESC("pvalue") )}
 
@@ -50,7 +50,7 @@ mtop and mtopg are mutalbe exclusive, so rtop and rtopg
 if you specified both, only mtop (rtop) is taken
 }
 \examples{
-
+\dontrun{
 startGMQL()
 path = /.../dataset_name
 r = read(path)
@@ -60,13 +60,11 @@ s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
 semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
 
 o = order(DESC(Region_Count), mtop = 2, input_data = s)
-o = order(list(DESC(Region_Count)),regions_order = list(DESC(MutationCount),ASC(pvalue)),
+o = order(list(DESC(Region_Count)),regions_ordering = list(DESC(MutationCount),ASC(pvalue)),
 mtop = 5,rtopg = 1, input_data = c)
-
+}
 
 }
-\seealso{
-\code{\link{DESC}} \code{\link{ASC}}
-
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

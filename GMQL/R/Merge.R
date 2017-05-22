@@ -12,7 +12,7 @@
 #' @param input_data "url-like" string taken from GMQL function
 #' @param groupBy a vector of strings specifying grouping criteria
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #'

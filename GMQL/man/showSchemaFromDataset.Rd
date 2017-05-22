@@ -4,9 +4,8 @@
 \alias{showSchemaFromDataset}
 \title{GMQL API web Service}
 \usage{
-showSchemaFromDataset(datasetName)
+showSchemaFromDataset(url, datasetName)
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

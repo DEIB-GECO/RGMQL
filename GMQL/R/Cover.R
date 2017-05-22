@@ -26,15 +26,15 @@
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class OPERATOR
+#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#' @seealso \code{\link{OPERATOR}}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
+#' @seealso  \code{\link{summit}} \code{\link{flat}} \code{\link{histogram}}
 #'
 #' @examples
 #'
@@ -68,15 +68,14 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class OPERATOR
+#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#' @seealso \code{\link{OPERATOR}}
-#'
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{summit}}
 #'
 histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
@@ -103,14 +102,14 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class OPERATOR
+#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#' @seealso \code{\link{OPERATOR}}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{histogram}}
 #'
 #'
 summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
@@ -136,14 +135,15 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class OPERATOR
+#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#' @seealso \code{\link{OPERATOR}}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @seealso \code{\link{summit}} \code{\link{cover}} \code{\link{histogram}}
+#'
 #'
 #'
 flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)

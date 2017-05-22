@@ -33,6 +33,6 @@ m2 = merge(input_data = s)
 m3 = merge(s)
 }
 }
-\seealso{
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

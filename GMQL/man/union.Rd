@@ -26,13 +26,14 @@ For what concerns metadata, attributes of samples from the left (right) input da
 with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 }
 \examples{
-
+\dontrun{
 r = read(path)
 r2 = read(path2)
 c = cover(2,3,input_data = r)
 u = union(r2,c)
+}
 
 }
-\seealso{
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

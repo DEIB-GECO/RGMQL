@@ -4,7 +4,7 @@
 #'
 #'
 #'
-
+#'
 showJobs <- function(url, dataset_name)
 {
   URL <- paste0(url,"/jobs")
@@ -24,7 +24,7 @@ showJobs <- function(url, dataset_name)
 #'
 #'
 #'
-
+#'
 showJobLog <- function(url,job_id)
 {
   URL <- paste0(url,"/jobs/",job_id,"/log")
@@ -44,9 +44,8 @@ showJobLog <- function(url,job_id)
 #'
 #'
 #'
-#' @param username user name
-#' @param password user password
-
+#'
+#'
 stopJob <- function(url,job_id)
 {
   URL <- paste0(url,"/jobs/",job_id,"/stop")
@@ -62,15 +61,11 @@ stopJob <- function(url,job_id)
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
 #'
 #'
 #'
 #'
-#' @param username user name
-#' @param password user password
-
+#'
 traceJob <- function(url, job_id)
 {
   URL <- paste0(url,"/jobs/",job_id,"/trace")
@@ -92,9 +87,6 @@ traceJob <- function(url, job_id)
 #'
 #'
 #'
-
-
-
 runQuery <- function(url,fileName,query,output_gtf = T)
 {
   if(output_gtf)
@@ -122,8 +114,7 @@ runQuery <- function(url,fileName,query,output_gtf = T)
 #'
 #'
 #'
-
-
+#'
 compileQuery <- function(url ,query)
 {
   h <- c('Accept' = "Application/json",

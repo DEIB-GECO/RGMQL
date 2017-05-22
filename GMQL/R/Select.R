@@ -8,19 +8,18 @@
 #' with at least one metadata value in common with semi join dataset
 #' If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 #'
-#'
+#' @param input_data "url-like" string taken from GMQL function
 #' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
-#' @param region_predicate string predicate made up by logical oepration: AND,OR,NOT on schema region values
-#' @param semijoin list of CONDITION objects where every object contains the name of metadata to be used in semijoin
-#' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
+#' @param region_predicate string predicate made up by logical operation: AND,OR,NOT on schema region values
+#' @param semi_join list of CONDITION objects where every object contains the name of metadata to be used in semijoin
+#' The CONDITION's available are: \code{\link{FULLNAME}}, \code{\link{DEFAULT}}, \code{\link{EXACT}}
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
 #' @param semi_join_dataset "url-like" string taken from GMQL function used in semijoin
-#' @param input_data "url-like" string taken from GMQL function
 #'
-#' @seealso  \code{\link{EXACT}} \code{\link{FULLNAME}} \code{\link{DEFAULT}}
-#' @seealso  \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
+#' \dontrun{
 #' startGMQL()
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
@@ -30,7 +29,7 @@
 #' semi_join = list(DEFAULT("cell_type"),FULLNAME("age")),semi_join_dataset = c,input_data = r )
 #' s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
 #' semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
-#'
+#' }
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
                    semi_join_dataset = NULL)
@@ -41,7 +40,7 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
 
   if(!is.null(region_predicate))
     if(!is.character(region_predicate))
-      stop("region_predicate must be a single string ")
+      stop("region_predicate must be a single string")
 
   if(is.null(semi_join) && is.null(semi_join_dataset)) {
     #trick, if we call it like that

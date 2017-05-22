@@ -12,14 +12,12 @@ logout.GMQL(url)
 \description{
 Log out to GMQL web service
 After this operation you will not be able to call any services.
-You log in first
 }
 \examples{
 
 \dontrun{
-login.GMQL(url = http://...../...)
+url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
-
 logout.GMQL()
 }
 }

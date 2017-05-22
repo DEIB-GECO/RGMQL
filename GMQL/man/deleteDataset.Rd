@@ -4,10 +4,8 @@
 \alias{deleteDataset}
 \title{GMQL API web Service}
 \usage{
-deleteDataset(url = "http://genomic.elet.polimi.it/gmql-rest/datasets",
-  datasetName)
+deleteDataset(url, datasetName)
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

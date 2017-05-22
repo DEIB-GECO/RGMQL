@@ -5,6 +5,7 @@
 #'
 #' @examples
 #'
+#' \dontrun{
 #' startGMQL()
 #' r = read(path)
 #' r2 = read(path2)
@@ -13,7 +14,7 @@
 #' materialize(input_data = m, dir_out = "/.../foldername")
 #' materialize(s,"/.../foldername")
 #' execute()
-#'
+#' }
 execute <- function()
 {
   out <- frappeR$execute()
@@ -34,8 +35,12 @@ execute <- function()
 #' @param input_data "url-like" string taken from GMQL function
 #' @param dir_out destination folder path.
 #' by default the working directory is set by R environment
+#'
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
 #' @examples
 #'
+#' \dontrun{
 #' startGMQL()
 #' r = read(path)
 #' r2 = read(path2)
@@ -43,7 +48,7 @@ execute <- function()
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = "/.../foldername")
 #' materialize(s,"/.../foldername")
-#'
+#' }
 materialize <- function(input_data, dir_out = getwd())
 {
   out <- frappeR$materialize(input_data,dir_out)

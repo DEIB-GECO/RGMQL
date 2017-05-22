@@ -12,6 +12,7 @@ The function works only after invoking at least one materialize
 }
 \examples{
 
+\dontrun{
 startGMQL()
 r = read(path)
 r2 = read(path2)
@@ -20,5 +21,5 @@ m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = "/.../foldername")
 materialize(s,"/.../foldername")
 execute()
-
+}
 }

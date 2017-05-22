@@ -1,68 +1,71 @@
-ATOMIC_CONDITION <- function(value)
+DISTAL <- function(value)
 {
   op_list <- list(
     value = value
   )
   ## Set the name for the class
-  class(op_list) <- "ATOMIC_CONDITION"
+  class(op_list) <- "DISTAL"
   return(op_list)
 }
 
-print.ATOMIC_CONDITION <- function(obj) {}
+print.DISTAL <- function(obj) {}
 
-as.character.ATOMIC_CONDITION <- function(obj) {
+as.character.DISTAL <- function(obj) {
   class <- class(obj)[1]
   val <- obj$value
   c(val,class)
 }
 
-DISTLESS <- function(value)
+DLE <- function(value)
 {
 
   list <- list(
     value = value
   )
   ## Set the name for the class
-  class(list) <- c("DISTLESS","ATOMIC_CONDITION")
+  class(list) <- c("DLE","DISTAL")
   return(list)
 }
 
-DISTGREAT <- function(value)
+DGE <- function(value)
 {
   list <- list(
     value = value
   )
   ## Set the name for the class
-  class(list) <- c("DISTGREAT","ATOMIC_CONDITION")
+  class(list) <- c("DGE","DISTAL")
   return(list)
 }
 
-MINDIST <- function(value)
+MD <- function(value)
 {
   list <- list(
     value = value
   )
   ## Set the name for the class
-  class(list) <- c("MINDIST","ATOMIC_CONDITION")
+  class(list) <- c("MD","DISTAL")
   return(list)
 }
 
-UPSTREAM <- function()
+UP <- function()
 {
-  list <- list(
-    value = value
-  )
+  list <- list()
   ## Set the name for the class
-  class(list) <- c("UPSTREAM","ATOMIC_CONDITION")
+  class(list) <- c("UP","DISTAL")
   return(list)
 }
-
-DOWNSTREAM <- function()
+as.character.UP <- function(obj) {
+  class <- class(obj)[1]
+  c(class,"")
+}
+DOWN <- function()
 {
-  list <- list(
-    value = value
-  )
+  list <- list()
   ## Set the name for the class
-  class(list) <- c("DOWNSTREAM","ATOMIC_CONDITION")
+  class(list) <- c("DOWN","DISTAL")
   return(list)
+}
+as.character.DOWN <- function(obj) {
+  class <- class(obj)[1]
+  c(class,"")
 }

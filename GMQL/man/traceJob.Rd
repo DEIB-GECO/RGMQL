@@ -6,12 +6,6 @@
 \usage{
 traceJob(url, job_id)
 }
-\arguments{
-\item{username}{user name}
-
-\item{password}{user password}
-}
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

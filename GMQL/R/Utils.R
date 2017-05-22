@@ -8,3 +8,8 @@ GenomicPolimiUrl <- "http://genomic.elet.polimi.it/gmql-rest"
 
 
 predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp' AND antibody_target == 'TEAD4')"
+
+
+# start.time <- Sys.time()
+# end.time <- Sys.time()
+#  time.taken <- end.time - start.time

@@ -2,16 +2,22 @@
 % Please edit documentation in R/GMQLtoGRanges.R
 \name{importGMQL.gtf}
 \alias{importGMQL.gtf}
-\title{Create GrangesList from dataset GMQL in GTF format file}
+\title{Create GRangesList from GMQL Dataset}
 \usage{
-importGMQL.gtf(datasetName = "/Users/simone/Downloads/DATA_SET_VAR_GTF")
+importGMQL.gtf(datasetName)
 }
 \arguments{
-\item{datasetName}{dataset folder path}
+\item{datasetName}{GMQL dataset folder path}
 }
 \description{
-Create GrangesList from dataset GMQL in GTF format file
+It create a GrangesList from GMQL samples in dataset
+It reads only sample files in GTF format
 }
 \examples{
+
+\dontrun{
+path = "<path_folder_input>"
+grl = importGMQL.gtf(path)
+}
 
 }

@@ -4,11 +4,8 @@
 \alias{showSamplesFromDataset}
 \title{GMQL API web Service}
 \usage{
-
-  showSamplesFromDataset(url = "http://genomic.elet.polimi.it/gmql-rest/datasets/",
-  datasetName)
+showSamplesFromDataset(url, datasetName)
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

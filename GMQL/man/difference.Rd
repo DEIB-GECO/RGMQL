@@ -27,7 +27,7 @@ only those samples that have the same value for each attribute
 are considered when performing the difference.
 }
 \examples{
-
+\dontrun{
 startGMQL()
 path = /.../dataset_name
 r = read(path)
@@ -35,8 +35,9 @@ c = cover(2,3,input_data = r)
 s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
 d = difference(left_input_data = r, right_input_data = c)
 d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
+}
 
 }
-\seealso{
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

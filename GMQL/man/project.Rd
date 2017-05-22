@@ -4,7 +4,8 @@
 \alias{project}
 \title{GMQL Operation: PROJECT}
 \usage{
-project(metadata = NULL, regions = NULL, input_data)
+project(input_data, metadata = NULL, regions = NULL,
+  metadata_update = NULL, regions_update = NULL)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
@@ -12,8 +13,6 @@ project(metadata = NULL, regions = NULL, input_data)
 \item{predicate}{string made up by logical oepration: AND,OR,NOT}
 
 \item{region}{region}
-
-\item{semijoin}{semijoin}
 }
 \description{
 It creates, from an existing dataset, a new dataset with all the samples from input dataset
@@ -21,6 +20,19 @@ but keeping for each sample in the input dataset only those metadata and/or regi
 expressed in the operator parameter list.
 Region coordinates and values of the remaining metadata remain equal to those in the input dataset.
 It allows to:
-a) Remove existing metadata and/or region attributes from a dataset;
-b) Create new metadata and/or region attributes in the result
+\itemize{
+\item{Remove existing metadata and/or region attributes from a dataset}
+\item{Create new metadata and/or region attributes in the result}
+}
+}
+\examples{
+\dontrun{
+
+}
+
+
+
+}
+\references{
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

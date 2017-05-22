@@ -6,10 +6,6 @@
 \usage{
 showQueries(url)
 }
-\arguments{
-\item{url}{server address}
-}
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

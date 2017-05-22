@@ -6,14 +6,6 @@
 \usage{
 saveQuery(url, queryName, queryTxt)
 }
-\arguments{
-\item{url}{server address}
-
-\item{queryName}{query name}
-
-\item{queryTxt}{query text}
-}
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

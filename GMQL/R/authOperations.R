@@ -71,8 +71,9 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' }
 logout.GMQL <- function(url)
 {
+  URL <- paste0(url,"/logout")
   h <- c('X-Auth-Token' = authToken)
-  req <- GET(url, add_headers(h))
+  req <- GET(URL, add_headers(h))
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   content <- httr::content(req)
   if(req$status_code !=200)

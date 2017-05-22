@@ -29,13 +29,10 @@ The clause consists of a list of metadata attribute names that must be present w
 in both M1 and  M2
 }
 \examples{
-
-r = read(path)
-r2 = read(path2)
+\dontrun{
+}
 
 }
 \seealso{
-
-
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

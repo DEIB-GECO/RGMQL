@@ -4,9 +4,8 @@
 \alias{downloadDataset}
 \title{GMQL API web Service}
 \usage{
-downloadDataset(datasetName, path = getwd())
+downloadDataset(url, datasetName, path = getwd())
 }
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
+GMQL API web Service
 }

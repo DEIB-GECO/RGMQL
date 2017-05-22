@@ -3,7 +3,8 @@
 #'
 #'
 #'
-
+#'
+#'
 showQueries <- function(url)
 {
   URL <- paste0(url,"/query")
@@ -25,9 +26,11 @@ showQueries <- function(url)
 #'
 #'
 #'
-
-
-# TODO: testo preso anche da file?
+#'
+#'
+#'
+#'
+#'
 saveQuery <- function(url,queryName,queryTxt)
 {
   URL <- paste0(url,"/query/",queryName,"/save")

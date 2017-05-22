@@ -10,11 +10,12 @@
 #' \item{Create new metadata and/or region attributes in the result}
 #' }
 #'
+#'
+#' @param input_data string pointer taken from GMQL function
 #' @param predicate string made up by logical oepration: AND,OR,NOT
 #' @param region region
-#' @param input_data string pointer taken from GMQL function
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #' \dontrun{
@@ -23,7 +24,7 @@
 #'
 #'
 #'
-project <-function(metadata = NULL,regions = NULL,input_data)
+project <-function(input_data, metadata = NULL, regions = NULL, metadata_update = NULL, regions_update = NULL)
 {
  # if(!is.character(metadata) && !is.null(metadata))
  #   stop("groupBy can be a string or an array of string")

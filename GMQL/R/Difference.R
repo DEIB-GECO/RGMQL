@@ -17,10 +17,10 @@
 #' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
-#'
+#' \dontrun{
 #' startGMQL()
 #' path = /.../dataset_name
 #' r = read(path)
@@ -28,6 +28,7 @@
 #' s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
 #' d = difference(left_input_data = r, right_input_data = c)
 #' d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
+#' }
 #'
 difference <- function(left_input_data, right_input_data, joinBy = NULL)
 {

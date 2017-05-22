@@ -13,18 +13,18 @@
 #' For what concerns metadata, attributes of samples from the left (right) input dataset are prefixed
 #' with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 #'
-#' @param right_input_data "url-like" string taken from GMQL function
 #' @param left_input_data "url-like" string taken from GMQL function
+#' @param right_input_data "url-like" string taken from GMQL function
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#'
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
-#'
+#' \dontrun{
 #' r = read(path)
 #' r2 = read(path2)
 #' c = cover(2,3,input_data = r)
 #' u = union(r2,c)
+#' }
 #'
 union <- function(left_input_data,right_input_data)
 {

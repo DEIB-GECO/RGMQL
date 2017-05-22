@@ -6,18 +6,6 @@
 \usage{
 runQuery(url, fileName, query, output_gtf = T)
 }
-\arguments{
-\item{username}{user name}
-
-\item{password}{user password}
-}
-\value{
-authentication token
-}
 \description{
-Allow access to web service GMQL as guest or registered user
-with username and password
-}
-\details{
-si predilige il testo della query
+GMQL API web Service
 }

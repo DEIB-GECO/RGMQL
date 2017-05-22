@@ -17,14 +17,15 @@ register.GMQL(url, name, lastname, mail, username, password)
 
 \item{username}{user username}
 
-\item{password}{user password}
+\item{password}{user password, unfortunatley the password is not encrypted and not hide}
 }
 \description{
-Register to web Service Provider
+Register to Web Service Provider
 }
 \examples{
 \dontrun{
-register.GMQL(url = http://...../...)
+url <- <http_server_address>)
+register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")
 }
 }
 \seealso{

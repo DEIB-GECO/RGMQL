@@ -6,11 +6,12 @@
 #'
 #'
 
-showDatasets <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets")
+showDatasets <- function(url)
 {
+  URL <- paste0(url,"/datasets",datasetName)
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(url, add_headers(h))
+  req <- GET(URL, add_headers(h))
   content <- httr::content(req,"parsed") #JSON
   if(req$status_code !=200)
     stop(content$error)
@@ -28,9 +29,9 @@ showDatasets <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets
 #'
 #'
 
-showSamplesFromDataset <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets/",datasetName)
+showSamplesFromDataset <- function(url,datasetName)
 {
-  URL <- paste0(url,datasetName)
+  URL <- paste0(url,"/datasets",datasetName)
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(URL, add_headers(h))
@@ -47,19 +48,18 @@ showSamplesFromDataset <- function(url = "http://genomic.elet.polimi.it/gmql-res
 
 #' GMQL API web Service
 #'
-#' Allow access to web service GMQL as guest or registered user
-#' with username and password
+#'
 #'
 #'
 #'
 #'
 
-showSchemaFromDataset <- function(datasetName)
+showSchemaFromDataset <- function(url,datasetName)
 {
-  url <- paste0("http://genomic.elet.polimi.it/gmql-rest/datasets/",datasetName,"/schema")
+  URL <- paste0(url,"/datasets/",datasetName,"/schema")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(url, add_headers(h))
+  req <- GET(URL, add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -67,16 +67,11 @@ showSchemaFromDataset <- function(datasetName)
     return(content)
 }
 
-#' GMQL API web Service
-#'
-#'
-#'
-#'
-#'
+# GMQL API web Service
 
-uploadSamples <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets",datasetName,schemaName=NULL,...)
+uploadSamples <- function(url,datasetName,schemaName=NULL,...)
 {
-  URL <- paste0(url,"/",datasetName,"/uploadSample")
+  URL <- paste0(url,"/datasets/",datasetName,"/schema")
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
   #  req <<- POST(url,body = query ,add_headers(h),encode = "json")
   req <<- POST(url,body =  ,add_headers(h))
@@ -103,9 +98,9 @@ uploadSamples <- function(url = "http://genomic.elet.polimi.it/gmql-rest/dataset
 #'
 #'
 
-deleteDataset <- function(url = "http://genomic.elet.polimi.it/gmql-rest/datasets",datasetName)
+deleteDataset <- function(url,datasetName)
 {
-  URL <- paste0(url,"/",datasetName)
+  URL <- paste0(url,"/datasets/",datasetName)
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
   #req <- DELETE(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- DELETE(URL, add_headers(h))
@@ -125,13 +120,14 @@ deleteDataset <- function(url = "http://genomic.elet.polimi.it/gmql-rest/dataset
 #'
 #'
 #'
-
-downloadDataset <- function(datasetName,path = getwd())
+#'
+#'
+downloadDataset <- function(url,datasetName,path = getwd())
 {
-  url <- paste0("gmql-rest/dataSets/",datasetName,"/zip")
+  URL <- paste0(url,"/datasets/",datasetName,"/zip")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url,add_headers(h))
-  req <- GET(url,add_headers(h),verbose(info = TRUE))
+  req <- GET(URL,add_headers(h),verbose(info = TRUE))
   print(req)
   fileZip <- httr::content(req)
   writeBin(fileZip,path)
@@ -140,15 +136,15 @@ downloadDataset <- function(datasetName,path = getwd())
 
 #' GMQL API web Service
 #'
+#'
+#'
+#'
+#'
+#'
 
-#'
-#'
-#'
-#'
-
-metadataFromSample <- function(url="http://genomic.elet.polimi.it/gmql-rest/datasets/", datasetName,sampleName)
+metadataFromSample <- function(url, datasetName,sampleName)
 {
-  URL <- paste0(url,datasetName,"/",sampleName,"/metadata")
+  URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/metadata")
   h <- c('X-Auth-Token' = authToke, 'Accpet' = 'text/plain')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(URL, add_headers(h))
@@ -173,16 +169,9 @@ metadataFromSample <- function(url="http://genomic.elet.polimi.it/gmql-rest/data
 #'
 #'
 #'
-
-
-
-# start.time <- Sys.time()
-# end.time <- Sys.time()
-#  time.taken <- end.time - start.time
-
-regionFromSample <- function(url="http://genomic.elet.polimi.it/gmql-rest/datasets/", datasetName,sampleName)
+regionFromSample <- function(url, datasetName,sampleName)
 {
-  URL <- paste0(url,datasetName,"/",sampleName,"/region")
+  URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
   h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(URL, add_headers(h))

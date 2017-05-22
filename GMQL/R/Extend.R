@@ -5,8 +5,9 @@
 #' Aggregate functions are applied sample by sample.
 #'
 #'
+#' @param input_data "url-like" string returned from GMQL function
 #' @param metadata a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class META_OPERATOR
+#' 'function_aggregate' is an object of class \code{\link{META_OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, STD, MEDIAN, Q1, Q1, Q3.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
@@ -17,10 +18,7 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @param input_data "url-like" string returned from GMQL function
-#'
 #' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#' @seealso \code{\link{META_OPERATOR}}
 #'
 #' @examples
 #'
@@ -30,7 +28,7 @@
 #' r = read(path)
 #' e = extend(sum = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
 #' }
-extend <-function(metadata = NULL, input_data)
+extend <-function(input_data, metadata = NULL)
 {
   if(!is.null(metadata))
   {

@@ -12,13 +12,13 @@ select(input_data, predicate = NULL, region_predicate = NULL,
 
 \item{predicate}{string predicate made up by logical oepration: AND,OR,NOT on metadata attribute}
 
-\item{region_predicate}{string predicate made up by logical oepration: AND,OR,NOT on schema region values}
+\item{region_predicate}{string predicate made up by logical operation: AND,OR,NOT on schema region values}
+
+\item{semi_join}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin
+The CONDITION's available are: \code{\link{FULLNAME}}, \code{\link{DEFAULT}}, \code{\link{EXACT}}
+Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
 
 \item{semi_join_dataset}{"url-like" string taken from GMQL function used in semijoin}
-
-\item{semijoin}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin
-The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
-Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
 }
 \description{
 It extracts a subset of samples from the input dataset.
@@ -30,6 +30,7 @@ with at least one metadata value in common with semi join dataset
 If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 }
 \examples{
+\dontrun{
 startGMQL()
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
@@ -39,11 +40,9 @@ s = select("NOT(Patient_age < 70)",region_predicate = "NOT(variant_type == 'SNP'
 semi_join = list(DEFAULT("cell_type"),FULLNAME("age")),semi_join_dataset = c,input_data = r )
 s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
 semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
-
+}
 
 }
-\seealso{
-\code{\link{EXACT}} \code{\link{FULLNAME}} \code{\link{DEFAULT}}
-
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

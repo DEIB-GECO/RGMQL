@@ -20,7 +20,8 @@ trough username and password
 \examples{
 
 \dontrun{
-login.GMQL(url = http://...../...)
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
 }
 }
