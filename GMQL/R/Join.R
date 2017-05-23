@@ -27,7 +27,7 @@
 #' as
 #'
 #' @examples
-#' \dontrum{
+#' \dontrun{
 #'
 #'
 #' }

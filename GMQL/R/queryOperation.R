@@ -115,6 +115,23 @@ runQuery <- function(url,fileName,query,output_gtf = T)
 #'
 #'
 #'
+runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
+{
+  if(!file.exists(filePath))
+    stop("file does not exist")
+
+  query <- read.table(filePath)
+  runQuery(url,fileName,query,output_gtf)
+}
+
+#' GMQL API web Service
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 compileQuery <- function(url ,query)
 {
   h <- c('Accept' = "Application/json",
@@ -128,4 +145,21 @@ compileQuery <- function(url ,query)
     stop(content$error)
   else
     return(content)
+}
+
+#' GMQL API web Service
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+compileQuery.fromfile <- function(url ,filePath)
+{
+  if(!file.exists(filePath))
+   stop("file does not exist")
+
+  query <- read.table(filePath)
+  compileQuery(url,query)
 }

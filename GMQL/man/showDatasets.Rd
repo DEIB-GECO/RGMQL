@@ -6,6 +6,31 @@
 \usage{
 showDatasets(url)
 }
+\arguments{
+\item{url}{server address}
+}
+\value{
+list of datasets
+every dataset in the list is identified by:
+\itemize{
+\item{name}
+\item{owner}
+}
+}
 \description{
-GMQL API web Service
+It show all GMQL dataset stored in repository
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+list <- showDatasets(url)
+}
+}
+\seealso{
+\code{\link{deleteDataset}}
 }

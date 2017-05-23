@@ -25,11 +25,10 @@ if error occured print the content error
 url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
 saveQuery(url,"prova1","<query_text>")
-showQueries(url)
 logout.GMQL()
 }
 
 }
 \seealso{
-\code{\link{showQueries}}
+\code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 }

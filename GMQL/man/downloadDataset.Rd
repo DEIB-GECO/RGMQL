@@ -6,6 +6,25 @@
 \usage{
 downloadDataset(url, datasetName, path = getwd())
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{dataset name to delete}
+
+\item{path}{local path folder where store dataset
+by defualt is R working directory}
+}
 \description{
-GMQL API web Service
+It donwload private dataset from repository
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+downloadDataset(url,<dataset_name>,path = <folder_path>)
+}
 }

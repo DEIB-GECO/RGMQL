@@ -6,6 +6,34 @@
 \usage{
 showSamplesFromDataset(url, datasetName)
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{name of dataset}
+}
+\value{
+list of samples
+every sample in the list is identified by:
+\itemize{
+\item{id}
+\item{name}
+\item{path}
+}
+}
 \description{
-GMQL API web Service
+It show all sample from a specific GMQL dataset
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+list <- showSamplesFromDataset(url,<dataset_name>)
+}
+}
+\seealso{
+\code{\link{uploadSamples}}
 }

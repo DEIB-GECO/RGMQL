@@ -132,17 +132,6 @@ exportGMQL.gtf <- function(samples, dir_out)
 }
 
 
-#move to internals
-
-.counter <- function(zero = 0)
-{
-  i <- zero
-  function() {
-    i <<- i + 1
-    toString <- as.character(i)
-  }
-}
-
 
 .write_metadata <- function(meta_list,sample_name)
 {
@@ -181,4 +170,16 @@ exportGMQL.gtf <- function(samples, dir_out)
   },gmqlSchema)
   write_xml(root,schema)
 }
+
+#move to internals
+
+.counter <- function(zero = 0)
+{
+  i <- zero
+  function() {
+    i <<- i + 1
+    toString <- as.character(i)
+  }
+}
+
 

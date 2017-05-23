@@ -8,7 +8,7 @@ errore nell’esecuzione di dataset con sample in formato GTF
 
 SELECT: manca controllo sulle regioni nel predicato (controllare parser)
 
-PROJECT: metadata update non implementata
+PROJECT: metadata update non implementata chiedere per compiler
 
 GROUP: non implementata
 
@@ -19,4 +19,4 @@ WEB SERVICE: manca regioni to Granges e upload function
 
 MATERIALIZE: dove setto formato uscita 
 
-TFAmr come fare?
+TFARM come fare?

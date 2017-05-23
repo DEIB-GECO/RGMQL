@@ -23,7 +23,7 @@ left or right respectively.
 asdas
 }
 \examples{
-\dontrum{
+\dontrun{
 
 
 }

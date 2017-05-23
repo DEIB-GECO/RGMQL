@@ -6,6 +6,30 @@
 \usage{
 showSchemaFromDataset(url, datasetName)
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{name of dataset}
+}
+\value{
+list of region schema fields
+every field in the list is identified by:
+\itemize{
+\item{name}
+\item{fieldType: (e.g STRING, DOUBLE)}
+}
+}
 \description{
-GMQL API web Service
+It show the region schema of a specific GMQL dataset
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+list <- showSchemaFromDataset(url,<dataset_name>)
+}
 }

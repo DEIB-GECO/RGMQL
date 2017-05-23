@@ -6,6 +6,25 @@
 \usage{
 deleteDataset(url, datasetName)
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{dataset name to delete}
+}
 \description{
-GMQL API web Service
+It delete private dataset from repository
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+deleteDataset(url,<dataset_name>)
+}
+}
+\seealso{
+\code{\link{downloadDataset}}
 }

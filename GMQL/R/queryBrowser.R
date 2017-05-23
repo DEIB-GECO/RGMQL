@@ -16,7 +16,7 @@
 #' \dontrun{
 #' url <- <http_server_address>)
 #' login.GMQL(url, username="pippo",password="baudo")
-#' showQueries(url)
+#' list <- showQueries(url)
 #' logout.GMQL()
 #' }
 #'
@@ -44,7 +44,7 @@ showQueries <- function(url)
 #' @param queryName name of query
 #' @param queryTxt text of GMQL queries
 #'
-#' @seealso \code{\link{showQueries}}
+#' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 #'
 #' @details
 #' if error occured print the content error
@@ -55,7 +55,6 @@ showQueries <- function(url)
 #' url <- <http_server_address>)
 #' login.GMQL(url, username="pippo",password="baudo")
 #' saveQuery(url,"prova1","<query_text>")
-#' showQueries(url)
 #' logout.GMQL()
 #' }
 #'
@@ -71,4 +70,35 @@ saveQuery <- function(url,queryName,queryTxt)
     print(content) # print Saved
   else
     stop(content$error)
+}
+
+#' GMQL API web Service
+#'
+#' It save the GMQL queries to repository
+#'
+#' @param url server address
+#' @param queryName name of query
+#' @param filePath local file path where you write GMQL query
+#'
+#' @seealso \code{\link{saveQuery}}
+#'
+#' @details
+#' if error occured print the content error
+#'
+#' @examples
+#'
+#' \dontrun{
+#' url <- <http_server_address>)
+#' login.GMQL(url, username="pippo",password="baudo")
+#' saveQuery.fromfile(url,"prova1","<query_file_path>")
+#' logout.GMQL()
+#' }
+#'
+saveQuery.fromfile <- function(url,queryName,filePath)
+{
+  if(!file.exists(filePath))
+    stop("file does not exist")
+
+  queryTxt <- read.table(filePath)
+  saveQuery(url,queryName,queryTxt)
 }
