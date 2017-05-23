@@ -18,7 +18,7 @@
 #' @param left_input_data "url-like" string taken from GMQL function
 #' @param right_input_data "url-like" string taken from GMQL function
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #'
 #' @examples
@@ -26,13 +26,65 @@
 #'}
 #'
 
-map <- function(left_input_data, right_input_data, output, aggregates = NULL, joinBy = NULL)
+map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 {
 
-  #out<-frappeR$map(aggregates,left_input_data,right_input_data)
+  if(!is.null(aggregates))
+  {
+    if(!is.list(aggregates))
+      stop("aggregates must be a list")
 
-  #if(grepl("No",out,ignore.case = T))
-  #  stop(out)
-  #else
-  #  out
+    if(!all(sapply(aggregates, function(x) is(x,"OPERATOR") )))
+    {
+      stop("you must use OPERATOR object for defining aggregates function")
+    }
+
+    names <- names(aggregates)
+    if(is.null(names)){
+      warning("you did not assign a names to a list.\nWe build names for you")
+      names <- sapply(aggregates, function(x) {
+        take_value.OPERATOR(x)
+      })
+    }
+    else {
+      if(all(sapply(names, function(x) (x=="")))) {
+        stop("no partial names assignment to list")
+      }
+    }
+    aggregate_matrix <- t(sapply(aggregates, function(x) {
+
+      new_value = as.character(x)
+      matrix <- matrix(new_value)
+    }))
+    m_names <- matrix(names)
+    metadata_matrix <- cbind(m_names,aggregate_matrix)
+  }
+  else
+    metadata_matrix = NULL
+
+  if(!is.null(joinBy))
+  {
+    if(!is.list(joinBy))
+      stop("joinBy have to be a list ")
+
+    if(!all(sapply(semi_join, function(x) is(x,"CONDITION") )))
+    {
+      stop("you must use CONDITION object for defining attibute in semijoin")
+    }
+
+    join_condition_matrix <- t(sapply(joinBy, function(x) {
+      new_value = as.character(x)
+      matrix <- matrix(new_value)
+    }))
+
+  }
+  else
+    join_condition_matrix = NULL
+
+  out<-frappeR$map(join_condition_matrix,aggregates,left_input_data,right_input_data)
+
+  if(grepl("No",out,ignore.case = T))
+    stop(out)
+  else
+    out
 }
