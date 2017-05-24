@@ -9,28 +9,12 @@
 #' left or right respectively.
 #'
 #'
-#' @param genometric_predicate
-#' @param joinBy
-#' @param output
-#' @param right_input_data
-#' @param left_input_data
+#' @param left_input_data "url-like" string taken from GMQL function
+#' @param right_input_data "url-like" string taken from GMQL function
 #'
 #'
-#' @details
-#' asdas
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
-#' @references
-#' asdas
-#'
-#' @seealso
-#'
-#' as
-#'
-#' @examples
-#' \dontrun{
-#'
-#'
-#' }
 #'
 
 join <- function(genometric_predicate = NULL, joinBy = NULL, output=CONTIG(),

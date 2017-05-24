@@ -8,7 +8,9 @@ join(genometric_predicate = NULL, joinBy = NULL, output = CONTIG(),
   right_input_data, left_input_data)
 }
 \arguments{
-\item{left_input_data}{}
+\item{right_input_data}{"url-like" string taken from GMQL function}
+
+\item{left_input_data}{"url-like" string taken from GMQL function}
 }
 \description{
 It takes in input two datasets, respectively known as nchor (left) and experiment (right) and returns
@@ -19,19 +21,6 @@ in the anchor and in the experiment dataset (if joinBy is not specified).
 The output metadata are the union of the input metadata, with their attribute names prefixed with
 left or right respectively.
 }
-\details{
-asdas
-}
-\examples{
-\dontrun{
-
-
-}
-
-}
 \references{
-asdas
-}
-\seealso{
-as
+\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

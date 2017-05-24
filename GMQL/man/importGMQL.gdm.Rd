@@ -21,3 +21,6 @@ grl = importGMQL.gdm(path)
 }
 
 }
+\seealso{
+\code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
+}

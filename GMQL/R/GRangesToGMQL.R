@@ -7,7 +7,7 @@
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
 #'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gtf} }
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf}}
 #'
 #'
 #' @details
@@ -45,7 +45,7 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
 #'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
 #' @details
 #' The GMQL dataset is made up by two differet file type
@@ -96,7 +96,7 @@ exportGMQL.gtf <- function(samples, dir_out)
    #write region
     lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gtf")
-      export.gff2(x,sample_name)
+      export.ucsc(x,sample_name,c("gtf"))
     },files_sub_dir)
 
     c = .counter(0)

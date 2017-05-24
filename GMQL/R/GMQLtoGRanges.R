@@ -5,7 +5,7 @@
 #'
 #' @param datasetName GMQL dataset folder path
 #'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
 #'
 #' @examples
@@ -29,7 +29,7 @@ importGMQL.gtf <- function(datasetName)
   name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
   if(length(regions) != 0)
   {
-    sampleList <- lapply(regions, import.gff2)
+    sampleList <- lapply(regions, function(x){import.gff(con = x, format = "gtf")} )
     names(sampleList) <- name_samples
     gRange_list <- GRangesList(sampleList)
   }
@@ -61,7 +61,7 @@ importGMQL.gtf <- function(datasetName)
 #' @param datasetName GMQL dataset folder path
 #'
 #'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf} \code{\link{importGMQL.gdm} }
+#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
 #'
 #' @examples
@@ -123,13 +123,4 @@ importGMQL.gdm <- function(datasetName)
   listMeta <- lapply(y, `[`, -1)
 }
 
-prova <- function(m,name)
-{
-  all_meta <- m
-  list <- lapply(all_meta,function(x,name){
-    if(name %in% names(x))
-    {
-      print(x$"name")
-    }
-  },name)
-}
+

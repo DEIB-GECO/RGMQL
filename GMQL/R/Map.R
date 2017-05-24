@@ -21,11 +21,7 @@
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #'
-#' @examples
-#'\dontrun{
-#'}
 #'
-
 map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 {
 

@@ -36,3 +36,6 @@ exportGMQL.gdm(grl,path)
 }
 
 }
+\seealso{
+\code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf}}
+}

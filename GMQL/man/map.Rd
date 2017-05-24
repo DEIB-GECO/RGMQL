@@ -4,8 +4,7 @@
 \alias{map}
 \title{GMQL Operation: MAP}
 \usage{
-map(left_input_data, right_input_data, output, aggregates = NULL,
-  joinBy = NULL)
+map(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 }
 \arguments{
 \item{left_input_data}{"url-like" string taken from GMQL function}
@@ -28,11 +27,6 @@ metadata M1 and M2 respectively that satisfy the joinby condition are considered
 The clause consists of a list of metadata attribute names that must be present with equal values
 in both M1 and  M2
 }
-\examples{
-\dontrun{
-}
-
-}
-\seealso{
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }
