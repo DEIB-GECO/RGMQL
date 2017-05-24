@@ -120,18 +120,20 @@ showSchemaFromDataset <- function(url,datasetName)
     return(content)
 }
 
+
 #' GMQL API web Service
 #'
 #'
 #'
-#'  schema_name <- toupper(schemaName)
-#'  switch(schema_name,
-#'   "BED",
-#'   "NARROWPEAK",
-#'   "BEDGRAPH",
-#'   "VCF",
-#'   "BROADPEAK")
 #'
+
+#  schema_name <- toupper(schemaName)
+#  switch(schema_name,
+#   "BED",
+#   "NARROWPEAK",
+#   "BEDGRAPH",
+#  "VCF",
+#   "BROADPEAK")
 
 uploadSamples <- function(url,datasetName,schemaName=NULL, folderPath,fileExt = "gtf")
 {
@@ -302,4 +304,3 @@ regionFromSample <- function(url, datasetName,sampleName)
   else
     return(listMeta)
 }
-
