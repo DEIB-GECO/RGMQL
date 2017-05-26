@@ -26,8 +26,8 @@ If error occured stop and print error
 \examples{
 
 \dontrun{
+url <- <http_server_address>
 login.GMQL(url = <http_server_address>)
-url <- <http_server_address>)
 list <- showDatasets(url)
 }
 }

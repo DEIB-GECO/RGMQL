@@ -6,6 +6,16 @@
 \usage{
 metadataFromSample(url, datasetName, sampleName)
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{dataset name to delete}
+
+\item{sampleName}{sample name}
+}
+\value{
+list of metadata
+}
 \description{
-GMQL API web Service
+It retrieve metadata for a specific sample in dataset
 }

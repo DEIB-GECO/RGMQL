@@ -6,6 +6,11 @@
 \usage{
 traceJob(url, job_id)
 }
+\arguments{
+\item{url}{server address}
+
+\item{job_id}{id of jobs}
+}
 \description{
-GMQL API web Service
+It traces a specific job
 }

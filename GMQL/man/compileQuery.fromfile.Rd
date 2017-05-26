@@ -6,6 +6,11 @@
 \usage{
 compileQuery.fromfile(url, filePath)
 }
+\arguments{
+\item{url}{server address}
+
+\item{filePath}{path of txt files where you wrote a query}
+}
 \description{
-GMQL API web Service
+It compile a query from file
 }

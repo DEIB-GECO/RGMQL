@@ -4,9 +4,29 @@
 \alias{uploadSamples}
 \title{GMQL API web Service}
 \usage{
-uploadSamples(url, datasetName, schemaName = NULL, folderPath,
-  fileExt = "gtf")
+uploadSamples(url, datasetName, folderPath, schemaName = NULL)
+}
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{name of new dataset}
+
+\item{folderPath}{path of samples folder you want to upload}
+
+\item{schemaName}{name of schema used to parse the samples}
 }
 \description{
-GMQL API web Service
+It upload sample files to create a new dataset on repository
+}
+\details{
+If error occured stop and print error
+}
+\examples{
+
+\dontrun{
+url <- <http_server_address>)
+login.GMQL(url = <http_server_address>)
+uploadSamples(url,"prova1",folderPath = <folder_path>)
+}
+
 }

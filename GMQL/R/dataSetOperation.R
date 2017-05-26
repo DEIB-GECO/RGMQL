@@ -123,12 +123,30 @@ showSchemaFromDataset <- function(url,datasetName)
 #' GMQL API web Service
 #'
 #'
+#' It upload sample files to create a new dataset on repository
 #'
 #'
-uploadSamples <- function(url,datasetName,schemaName=NULL, folderPath,fileExt = "gtf")
+#' @param url server address
+#' @param datasetName name of new dataset
+#' @param folderPath path of samples folder you want to upload
+#' @param schemaName name of schema used to parse the samples
+#'
+#' @details
+#' If error occured stop and print error
+#'
+#' @examples
+#'
+#' \dontrun{
+#' url <- <http_server_address>)
+#' login.GMQL(url = <http_server_address>)
+#' uploadSamples(url,"prova1",folderPath = <folder_path>)
+#' }
+#'
+uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
 {
-  file_ext_regex <- paste0("*.",fileExt)
-  files <- list.files(folderPath, pattern = file_ext_regex,full.names = T)
+  #file_ext_regex <- paste0("*.",fileExt)
+#  files <- list.files(folderPath, pattern = file_ext_regex,full.names = T)
+  files <- list.files(folderPath,full.names = T)
   if(length(files)==0)
   {
     stop("no files present")
@@ -255,10 +273,12 @@ downloadDataset <- function(url,datasetName,path = getwd())
 
 #' GMQL API web Service
 #'
+#' It retrieve metadata for a specific sample in dataset
 #'
-#'
-#'
-#'
+#' @param url server address
+#' @param datasetName dataset name to delete
+#' @param sampleName sample name
+#' @return list of metadata
 #'
 
 metadataFromSample <- function(url, datasetName,sampleName)
@@ -285,7 +305,12 @@ metadataFromSample <- function(url, datasetName,sampleName)
 #' GMQL API web Service
 #'
 #'
+#' It retrieve regions for a specific sample in dataset
 #'
+#' @param url server address
+#' @param datasetName dataset name to delete
+#' @param sampleName sample name
+#' @return Granges containing regions
 #'
 #'
 regionFromSample <- function(url, datasetName,sampleName)
@@ -294,12 +319,29 @@ regionFromSample <- function(url, datasetName,sampleName)
   h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(URL, add_headers(h))
-  content <- httr::content(req, 'text',encoding = "UTF-8")
-
-  #trasform text to Granges
 
   if(req$status_code !=200)
     stop(content$error)
   else
-    return(listMeta)
+  {
+    list <- showSchemaFromDataset(url,datasetName)
+    schema_type <- list$schemaType
+
+    content <- httr::content(req, 'text',encoding = "UTF-8")
+    temp <- tempfile("temp") #use temporary files
+    write.table(content,temp,quote = F,sep = '\t',col.names = F,row.names = F)
+    if(schema_type=="gtf")
+      samples <- import.gff2(temp)
+    else
+    {
+      vector_field <- sapply(list$fields,function(x){
+        name <- x$name
+      })
+      df <- fread(temp,header = FALSE,sep = "\t")
+      setnames(df,vector_field)
+      samples <- makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
+    }
+    unlink(temp)
+    return(samples)
+  }
 }

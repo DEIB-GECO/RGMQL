@@ -11,7 +11,7 @@ saveQuery(url, queryName, queryTxt)
 
 \item{queryName}{name of query}
 
-\item{queryTxt}{text of GMQL queries}
+\item{queryTxt}{text of GMQL query}
 }
 \description{
 It save the GMQL queries to repository

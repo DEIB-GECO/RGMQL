@@ -4,8 +4,11 @@
 \alias{showJobs}
 \title{GMQL API web Service}
 \usage{
-showJobs(url, dataset_name)
+showJobs(url)
+}
+\arguments{
+\item{url}{server address}
 }
 \description{
-GMQL API web Service
+It show all Jobs
 }

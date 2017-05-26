@@ -6,6 +6,16 @@
 \usage{
 runQuery(url, fileName, query, output_gtf = T)
 }
+\arguments{
+\item{url}{server address}
+
+\item{fileName}{name of file}
+
+\item{query}{text of query}
+
+\item{output_gtf}{logical: file format for sample generating from query
+the possiblities are: GTF or TAB}
+}
 \description{
-GMQL API web Service
+It runs a query
 }

@@ -6,6 +6,11 @@
 \usage{
 compileQuery(url, query)
 }
+\arguments{
+\item{url}{server address}
+
+\item{query}{txt query}
+}
 \description{
-GMQL API web Service
+It compile a query
 }

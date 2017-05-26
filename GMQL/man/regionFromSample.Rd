@@ -6,6 +6,16 @@
 \usage{
 regionFromSample(url, datasetName, sampleName)
 }
+\arguments{
+\item{url}{server address}
+
+\item{datasetName}{dataset name to delete}
+
+\item{sampleName}{sample name}
+}
+\value{
+Granges containing regions
+}
 \description{
-GMQL API web Service
+It retrieve regions for a specific sample in dataset
 }

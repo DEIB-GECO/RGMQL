@@ -42,7 +42,7 @@ showQueries <- function(url)
 #'
 #' @param url server address
 #' @param queryName name of query
-#' @param queryTxt text of GMQL queries
+#' @param queryTxt text of GMQL query
 #'
 #' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 #'
