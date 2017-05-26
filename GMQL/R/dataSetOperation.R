@@ -3,7 +3,6 @@
 #' It show all GMQL dataset stored in repository
 #'
 #'
-#'
 #' @param url server address
 #' @return list of datasets
 #' every dataset in the list is identified by:
@@ -19,14 +18,14 @@
 #' @examples
 #'
 #' \dontrun{
+#' url <- <http_server_address>
 #' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
 #' list <- showDatasets(url)
 #' }
 
 showDatasets <- function(url)
 {
-  URL <- paste0(url,"/datasets",datasetName)
+  URL <- paste0(url,"/datasets")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- GET(URL, add_headers(h))
@@ -126,15 +125,6 @@ showSchemaFromDataset <- function(url,datasetName)
 #'
 #'
 #'
-
-#  schema_name <- toupper(schemaName)
-#  switch(schema_name,
-#   "BED",
-#   "NARROWPEAK",
-#   "BEDGRAPH",
-#  "VCF",
-#   "BROADPEAK")
-
 uploadSamples <- function(url,datasetName,schemaName=NULL, folderPath,fileExt = "gtf")
 {
   file_ext_regex <- paste0("*.",fileExt)
@@ -144,14 +134,20 @@ uploadSamples <- function(url,datasetName,schemaName=NULL, folderPath,fileExt = 
     stop("no files present")
   }
 
+  count = .counter(0)
+
   list_files <- lapply(files, function(x) {
     upload_file(x)
   })
 
-  names(list_files) <- lapply(list_files, function(x) {
-    paste0("files_",c())
+  list_files_names <- sapply(list_files, function(x) {
+    paste0("file",count())
   })
 
+  names(list_files) <- list_files_names
+  URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
+  h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
+  #  req <<- POST(url,body = query ,add_headers(h),encode = "json")
 
   if(is.null(schemaName))
   {
@@ -160,22 +156,25 @@ uploadSamples <- function(url,datasetName,schemaName=NULL, folderPath,fileExt = 
     {
       stop("schema must be present")
     }
+
+    list_files <- list(list("schema" = upload_file(schema_name)),list_files)
+    list_files <- unlist(list_files,recursive = F)
   }
-  else
-    schema_name <- schemaName
-
-  URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
-  h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
-  #  req <<- POST(url,body = query ,add_headers(h),encode = "json")
-  req <<- POST(url,body = list_files ,add_headers(h))
-  content <- httr::content(req,"parsed") #JSON
-
-  if(req$status_code !=200)
-    stop(content$error)
   else
   {
-    print(content$result)
+    if(!is("SCHEMA",schemaName))
+      stop("schema not admissable")
+
+    schema_name <- schemaName
+    URL <- paste0(url,"/datasets/",datasetName,"/uploadSample?schemaName=",schema_name)
   }
+
+  req <- POST(URL, body = list_files ,add_headers(h))
+  content <- httr::content(req)
+  if(req$status_code !=200)
+    stop(content)
+  else
+    print("upload Complete")
 }
 
 #' GMQL API web Service

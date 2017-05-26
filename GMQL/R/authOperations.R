@@ -13,8 +13,10 @@
 #' @examples
 #'
 #' @details
+#' if username and password are NULL you will log in as user guest
 #' After login you receive an authenticated token.
 #' This token is saved in Global environment and used to perform the other REST call
+#'
 #'
 #' \dontrun{
 #' login.GMQL(url = <http_server_address>)
@@ -60,7 +62,6 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' GMQL API web Service
 #'
 #' Log out to GMQL web service
-#' After this operation
 #'
 #'
 #' @param url server address
@@ -69,7 +70,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #'
 #' @details
 #' After logout you will not be able to call any services.
-#' The authneticated token is removed from environment
+#' The authneticated token is removed from Global environment
 #'
 #' @examples
 #'
