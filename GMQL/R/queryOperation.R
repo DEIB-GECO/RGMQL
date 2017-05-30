@@ -2,6 +2,7 @@
 #'
 #' It show all Jobs
 #'
+#' @import httr
 #' @param url server address
 #'
 #'
@@ -11,7 +12,7 @@ showJobs <- function(url)
   URL <- paste0(url,"/jobs")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -23,6 +24,8 @@ showJobs <- function(url)
 #'
 #' It show a log for specific job
 #'
+#'
+#' @import httr
 #' @param url server address
 #' @param job_id id of jobs
 #'
@@ -33,7 +36,7 @@ showJobLog <- function(url,job_id)
   URL <- paste0(url,"/jobs/",job_id,"/log")
   h <- c('X-Auth-Token' = authToken,'Accept'= 'Application/json')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -45,6 +48,7 @@ showJobLog <- function(url,job_id)
 #'
 #' It stops a specific job
 #'
+#' @import httr
 #' @param url server address
 #' @param job_id id of jobs
 #'
@@ -55,7 +59,7 @@ stopJob <- function(url,job_id)
   URL <- paste0(url,"/jobs/",job_id,"/stop")
   h <- c('X-Auth-Token' = authToken,'Accept'= 'text/plain')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content)
@@ -67,6 +71,7 @@ stopJob <- function(url,job_id)
 #'
 #' It traces a specific job
 #'
+#' @import httr
 #' @param url server address
 #' @param job_id id of jobs
 #'
@@ -77,7 +82,7 @@ traceJob <- function(url, job_id)
   URL <- paste0(url,"/jobs/",job_id,"/trace")
   h <- c('X-Auth-Token' = authToken,'Accept'= 'Application/json')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -91,6 +96,8 @@ traceJob <- function(url, job_id)
 #'
 #' It runs a query
 #'
+#'
+#' @import httr
 #' @param url server address
 #' @param fileName name of file
 #' @param query text of query
@@ -110,7 +117,8 @@ runQuery <- function(url,fileName,query,output_gtf = T)
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
 
-  req <- POST(URL,body = query ,add_headers(h),encode = "json",verbose(data_in = T,data_out = T))
+  #req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json",verbose(data_in = T,data_out = T))
+  req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
   #req <- GET(URL,add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
@@ -121,9 +129,10 @@ runQuery <- function(url,fileName,query,output_gtf = T)
 
 #' GMQL API web Service
 #'
-#'
 #' It runs a query from file
 #'
+#'
+#' @import httr
 #' @param url server address
 #' @param fileName name of file
 #' @param filePath path of txt files where you wrote a query
@@ -137,7 +146,7 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
   if(!file.exists(filePath))
     stop("file does not exist")
 
-  query <- read.table(filePath)
+  query <- readLines(filePath)
   runQuery(url,fileName,query,output_gtf)
 }
 
@@ -145,6 +154,7 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
 #'
 #' It compile a query
 #'
+#' @import httr
 #' @param url server address
 #' @param query txt query
 #'
@@ -157,7 +167,7 @@ compileQuery <- function(url ,query)
   URL <- paste0(url,"/queries/compile")
 
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <<- POST(URL,body = query ,add_headers(h),encode = "json")
+  req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -178,6 +188,6 @@ compileQuery.fromfile <- function(url ,filePath)
   if(!file.exists(filePath))
    stop("file does not exist")
 
-  query <- read.table(filePath)
+  query <- readLines(filePath)
   compileQuery(url,query)
 }

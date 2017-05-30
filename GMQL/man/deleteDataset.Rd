@@ -20,6 +20,7 @@ If error occured stop and print error
 \examples{
 
 \dontrun{
+
 login.GMQL(url = <http_server_address>)
 url <- <http_server_address>)
 deleteDataset(url,<dataset_name>)

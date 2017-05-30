@@ -9,9 +9,9 @@ login.GMQL(url, username = NULL, password = NULL)
 \arguments{
 \item{url}{server address}
 
-\item{username}{user name used on registration}
+\item{username}{single string name used on registration}
 
-\item{password}{password used on registration}
+\item{password}{single string password used on registration}
 }
 \description{
 Log in to GMQL web service as guest or registered user
@@ -29,7 +29,6 @@ This token is saved in Global environment and used to perform the other REST cal
 url <- <http_server_address>
 login.GMQL(url)
 login.GMQL(url, username="pippo",password="baudo")
-
 }
 
 }

@@ -3,6 +3,11 @@
 #' It create a GrangesList from GMQL samples in dataset
 #' It reads only sample files in GTF format
 #'
+#' @import rtracklayer
+#' @import GenomicRanges
+#' @import S4Vectors
+#'
+#'
 #' @param datasetName GMQL dataset folder path
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
@@ -29,9 +34,9 @@ importGMQL.gtf <- function(datasetName)
   name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
   if(length(regions) != 0)
   {
-    sampleList <- lapply(regions, function(x){import.gff(con = x, format = "gtf")} )
+    sampleList <- lapply(regions, function(x){rtracklayer::import.gff(con = x, format = "gtf")} )
     names(sampleList) <- name_samples
-    gRange_list <- GRangesList(sampleList)
+    gRange_list <- GenomicRanges::GRangesList(sampleList)
   }
   else
     stop("No GTF files present")
@@ -45,7 +50,7 @@ importGMQL.gtf <- function(datasetName)
   else
     stop("No meta GTF files present")
 
-  metadata(gRange_list) <- meta_list
+  S4Vectors::metadata(gRange_list) <- meta_list
   return(gRange_list)
 }
 
@@ -56,7 +61,8 @@ importGMQL.gtf <- function(datasetName)
 #' It create a GrangesList from GMQL samples in dataset
 #' It reads only sample files in GDM format
 #'
-#'
+#' @import GenomicRanges
+#' @import S4Vectors
 #'
 #' @param datasetName GMQL dataset folder path
 #'
@@ -92,10 +98,10 @@ importGMQL.gdm <- function(datasetName)
     names(vector_field)=NULL
     sampleList <- lapply(regions,function(x){
       df <- read.delim(x,col.names = vector_field,header = FALSE)
-      g <- makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
+      g <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
     })
     names(sampleList) <- name_samples
-    gRange_list <- GRangesList(sampleList)
+    gRange_list <- GenomicRanges::GRangesList(sampleList)
   }
   else
     stop("No GDM files present")
@@ -109,7 +115,7 @@ importGMQL.gdm <- function(datasetName)
   else
     stop("No meta GDM files present")
 
-  metadata(gRange_list) <- meta_list
+  S4Vectors::metadata(gRange_list) <- meta_list
   return(gRange_list)
 }
 

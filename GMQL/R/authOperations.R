@@ -3,11 +3,10 @@
 #' Log in to GMQL web service as guest or registered user
 #' trough username and password
 #'
-#'
-#'
+#' @import httr
 #' @param url server address
-#' @param username user name used on registration
-#' @param password password used on registration
+#' @param username single string name used on registration
+#' @param password single string password used on registration
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
@@ -16,6 +15,7 @@
 #' After login you receive an authenticated token.
 #' This token is saved in Global environment and used to perform the other REST call
 #'
+#'
 #' @examples
 #'
 #' \dontrun{
@@ -23,7 +23,6 @@
 #' url <- <http_server_address>
 #' login.GMQL(url)
 #' login.GMQL(url, username="pippo",password="baudo")
-#'
 #' }
 #'
 login.GMQL <- function(url,username = NULL, password = NULL)
@@ -38,7 +37,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
     h <- c('Accept' = "Application/json")
     URL <- paste0(url,"/guest")
     #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-    req <- GET(URL, add_headers(h))
+    req <- httr::GET(URL,httr::add_headers(h))
   }
   else
   {
@@ -46,7 +45,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
     URL <- paste0(url,"/login")
     body <- list('username'=username,'password'=password)
    # req <- POST(url,add_headers(h),body = body,verbose(data_in = T,info = T),encode = "json")
-    req <- POST(URL,add_headers(h),body = body,encode = "json")
+    req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
   }
 
   content <- httr::content(req)
@@ -65,7 +64,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #'
 #' Log out to GMQL web services
 #'
-#'
+#' @import httr
 #' @param url server address
 #'
 #' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
@@ -77,6 +76,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' @examples
 #'
 #' \dontrun{
+#'
 #' url <- <http_server_address>)
 #' login.GMQL(url, username="pippo",password="baudo")
 #' logout.GMQL()
@@ -85,7 +85,7 @@ logout.GMQL <- function(url)
 {
   URL <- paste0(url,"/logout")
   h <- c('X-Auth-Token' = authToken)
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   content <- httr::content(req)
   if(req$status_code !=200)
@@ -102,7 +102,7 @@ logout.GMQL <- function(url)
 #'
 #' Register to Web Service Provider
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @param name first name
 #' @param lastname lastname
@@ -135,7 +135,7 @@ register.GMQL <- function(url, name, lastname, mail, username, password)
   URL <- paste0(url,"/register")
   h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
   #req <<- POST(url,body = info ,add_headers(h),encode = "multipart",verbose(data_in = TRUE,info = TRUE))
-  req <<- POST(URL,body = info ,add_headers(h),encode = "json")
+  req <<- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
 
   content <- httr::content(req)
 

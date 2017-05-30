@@ -21,7 +21,8 @@ For best performance, materialize the relevant data only.
 \examples{
 
 \dontrun{
-startGMQL()
+
+initGMQL("gtf")
 r = read(path)
 r2 = read(path2)
 s = select(input_data = r)

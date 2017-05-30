@@ -6,7 +6,8 @@
 #' @examples
 #'
 #' \dontrun{
-#' startGMQL()
+#'
+#' initGMQL("gtf")
 #' r = read(path)
 #' r2 = read(path2)
 #' s = select(input_data = r)
@@ -19,7 +20,7 @@ execute <- function()
 {
   out <- frappeR$execute()
   if(grepl("OK",out,ignore.case = T))
-    print("Done")
+    print("Executed")
   else
     stop(out)
 }
@@ -41,7 +42,8 @@ execute <- function()
 #' @examples
 #'
 #' \dontrun{
-#' startGMQL()
+#'
+#' initGMQL("gtf")
 #' r = read(path)
 #' r2 = read(path2)
 #' s = select(input_data = r)
@@ -57,3 +59,42 @@ materialize <- function(input_data, dir_out = getwd())
   else
     NULL
 }
+
+#' GMQL Operation: TAKE
+#'
+#'
+#'
+#' @param input_data "url-like" string taken from GMQL function
+#' @param rows number of rows that you want to retrieve an stored in memory
+#' by default is 0 that means all rows
+#'
+#' @return GrangesList
+#'
+#'
+#' @examples
+#'
+#' \dontrun{
+#'
+#' initGMQL("gtf")
+#' r = read(path)
+#' r2 = read(path2)
+#' s = select(input_data = r)
+#' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
+#' take(input_data = m, rows = 45)
+#' }
+take <- function(input_data, rows=0)
+{
+  rows <- rows[1]
+  if(rows<0)
+    stop("rows cannot be negative")
+
+  out <- frappeR$take(input_data,rows)
+
+  if(grepl("No",out,ignore.case = T))
+    stop(out)
+  else
+    NULL
+}
+
+
+

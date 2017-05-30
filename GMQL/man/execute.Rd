@@ -13,7 +13,8 @@ The function works only after invoking at least one materialize
 \examples{
 
 \dontrun{
-startGMQL()
+
+initGMQL("gtf")
 r = read(path)
 r2 = read(path2)
 s = select(input_data = r)

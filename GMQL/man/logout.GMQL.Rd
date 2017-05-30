@@ -19,6 +19,7 @@ The authneticated token is removed from Global environment
 \examples{
 
 \dontrun{
+
 url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
 logout.GMQL()

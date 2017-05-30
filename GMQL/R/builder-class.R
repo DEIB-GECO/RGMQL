@@ -1,3 +1,22 @@
+#############################
+#       BUILDER            #
+############################
+
+
+#' BUILDER object class
+#'
+#'
+#' BUILDER object available are:
+#' \itemize{
+#' \item{LEFT}
+#' \item{RIGHT}
+#' \item{CONTIG}
+#' \item{INTERSECTION}
+#' }
+#'
+#' @details
+#' you never use a parent class BUILDER()
+#'
 BUILDER <- function()
 {
   ## Set the name for the class
@@ -5,13 +24,13 @@ BUILDER <- function()
   return(op_list)
 }
 
-
-print.BUILDER <- function(obj) {}
+print.BUILDER <- function(obj) {
+  as.character(obj)
+}
 
 as.character.BUILDER <- function(obj) {
   class <- class(obj)[1]
 }
-
 
 LEFT <- function()
 {

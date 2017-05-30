@@ -31,7 +31,7 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 }
 \examples{
 \dontrun{
-startGMQL()
+initGMQL("tab")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 c = cover(2,3,input_data = r)

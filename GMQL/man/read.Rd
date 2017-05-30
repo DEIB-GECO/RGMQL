@@ -30,7 +30,8 @@ the parser defined without reading any XML schema
 \examples{
 
 \dontrun{
-startGMQL()
+
+initGMQL("gtf")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 r = read(path,BedParser())

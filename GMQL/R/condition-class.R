@@ -1,3 +1,23 @@
+#############################
+#       CONDITION          #
+############################
+
+
+#' CONDITION object class
+#'
+#'
+#' CONDITION object available are:
+#' \itemize{
+#' \item{DEFAULT}
+#' \item{EXACT}
+#' \item{FULLNAME}
+#' }
+#' @details
+#' you never use a parent class CONDITION()
+#'
+#'
+#'
+
 CONDITION <- function(value)
 {
   op_list <- list(
@@ -8,7 +28,6 @@ CONDITION <- function(value)
   return(op_list)
 }
 
-
 print.CONDITION <- function(obj) {}
 
 as.character.CONDITION <- function(obj) {
@@ -17,11 +36,18 @@ as.character.CONDITION <- function(obj) {
   c(class,val)
 }
 
+check.CONDITION <- function(value)
+{
+  if(is.character(value) && length(value)>1)
+    stop("value: no multiple string")
+
+  if(!is.character(value))
+    stop("value: is not a string")
+}
 
 DEFAULT <- function(value)
 {
-  if(!is.character(value) || length(value)>=2)
-    stop("parameter must be a one string")
+  check.CONDITION(value)
 
   list <- list(
     value = value
@@ -33,8 +59,7 @@ DEFAULT <- function(value)
 
 EXACT <- function(value)
 {
-  if(!is.character(value) || length(value)>=2)
-    stop("parameter must be one string")
+  check.CONDITION(value)
 
   list <- list(
     value = value
@@ -46,8 +71,7 @@ EXACT <- function(value)
 
 FULLNAME <- function(value)
 {
-  if(!is.character(value) || length(value)>=2)
-    stop("parameter must be one string")
+  check.CONDITION(value)
 
   list <- list(
     value = value

@@ -6,17 +6,36 @@ errore nell’esecuzione di dataset con sample in formato GTF
 
 ———————————
 
-SELECT: manca controllo sulle regioni nel predicato (controllare parser)
+SELECT: manca controllo sulle regioni nel predicato
+	descrivere CONDITION come S3 CLASS in doc R
 
-PROJECT: metadata update non implementata chiedere per compiler
+
+TAKE: non andrà mai
 
 GROUP: non implementata
 
+
+EXTEND: descrivere META_OPERATOR come S3 CLASS in doc
+
+JOIN: prefissi usato quelli default
+
+PROJECT: metadata update non implementata 
+
 UNION: inserito left e right come prefisso, no il dataset
 
+————————————
 
-WEB SERVICE: manca regioni to Granges e upload function
+descrivere PARSER come S3 CLASS in doc
+descrivere SCHEMA come S3 CLASS in doc
+descrivere BUILDER come S3 CLASS in doc
 
-MATERIALIZE: dove setto formato uscita 
 
-TFARM come fare?
+WEB SERVICE:
+
+auth operation: sistemare doc
+browse op: sistemare doc
+ope dataset: sistemare doc
+exec: sistemare doc
+
+metadatafromsample error 404:  {"error":"Dataset not found: asd"} scriverlo diversamente
+stessa cosa regionfromsample

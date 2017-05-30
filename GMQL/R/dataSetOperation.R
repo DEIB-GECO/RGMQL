@@ -2,7 +2,7 @@
 #'
 #' It show all GMQL dataset stored in repository
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @return list of datasets
 #' every dataset in the list is identified by:
@@ -18,6 +18,7 @@
 #' @examples
 #'
 #' \dontrun{
+#'
 #' url <- <http_server_address>
 #' login.GMQL(url = <http_server_address>)
 #' list <- showDatasets(url)
@@ -28,7 +29,7 @@ showDatasets <- function(url)
   URL <- paste0(url,"/datasets")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed") #JSON
   if(req$status_code !=200)
     stop(content$error)
@@ -42,7 +43,7 @@ showDatasets <- function(url)
 #'
 #' It show all sample from a specific GMQL dataset
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @param datasetName name of dataset
 #' @return list of samples
@@ -67,10 +68,10 @@ showDatasets <- function(url)
 
 showSamplesFromDataset <- function(url,datasetName)
 {
-  URL <- paste0(url,"/datasets",datasetName)
+  URL <- paste0(url,"/datasets/",datasetName)
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -85,7 +86,7 @@ showSamplesFromDataset <- function(url,datasetName)
 #'
 #' It show the region schema of a specific GMQL dataset
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @param datasetName name of dataset
 #' @return list of region schema fields
@@ -111,7 +112,7 @@ showSchemaFromDataset <- function(url,datasetName)
   URL <- paste0(url,"/datasets/",datasetName,"/schema")
   h <- c('X-Auth-Token' = authToken)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     stop(content$error)
@@ -155,7 +156,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
   count = .counter(0)
 
   list_files <- lapply(files, function(x) {
-    upload_file(x)
+    httr::upload_file(x)
   })
 
   list_files_names <- sapply(list_files, function(x) {
@@ -175,7 +176,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
       stop("schema must be present")
     }
 
-    list_files <- list(list("schema" = upload_file(schema_name)),list_files)
+    list_files <- list(list("schema" = httr::upload_file(schema_name)),list_files)
     list_files <- unlist(list_files,recursive = F)
   }
   else
@@ -187,7 +188,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
     URL <- paste0(url,"/datasets/",datasetName,"/uploadSample?schemaName=",schema_name)
   }
 
-  req <- POST(URL, body = list_files ,add_headers(h))
+  req <- httr::POST(URL, body = list_files ,httr::add_headers(h))
   content <- httr::content(req)
   if(req$status_code !=200)
     stop(content)
@@ -199,7 +200,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
 #'
 #' It delete private dataset from repository
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @param datasetName dataset name to delete
 #'
@@ -212,6 +213,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
 #' @examples
 #'
 #' \dontrun{
+#'
 #' login.GMQL(url = <http_server_address>)
 #' url <- <http_server_address>)
 #' deleteDataset(url,<dataset_name>)
@@ -222,7 +224,7 @@ deleteDataset <- function(url,datasetName)
   URL <- paste0(url,"/datasets/",datasetName)
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
   #req <- DELETE(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- DELETE(URL, add_headers(h))
+  req <- httr::DELETE(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed") #JSON
 
   if(req$status_code !=200)
@@ -237,7 +239,7 @@ deleteDataset <- function(url,datasetName)
 #'
 #' It donwload private dataset from repository
 #'
-#'
+#' @import httr
 #' @param url server address
 #' @param datasetName dataset name to delete
 #' @param path local path folder where store dataset
@@ -259,15 +261,16 @@ deleteDataset <- function(url,datasetName)
 downloadDataset <- function(url,datasetName,path = getwd())
 {
   URL <- paste0(url,"/datasets/",datasetName,"/zip")
-  h <- c('X-Auth-Token' = authToken)
-  #req <- GET(url,add_headers(h))
-  req <- GET(URL,add_headers(h),verbose(info = TRUE))
+  h <- c('X-Auth-Token' = authToken, 'Accept' = 'application/zip')
+  req <- httr::GET(URL,httr::add_headers(h))
+  #req <- httr::GET(URL,httr::add_headers(h),verbose(info = TRUE))
   if(req$status_code !=200)
     stop(content$error)
 
   #print(content$result)
   fileZip <- httr::content(req)
-  writeBin(fileZip,path)
+  zip_path = paste0(path,"/",datasetName,".zip")
+  writeBin(fileZip,zip_path)
   print("Download Complete")
 }
 
@@ -275,6 +278,7 @@ downloadDataset <- function(url,datasetName,path = getwd())
 #'
 #' It retrieve metadata for a specific sample in dataset
 #'
+#' @import httr
 #' @param url server address
 #' @param datasetName dataset name to delete
 #' @param sampleName sample name
@@ -284,9 +288,9 @@ downloadDataset <- function(url,datasetName,path = getwd())
 metadataFromSample <- function(url, datasetName,sampleName)
 {
   URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/metadata")
-  h <- c('X-Auth-Token' = authToke, 'Accpet' = 'text/plain')
+  h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req, 'text',encoding = "UTF-8")
 
   #trasform text to list
@@ -296,7 +300,7 @@ metadataFromSample <- function(url, datasetName,sampleName)
   listMeta <- lapply(metadata, `[`, -1)
 
   if(req$status_code !=200)
-    stop(content$error)
+    stop(content)
   else
     return(listMeta)
 }
@@ -307,6 +311,10 @@ metadataFromSample <- function(url, datasetName,sampleName)
 #'
 #' It retrieve regions for a specific sample in dataset
 #'
+#' @import httr
+#' @import rtracklayer
+#' @import data.table
+#' @import GenomicRanges
 #' @param url server address
 #' @param datasetName dataset name to delete
 #' @param sampleName sample name
@@ -317,29 +325,28 @@ regionFromSample <- function(url, datasetName,sampleName)
 {
   URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
   h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
-  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
-  req <- GET(URL, add_headers(h))
+  req <- httr::GET(URL, httr::add_headers(h))
+  content <- httr::content(req, 'text',encoding = "UTF-8")
 
   if(req$status_code !=200)
-    stop(content$error)
+    stop(content)
   else
   {
     list <- showSchemaFromDataset(url,datasetName)
     schema_type <- list$schemaType
 
-    content <- httr::content(req, 'text',encoding = "UTF-8")
     temp <- tempfile("temp") #use temporary files
     write.table(content,temp,quote = F,sep = '\t',col.names = F,row.names = F)
     if(schema_type=="gtf")
-      samples <- import.gff2(temp)
+      samples <- rtracklayer::import(temp,format = "gtf")
     else
     {
       vector_field <- sapply(list$fields,function(x){
         name <- x$name
       })
-      df <- fread(temp,header = FALSE,sep = "\t")
-      setnames(df,vector_field)
-      samples <- makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
+      df <- data.table::fread(temp,header = FALSE,sep = "\t")
+      data.table::setnames(df,vector_field)
+      samples <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
     }
     unlink(temp)
     return(samples)

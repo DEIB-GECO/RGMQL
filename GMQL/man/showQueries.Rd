@@ -21,6 +21,7 @@ if error occured print the content error
 \examples{
 
 \dontrun{
+
 url <- <http_server_address>)
 login.GMQL(url, username="pippo",password="baudo")
 list <- showQueries(url)

@@ -13,7 +13,7 @@
 #'
 #' @param right_input_data "url-like" string taken from GMQL function
 #' @param left_input_data "url-like" string taken from GMQL function
-#' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in joinBy
+#' @param joinBy list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
 #' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
 #'
@@ -35,10 +35,8 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL)
     if(!is.list(joinBy))
       stop("joinBy have to be a list ")
 
-    if(!all(sapply(semi_join, function(x) is(x,"CONDITION") )))
-    {
-      stop("you must use CONDITION object for defining attibute in semijoin")
-    }
+    if(!all(sapply(joinBy, function(x) is(x,"CONDITION") )))
+      stop("All elements should be CONDITION object")
 
     join_condition_matrix <- t(sapply(joinBy, function(x) {
       new_value = as.character(x)

@@ -11,8 +11,8 @@
 #' @param input_data "url-like" string taken from GMQL function
 #' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
 #' @param region_predicate string predicate made up by logical operation: AND,OR,NOT on schema region values
-#' @param semi_join list of CONDITION objects where every object contains the name of metadata to be used in semijoin
-#' The CONDITION's available are: \code{\link{FULLNAME}}, \code{\link{DEFAULT}}, \code{\link{EXACT}}
+#' @param semi_join list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in semijoin
+#' The CONDITION's available are: FULLNAME, DEFAULT, EXACT
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
 #' @param semi_join_dataset "url-like" string taken from GMQL function used in semijoin
 #'
@@ -20,7 +20,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' startGMQL()
+#'
+#' initGMQL("tab")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
@@ -35,12 +36,10 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
                    semi_join_dataset = NULL)
 {
   if(!is.null(predicate))
-    if(!is.character(predicate))
-      stop("predicate must be a single string")
+    .check_predicate(predicate)
 
   if(!is.null(region_predicate))
-    if(!is.character(region_predicate))
-      stop("region_predicate must be a single string")
+    .check_predicate(region_predicate)
 
   if(is.null(semi_join) && is.null(semi_join_dataset)) {
     #trick, if we call it like that
@@ -56,12 +55,10 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
       stop("semi_join must be a list")
 
     if(!all(sapply(semi_join, function(x) is(x,"CONDITION") )))
-    {
-      stop("you must use CONDITION object for defining attibute in semijoin")
-    }
+      stop("All elements should be CONDITION object")
 
-    if(!is.character(semi_join_dataset))
-      stop("semi_join_dataset must be a single string")
+    if(is.character(semi_join_dataset) && length(semi_join_dataset)>1)
+      stop("semi_join_dataset: no multiple string")
 
     join_condition_matrix <- t(sapply(semi_join, function(x) {
       new_value = as.character(x)
@@ -69,12 +66,20 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
     }))
   }
 
-  #semi_join = groupBy[!semi_join %in% ""]
-  #semi_join = groupBy[!duplicated(semi_join)]
-
   out <- frappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,input_data)
   if(grepl("No",out,ignore.case = T) || grepl("expected",out,ignore.case = T))
     stop(out)
   else
     out
 }
+
+.check_predicate <- function(predicate_string)
+{
+  if(!is.character(predicate_string))
+    stop("must be a string")
+
+  if(is.character(predicate_string) && length(predicate_string)>1)
+    stop("no multiple string")
+
+}
+

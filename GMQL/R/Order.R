@@ -14,14 +14,14 @@
 #'
 #'
 #' @param input_data "url-like" string taken from GMQL function
-#' @param metadata_ordering list of ORDER objects where every object contains the name of metadata
-#' The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
+#' @param metadata_ordering list of \code{\link{ORDER}} objects where every object contains the name of metadata
+#' The ORDER's available are: ASC, DESC
 #' Every condition accepts only one string value. (e.g. ASC("cell_type") )
 #' @param mtop integer value specifying the first k samples.
 #' default is 0 that means every sample must be considered
 #' @param mtopg integer value specifying the first j samples in each group.
 #' default is 0 that means every sample must be considered
-#' @param regions_ordering list of ORDER objects where every object contains the name of region schema value
+#' @param regions_ordering list of \code{\link{ORDER}} objects where every object contains the name of region schema value
 #' The ORDER's available are: ASC, DESC.
 #' Every condition accepts only one string value. (e.g. DESC("pvalue") )
 #' @param rtop integer value specifying the first m samples in each group.
@@ -39,7 +39,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' startGMQL()
+#'
+#' initGMQL("gtf")
 #' path = /.../dataset_name
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
@@ -59,26 +60,10 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     stop("mtop, rtop, rtopg and mtopg must be integer")
 
   if(!is.null(metadata_order))
-  {
-    if(!is.list(metadata_order))
-     stop("metadata_order must be a list")
-
-    if(all(sapply(metadata_order, function(x) is(x,"ORDER") )))
-    {
-      stop("in metadata_order: use ORDER object for defining ordering")
-    }
-  }
+    .check_ordering(metadata_order)
 
   if(!is.null(regions_order))
-  {
-    if(!is.list(regions_order))
-      stop("regions_order must be a list")
-
-    if(all(sapply(regions_order, function(x) is(x,"ORDER") )))
-    {
-      stop("in regions_order: use ORDER object for defining ordering")
-    }
-  }
+    .check_ordering(regions_order)
 
   # we consider only the first element even if input is a vector of Int
   # we cut the other arguments
@@ -119,4 +104,16 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
   else
     out
 }
+
+
+.check_ordering <- function(ordering_list)
+{
+  if(!is.list(ordering_list))
+    stop("metadata_order must be a list")
+
+  if(all(sapply(ordering_list, function(x) is(x,"ORDER") )))
+    stop("All elements should be ORDER object")
+
+}
+
 

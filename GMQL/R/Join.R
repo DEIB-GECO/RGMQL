@@ -11,9 +11,31 @@
 #'
 #' @param left_input_data "url-like" string taken from GMQL function
 #' @param right_input_data "url-like" string taken from GMQL function
-#'
+#' @param genometric_predicate is a concatenation of distal conditions by means of logical ANDs
+#' @param joinBy list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
+#' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
+#' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
+#' @param output is \code{\link{BUILDER}} object: one of four different values that declare which region is given in
+#' output for each input pair of left dataset and right dataset regions satisfying the genometric predicate:
+#' \itemize{
+#' \item{LEFT}
+#' \item{RIGHT}
+#' \item{INTERSECTION}
+#' \item{CONTIG}
+#' }
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
+#'
+#' @examples
+#' \dontrun{
+#' initGMQL("gtf")
+#' path = "/<path_to_your_folder>/<your_dataset_name>"
+#' r = read(path)
+#' c = cover(2,3,input_data = r)
+#' j = join (list(list(UP(),MD(1)), list(DOWN(),DGE(5000))),right_input_data = r,left_input_data = c)
+#'
+#' }
 #'
 #'
 
@@ -25,9 +47,7 @@ join <- function(genometric_predicate = NULL, joinBy = NULL, output=CONTIG(),
     stop("genometric_predicate must be list of lists")
 
   if(!all(sapply(genometric_predicate, function(x) is.list(x) )))
-  {
     stop("genometric_predicate must be list of lists")
-  }
 
   lapply(genometric_predicate, function(list_pred) {
     if(length(list_pred)>4)
@@ -37,34 +57,36 @@ join <- function(genometric_predicate = NULL, joinBy = NULL, output=CONTIG(),
     }
 
     if(!all(sapply(list_pred, function(x) {is(x,"DISTAL")} )))
-    {
-      stop("you must use DISTAL object for defining attibute in genometric_predicate")
-    }
+      stop("All elements should be DISTAL object")
+
   })
 
-  genomatrix <- sapply(genometric_predicate, function(list_pred) {
-    t(sapply(list_pred, function(x) {
+  genomatrix <- t(sapply(genometric_predicate, function(list_pred) {
+    dist_array <- sapply(list_pred, function(x) {
       new_value = as.character(x)
-      matrix <- matrix(new_value)
-    }))
-
-  })
+      array <- c(new_value)
+    })
+    dist_array = c(dist_array,c("NA","NA"),c("NA","NA"),c("NA","NA"))
+    length(dist_array) = 8
+    dist_array
+  }))
 
   if(!is.null(joinBy))
   {
-    if(!is.list(joinBy) )
-      stop("joinBy must be a list")
+    if(!is.list(joinBy))
+      stop("joinBy have to be a list ")
 
     if(!all(sapply(joinBy, function(x) is(x,"CONDITION") )))
-    {
-      stop("you must use CONDITION object for defining attibute in semijoin")
-    }
+      stop("All elements should be CONDITION object")
 
     join_condition_matrix <- t(sapply(joinBy, function(x) {
       new_value = as.character(x)
       matrix <- matrix(new_value)
     }))
+
   }
+  else
+    join_condition_matrix = NULL
 
   if(is.null(output))
     stop("output cannot be null")

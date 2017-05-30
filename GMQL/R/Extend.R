@@ -23,10 +23,10 @@
 #' @examples
 #'
 #' \dontrun{
-#' startGMQL()
+#' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
-#' e = extend(sum = SUM("pvalue"),c = COUNT(), m = AVG("score"),input_data = r)
+#' e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
 #' }
 extend <-function(input_data, metadata = NULL)
 {
@@ -36,23 +36,19 @@ extend <-function(input_data, metadata = NULL)
       stop("metadata must be a list")
 
     if(!all(sapply(metadata, function(x) is(x,"META_OPERATOR") )))
-    {
-      stop("you must use OPERATOR object for defining aggregates function")
-    }
+      stop("All elements should be META_OPERATOR object")
 
     names <- names(metadata)
     if(is.null(names))
     {
-      warning("you did not assign a names to a list.\nWe build names for you")
+      warning("You did not assign a names to a list.\nWe build names for you")
       names <- sapply(metadata, function(x) {
         take_value.META_OPERATOR(x)
       })
     }
     else {
-      if(all(sapply(names, function(x) (x==""))))
-      {
-        stop("no partial names assignment to list")
-      }
+      if("" %in% names)
+        stop("No partial names assignment is allowed")
     }
     aggregate_matrix <- t(sapply(metadata, function(x) {
 
