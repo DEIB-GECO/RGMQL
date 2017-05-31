@@ -4,7 +4,7 @@
 \alias{read}
 \title{GMQL Function: READ}
 \usage{
-read(DatasetPathFolder, parser = CustomParser())
+read(DatasetPathFolder, parser = CustomParser(), local = T)
 }
 \arguments{
 \item{DatasetPathFolder}{folder path for GMQL dataset}

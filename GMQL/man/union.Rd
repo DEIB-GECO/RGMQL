@@ -27,6 +27,7 @@ with the strings LEFT (RIGHT), so as to trace the dataset to which they original
 }
 \examples{
 \dontrun{
+
 r = read(path)
 r2 = read(path2)
 c = cover(2,3,input_data = r)

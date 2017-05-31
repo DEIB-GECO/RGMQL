@@ -22,7 +22,7 @@ It contains meta-information lines, a header line, data lines each containing in
 Initialize and run GMQL server for executing GMQL query
 }
 \details{
-Instantiate in .GlobalEnv a scala singleton (WrappeR) used to call its scala methods
+Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
 }
 \examples{
 \dontrun{

@@ -6,6 +6,7 @@
 #' @import rtracklayer
 #' @import GenomicRanges
 #' @import S4Vectors
+#' @import xml2
 #'
 #'
 #' @param datasetName GMQL dataset folder path
@@ -31,10 +32,10 @@ importGMQL.gtf <- function(datasetName)
     stop("no samples present in this dataset")
 
   regions <- list.files(datasetName, pattern = "*.gtf$",full.names = T)
-  name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
   if(length(regions) != 0)
   {
-    sampleList <- lapply(regions, function(x){rtracklayer::import.gff(con = x, format = "gtf")} )
+    name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
+    sampleList <- lapply(regions, function(x){rtracklayer::import(con = x, format = "gtf")} )
     names(sampleList) <- name_samples
     gRange_list <- GenomicRanges::GRangesList(sampleList)
   }
@@ -63,6 +64,7 @@ importGMQL.gtf <- function(datasetName)
 #'
 #' @import GenomicRanges
 #' @import S4Vectors
+#' @import xml2
 #'
 #' @param datasetName GMQL dataset folder path
 #'
@@ -88,12 +90,15 @@ importGMQL.gdm <- function(datasetName)
     stop("no samples present in this dataset")
 
   regions <- list.files(datasetName, pattern = "*.gdm$",full.names = T)
-  name_samples <- lapply(regions, function(x){gsub("*.gdm", "", basename(x))})
   if(length(regions) != 0)
   {
-    schema <- paste0(datasetName,"/test.schema")
-    xml_schema <- read_xml(schema)
-    list_field <- as_list(xml_schema)
+    name_samples <- lapply(regions, function(x){gsub("*.gdm", "", basename(x))})
+    schema <- list.files(datasetName, pattern = "*.schema$",full.names = T)
+    if(length(schema)==0)
+      stop("schema not present")
+
+    xml_schema <- xml2::read_xml(schema)
+    list_field <- xml2::as_list(xml_schema)
     vector_field <- unlist(list_field)
     names(vector_field)=NULL
     sampleList <- lapply(regions,function(x){

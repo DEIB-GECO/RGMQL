@@ -14,8 +14,8 @@ select(input_data, predicate = NULL, region_predicate = NULL,
 
 \item{region_predicate}{string predicate made up by logical operation: AND,OR,NOT on schema region values}
 
-\item{semi_join}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin
-The CONDITION's available are: \code{\link{FULLNAME}}, \code{\link{DEFAULT}}, \code{\link{EXACT}}
+\item{semi_join}{list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in semijoin
+The CONDITION's available are: FULLNAME, DEFAULT, EXACT
 Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
 
 \item{semi_join_dataset}{"url-like" string taken from GMQL function used in semijoin}
@@ -31,6 +31,7 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 }
 \examples{
 \dontrun{
+
 initGMQL("tab")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)

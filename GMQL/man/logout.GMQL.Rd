@@ -2,7 +2,7 @@
 % Please edit documentation in R/authOperations.R
 \name{logout.GMQL}
 \alias{logout.GMQL}
-\title{GMQL API web Service}
+\title{Log out to GMQL web services}
 \usage{
 logout.GMQL(url)
 }

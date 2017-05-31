@@ -2,7 +2,7 @@
 % Please edit documentation in R/authOperations.R
 \name{login.GMQL}
 \alias{login.GMQL}
-\title{GMQL API web Service}
+\title{Log in to GMQL web service}
 \usage{
 login.GMQL(url, username = NULL, password = NULL)
 }

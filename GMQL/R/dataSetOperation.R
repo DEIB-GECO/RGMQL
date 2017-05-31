@@ -1,4 +1,4 @@
-#' GMQL API web Service
+#' Show Dataset
 #'
 #' It show all GMQL dataset stored in repository
 #'
@@ -39,7 +39,7 @@ showDatasets <- function(url)
   }
 }
 
-#' GMQL API web Service
+#' Show dataset samples
 #'
 #' It show all sample from a specific GMQL dataset
 #'
@@ -82,7 +82,7 @@ showSamplesFromDataset <- function(url,datasetName)
 }
 
 
-#' GMQL API web Service
+#' Show dataset schema
 #'
 #' It show the region schema of a specific GMQL dataset
 #'
@@ -121,7 +121,7 @@ showSchemaFromDataset <- function(url,datasetName)
 }
 
 
-#' GMQL API web Service
+#' Upload dataset
 #'
 #'
 #' It upload sample files to create a new dataset on repository
@@ -131,6 +131,16 @@ showSchemaFromDataset <- function(url,datasetName)
 #' @param datasetName name of new dataset
 #' @param folderPath path of samples folder you want to upload
 #' @param schemaName name of schema used to parse the samples
+#' schemaName available are:
+#' \itemize{
+#' \item{NARROWPEAK}
+#' \item{BROADPEAK}
+#' \item{VCF}
+#' \item{BED}
+#' \item{BEDGRAPH}
+#' }
+#' if schema is NULL it reads from disk looking for a XML schema file
+#'
 #'
 #' @details
 #' If error occured stop and print error
@@ -145,18 +155,14 @@ showSchemaFromDataset <- function(url,datasetName)
 #'
 uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
 {
-  #file_ext_regex <- paste0("*.",fileExt)
-#  files <- list.files(folderPath, pattern = file_ext_regex,full.names = T)
   files <- list.files(folderPath,full.names = T)
   if(length(files)==0)
-  {
     stop("no files present")
-  }
 
   count = .counter(0)
 
   list_files <- lapply(files, function(x) {
-    httr::upload_file(x)
+    file <- httr::upload_file(x)
   })
 
   list_files_names <- sapply(list_files, function(x) {
@@ -172,19 +178,18 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
   {
     schema_name <- list.files(folderPath, pattern = "*.schema$",full.names = T)
     if(length(schema_name)==0)
-    {
       stop("schema must be present")
-    }
 
     list_files <- list(list("schema" = httr::upload_file(schema_name)),list_files)
     list_files <- unlist(list_files,recursive = F)
   }
   else
   {
-    if(!is("SCHEMA",schemaName))
+    schema_name <- tolower(schemaName)
+    if(!identical(schema_name,"narrowpeak") && !identical(schema_name,"vcf") && !identical(schema_name,"broadpeak")
+       && !identical(schema_name,"bed")  && !identical(schema_name,"bedgraph"))
       stop("schema not admissable")
 
-    schema_name <- schemaName
     URL <- paste0(url,"/datasets/",datasetName,"/uploadSample?schemaName=",schema_name)
   }
 
@@ -196,7 +201,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
     print("upload Complete")
 }
 
-#' GMQL API web Service
+#' Delete dataset
 #'
 #' It delete private dataset from repository
 #'
@@ -235,7 +240,7 @@ deleteDataset <- function(url,datasetName)
   }
 }
 
-#' GMQL API web Service
+#' Download Dataset
 #'
 #' It donwload private dataset from repository
 #'
@@ -274,7 +279,7 @@ downloadDataset <- function(url,datasetName,path = getwd())
   print("Download Complete")
 }
 
-#' GMQL API web Service
+#' Show metadata list from dataset sample
 #'
 #' It retrieve metadata for a specific sample in dataset
 #'
@@ -306,7 +311,7 @@ metadataFromSample <- function(url, datasetName,sampleName)
 }
 
 
-#' GMQL API web Service
+#' Show regions from dataset sample
 #'
 #'
 #' It retrieve regions for a specific sample in dataset
@@ -326,7 +331,7 @@ regionFromSample <- function(url, datasetName,sampleName)
   URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
   h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
   req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, 'text',encoding = "UTF-8")
+  content <- httr::content(req, 'parsed',encoding = "UTF-8")
 
   if(req$status_code !=200)
     stop(content)

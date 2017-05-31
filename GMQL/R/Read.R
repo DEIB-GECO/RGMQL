@@ -41,7 +41,7 @@ initGMQL <- function(output_format)
 #' from disk, saving in Scala memory that can be referenced in R
 #'
 #'
-#' @param DatasetPathFolder folder path for GMQL dataset
+#' @param DatasetPathFolder folder path for GMQL dataset or datasetname on repository
 #' @param parser \code{\link{PARSER}} objects used to parsing dataset files
 #' The PARSER's available are: BedParser, ANNParser, BroadProjParser, BasicParser,
 #' NarrowPeakParser, RnaSeqParser, CustomParser.
@@ -68,14 +68,13 @@ initGMQL <- function(output_format)
 #'
 read <- function(DatasetPathFolder, parser = CustomParser(),local = T)
 {
-  if(local)
-  {
-    if(is.character(DatasetPathFolder) && !length(DatasetPathFolder)==1)
-      stop("DatasetPathFolder: no multiple string")
+  if(is.character(DatasetPathFolder) && !length(DatasetPathFolder)==1)
+    stop("DatasetPathFolder: no multiple string")
 
-    if(!dir.exists(DatasetPathFolder))
-      stop("folder does not exist")
-  }
+  if(!dir.exists(DatasetPathFolder) && local)
+    stop("folder does not exist")
+
+
   if(!is(parser,"PARSER"))
     stop("No correct parser")
 
@@ -86,4 +85,6 @@ read <- function(DatasetPathFolder, parser = CustomParser(),local = T)
   else
     out
 }
+
+
 
