@@ -41,13 +41,10 @@
 #' \dontrun{
 #'
 #' initGMQL("gtf")
-#' path = /.../dataset_name
+#' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
-#' s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
-#' s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
-#' semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
-#'
+#' s = select()
 #' o = order(DESC(Region_Count), mtop = 2, input_data = s)
 #' o = order(list(DESC(Region_Count)),regions_ordering = list(DESC(MutationCount),ASC(pvalue)),
 #' mtop = 5,rtopg = 1, input_data = c)
@@ -58,12 +55,6 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 {
   if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg))
     stop("mtop, rtop, rtopg and mtopg must be integer")
-
-  if(!is.null(metadata_order))
-    .check_ordering(metadata_order)
-
-  if(!is.null(regions_order))
-    .check_ordering(regions_order)
 
   # we consider only the first element even if input is a vector of Int
   # we cut the other arguments
@@ -86,19 +77,13 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     rtopg = 0
   }
 
-  order_matrix <- sapply(metadata_order,function(x){
-    order <- as.character(x)
-    matrix <- t(matrix(order))
-  })
+  if(!is.null(metadata_ordering))
+    meta_matrix <- .ordering_meta(metadata_ordering)
 
-  order_matrix <- sapply(regions_order,function(x){
-    order <- as.character(x)
-    matrix <- matrix(order)
-  })
-  o_m_names <- matrix(names_reg)
-  order_region_matrix <- cbind(o_m_names,order_matrix)
+  if(!is.null(regions_ordering))
+    region_matrix <- .ordering_meta(regions_ordering)
 
-  out <- frappeR$order(metadata,mtopg,mtop,order_region_matrix,rtopg,rtop,input_data)
+  out <- WrappeR$order(meta_matrix,mtopg,mtop,region_matrix,rtopg,rtop,input_data)
   if(grepl("No",out,ignore.case = T))
     stop(out)
   else
@@ -106,14 +91,30 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 }
 
 
-.check_ordering <- function(ordering_list)
+
+.ordering_meta <- function(ordering)
 {
-  if(!is.list(ordering_list))
-    stop("metadata_order must be a list")
-
-  if(all(sapply(ordering_list, function(x) is(x,"ORDER") )))
-    stop("All elements should be ORDER object")
-
+  if(is.list(ordering))
+  {
+    order_matrix <- t(sapply(ordering,function(x){
+      new_value <- as.character(x)
+      if(length(new_value)==1)
+        new_value = c("ASC",new_value)
+      else if(!identical("ASC",new_value[1]) && !identical("DESC",new_value[1]))
+        stop("no more than one value")
+      matrix <- matrix(new_value)
+    }))
+  }
+  else if(is.character(ordering))
+  {
+    order_matrix <- t(sapply(ordering, function(x) {
+      new_value = c("ASC",x)
+      matrix <- matrix(new_value)
+    }))
+  }
+  else
+    stop("only list or character")
 }
+
 
 

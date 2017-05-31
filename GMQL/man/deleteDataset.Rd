@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{deleteDataset}
 \alias{deleteDataset}
-\title{GMQL API web Service}
+\title{Delete dataset}
 \usage{
 deleteDataset(url, datasetName)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/authOperations.R
 \name{register.GMQL}
 \alias{register.GMQL}
-\title{GMQL API web Service}
+\title{Register to GMQL}
 \usage{
 register.GMQL(url, name, lastname, mail, username, password)
 }
@@ -20,7 +20,7 @@ register.GMQL(url, name, lastname, mail, username, password)
 \item{password}{password}
 }
 \description{
-Register to Web Service Provider
+Register to GMQL rest services suite
 }
 \details{
 After registration you receive an authenticated token.
@@ -29,6 +29,7 @@ This token is saved in Global environment and used to perform the other REST cal
 \examples{
 
 \dontrun{
+
 url <- <http_server_address>)
 register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")
 }

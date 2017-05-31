@@ -40,10 +40,15 @@ print.ORDER <- function(obj) {
 }
 
 
+c.ORDER <- function(...)
+{
+  a <- list(...)
+}
+
 as.character.ORDER <- function(obj) {
   class <- class(obj)[1]
   val <- obj$value
-  c(val,class)
+  c(class,val)
 }
 
 

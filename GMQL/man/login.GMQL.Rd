@@ -2,7 +2,7 @@
 % Please edit documentation in R/authOperations.R
 \name{login.GMQL}
 \alias{login.GMQL}
-\title{Log in to GMQL web service}
+\title{Log in to GMQL}
 \usage{
 login.GMQL(url, username = NULL, password = NULL)
 }
@@ -14,8 +14,8 @@ login.GMQL(url, username = NULL, password = NULL)
 \item{password}{single string password used on registration}
 }
 \description{
-Log in to GMQL web service as guest or registered user
-trough username and password
+Log in to GMQL rest services suite as guest or registered user
+by username and password
 }
 \details{
 if username and password are NULL you will log in as guest

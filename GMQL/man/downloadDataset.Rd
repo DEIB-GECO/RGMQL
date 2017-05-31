@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{downloadDataset}
 \alias{downloadDataset}
-\title{GMQL API web Service}
+\title{Download Dataset}
 \usage{
 downloadDataset(url, datasetName, path = getwd())
 }

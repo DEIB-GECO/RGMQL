@@ -22,29 +22,18 @@
 #' @examples
 #' \dontrun{
 #'
-#' startGMQL()
+#' initGMQL("gtf")
 #' path = /.../dataset_name
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
-#' d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
+#' d = difference(list(DEF("antibody_target"),FULL("cell_type")),left_input_data = r, right_input_data = c)
+#' d = difference(c("cell_type","age","cell_attribute","size"),left_input_data = r, right_input_data = c)
 #' }
 #'
 difference <- function(left_input_data, right_input_data, joinBy = NULL)
 {
   if(!is.null(joinBy))
-  {
-    if(!is.list(joinBy))
-      stop("joinBy have to be a list ")
-
-    if(!all(sapply(joinBy, function(x) is(x,"CONDITION") )))
-      stop("All elements should be CONDITION object")
-
-    join_condition_matrix <- t(sapply(joinBy, function(x) {
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-    }))
-
-  }
+    join_condition_matrix <- .join_condition(joinBy)
   else
     join_condition_matrix = NULL
 

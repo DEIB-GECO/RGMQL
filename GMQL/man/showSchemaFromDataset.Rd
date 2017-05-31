@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{showSchemaFromDataset}
 \alias{showSchemaFromDataset}
-\title{GMQL API web Service}
+\title{Show dataset schema}
 \usage{
 showSchemaFromDataset(url, datasetName)
 }

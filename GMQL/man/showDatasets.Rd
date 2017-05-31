@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{showDatasets}
 \alias{showDatasets}
-\title{GMQL API web Service}
+\title{Show Dataset}
 \usage{
 showDatasets(url)
 }

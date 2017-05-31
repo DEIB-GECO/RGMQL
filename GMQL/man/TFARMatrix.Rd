@@ -7,6 +7,9 @@
 TFARMatrix(GMQL_dataset_path, metadata = NULL, metadata_prefix = NULL,
   regions = NULL)
 }
+\arguments{
+\item{regions}{}
+}
 \description{
 GMQL to TFARM matrix
 }

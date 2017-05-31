@@ -86,7 +86,7 @@ take_value.META_OPERATOR <- function(obj){
                  "SUM" = paste0("sum_",val),
                  "MIN" = paste0("min_",val),
                  "MAX" = paste0("max_",val),
-                 "COUNT" = paste0("count_"),
+                 "COUNT" = paste0("count"),
                  "BAG" = paste0("bag_",val),
                  "AVG" = paste0("avg_",val),
                  "STD" = paste0("std_"),
@@ -192,7 +192,7 @@ MEDIAN <- function(value)
     value = value
   )
   ## Set the name for the class
-  class(list) <- c("MEDIAN","META_OPERATOR")
+  class(list) <- c("MEDIAN","OPERATOR","META_OPERATOR")
   return(list)
 }
 

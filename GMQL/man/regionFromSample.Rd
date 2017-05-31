@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{regionFromSample}
 \alias{regionFromSample}
-\title{GMQL API web Service}
+\title{Show regions from dataset sample}
 \usage{
 regionFromSample(url, datasetName, sampleName)
 }

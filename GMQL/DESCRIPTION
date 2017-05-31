@@ -2,11 +2,11 @@ Package: GMQL
 Type: Package
 Title: GMQL function
 Version: 1.1.0
-Author: Simone Pallotta <simone.pallotta@mail.polimi.it>
-Maintainer: Polimi <yourself@somewhere.net>
+Author: Pallotta Simone, Masseroli Marco 
+Maintainer: Simone Pallotta <simonepallotta@hotmail.com>, Masseroli Marco <marco.masseroli@polimi.it>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1

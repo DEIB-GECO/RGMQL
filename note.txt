@@ -2,26 +2,33 @@ NOTE:
 
 se errore di cartella già esistente —> spark si disattiva
 
-errore nell’esecuzione di dataset con sample in formato GTF
-
 ———————————
 
 SELECT: manca controllo sulle regioni nel predicato
-	descrivere CONDITION come S3 CLASS in doc R
+	sistemare doc
 
+CONDITION: come S3 CLASS in doc R
 
-TAKE: non andrà mai
+UNION: inserito left e right come prefisso, no il dataset
+
+OPERATOR: come S3 CLASS in doc R
 
 GROUP: non implementata
 
-EXTEND: descrivere META_OPERATOR come S3 CLASS in doc
+META_OPERATOR: come S3 CLASS in doc
+
+
+ORDER: sistemare doc
+	
+
+
+
 
 JOIN: prefissi usato quelli default
 
 PROJECT: metadata update non implementata 
 region update difficoltà nel parser
 
-UNION: inserito left e right come prefisso, no il dataset
 
 ————————————
 
@@ -32,7 +39,8 @@ descrivere BUILDER come S3 CLASS in doc
 
 WEB SERVICE:
 
-auth operation: sistemare doc
+auth operation: sistemare roxygen doc
+
 browse op: sistemare doc
 ope dataset: sistemare doc
 exec: sistemare doc

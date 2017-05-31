@@ -2,7 +2,7 @@
 % Please edit documentation in R/authOperations.R
 \name{logout.GMQL}
 \alias{logout.GMQL}
-\title{Log out to GMQL web services}
+\title{Log out from GMQL}
 \usage{
 logout.GMQL(url)
 }
@@ -10,7 +10,7 @@ logout.GMQL(url)
 \item{url}{server address}
 }
 \description{
-Log out to GMQL web services
+Log out from GMQL rest services suite
 }
 \details{
 After logout you will not be able to call any services.

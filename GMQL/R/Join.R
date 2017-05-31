@@ -15,13 +15,13 @@
 #' @param joinBy list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
 #' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
-#' @param output is \code{\link{BUILDER}} object: one of four different values that declare which region is given in
+#' @param output is one of four different values that declare which region is given in
 #' output for each input pair of left dataset and right dataset regions satisfying the genometric predicate:
 #' \itemize{
-#' \item{LEFT}
-#' \item{RIGHT}
-#' \item{INTERSECTION}
-#' \item{CONTIG}
+#' \item{left}
+#' \item{right}
+#' \item{intersection}
+#' \item{contig}
 #' }
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
@@ -29,6 +29,7 @@
 #'
 #' @examples
 #' \dontrun{
+#'
 #' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
@@ -39,10 +40,9 @@
 #'
 #'
 
-join <- function(genometric_predicate = NULL, joinBy = NULL, output=CONTIG(),
+join <- function(genometric_predicate = NULL, joinBy = NULL, output="contig",
                  right_input_data, left_input_data)
 {
-
   if(!is.list(genometric_predicate))
     stop("genometric_predicate must be list of lists")
 
@@ -72,31 +72,16 @@ join <- function(genometric_predicate = NULL, joinBy = NULL, output=CONTIG(),
   }))
 
   if(!is.null(joinBy))
-  {
-    if(!is.list(joinBy))
-      stop("joinBy have to be a list ")
-
-    if(!all(sapply(joinBy, function(x) is(x,"CONDITION") )))
-      stop("All elements should be CONDITION object")
-
-    join_condition_matrix <- t(sapply(joinBy, function(x) {
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-    }))
-
-  }
+    join_condition_matrix <- .join_condition(joinBy)
   else
-    join_condition_matrix = NULL
+    join_condition_matrix <- NULL
 
-  if(is.null(output))
-    stop("output cannot be null")
+  ouput <- tolower(output)
+  if(!identical(output,"contig") && !identical(output,"left") && !identical(output,"right")
+     && !identical(output,"intersection"))
+    stop("output must be contig,left,right or intersection")
 
-  if(!is(output,"BUILDER"))
-    stop("output must be CONTIG(), LEFT(), RIGHT() or INTERSECTION()")
-
-  builder <- as.character(output)
-
-  out <- frappeR$join(genomatrix,joinBy, builder,right_input_data, left_input_data)
+  out <- frappeR$join(genomatrix,joinBy, ouput,right_input_data, left_input_data)
   if(grepl("No",out,ignore.case = T))
     stop(out)
   else

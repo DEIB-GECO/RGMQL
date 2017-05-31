@@ -7,7 +7,7 @@
 read(DatasetPathFolder, parser = CustomParser(), local = T)
 }
 \arguments{
-\item{DatasetPathFolder}{folder path for GMQL dataset}
+\item{DatasetPathFolder}{folder path for GMQL dataset or datasetname on repository}
 
 \item{parser}{\code{\link{PARSER}} objects used to parsing dataset files
 The PARSER's available are: BedParser, ANNParser, BroadProjParser, BasicParser,

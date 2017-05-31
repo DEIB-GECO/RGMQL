@@ -18,11 +18,12 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @seealso \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #'
 #' \dontrun{
+#'
 #' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
@@ -42,11 +43,10 @@ extend <-function(input_data, metadata = NULL)
     if(is.null(names))
     {
       warning("You did not assign a names to a list.\nWe build names for you")
-      names <- sapply(metadata, function(x) {
-        take_value.META_OPERATOR(x)
-      })
+      names <- sapply(metadata, take_value.META_OPERATOR)
     }
-    else {
+    else
+    {
       if("" %in% names)
         stop("No partial names assignment is allowed")
     }
@@ -69,3 +69,4 @@ extend <-function(input_data, metadata = NULL)
   else
     out
 }
+

@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{metadataFromSample}
 \alias{metadataFromSample}
-\title{GMQL API web Service}
+\title{Show metadata list from dataset sample}
 \usage{
 metadataFromSample(url, datasetName, sampleName)
 }

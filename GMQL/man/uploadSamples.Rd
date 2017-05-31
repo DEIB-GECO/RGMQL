@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{uploadSamples}
 \alias{uploadSamples}
-\title{GMQL API web Service}
+\title{Upload dataset}
 \usage{
 uploadSamples(url, datasetName, folderPath, schemaName = NULL)
 }
@@ -13,7 +13,16 @@ uploadSamples(url, datasetName, folderPath, schemaName = NULL)
 
 \item{folderPath}{path of samples folder you want to upload}
 
-\item{schemaName}{name of schema used to parse the samples}
+\item{schemaName}{name of schema used to parse the samples
+schemaName available are:
+\itemize{
+\item{NARROWPEAK}
+\item{BROADPEAK}
+\item{VCF}
+\item{BED}
+\item{BEDGRAPH}
+}
+if schema is NULL it reads from disk looking for a XML schema file}
 }
 \description{
 It upload sample files to create a new dataset on repository

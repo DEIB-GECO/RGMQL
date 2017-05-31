@@ -27,7 +27,7 @@
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
 #' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
-#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT,MEDIAN
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
@@ -39,7 +39,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' startGMQL()
+#' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' r2 = read(path2)
