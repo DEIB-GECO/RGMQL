@@ -1,4 +1,4 @@
-#' GMQL API web Service
+#' Log in to GMQL web service
 #'
 #' Log in to GMQL web service as guest or registered user
 #' trough username and password
@@ -60,7 +60,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 }
 
 
-#' GMQL API web Service
+#' Log out to GMQL web services
 #'
 #' Log out to GMQL web services
 #'

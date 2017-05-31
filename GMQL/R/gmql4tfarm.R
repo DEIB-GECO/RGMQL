@@ -28,6 +28,12 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
     stop("GMQL dataset cannot be mixed dataset: no GTF and GDM together")
 
   vector_field <- .schema_header(datasetName)
+
+
+
+
+
+
   if(length(gdm_region_files)>0)
   {
     gdm_meta_files <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = T)
@@ -39,8 +45,7 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
     .parse_gtf(gtf_meta_files,vector_field,gtf_region_files)
   }
 
-  df <- rbind.fill(df_list)
-  df %>% distinct
+
 }
 
 
@@ -91,8 +96,6 @@ prova <- function(m,name)
 
   names_list <- .get_names_list(meta_list)
 
-
-
   df_list <- lapply(gdm_region_files,function(x,regions,vector_field){
 
     region_frame <- read.delim(x,col.names = vector_field,header = FALSE,sep = '\t')
@@ -101,6 +104,9 @@ prova <- function(m,name)
     r <- region_frame[col_names]
 
   },regions,vector_field)
+
+  df <- rbind.fill(df_list)
+  df %>% distinct
 }
 
 

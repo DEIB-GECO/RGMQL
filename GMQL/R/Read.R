@@ -14,7 +14,7 @@
 #' }
 #'
 #' @details
-#' Instantiate in .GlobalEnv a scala singleton (WrappeR) used to call its scala methods
+#' Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
 #'
 #' @examples
 #' \dontrun{
@@ -66,19 +66,21 @@ initGMQL <- function(output_format)
 #' r = read(path,RnaSeqParser())
 #' }
 #'
-read <- function(DatasetPathFolder, parser = CustomParser())
+read <- function(DatasetPathFolder, parser = CustomParser(),local = T)
 {
- if(is.character(DatasetPathFolder) && !length(DatasetPathFolder)==1)
-   stop("DatasetPathFolder: no multiple string")
+  if(local)
+  {
+    if(is.character(DatasetPathFolder) && !length(DatasetPathFolder)==1)
+      stop("DatasetPathFolder: no multiple string")
 
-  if(!dir.exists(DatasetPathFolder))
-    stop("folder does not exist")
-
+    if(!dir.exists(DatasetPathFolder))
+      stop("folder does not exist")
+  }
   if(!is(parser,"PARSER"))
     stop("No correct parser")
 
   parser_name <- as.character(parser)
-  out <- WrappeR$readDataset(DatasetPathFolder,parser_name)
+  out <- WrappeR$readDataset(DatasetPathFolder,parser_name,local)
   if(grepl("File",out,ignore.case = T) || grepl("No",out,ignore.case = T))
     stop(out)
   else

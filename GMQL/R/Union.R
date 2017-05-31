@@ -20,6 +20,7 @@
 #'
 #' @examples
 #' \dontrun{
+#'
 #' r = read(path)
 #' r2 = read(path2)
 #' c = cover(2,3,input_data = r)

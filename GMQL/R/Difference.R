@@ -21,6 +21,7 @@
 #'
 #' @examples
 #' \dontrun{
+#'
 #' startGMQL()
 #' path = /.../dataset_name
 #' r = read(path)

@@ -14,12 +14,12 @@ TAKE: non andrà mai
 
 GROUP: non implementata
 
-
 EXTEND: descrivere META_OPERATOR come S3 CLASS in doc
 
 JOIN: prefissi usato quelli default
 
 PROJECT: metadata update non implementata 
+region update difficoltà nel parser
 
 UNION: inserito left e right come prefisso, no il dataset
 
