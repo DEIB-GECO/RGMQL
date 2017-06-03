@@ -1,19 +1,25 @@
-#' Log in to GMQL
+#' Login to GMQL
 #'
-#' Log in to GMQL rest services suite as guest or registered user
-#' by username and password
+#' Login to GMQL REST services suite as a registered user, specifiyng username and password,
+#' or as guest
 #'
 #' @import httr
-#' @param url server address
-#' @param username single string name used on registration
-#' @param password single string password used on registration
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param username single string name used during signup
+#' @param password single string password used during signup
 #'
 #' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
 #' @details
-#' if username and password are NULL you will log in as guest
-#' After login you receive an authenticated token.
-#' This token is saved in Global environment and used to perform the other REST call
+#' if both username and password are NULL you will be logged as guest
+#' After login you will receive an authentication token.
+#' As token remains vaild on server (until the next login / registration) a user can safely use a token for
+#' a previous session as a convenience, this token is saved in Global environment to perform
+#' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
+#' If error occured a specific error will be printed
+#'
 #'
 #'
 #' @examples
@@ -58,18 +64,21 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 }
 
 
-#' Log out from GMQL
+#' Logout from GMQL
 #'
-#' Log out from GMQL rest services suite
+#' Logout from GMQL REST services suite
 #'
 #' @import httr
-#' @param url server address
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
 #'
 #' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
 #' @details
-#' After logout you will not be able to call any services.
-#' The authneticated token is removed from Global environment
+#' After logout the authentication token will be invalidated.
+#' The authentication token is removed from Global environment
+#' If error occured a specific error will be printed
 #'
 #' @examples
 #'
@@ -95,25 +104,30 @@ logout.GMQL <- function(url)
   }
 }
 
-#' Register to GMQL
+#' Sign up to GMQL
 #'
-#' Register to GMQL rest services suite
-#'
+#' Sign up to GMQL rest services suite
 #'
 #' @import httr
-#' @param url server address
-#' @param name first name
-#' @param lastname lastname
-#' @param mail email
-#' @param username username
-#' @param password password
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param name single string first name of the user (can contain space)
+#' @param lastname single string last name of the user (can contain space)
+#' @param mail single string email (as spacified in RFC format)
+#' @param username single string name you want to authenticate with
+#' @param password single string password you want to authenticate with
 #'
 #'
 #' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
 #'
 #' @details
-#' After registration you receive an authenticated token.
-#' This token is saved in Global environment and used to perform the other REST call
+#' After registration you receive an authentication token.
+#' As token remains vaild on server (until the next login / registration) a user can safely use a token for
+#' a previous session as a convenience, this token is saved in Global environment to perform
+#' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
+#' If error occured a specific error will be printed
+#'
 #'
 #' @examples
 #'

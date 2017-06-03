@@ -3,17 +3,20 @@
 #' It show all GMQL dataset stored in repository
 #'
 #' @import httr
-#' @param url server address
-#' @return list of datasets
-#' every dataset in the list is identified by:
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#'
+#' @return list of datasets.
+#' Every dataset in the list is identified by:
 #' \itemize{
-#' \item{name}
-#' \item{owner}
+#' \item{name: name of dataset}
+#' \item{owner: pulbic or name of the user}
 #' }
+#'
 #' @seealso \code{\link{deleteDataset}}
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #' @examples
 #'
@@ -28,7 +31,6 @@ showDatasets <- function(url)
 {
   URL <- paste0(url,"/datasets")
   h <- c('X-Auth-Token' = authToken)
-  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed") #JSON
   if(req$status_code !=200)
@@ -44,19 +46,21 @@ showDatasets <- function(url)
 #' It show all sample from a specific GMQL dataset
 #'
 #' @import httr
-#' @param url server address
-#' @param datasetName name of dataset
-#' @return list of samples
-#' every sample in the list is identified by:
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#' @return list of samples in dataset.
+#' Every sample in the list is identified by:
 #' \itemize{
-#' \item{id}
-#' \item{name}
-#' \item{path}
+#' \item{id: id of sample}
+#' \item{name: name of sample}
+#' \item{path: sample repository path}
 #' }
 #' @seealso \code{\link{uploadSamples}}
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #' @examples
 #'
@@ -84,20 +88,21 @@ showSamplesFromDataset <- function(url,datasetName)
 
 #' Show dataset schema
 #'
-#' It show the region schema of a specific GMQL dataset
+#' It shows the region schema of a specific GMQL dataset
 #'
 #' @import httr
-#' @param url server address
-#' @param datasetName name of dataset
-#' @return list of region schema fields
-#' every field in the list is identified by:
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#' @return list of region schema fields.
+#' Every field in the list is identified by:
 #' \itemize{
-#' \item{name}
-#' \item{fieldType: (e.g STRING, DOUBLE)}
+#' \item{name: name of field (e.g. chr, start, end, strand ...)}
+#' \item{fieldType: (e.g STRING, DOUBLE ...)}
 #' }
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #' @examples
 #'
@@ -124,12 +129,13 @@ showSchemaFromDataset <- function(url,datasetName)
 #' Upload dataset
 #'
 #'
-#' It upload sample files to create a new dataset on repository
+#' It uploads folder containing dataset files: a new dataset will be created on repository
 #'
 #'
-#' @param url server address
-#' @param datasetName name of new dataset
-#' @param folderPath path of samples folder you want to upload
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#' @param folderPath local path to the folder containing the samples
 #' @param schemaName name of schema used to parse the samples
 #' schemaName available are:
 #' \itemize{
@@ -139,11 +145,11 @@ showSchemaFromDataset <- function(url,datasetName)
 #' \item{BED}
 #' \item{BEDGRAPH}
 #' }
-#' if schema is NULL it reads from disk looking for a XML schema file
-#'
+#' if schema is NULL it looking for a XML schema file to read
+#' @param isGMQL logical value indicating whether is GMQL dataset or not
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #' @examples
 #'
@@ -153,8 +159,11 @@ showSchemaFromDataset <- function(url,datasetName)
 #' uploadSamples(url,"prova1",folderPath = <folder_path>)
 #' }
 #'
-uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
+uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=T)
 {
+  if(isGMQL)
+    folderPath <- paste0(folderPath,"/files")
+
   files <- list.files(folderPath,full.names = T)
   if(length(files)==0)
     stop("no files present")
@@ -172,7 +181,6 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
   names(list_files) <- list_files_names
   URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
-  #  req <<- POST(url,body = query ,add_headers(h),encode = "json")
 
   if(is.null(schemaName))
   {
@@ -203,15 +211,16 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL)
 
 #' Delete dataset
 #'
-#' It delete private dataset from repository
+#' It deletes single private dataset from repository specified by name
 #'
 #' @import httr
-#' @param url server address
-#' @param datasetName dataset name to delete
 #'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #' @seealso \code{\link{downloadDataset}}
 #'
@@ -242,22 +251,25 @@ deleteDataset <- function(url,datasetName)
 
 #' Download Dataset
 #'
-#' It donwload private dataset from repository
+#' It donwloads private dataset as zip file from repository to local path specified
 #'
 #' @import httr
-#' @param url server address
-#' @param datasetName dataset name to delete
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
 #' @param path local path folder where store dataset
 #' by defualt is R working directory
 #'
 #'
 #' @details
-#' If error occured stop and print error
+#' If error occured a specific error will be printed
 #'
 #'
 #' @examples
 #'
 #' \dontrun{
+#'
 #' login.GMQL(url = <http_server_address>)
 #' url <- <http_server_address>)
 #' downloadDataset(url,<dataset_name>,path = <folder_path>)
@@ -279,17 +291,30 @@ downloadDataset <- function(url,datasetName,path = getwd())
   print("Download Complete")
 }
 
-#' Show metadata list from dataset sample
+#' Shows metadata list from dataset sample
 #'
-#' It retrieve metadata for a specific sample in dataset
+#' It retrieves metadata for a specific sample in dataset
 #'
 #' @import httr
-#' @param url server address
-#' @param datasetName dataset name to delete
-#' @param sampleName sample name
-#' @return list of metadata
 #'
-
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#' @param sampleName sample name we want to get
+#'
+#' @return list of metadata in the form 'key = value'
+#'
+#' @details
+#' If error occured a specific error will be printed
+#'
+#'
+#' \dontrun{
+#'
+#' login.GMQL(url = <http_server_address>)
+#' url <- <http_server_address>)
+#' metadataFromSample(url,"<dataset_name>",<dataset_sample_name>)
+#' }
+#'
 metadataFromSample <- function(url, datasetName,sampleName)
 {
   URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/metadata")
@@ -311,20 +336,33 @@ metadataFromSample <- function(url, datasetName,sampleName)
 }
 
 
-#' Show regions from dataset sample
+#' Shows regions from a dataset sample
 #'
 #'
-#' It retrieve regions for a specific sample in dataset
+#' It retrieves regions for a specific sample (whose name is specified in the paramter "sampleName")
+#' in a specific dataset (whose name is specified in the paramter "datasetName")
 #'
 #' @import httr
 #' @import rtracklayer
 #' @import data.table
 #' @import GenomicRanges
-#' @param url server address
-#' @param datasetName dataset name to delete
-#' @param sampleName sample name
-#' @return Granges containing regions
 #'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#' @param sampleName sample name we want to get
+#'
+#' @return Granges data containing regions of sample
+#'
+#' @details
+#' If error occured a specific error will be printed
+#'
+#' \dontrun{
+#'
+#' login.GMQL(url = <http_server_address>)
+#' url <- <http_server_address>)
+#' regionFromSample(url,"<dataset_name>",<dataset_sample_name>)
+#' }
 #'
 regionFromSample <- function(url, datasetName,sampleName)
 {

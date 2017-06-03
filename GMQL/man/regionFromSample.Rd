@@ -2,20 +2,32 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{regionFromSample}
 \alias{regionFromSample}
-\title{Show regions from dataset sample}
+\title{Shows regions from a dataset sample}
 \usage{
 regionFromSample(url, datasetName, sampleName)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{dataset name to delete}
+\item{datasetName}{name of dataset we want to get}
 
-\item{sampleName}{sample name}
+\item{sampleName}{sample name we want to get}
 }
 \value{
-Granges containing regions
+Granges data containing regions of sample
 }
 \description{
-It retrieve regions for a specific sample in dataset
+It retrieves regions for a specific sample (whose name is specified in the paramter "sampleName")
+in a specific dataset (whose name is specified in the paramter "datasetName")
+}
+\details{
+If error occured a specific error will be printed
+
+\dontrun{
+
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+regionFromSample(url,"<dataset_name>",<dataset_sample_name>)
+}
 }

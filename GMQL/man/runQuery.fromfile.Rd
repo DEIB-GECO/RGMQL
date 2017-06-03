@@ -2,12 +2,13 @@
 % Please edit documentation in R/queryOperation.R
 \name{runQuery.fromfile}
 \alias{runQuery.fromfile}
-\title{GMQL API web Service}
+\title{Run GMQL query}
 \usage{
 runQuery.fromfile(url, fileName, filePath, output_gtf = T)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
 \item{fileName}{name of file}
 
@@ -17,5 +18,8 @@ runQuery.fromfile(url, fileName, filePath, output_gtf = T)
 the possiblities are: GTF or TAB}
 }
 \description{
-It runs a query from file
+It runs a GMQL query from file
+}
+\details{
+If error occured a specific error will be printed
 }

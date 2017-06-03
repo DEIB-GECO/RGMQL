@@ -93,13 +93,9 @@ importGMQL.gdm <- function(datasetName)
   if(length(regions) != 0)
   {
     name_samples <- lapply(regions, function(x){gsub("*.gdm", "", basename(x))})
-    schema <- list.files(datasetName, pattern = "*.schema$",full.names = T)
-    if(length(schema)==0)
-      stop("schema not present")
 
-    xml_schema <- xml2::read_xml(schema)
-    list_field <- xml2::as_list(xml_schema)
-    vector_field <- unlist(list_field)
+    vector_field <- .schema_header(datasetName)
+
     names(vector_field)=NULL
     sampleList <- lapply(regions,function(x){
       df <- read.delim(x,col.names = vector_field,header = FALSE)

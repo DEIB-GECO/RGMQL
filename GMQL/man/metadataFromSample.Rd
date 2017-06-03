@@ -2,20 +2,32 @@
 % Please edit documentation in R/dataSetOperation.R
 \name{metadataFromSample}
 \alias{metadataFromSample}
-\title{Show metadata list from dataset sample}
+\title{Shows metadata list from dataset sample}
 \usage{
 metadataFromSample(url, datasetName, sampleName)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{dataset name to delete}
+\item{datasetName}{name of dataset we want to get}
 
-\item{sampleName}{sample name}
+\item{sampleName}{sample name we want to get}
 }
 \value{
-list of metadata
+list of metadata in the form 'key = value'
 }
 \description{
-It retrieve metadata for a specific sample in dataset
+It retrieves metadata for a specific sample in dataset
+}
+\details{
+If error occured a specific error will be printed
+
+
+\dontrun{
+
+login.GMQL(url = <http_server_address>)
+url <- <http_server_address>)
+metadataFromSample(url,"<dataset_name>",<dataset_sample_name>)
+}
 }

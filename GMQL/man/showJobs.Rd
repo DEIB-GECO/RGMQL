@@ -2,13 +2,27 @@
 % Please edit documentation in R/queryOperation.R
 \name{showJobs}
 \alias{showJobs}
-\title{GMQL API web Service}
+\title{Show all jobs}
 \usage{
 showJobs(url)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
+}
+\value{
+list of jobs
+Every job in the list is identified by:
+\itemize{
+\item{id: id of job used for log, trace and stop}
+}
 }
 \description{
-It show all Jobs
+It show all Jobs (runnig, succeded or failed) run by user
+}
+\details{
+If error occured a specific error will be printed
+}
+\seealso{
+\code{\link{showJobLog}} @seealso \code{\link{stopJob}} @seealso \code{\link{traceJob}}
 }

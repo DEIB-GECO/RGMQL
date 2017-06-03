@@ -1,0 +1,85 @@
+Scenarios for GMQL API usage in R/python framework
+
+LOCAL processing:
+================
+
+Input data:
+----------
+1- local
+	a- GMQL dataset on local disk (either .gtf or .gdm format,
+		including metadata files and xml schema)
+		
+	b- tab delimited custom samples on local disk (require custom
+		parser); if without sample metadata files, require generation of
+		sample metadata files (containing sample file name)
+
+	d- in a local variable in memory (in the used framework: R/python)
+
+2- remote
+	a- in a remote GMQL repository
+
+	b- available at a URI (http, ?ftp, ..)
+
+
+Output data:
+-----------
+3- local
+	a- GMQL dataset on local disk (either .gtf or .gdm format,
+		including metadata files and xml schema)
+
+	c- in a local variable in memory (in R/python)
+
+
+Processing workflow:
+-------------------
+Components:
+I- GMQL dag creation and execution
+II- processing in the used framework: R/python
+
+Workflow:
+- any composition of the components 1 and 2, also iterative 
+	(e.g. 1-2-1-2-..., or 2-1-2-1-...)
+
+
+
+REMOTE processing:
+=================
+
+Input data:
+----------
+4- remote
+	a- in the GMQL repository of the remote processing framework
+
+	b- available at a URI (http, ?ftp, ..)
+
+5- local (require upload in the remote processing framework)
+	a- GMQL dataset on local disk (either .gtf or .gdm format,
+		including metadata files and xml schema)
+		
+	b- tab delimited custom samples on local disk (require custom
+		parser); if without sample metadata files, require generation of
+		sample metadata files (containing sample file name)
+
+	c- in a local variable in memory (in the used framework: R/python)
+
+
+Output data:
+-----------
+6- remote (require download in the local processing framework, on the
+	local file system, or/and also in streaming in memory?)
+
+	a- GMQL dataset(either .gtf or .gdm format, including metadata
+		files and xml schema) on remote GMQL repository
+
+
+Processing workflow:
+-------------------
+Components:
+I- GMQL dag creation and its remote execution
+II- processing in the used framework: R/python
+
+Workflow:
+- any composition of the components 1 and 2, also iterative 
+	(e.g. 1-2-1-2-..., or 2-1-2-1-...)
+
+

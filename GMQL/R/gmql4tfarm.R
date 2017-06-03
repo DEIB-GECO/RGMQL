@@ -1,11 +1,11 @@
 #' GMQL to TFARM matrix
-#'
+#' solo sample con ugual numero di righe
 #'
 #' @import xml2
 #' @import plyr
 #' @import dplyr
 #' @import data.table
-#' @importFrom dplyr %>%
+#' @import rtracklayer
 #'
 #' @param GMQL_dataset_path
 #' @param metadata
@@ -39,26 +39,26 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 
   if(length(gdm_meta_files)>0)
   {
-    #gdm_meta_files <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = T)
-
     samples_file <- .check_metadata(metadata,metadata_prefix,gdm_meta_files)
     samples_to_read <- unlist(samples_file)
-    samples_to_read <- gsub(".meta$", "", samples_to_read)
+    if(length(samples_to_read)>0)
+      samples_to_read <- gsub(".meta$", "", samples_to_read)
+    else
+      samples_to_read <- gsub(".meta$", "", gdm_meta_files)
 
     granges <- .parse_gdm(vector_field,samples_to_read,regions)
   }
   else
   {
-   # gtf_meta_files <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = T)
-
     samples_file <- .check_metadata(metadata,metadata_prefix,gtf_meta_files)
     samples_to_read <- unlist(samples_file)
-    samples_to_read <- gsub(".meta$", "", samples_to_read)
+    if(length(samples_to_read)>0)
+      samples_to_read <- gsub(".meta$", "", samples_to_read)
+    else
+      samples_to_read <- gsub(".meta$", "", gtf_meta_files)
 
-    .parse_gtf(vector_field,samples_to_read,regions)
+    granges <- .parse_gtf(vector_field,samples_to_read,regions)
   }
-  #print(samples_to_read)
-
 }
 
 .check_metadata <- function(metadata,metadata_prefix,meta_files)
@@ -89,9 +89,18 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 }
 
 
-.parse_gtf <- function(vector_field,gtf_region_files)
+.parse_gtf <- function(vector_field,gtf_region_files,regions)
 {
-
+  g1 <- rtracklayer::import(con = gtf_region_files[1], format = "gtf")
+  elementMetadata(g1) <- NULL
+  DF_list <- lapply(gtf_region_files, function(x){
+    g_x <- rtracklayer::import(con = x, format = "gtf")
+    meta <- elementMetadata(g_x)[regions]
+    data.frame(meta)
+    })
+  DF_only_regions <- dplyr::bind_cols(DF_list)
+  elementMetadata(g1) <- DF_only_regions
+  g1
 }
 
 .parse_gdm <- function(vector_field,gdm_region_files,regions)
@@ -114,6 +123,8 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
   complete_df <- dplyr::bind_cols(df,df_only_regions)
   g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,keep.extra.columns = T,
                                                start.field = "left",end.field = "right")
+
+
 
 }
 

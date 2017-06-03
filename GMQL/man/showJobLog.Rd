@@ -2,15 +2,22 @@
 % Please edit documentation in R/queryOperation.R
 \name{showJobLog}
 \alias{showJobLog}
-\title{GMQL API web Service}
+\title{Show a job log}
 \usage{
 showJobLog(url, job_id)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{job_id}{id of jobs}
+\item{job_id}{single string id of the job}
+}
+\value{
+log text
 }
 \description{
-It show a log for specific job
+It show a job log for specific job
+}
+\details{
+If error occured a specific error will be printed
 }

@@ -4,7 +4,7 @@
 \alias{take}
 \title{GMQL Operation: TAKE}
 \usage{
-take(input_data, rows = 0)
+take(input_data, rows = 0L)
 }
 \arguments{
 \item{input_data}{"url-like" string taken from GMQL function}
@@ -22,7 +22,7 @@ GMQL Operation: TAKE
 
 \dontrun{
 
-initGMQL("gtf")
+initGMQL("collect")
 r = read(path)
 r2 = read(path2)
 s = select(input_data = r)

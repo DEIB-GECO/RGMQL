@@ -2,7 +2,8 @@
 % Please edit documentation in R/gmql4tfarm.R
 \name{TFARMatrix}
 \alias{TFARMatrix}
-\title{GMQL to TFARM matrix}
+\title{GMQL to TFARM matrix
+solo sample con ugual numero di righe}
 \usage{
 TFARMatrix(GMQL_dataset_path, metadata = NULL, metadata_prefix = NULL,
   regions = NULL)
@@ -12,6 +13,7 @@ TFARMatrix(GMQL_dataset_path, metadata = NULL, metadata_prefix = NULL,
 }
 \description{
 GMQL to TFARM matrix
+solo sample con ugual numero di righe
 }
 \details{
 

@@ -14,9 +14,9 @@ select(input_data, predicate = NULL, region_predicate = NULL,
 
 \item{region_predicate}{string predicate made up by logical operation: AND,OR,NOT on schema region values}
 
-\item{semi_join}{list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in semijoin
-The CONDITION's available are: FULLNAME, DEFAULT, EXACT
-Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
+\item{semi_join}{list of \code{\link{CONDITION}} objects every object contains the name of metadata to be used in semijoin,
+The CONDITION's available are: FULL, DEF, EXACT
+Every condition accepts only one string value. (e.g. DEF("cell_type") )}
 
 \item{semi_join_dataset}{"url-like" string taken from GMQL function used in semijoin}
 }
@@ -37,10 +37,10 @@ path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 c = cover(2,3,input_data = r)
 s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
-s = select("NOT(Patient_age < 70)",region_predicate = "NOT(variant_type == 'SNP' OR pValue < 0.01)",
-semi_join = list(DEFAULT("cell_type"),FULLNAME("age")),semi_join_dataset = c,input_data = r )
-s = select("NOT(Patient_age < 70)",region_predicate = "NOT(qValue > 0.001)",
-semi_join = list(EXACT("cell_type"),EXACT("age")),semi_join_dataset = c,input_data = r )
+s = select(region_predicate = "NOT(qValue > 0.001)", semi_join = list("cell_type","age",EXACT("cell")),
+semi_join_dataset = c,input_data = r )
+s = select("NOT(Patient_age < 70)", semi_join = c("cell_type","age","cell_attribute","size"),
+semi_join_dataset = c,input_data = r )
 }
 
 }

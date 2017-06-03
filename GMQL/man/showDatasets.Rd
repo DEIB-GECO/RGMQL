@@ -7,21 +7,22 @@
 showDatasets(url)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 }
 \value{
-list of datasets
-every dataset in the list is identified by:
+list of datasets.
+Every dataset in the list is identified by:
 \itemize{
-\item{name}
-\item{owner}
+\item{name: name of dataset}
+\item{owner: pulbic or name of the user}
 }
 }
 \description{
 It show all GMQL dataset stored in repository
 }
 \details{
-If error occured stop and print error
+If error occured a specific error will be printed
 }
 \examples{
 

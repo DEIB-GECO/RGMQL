@@ -16,6 +16,7 @@
 #' @param joinBy list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
 #' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 #' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
+#' @param is_exact logical
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
@@ -30,14 +31,14 @@
 #' d = difference(c("cell_type","age","cell_attribute","size"),left_input_data = r, right_input_data = c)
 #' }
 #'
-difference <- function(left_input_data, right_input_data, joinBy = NULL)
+difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact = F)
 {
   if(!is.null(joinBy))
     join_condition_matrix <- .join_condition(joinBy)
   else
     join_condition_matrix = NULL
 
-  out <- frappeR$difference(join_condition_matrix,right_input_data,left_input_data)
+  out <- WrappeR$difference(join_condition_matrix,right_input_data,left_input_data,is_exact)
   if(grepl("No",out,ignore.case = T))
     stop(out)
   else

@@ -7,15 +7,16 @@
 deleteDataset(url, datasetName)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{dataset name to delete}
+\item{datasetName}{name of dataset we want to get}
 }
 \description{
-It delete private dataset from repository
+It deletes single private dataset from repository specified by name
 }
 \details{
-If error occured stop and print error
+If error occured a specific error will be printed
 }
 \examples{
 

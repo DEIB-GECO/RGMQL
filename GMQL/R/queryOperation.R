@@ -1,10 +1,20 @@
-#' GMQL API web Service
+#' Show all jobs
 #'
-#' It show all Jobs
+#' It show all Jobs (runnig, succeded or failed) run by user
 #'
 #' @import httr
-#' @param url server address
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @return list of jobs
+#' Every job in the list is identified by:
+#' \itemize{
+#' \item{id: id of job used for log, trace and stop}
+#' }
 #'
+#' @seealso \code{\link{showJobLog}} @seealso \code{\link{stopJob}} @seealso \code{\link{traceJob}}
+#'
+#' @details
+#' If error occured a specific error will be printed
 #'
 #'
 showJobs <- function(url)
@@ -20,16 +30,21 @@ showJobs <- function(url)
     return(content)
 }
 
-#' GMQL API web Service
+#' Show a job log
 #'
-#' It show a log for specific job
+#' It show a job log for specific job
 #'
 #'
 #' @import httr
-#' @param url server address
-#' @param job_id id of jobs
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param job_id single string id of the job
+#'
+#' @return log text
 #'
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 showJobLog <- function(url,job_id)
 {
@@ -41,18 +56,21 @@ showJobLog <- function(url,job_id)
   if(req$status_code !=200)
     stop(content$error)
   else
-    return(unlist(content))
+    return(unlist(content,use.names = F))
 }
 
-#' GMQL API web Service
+#' Stop a job
 #'
-#' It stops a specific job
+#' It stops a specific current job
 #'
 #' @import httr
-#' @param url server address
-#' @param job_id id of jobs
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param job_id single string id of the job
 #'
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 stopJob <- function(url,job_id)
 {
@@ -67,15 +85,18 @@ stopJob <- function(url,job_id)
     return(content)
 }
 
-#' GMQL API web Service
+#' Trace a job
 #'
-#' It traces a specific job
+#' It traces a specific current job
 #'
 #' @import httr
-#' @param url server address
-#' @param job_id id of jobs
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param job_id single string id of the job
 #'
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 traceJob <- function(url, job_id)
 {
@@ -92,19 +113,22 @@ traceJob <- function(url, job_id)
 }
 
 
-#' GMQL API web Service
+#' Run GMQL query
 #'
-#' It runs a query
+#' It runs a GMQL query
 #'
 #'
 #' @import httr
-#' @param url server address
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
 #' @param fileName name of file
 #' @param query text of query
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 runQuery <- function(url,fileName,query,output_gtf = T)
 {
@@ -127,19 +151,22 @@ runQuery <- function(url,fileName,query,output_gtf = T)
     return(content)
 }
 
-#' GMQL API web Service
+#' Run GMQL query
 #'
-#' It runs a query from file
+#' It runs a GMQL query from file
 #'
 #'
 #' @import httr
-#' @param url server address
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
 #' @param fileName name of file
 #' @param filePath path of txt files where you wrote a query
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
 {
@@ -150,13 +177,14 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
   runQuery(url,fileName,query,output_gtf)
 }
 
-#' GMQL API web Service
+#' Compile GMQL query
 #'
-#' It compile a query
+#' It compiles a GMQL query
 #'
 #' @import httr
-#' @param url server address
-#' @param query txt query
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param query text query
 #'
 #'
 #'
@@ -175,13 +203,16 @@ compileQuery <- function(url ,query)
     return(content)
 }
 
-#' GMQL API web Service
+#' Compile GMQL query from file
 #'
-#' It compile a query from file
+#' It compiles a GMQL query from file
 #'
-#' @param url server address
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
 #' @param filePath path of txt files where you wrote a query
 #'
+#' @details
+#' If error occured a specific error will be printed
 #'
 compileQuery.fromfile <- function(url ,filePath)
 {

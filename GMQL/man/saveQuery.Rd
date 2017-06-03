@@ -2,19 +2,20 @@
 % Please edit documentation in R/queryBrowser.R
 \name{saveQuery}
 \alias{saveQuery}
-\title{GMQL API web Service}
+\title{Save GMQL query}
 \usage{
 saveQuery(url, queryName, queryTxt)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{queryName}{name of query}
+\item{queryName}{single string name of query}
 
-\item{queryTxt}{text of GMQL query}
+\item{queryTxt}{single string text of GMQL query}
 }
 \description{
-It save the GMQL queries to repository
+It saves the GMQL query into repository
 }
 \details{
 if error occured print the content error
@@ -23,8 +24,8 @@ if error occured print the content error
 
 \dontrun{
 
-url <- <http_server_address>)
-login.GMQL(url, username="pippo",password="baudo")
+url <- <http_server_address>
+login.GMQL(url)
 saveQuery(url,"prova1","<query_text>")
 logout.GMQL()
 }

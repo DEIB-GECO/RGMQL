@@ -4,15 +4,25 @@
 \alias{read}
 \title{GMQL Function: READ}
 \usage{
-read(DatasetPathFolder, parser = CustomParser(), local = T)
+read(DatasetFolder, parser = "CustomParser", is_local = T)
 }
 \arguments{
-\item{DatasetPathFolder}{folder path for GMQL dataset or datasetname on repository}
+\item{DatasetFolder}{folder path for GMQL dataset or datasetname on repository}
 
-\item{parser}{\code{\link{PARSER}} objects used to parsing dataset files
-The PARSER's available are: BedParser, ANNParser, BroadProjParser, BasicParser,
-NarrowPeakParser, RnaSeqParser, CustomParser.
+\item{parser}{string used to parsing dataset files
+The Parser's available are:
+\itemize{
+\item{BedParser}
+\item{ANNParser}
+\item{BroadProjParser}
+\item{BedParser}
+\item{NarrowPeakParser}
+\item{RnaSeqParser}
+\item{CustomParser.}
+}
 Default is CustomParser.}
+
+\item{local}{logical}
 }
 \value{
 "url-like" string to dataset
@@ -34,8 +44,8 @@ the parser defined without reading any XML schema
 initGMQL("gtf")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
-r = read(path,BedParser())
-r = read(path,RnaSeqParser())
+r = read(path,"BedParser")
+r = read(path,"RnaSeqParser")
 }
 
 }

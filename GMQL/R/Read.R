@@ -12,6 +12,7 @@
 #' \item{VCF: Text file format (most likely stored in a compressed manner).
 #' It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 #' }
+#' @param remote_processing logical
 #'
 #' @details
 #' Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
@@ -19,10 +20,10 @@
 #' @examples
 #' \dontrun{
 #'
-#' initGMQL("tab")
+#' initGMQL("tab",F)
 #' }
 #'
-initGMQL <- function(output_format)
+initGMQL <- function(output_format, remote_processing = F)
 {
   out_format <- toupper(output_format)
 
@@ -32,7 +33,7 @@ initGMQL <- function(output_format)
 
   scalaCompiler <- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
   WrappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
-  WrappeR$initGMQL(out_format)
+  WrappeR$initGMQL(out_format,remote_processing)
 }
 
 #' GMQL Function: READ
@@ -41,11 +42,22 @@ initGMQL <- function(output_format)
 #' from disk, saving in Scala memory that can be referenced in R
 #'
 #'
-#' @param DatasetPathFolder folder path for GMQL dataset or datasetname on repository
-#' @param parser \code{\link{PARSER}} objects used to parsing dataset files
-#' The PARSER's available are: BedParser, ANNParser, BroadProjParser, BasicParser,
-#' NarrowPeakParser, RnaSeqParser, CustomParser.
+#' @param DatasetFolder folder path for GMQL dataset or datasetname on repository
+#' @param parser string used to parsing dataset files
+#' The Parser's available are:
+#' \itemize{
+#' \item{BedParser}
+#' \item{ANNParser}
+#' \item{BroadProjParser}
+#' \item{BedParser}
+#' \item{NarrowPeakParser}
+#' \item{RnaSeqParser}
+#' \item{CustomParser.}
+#' }
 #' Default is CustomParser.
+#' @param is_local logical value indicates if dataset is a local or remote dataset
+#' if the remote processing is off you cannot use a remote repository (error occured)
+#'
 #' @return "url-like" string to dataset
 #'
 #'
@@ -62,28 +74,66 @@ initGMQL <- function(output_format)
 #' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
-#' r = read(path,BedParser())
-#' r = read(path,RnaSeqParser())
+#' r = read(path,"BedParser")
+#' r = read(path,"RnaSeqParser")
 #' }
 #'
-read <- function(DatasetPathFolder, parser = CustomParser(),local = T)
+read <- function(DatasetFolder, parser = "CustomParser",is_local=T)
 {
-  if(is.character(DatasetPathFolder) && !length(DatasetPathFolder)==1)
-    stop("DatasetPathFolder: no multiple string")
+  remote_proc <- WrappeR$is_remote_processing()
+  if(!remote_proc && !is_local)
+    stop("you cannot use local processing with remote repository")
 
-  if(!dir.exists(DatasetPathFolder) && local)
-    stop("folder does not exist")
+  if(!is.character())
+    stop("DatasetFolder: must be one string")
 
+  if(length(DatasetFolder)!=1)
+    stop("DatasetFolder: no multiple string")
 
-  if(!is(parser,"PARSER"))
-    stop("No correct parser")
+  if(is_local)
+    if(!dir.exists(DatasetFolder))
+      stop("folder does not exist")
 
-  parser_name <- as.character(parser)
-  out <- WrappeR$readDataset(DatasetPathFolder,parser_name,local)
+  parser_name <- .check_parser(parser)
+
+  out <- WrappeR$readDataset(DatasetFolder,parser_name,is_local)
   if(grepl("File",out,ignore.case = T) || grepl("No",out,ignore.case = T))
     stop(out)
   else
     out
+}
+
+.check_parser <- function(parser)
+{
+  parser <- toupper(parser)
+  if(!identical(parser,"BEDPARSER") && !identical(parser,"ANNPARSER") && !identical(parser,"BROADPROJPARSER")
+     && !identical(parser,"BASICPARSER") && !identical(parser,"NARROWPEAKPARSER") && !identical(parser,"RNASEQPARSER")
+     && !identical(parser,"CUSTOMPARSER"))
+    stop("parser not defined")
+
+  parser
+}
+
+
+
+#' Disable remote processing
+#'
+#'
+#'
+off_remote_processing<- function()
+{
+  WrappeR$remote_processing(F)
+  print("remote proessing off")
+}
+
+#' Enable remote processing
+#'
+#'
+#'
+on_remote_processing<- function()
+{
+  WrappeR$remote_processing(T)
+  print("remote proessing on")
 }
 
 

@@ -4,14 +4,15 @@
 \alias{uploadSamples}
 \title{Upload dataset}
 \usage{
-uploadSamples(url, datasetName, folderPath, schemaName = NULL)
+uploadSamples(url, datasetName, folderPath, schemaName = NULL, isGMQL = T)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{name of new dataset}
+\item{datasetName}{name of dataset we want to get}
 
-\item{folderPath}{path of samples folder you want to upload}
+\item{folderPath}{local path to the folder containing the samples}
 
 \item{schemaName}{name of schema used to parse the samples
 schemaName available are:
@@ -22,13 +23,15 @@ schemaName available are:
 \item{BED}
 \item{BEDGRAPH}
 }
-if schema is NULL it reads from disk looking for a XML schema file}
+if schema is NULL it looking for a XML schema file to read}
+
+\item{isGMQL}{logical value indicating whether is GMQL dataset or not}
 }
 \description{
-It upload sample files to create a new dataset on repository
+It uploads folder containing dataset files: a new dataset will be created on repository
 }
 \details{
-If error occured stop and print error
+If error occured a specific error will be printed
 }
 \examples{
 

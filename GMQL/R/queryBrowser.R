@@ -1,11 +1,18 @@
-#' GMQL API web Service
+#' Shows all Queries
 #'
-#' It show all the query saved to repository
+#' It shows all the GMQL query saved to repository
 #'
 #' @import httr
-#' @param url server address
-#' @return list of queries
 #'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#'
+#' @return list of queries
+#' Every query in the list is identified by:
+#' \itemize{
+#' \item{name: name of query}
+#' \item{text: text of GMQL query}
+#' }
 #' @seealso \code{\link{saveQuery}}
 #'
 #' @details
@@ -37,14 +44,15 @@ showQueries <- function(url)
     stop(content$error)
 }
 
-#' GMQL API web Service
+#' Save GMQL query
 #'
-#' It save the GMQL queries to repository
+#' It saves the GMQL query into repository
 #'
 #' @import httr
-#' @param url server address
-#' @param queryName name of query
-#' @param queryTxt text of GMQL query
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param queryName single string name of query
+#' @param queryTxt single string text of GMQL query
 #'
 #' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 #'
@@ -55,8 +63,8 @@ showQueries <- function(url)
 #'
 #' \dontrun{
 #'
-#' url <- <http_server_address>)
-#' login.GMQL(url, username="pippo",password="baudo")
+#' url <- <http_server_address>
+#' login.GMQL(url)
 #' saveQuery(url,"prova1","<query_text>")
 #' logout.GMQL()
 #' }
@@ -75,12 +83,14 @@ saveQuery <- function(url,queryName,queryTxt)
     stop(content$error)
 }
 
-#' GMQL API web Service
+#' Save GMQL query from file
 #'
-#' It save the GMQL queries to repository
+#' It saves the GMQL query into repository taken from file
 #'
-#' @param url server address
-#' @param queryName name of query
+#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param queryName name of GMQL query
 #' @param filePath local file path where you write GMQL query
 #'
 #' @seealso \code{\link{saveQuery}}

@@ -2,15 +2,19 @@
 % Please edit documentation in R/queryOperation.R
 \name{stopJob}
 \alias{stopJob}
-\title{GMQL API web Service}
+\title{Stop a job}
 \usage{
 stopJob(url, job_id)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{job_id}{id of jobs}
+\item{job_id}{single string id of the job}
 }
 \description{
-It stops a specific job
+It stops a specific current job
+}
+\details{
+If error occured a specific error will be printed
 }

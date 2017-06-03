@@ -9,9 +9,9 @@ CONDITION(value)
 \description{
 CONDITION object available are:
 \itemize{
-\item{DEFAULT}
-\item{EXACT}
-\item{FULLNAME}
+\item{DEF: DEFAULT}
+\item{EXACT: EXACT}
+\item{FULL: FULLNAME}
 }
 }
 \details{

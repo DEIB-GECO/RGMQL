@@ -7,23 +7,24 @@
 showSchemaFromDataset(url, datasetName)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{name of dataset}
+\item{datasetName}{name of dataset we want to get}
 }
 \value{
-list of region schema fields
-every field in the list is identified by:
+list of region schema fields.
+Every field in the list is identified by:
 \itemize{
-\item{name}
-\item{fieldType: (e.g STRING, DOUBLE)}
+\item{name: name of field (e.g. chr, start, end, strand ...)}
+\item{fieldType: (e.g STRING, DOUBLE ...)}
 }
 }
 \description{
-It show the region schema of a specific GMQL dataset
+It shows the region schema of a specific GMQL dataset
 }
 \details{
-If error occured stop and print error
+If error occured a specific error will be printed
 }
 \examples{
 

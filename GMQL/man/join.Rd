@@ -4,7 +4,7 @@
 \alias{join}
 \title{GMQL Operation: JOIN}
 \usage{
-join(genometric_predicate = NULL, joinBy = NULL, output = CONTIG(),
+join(genometric_predicate = NULL, joinBy = NULL, output = "contig",
   right_input_data, left_input_data)
 }
 \arguments{
@@ -14,13 +14,13 @@ join(genometric_predicate = NULL, joinBy = NULL, output = CONTIG(),
 The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
 
-\item{output}{is \code{\link{BUILDER}} object: one of four different values that declare which region is given in
+\item{output}{is one of four different values that declare which region is given in
 output for each input pair of left dataset and right dataset regions satisfying the genometric predicate:
 \itemize{
-\item{LEFT}
-\item{RIGHT}
-\item{INTERSECTION}
-\item{CONTIG}
+\item{left}
+\item{right}
+\item{intersection}
+\item{contig}
 }}
 
 \item{right_input_data}{"url-like" string taken from GMQL function}
@@ -38,6 +38,7 @@ left or right respectively.
 }
 \examples{
 \dontrun{
+
 initGMQL("gtf")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)

@@ -2,15 +2,16 @@
 % Please edit documentation in R/queryOperation.R
 \name{compileQuery}
 \alias{compileQuery}
-\title{GMQL API web Service}
+\title{Compile GMQL query}
 \usage{
 compileQuery(url, query)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{query}{txt query}
+\item{query}{text query}
 }
 \description{
-It compile a query
+It compiles a GMQL query
 }

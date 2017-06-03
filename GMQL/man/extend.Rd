@@ -29,12 +29,13 @@ Aggregate functions are applied sample by sample.
 \examples{
 
 \dontrun{
+
 initGMQL("gtf")
 path = "/<path_to_your_folder>/<your_dataset_name>"
 r = read(path)
 e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
 }
 }
-\seealso{
+\references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

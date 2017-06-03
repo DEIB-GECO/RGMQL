@@ -2,29 +2,33 @@
 % Please edit documentation in R/authOperations.R
 \name{register.GMQL}
 \alias{register.GMQL}
-\title{Register to GMQL}
+\title{Sign up to GMQL}
 \usage{
 register.GMQL(url, name, lastname, mail, username, password)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{name}{first name}
+\item{name}{single string first name of the user (can contain space)}
 
-\item{lastname}{lastname}
+\item{lastname}{single string last name of the user (can contain space)}
 
-\item{mail}{email}
+\item{mail}{single string email (as spacified in RFC format)}
 
-\item{username}{username}
+\item{username}{single string name you want to authenticate with}
 
-\item{password}{password}
+\item{password}{single string password you want to authenticate with}
 }
 \description{
-Register to GMQL rest services suite
+Sign up to GMQL rest services suite
 }
 \details{
-After registration you receive an authenticated token.
-This token is saved in Global environment and used to perform the other REST call
+After registration you receive an authentication token.
+As token remains vaild on server (until the next login / registration) a user can safely use a token for
+a previous session as a convenience, this token is saved in Global environment to perform
+subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
+If error occured a specific error will be printed
 }
 \examples{
 

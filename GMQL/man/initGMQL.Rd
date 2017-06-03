@@ -4,7 +4,7 @@
 \alias{initGMQL}
 \title{Init GMQL Server}
 \usage{
-initGMQL(output_format)
+initGMQL(output_format, remote_processing = F)
 }
 \arguments{
 \item{output_format}{single string identifies the output format of sample files.
@@ -17,6 +17,8 @@ It is a tab-delimited text format based on the general feature format}
 \item{VCF: Text file format (most likely stored in a compressed manner).
 It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 }}
+
+\item{remote_processing}{logical}
 }
 \description{
 Initialize and run GMQL server for executing GMQL query
@@ -27,7 +29,7 @@ Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala met
 \examples{
 \dontrun{
 
-initGMQL("tab")
+initGMQL("tab",F)
 }
 
 }

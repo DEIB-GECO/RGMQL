@@ -3,6 +3,8 @@
 #' It create Gmql dataset from GRangesList
 #' All sample are in GDM (tab-separated values) file format
 #'
+#' @import xml2
+#' @import plyr
 #'
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
@@ -41,6 +43,8 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' It create Gmql dataset from GRangesList
 #' All sample are in GTF file format
 #'
+#' @import xml2
+#' @import plyr
 #'
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
@@ -80,12 +84,12 @@ exportGMQL.gtf <- function(samples, dir_out)
   if(dir.exists(dir_out))
     stop("Directory already exists")
 
+  if(!is(samples,"GRangesList"))
+    stop("samples must be a GrangesList")
+
   dir.create(dir_out)
   files_sub_dir <- paste0(dir_out,"/files")
   dir.create(files_sub_dir)
-
-  if(!is(samples,"GRangesList"))
-    stop("samples must be a GrangesList")
 
   c = .counter()
 
@@ -96,7 +100,7 @@ exportGMQL.gtf <- function(samples, dir_out)
    #write region
     lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gtf")
-      export.ucsc(x,sample_name,c("gtf"))
+      export(x,sample_name,format = "gtf")
     },files_sub_dir)
 
     c = .counter(0)
@@ -127,7 +131,8 @@ exportGMQL.gtf <- function(samples, dir_out)
     },files_sub_dir)
   }
 
-  .write_schema(col_names,files_sub_dir)
+  #write schema XML
+  .write_schema(col_names,files_sub_dir,to_GTF)
   c = .counter(0)
 }
 
@@ -155,20 +160,34 @@ exportGMQL.gtf <- function(samples, dir_out)
   col_names[!col_names %in% "width"] # elimino width
 }
 
-.write_schema <- function(node_list,directory)
+.write_schema <- function(node_list,directory,to_GTF)
 {
+  if(to_GTF)
+  {
+    correct_list_GTF = c("seqname", "source", "feature", "start","end", "score", "strand", "frame")
+    node_list <- plyr::revalue(node_list,c(type = "feature",phase = "frame",seqnames = "seqname"))
+    node_list <- node_list[base::order(match(node_list,correct_list_GTF))]
+
+  }
+  else
+  {
+    correct_list_GDM = c("chr", "left", "right", "strand")
+    node_list <- plyr::revalue(node_list,c(seqnames = "chr",start = "left",end = "right"))
+    node_list <- node_list[base::order(match(node_list,correct_list_GDM))]
+  }
+
   schema <- paste0(directory,"/test.schema")
-  root <- xml_new_root("gmqlSchemaCollection")
-  xml_attr(root,"name") <- "DatasetName_SCHEMAS"
-  xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
-  xml_add_child(root,"gmqlSchema")
-  gmqlSchema <- xml_child(root,1)
+  root <- xml2::xml_new_root("gmqlSchemaCollection")
+  xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
+  xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
+  xml2::xml_add_child(root,"gmqlSchema")
+  gmqlSchema <- xml2::xml_child(root,1)
 
   lapply(node_list, function(x,gmqlSchema){
-    field <- xml_add_child(gmqlSchema,"field")
-    xml_text(field) <- x
+    field <- xml2::xml_add_child(gmqlSchema,"field")
+    xml2::xml_text(field) <- x
   },gmqlSchema)
-  write_xml(root,schema)
+  xml2::write_xml(root,schema)
 }
 
 #move to internals
@@ -181,5 +200,3 @@ exportGMQL.gtf <- function(samples, dir_out)
     toString <- as.character(i)
   }
 }
-
-

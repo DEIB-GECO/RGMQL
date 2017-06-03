@@ -2,18 +2,24 @@
 % Please edit documentation in R/queryBrowser.R
 \name{showQueries}
 \alias{showQueries}
-\title{GMQL API web Service}
+\title{Shows all Queries}
 \usage{
 showQueries(url)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 }
 \value{
 list of queries
+Every query in the list is identified by:
+\itemize{
+\item{name: name of query}
+\item{text: text of GMQL query}
+}
 }
 \description{
-It show all the query saved to repository
+It shows all the GMQL query saved to repository
 }
 \details{
 if error occured print the content error

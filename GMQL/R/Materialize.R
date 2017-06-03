@@ -63,6 +63,7 @@ materialize <- function(input_data, dir_out = getwd())
 #' GMQL Operation: TAKE
 #'
 #'
+#' @import GenomicRanges
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param rows number of rows that you want to retrieve an stored in memory
@@ -75,25 +76,29 @@ materialize <- function(input_data, dir_out = getwd())
 #'
 #' \dontrun{
 #'
-#' initGMQL("gtf")
+#' initGMQL("collect")
 #' r = read(path)
 #' r2 = read(path2)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' take(input_data = m, rows = 45)
 #' }
-take <- function(input_data, rows=0)
+take <- function(input_data, rows=0L)
 {
-  rows <- rows[1]
+  rows <- as.integer(rows[1])
   if(rows<0)
     stop("rows cannot be negative")
 
-  out <- frappeR$take(input_data,rows)
-
+  out <- WrappeR$take(input_data,rows)
   if(grepl("No",out,ignore.case = T))
     stop(out)
   else
     NULL
+
+  reg <- WrappeR$get_reg()
+  meta <- WrappeR$get_meta()
+  schema <- WrappeR$get_schema()
+
 }
 
 

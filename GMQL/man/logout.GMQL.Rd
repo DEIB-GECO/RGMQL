@@ -2,19 +2,21 @@
 % Please edit documentation in R/authOperations.R
 \name{logout.GMQL}
 \alias{logout.GMQL}
-\title{Log out from GMQL}
+\title{Logout from GMQL}
 \usage{
 logout.GMQL(url)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 }
 \description{
-Log out from GMQL rest services suite
+Logout from GMQL REST services suite
 }
 \details{
-After logout you will not be able to call any services.
-The authneticated token is removed from Global environment
+After logout the authentication token will be invalidated.
+The authentication token is removed from Global environment
+If error occured a specific error will be printed
 }
 \examples{
 

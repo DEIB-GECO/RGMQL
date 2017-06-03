@@ -2,15 +2,19 @@
 % Please edit documentation in R/queryOperation.R
 \name{compileQuery.fromfile}
 \alias{compileQuery.fromfile}
-\title{GMQL API web Service}
+\title{Compile GMQL query from file}
 \usage{
 compileQuery.fromfile(url, filePath)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
 \item{filePath}{path of txt files where you wrote a query}
 }
 \description{
-It compile a query from file
+It compiles a GMQL query from file
+}
+\details{
+If error occured a specific error will be printed
 }

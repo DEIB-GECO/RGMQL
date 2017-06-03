@@ -7,24 +7,25 @@
 showSamplesFromDataset(url, datasetName)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{datasetName}{name of dataset}
+\item{datasetName}{name of dataset we want to get}
 }
 \value{
-list of samples
-every sample in the list is identified by:
+list of samples in dataset.
+Every sample in the list is identified by:
 \itemize{
-\item{id}
-\item{name}
-\item{path}
+\item{id: id of sample}
+\item{name: name of sample}
+\item{path: sample repository path}
 }
 }
 \description{
 It show all sample from a specific GMQL dataset
 }
 \details{
-If error occured stop and print error
+If error occured a specific error will be printed
 }
 \examples{
 

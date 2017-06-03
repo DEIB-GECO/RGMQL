@@ -4,7 +4,7 @@
 \alias{difference}
 \title{GMQL Operation: DIFFERENCE}
 \usage{
-difference(left_input_data, right_input_data, joinBy = NULL)
+difference(left_input_data, right_input_data, joinBy = NULL, is_exact = F)
 }
 \arguments{
 \item{left_input_data}{"url-like" string taken from GMQL function}
@@ -14,6 +14,8 @@ difference(left_input_data, right_input_data, joinBy = NULL)
 \item{joinBy}{list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
 The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
 Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
+
+\item{is_exact}{logical}
 }
 \description{
 It produces one sample in the result for each sample of the left operand,
@@ -29,11 +31,12 @@ are considered when performing the difference.
 \examples{
 \dontrun{
 
-startGMQL()
+initGMQL("gtf")
 path = /.../dataset_name
 r = read(path)
 c = cover(2,3,input_data = r)
-d = difference(list(DEFAULT("antibody_target")),left_input_data = r, right_input_data = c)
+d = difference(list(DEF("antibody_target"),FULL("cell_type")),left_input_data = r, right_input_data = c)
+d = difference(c("cell_type","age","cell_attribute","size"),left_input_data = r, right_input_data = c)
 }
 
 }

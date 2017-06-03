@@ -2,19 +2,20 @@
 % Please edit documentation in R/queryBrowser.R
 \name{saveQuery.fromfile}
 \alias{saveQuery.fromfile}
-\title{GMQL API web Service}
+\title{Save GMQL query from file}
 \usage{
 saveQuery.fromfile(url, queryName, filePath)
 }
 \arguments{
-\item{url}{server address}
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
 
-\item{queryName}{name of query}
+\item{queryName}{name of GMQL query}
 
 \item{filePath}{local file path where you write GMQL query}
 }
 \description{
-It save the GMQL queries to repository
+It saves the GMQL query into repository taken from file
 }
 \details{
 if error occured print the content error
