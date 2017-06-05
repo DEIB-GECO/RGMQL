@@ -4,7 +4,7 @@
 \alias{initGMQL}
 \title{Init GMQL Server}
 \usage{
-initGMQL(output_format, remote_processing = F)
+initGMQL(output_format, remote_processing = FALSE)
 }
 \arguments{
 \item{output_format}{single string identifies the output format of sample files.
@@ -20,6 +20,9 @@ It contains meta-information lines, a header line, data lines each containing in
 
 \item{remote_processing}{logical}
 }
+\value{
+no returned value
+}
 \description{
 Initialize and run GMQL server for executing GMQL query
 }
@@ -27,9 +30,10 @@ Initialize and run GMQL server for executing GMQL query
 Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
 }
 \examples{
+
 \dontrun{
 
-initGMQL("tab",F)
+library(rscala)
+initGMQL("tab",FALSE)
 }
-
 }

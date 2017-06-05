@@ -9,16 +9,17 @@ importGMQL.gdm(datasetName)
 \arguments{
 \item{datasetName}{GMQL dataset folder path}
 }
+\value{
+GrangesList containing all GMQL sample In dataset
+}
 \description{
 It create a GrangesList from GMQL samples in dataset
 It reads only sample files in GDM format
 }
 \examples{
 
-\dontrun{
-path = "<path_folder_input>"
-grl = importGMQL.gdm(path)
-}
+test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+grl = importGMQL.gdm(test_path)
 
 }
 \seealso{

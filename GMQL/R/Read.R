@@ -1,3 +1,10 @@
+if(getRversion() >= "2.15.1")
+  utils::globalVariables("WrappeR")
+
+if(getRversion() >= "3.1.0")
+  utils::suppressForeignCheck("WrappeR")
+
+
 #' Init GMQL Server
 #'
 #' Initialize and run GMQL server for executing GMQL query
@@ -14,16 +21,21 @@
 #' }
 #' @param remote_processing logical
 #'
+#' @return no returned value
+#'
 #' @details
 #' Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
 #'
 #' @examples
+#'
 #' \dontrun{
 #'
-#' initGMQL("tab",F)
+#' library(rscala)
+#' initGMQL("tab",FALSE)
 #' }
+#' @export
 #'
-initGMQL <- function(output_format, remote_processing = F)
+initGMQL <- function(output_format, remote_processing = FALSE)
 {
   out_format <- toupper(output_format)
 
@@ -31,8 +43,8 @@ initGMQL <- function(output_format, remote_processing = F)
      && !identical(out_format,"COLLECT"))
     stop("output_format must be TAB, GTF, VCF or COLLECT")
 
-  scalaCompiler <- scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
-  WrappeR <<- scalaCompiler$do('it.polimi.genomics.r.Wrapper')
+  scalaCompiler <- rscala::scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
+  assign("WrappeR",scalaCompiler$do('it.polimi.genomics.r.Wrapper'),.GlobalEnv)
   WrappeR$initGMQL(out_format,remote_processing)
 }
 
@@ -71,14 +83,20 @@ initGMQL <- function(output_format, remote_processing = F)
 #'
 #' \dontrun{
 #'
+#' ### with CustomParser
 #' initGMQL("gtf")
-#' path = "/<path_to_your_folder>/<your_dataset_name>"
-#' r = read(path)
-#' r = read(path,"BedParser")
-#' r = read(path,"RnaSeqParser")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
+#'
+#'  #### with an other Parser
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path,"ANNParser")
 #' }
 #'
-read <- function(DatasetFolder, parser = "CustomParser",is_local=T)
+#' @export
+#'
+read <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
 {
   remote_proc <- WrappeR$is_remote_processing()
   if(!remote_proc && !is_local)
@@ -97,7 +115,7 @@ read <- function(DatasetFolder, parser = "CustomParser",is_local=T)
   parser_name <- .check_parser(parser)
 
   out <- WrappeR$readDataset(DatasetFolder,parser_name,is_local)
-  if(grepl("File",out,ignore.case = T) || grepl("No",out,ignore.case = T))
+  if(grepl("File",out,ignore.case = TRUE) || grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out
@@ -116,23 +134,19 @@ read <- function(DatasetFolder, parser = "CustomParser",is_local=T)
 
 
 
-#' Disable remote processing
-#'
-#'
-#'
+# Disable remote processing
+
 off_remote_processing<- function()
 {
-  WrappeR$remote_processing(F)
+  WrappeR$remote_processing(FALSE)
   print("remote proessing off")
 }
 
-#' Enable remote processing
-#'
-#'
-#'
+# Enable remote processing
+
 on_remote_processing<- function()
 {
-  WrappeR$remote_processing(T)
+  WrappeR$remote_processing(TRUE)
   print("remote proessing on")
 }
 

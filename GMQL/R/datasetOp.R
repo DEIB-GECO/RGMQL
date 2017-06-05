@@ -7,6 +7,7 @@
 #' service name will be added automatically
 #'
 #' @return list of datasets.
+#'
 #' Every dataset in the list is identified by:
 #' \itemize{
 #' \item{name: name of dataset}
@@ -20,21 +21,21 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' list <- showDatasets(PolimiUrl)
 #'
-#' url <- <http_server_address>
-#' login.GMQL(url = <http_server_address>)
-#' list <- showDatasets(url)
-#' }
-
+#' @export
+#'
 showDatasets <- function(url)
 {
   URL <- paste0(url,"/datasets")
+
   h <- c('X-Auth-Token' = authToken)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed") #JSON
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
   {
     return(content)
@@ -50,7 +51,9 @@ showDatasets <- function(url)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
+#'
 #' @return list of samples in dataset.
+#'
 #' Every sample in the list is identified by:
 #' \itemize{
 #' \item{id: id of sample}
@@ -64,12 +67,12 @@ showDatasets <- function(url)
 #'
 #' @examples
 #'
-#' \dontrun{
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' list <- showSamplesFromDataset(url,<dataset_name>)
-#' }
-
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' list <- showSamplesFromDataset(PolimiUrl,"public.GRCh38_ENCODE_BROAD_MAY_2017")
+#'
+#' @export
+#'
 showSamplesFromDataset <- function(url,datasetName)
 {
   URL <- paste0(url,"/datasets/",datasetName)
@@ -94,7 +97,10 @@ showSamplesFromDataset <- function(url,datasetName)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
+#' if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
+#'
 #' @return list of region schema fields.
+#'
 #' Every field in the list is identified by:
 #' \itemize{
 #' \item{name: name of field (e.g. chr, start, end, strand ...)}
@@ -106,12 +112,13 @@ showSamplesFromDataset <- function(url,datasetName)
 #'
 #' @examples
 #'
-#' \dontrun{
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' list <- showSchemaFromDataset(url,<dataset_name>)
-#' }
-
+#' ### show schema of public dataset
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' list <- showSchemaFromDataset(PolimiUrl,"public.GRCh38_ENCODE_BROAD_MAY_2017")
+#'
+#' @export
+#'
 showSchemaFromDataset <- function(url,datasetName)
 {
   URL <- paste0(url,"/datasets/",datasetName,"/schema")
@@ -148,23 +155,27 @@ showSchemaFromDataset <- function(url,datasetName)
 #' if schema is NULL it looking for a XML schema file to read
 #' @param isGMQL logical value indicating whether is GMQL dataset or not
 #'
+#' @return no return value
+#'
 #' @details
 #' If error occured a specific error will be printed
 #'
 #' @examples
 #'
-#' \dontrun{
-#' url <- <http_server_address>)
-#' login.GMQL(url = <http_server_address>)
-#' uploadSamples(url,"prova1",folderPath = <folder_path>)
-#' }
+#' ## upload of GMQL dataset with no schema selection
+#' test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)
 #'
-uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=T)
+#' @export
+#'
+uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE)
 {
   if(isGMQL)
     folderPath <- paste0(folderPath,"/files")
 
-  files <- list.files(folderPath,full.names = T)
+  files <- list.files(folderPath,full.names = TRUE)
   if(length(files)==0)
     stop("no files present")
 
@@ -184,12 +195,12 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=T)
 
   if(is.null(schemaName))
   {
-    schema_name <- list.files(folderPath, pattern = "*.schema$",full.names = T)
+    schema_name <- list.files(folderPath, pattern = "*.schema$",full.names = TRUE)
     if(length(schema_name)==0)
       stop("schema must be present")
 
     list_files <- list(list("schema" = httr::upload_file(schema_name)),list_files)
-    list_files <- unlist(list_files,recursive = F)
+    list_files <- unlist(list_files,recursive = FALSE)
   }
   else
   {
@@ -219,6 +230,9 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=T)
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
 #'
+#' @return no return value
+#'
+#'
 #' @details
 #' If error occured a specific error will be printed
 #'
@@ -228,11 +242,12 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=T)
 #'
 #' \dontrun{
 #'
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' deleteDataset(url,<dataset_name>)
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl,"test101","test")
+#' deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
 #' }
-
+#' @export
+#'
 deleteDataset <- function(url,datasetName)
 {
   URL <- paste0(url,"/datasets/",datasetName)
@@ -242,7 +257,7 @@ deleteDataset <- function(url,datasetName)
   content <- httr::content(req,"parsed") #JSON
 
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
   {
     print(content$result)
@@ -261,6 +276,7 @@ deleteDataset <- function(url,datasetName)
 #' @param path local path folder where store dataset
 #' by defualt is R working directory
 #'
+#' @return no return value
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -268,26 +284,27 @@ deleteDataset <- function(url,datasetName)
 #'
 #' @examples
 #'
-#' \dontrun{
+#' #### download dataset in r working directory
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl,"test101","test")
+#' downloadDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS",path = getwd())
 #'
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' downloadDataset(url,<dataset_name>,path = <folder_path>)
-#' }
-
+#' @export
+#'
 downloadDataset <- function(url,datasetName,path = getwd())
 {
   URL <- paste0(url,"/datasets/",datasetName,"/zip")
   h <- c('X-Auth-Token' = authToken, 'Accept' = 'application/zip')
   req <- httr::GET(URL,httr::add_headers(h))
   #req <- httr::GET(URL,httr::add_headers(h),verbose(info = TRUE))
-  if(req$status_code !=200)
-    stop(content$error)
 
   #print(content$result)
-  fileZip <- httr::content(req)
+  content <- httr::content(req)
+  if(req$status_code !=200)
+    stop(content)
+
   zip_path = paste0(path,"/",datasetName,".zip")
-  writeBin(fileZip,zip_path)
+  writeBin(content,zip_path)
   print("Download Complete")
 }
 
@@ -307,13 +324,14 @@ downloadDataset <- function(url,datasetName,path = getwd())
 #' @details
 #' If error occured a specific error will be printed
 #'
+#' @examples
 #'
-#' \dontrun{
+#' ## download metadata with real test login
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl,"test101","test")
+#' metadataFromSample(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS","S_00000")
 #'
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' metadataFromSample(url,"<dataset_name>",<dataset_sample_name>)
-#' }
+#' @export
 #'
 metadataFromSample <- function(url, datasetName,sampleName)
 {
@@ -343,9 +361,10 @@ metadataFromSample <- function(url, datasetName,sampleName)
 #' in a specific dataset (whose name is specified in the paramter "datasetName")
 #'
 #' @import httr
-#' @import rtracklayer
-#' @import data.table
-#' @import GenomicRanges
+#' @importFrom rtracklayer import
+#' @importFrom data.table fread
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
+#' @importFrom utils write.table
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
@@ -357,12 +376,13 @@ metadataFromSample <- function(url, datasetName,sampleName)
 #' @details
 #' If error occured a specific error will be printed
 #'
-#' \dontrun{
+#' @examples
 #'
-#' login.GMQL(url = <http_server_address>)
-#' url <- <http_server_address>)
-#' regionFromSample(url,"<dataset_name>",<dataset_sample_name>)
-#' }
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl,"test101","test")
+#' regionFromSample(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS","S_00000")
+#'
+#' @export
 #'
 regionFromSample <- function(url, datasetName,sampleName)
 {
@@ -379,7 +399,7 @@ regionFromSample <- function(url, datasetName,sampleName)
     schema_type <- list$schemaType
 
     temp <- tempfile("temp") #use temporary files
-    write.table(content,temp,quote = F,sep = '\t',col.names = F,row.names = F)
+    write.table(content,temp,quote = FALSE,sep = '\t',col.names = FALSE,row.names = FALSE)
     if(schema_type=="gtf")
       samples <- rtracklayer::import(temp,format = "gtf")
     else
@@ -389,7 +409,7 @@ regionFromSample <- function(url, datasetName,sampleName)
       })
       df <- data.table::fread(temp,header = FALSE,sep = "\t")
       data.table::setnames(df,vector_field)
-      samples <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
+      samples <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = TRUE,start.field = "left",end.field = "right")
     }
     unlink(temp)
     return(samples)

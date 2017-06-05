@@ -84,7 +84,7 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     region_matrix <- .ordering_meta(regions_ordering)
 
   out <- WrappeR$order(meta_matrix,mtopg,mtop,region_matrix,rtopg,rtop,input_data)
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

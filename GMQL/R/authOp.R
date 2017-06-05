@@ -1,3 +1,9 @@
+if(getRversion() >= "2.15.1")
+  utils::globalVariables("authToken")
+
+if(getRversion() >= "3.1.0")
+  utils::suppressForeignCheck("authToken")
+
 #' Login to GMQL
 #'
 #' Login to GMQL REST services suite as a registered user, specifiyng username and password,
@@ -20,16 +26,18 @@
 #' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
 #' If error occured a specific error will be printed
 #'
-#'
+#' @return no object return
 #'
 #' @examples
+#' ### login as guest
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
 #'
-#' \dontrun{
+#' ##### login with username and password
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl,"test101","test")
 #'
-#' url <- <http_server_address>
-#' login.GMQL(url)
-#' login.GMQL(url, username="pippo",password="baudo")
-#' }
+#' @export
 #'
 login.GMQL <- function(url,username = NULL, password = NULL)
 {
@@ -55,10 +63,10 @@ login.GMQL <- function(url,username = NULL, password = NULL)
   content <- httr::content(req)
 
   if(req$status_code !=200)
-    stop(content$errorString)
+    print(content$errorString)
   else
   {
-    authToken <<- content$authToken
+    assign("authToken",content$authToken,.GlobalEnv)
     print(paste("your Token is",authToken))
   }
 }
@@ -82,12 +90,20 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #'
 #' @examples
 #'
-#' \dontrun{
+#' #### login as guest, then logout
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' logout.GMQL(PolimiUrl)
 #'
-#' url <- <http_server_address>)
-#' login.GMQL(url, username="pippo",password="baudo")
-#' logout.GMQL()
-#' }
+#' ##### login with username and password, then logout
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl,"test101","test")
+#' logout.GMQL(PolimiUrl)
+#'
+#' @return no object return
+#'
+#' @export
+#'
 logout.GMQL <- function(url)
 {
   URL <- paste0(url,"/logout")
@@ -95,7 +111,7 @@ logout.GMQL <- function(url)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req)
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
   {
     print(content)
@@ -128,15 +144,18 @@ logout.GMQL <- function(url)
 #' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
 #' If error occured a specific error will be printed
 #'
+#' @return no object return
 #'
 #' @examples
 #'
-#' \dontrun{
+#' ##### this user already exist, is a test account
+#' ##### don't use it
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
 #'
-#' url <- <http_server_address>)
-#' register.GMQL(url = url,"jonh","Doe","jonh@doe.com","JonhDoe46","password")
-#' }
-
+#'
+#' @export
+#'
 register.GMQL <- function(url, name, lastname, mail, username, password)
 {
   info <- list('firstName'=name,
@@ -147,15 +166,15 @@ register.GMQL <- function(url, name, lastname, mail, username, password)
                )
   URL <- paste0(url,"/register")
   h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
-  req <<- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
+  req <- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
 
   content <- httr::content(req)
 
   if(req$status_code !=200)
-    stop(content)
+    print(content)
   else
   {
-    authToken <<- content$authToken
+    assign("authToken",content$authToken,.GlobalEnv)
     print(paste("your Token is",authToken))
   }
 }

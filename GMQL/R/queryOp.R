@@ -11,11 +11,20 @@
 #' \item{id: id of job used for log, trace and stop}
 #' }
 #'
+#' @return no return value
+#'
 #' @seealso \code{\link{showJobLog}} @seealso \code{\link{stopJob}} @seealso \code{\link{traceJob}}
 #'
 #' @details
 #' If error occured a specific error will be printed
 #'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' list_jobs <- showJobs(PolimiUrl)
+#'
+#' @export
 #'
 showJobs <- function(url)
 {
@@ -25,7 +34,7 @@ showJobs <- function(url)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
     return(content)
 }
@@ -46,6 +55,19 @@ showJobs <- function(url)
 #' @details
 #' If error occured a specific error will be printed
 #'
+#' @examples
+#'
+#' ## login with test user
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl,"test101","test")
+#' ## list all jobs
+#' list_jobs <- showJobs(PolimiUrl)
+#' jobs_1 <- list_jobs$jobs[[1]]
+#' ## show log
+#' showJobLog(PolimiUrl,jobs_1)
+#'
+#' @export
+#'
 showJobLog <- function(url,job_id)
 {
   URL <- paste0(url,"/jobs/",job_id,"/log")
@@ -54,9 +76,9 @@ showJobLog <- function(url,job_id)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
-    return(unlist(content,use.names = F))
+    print(unlist(content,use.names = FALSE))
 }
 
 #' Stop a job
@@ -68,9 +90,21 @@ showJobLog <- function(url,job_id)
 #' service name will be added automatically
 #' @param job_id single string id of the job
 #'
+#' @return no return value
 #'
 #' @details
 #' If error occured a specific error will be printed
+#'
+#'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl,"test101","test")
+#' list_jobs <- showJobs(PolimiUrl)
+#' jobs_1 <- list_jobs$jobs[[1]]
+#' stopJob(PolimiUrl,jobs_1)
+#'
+#' @export
 #'
 stopJob <- function(url,job_id)
 {
@@ -80,9 +114,9 @@ stopJob <- function(url,job_id)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content)
+    print(content)
   else
-    return(content)
+    print(content)
 }
 
 #' Trace a job
@@ -94,9 +128,21 @@ stopJob <- function(url,job_id)
 #' service name will be added automatically
 #' @param job_id single string id of the job
 #'
+#' @return  text log
 #'
 #' @details
 #' If error occured a specific error will be printed
+#'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl,"test101","test")
+#' list_jobs <- showJobs(PolimiUrl)
+#' jobs_1 <- list_jobs$jobs[[1]]
+#' traceJob(PolimiUrl,jobs_1)
+#'
+#'
+#' @export
 #'
 traceJob <- function(url, job_id)
 {
@@ -126,11 +172,22 @@ traceJob <- function(url, job_id)
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
+#' @return no return value
 #'
 #' @details
 #' If error occured a specific error will be printed
 #'
-runQuery <- function(url,fileName,query,output_gtf = T)
+#'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' runQuery(PolimiUrl, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
+#' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
+#'
+#' @export
+#'
+runQuery <- function(url,fileName,query,output_gtf = TRUE)
 {
   if(output_gtf)
     out <- "GTF"
@@ -141,12 +198,10 @@ runQuery <- function(url,fileName,query,output_gtf = T)
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
 
-  #req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json",verbose(data_in = T,data_out = T))
   req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
-  #req <- GET(URL,add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
     return(content)
 }
@@ -164,11 +219,32 @@ runQuery <- function(url,fileName,query,output_gtf = T)
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
+#' @return no return value
 #'
 #' @details
 #' If error occured a specific error will be printed
 #'
-runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
+#' @examples
+#'
+#' ## run query: output GTF
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' test_path <- system.file("example",package = "GMQL")
+#' test_query <- file.path(test_path, "query1.txt")
+#' runQuery(PolimiUrl, "query_1", test_query, output_gtf = FALSE)
+#'
+#' ## run query: output GDM (tabulated)
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' test_path <- system.file("example",package = "GMQL")
+#' test_query <- file.path(test_path, "query1.txt")
+#' runQuery(PolimiUrl, "query_1", test_query, output_gtf = TRUE)
+#'
+#' @export
+#'
+runQuery.fromfile <- function(url,fileName,filePath,output_gtf = TRUE)
 {
   if(!file.exists(filePath))
     stop("file does not exist")
@@ -187,6 +263,16 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = T)
 #' @param query text query
 #'
 #'
+#' @return no return value
+#'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' compileQuery(PolimiUrl, "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
+#' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;")
+#'
+#' @export
 #'
 compileQuery <- function(url ,query)
 {
@@ -198,7 +284,7 @@ compileQuery <- function(url ,query)
   req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
     return(content)
 }
@@ -211,8 +297,21 @@ compileQuery <- function(url ,query)
 #' service name will be added automatically
 #' @param filePath path of txt files where you wrote a query
 #'
+#' @return no return value
+#'
 #' @details
 #' If error occured a specific error will be printed
+#'
+#'
+#' @examples
+#'
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' test_path <- system.file("example",package = "GMQL")
+#' test_query <- file.path(test_path, "query1.txt")
+#' compileQuery.fromfile(PolimiUrl,test_query)
+#'
+#' @export
 #'
 compileQuery.fromfile <- function(url ,filePath)
 {

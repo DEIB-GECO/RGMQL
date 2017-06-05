@@ -37,8 +37,8 @@ merge <- function(input_data, groupBy = NULL)
   if(length(groupBy)==0)
     groupBy=NULL
 
-  out <- frappeR$merge(groupBy,input_data)
-  if(grepl("No",out,ignore.case = T))
+  out <- WrappeR$merge(groupBy,input_data)
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

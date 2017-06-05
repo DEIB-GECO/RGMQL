@@ -62,9 +62,9 @@ extend <-function(input_data, metadata = NULL)
   else
     metadata_matrix <- NULL
 
-  out <- frappeR$extend(metadata_matrix,input_data)
+  out <- WrappeR$extend(metadata_matrix,input_data)
 
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

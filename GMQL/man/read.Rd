@@ -4,7 +4,7 @@
 \alias{read}
 \title{GMQL Function: READ}
 \usage{
-read(DatasetFolder, parser = "CustomParser", is_local = T)
+read(DatasetFolder, parser = "CustomParser", is_local = TRUE)
 }
 \arguments{
 \item{DatasetFolder}{folder path for GMQL dataset or datasetname on repository}
@@ -22,7 +22,8 @@ The Parser's available are:
 }
 Default is CustomParser.}
 
-\item{local}{logical}
+\item{is_local}{logical value indicates if dataset is a local or remote dataset
+if the remote processing is off you cannot use a remote repository (error occured)}
 }
 \value{
 "url-like" string to dataset
@@ -41,11 +42,15 @@ the parser defined without reading any XML schema
 
 \dontrun{
 
+### with CustomParser
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
-r = read(path,"BedParser")
-r = read(path,"RnaSeqParser")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
+
+ #### with an other Parser
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path,"ANNParser")
 }
 
 }

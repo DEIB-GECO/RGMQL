@@ -9,9 +9,10 @@ CONDITION(value)
 \description{
 CONDITION object available are:
 \itemize{
-\item{DEF: DEFAULT}
-\item{EXACT: EXACT}
-\item{FULL: FULLNAME}
+\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+if they have a further prefixes, the two prefix sequence are identical}
+\item{DEF: Default evaluation, two attributes match if both end with value. }
+\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 }
 }
 \details{

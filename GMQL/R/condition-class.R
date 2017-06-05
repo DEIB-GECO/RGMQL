@@ -8,16 +8,18 @@
 #'
 #' CONDITION object available are:
 #' \itemize{
-#' \item{DEF: DEFAULT}
-#' \item{EXACT: EXACT}
-#' \item{FULL: FULLNAME}
+#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+#' if they have a further prefixes, the two prefix sequence are identical}
+#' \item{DEF: Default evaluation, two attributes match if both end with value. }
+#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
+#'
 #' @details
 #' you never use a parent class CONDITION()
 #'
 #'
 #'
-
+#'
 CONDITION <- function(value)
 {
   op_list <- list(
@@ -52,6 +54,8 @@ check.CONDITION <- function(value)
     stop("value: is not a string")
 }
 
+
+#' @export
 DEF <- function(value)
 {
   check.CONDITION(value)
@@ -64,6 +68,7 @@ DEF <- function(value)
   return(list)
 }
 
+#' @export
 EXACT <- function(value)
 {
   check.CONDITION(value)
@@ -76,6 +81,7 @@ EXACT <- function(value)
   return(list)
 }
 
+#' @export
 FULL <- function(value)
 {
   check.CONDITION(value)

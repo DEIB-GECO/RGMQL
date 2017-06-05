@@ -81,8 +81,8 @@ join <- function(genometric_predicate = NULL, joinBy = NULL, output="contig",
      && !identical(output,"intersection"))
     stop("output must be contig,left,right or intersection")
 
-  out <- frappeR$join(genomatrix,joinBy, ouput,right_input_data, left_input_data)
-  if(grepl("No",out,ignore.case = T))
+  out <- WrappeR$join(genomatrix,joinBy, ouput,right_input_data, left_input_data)
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

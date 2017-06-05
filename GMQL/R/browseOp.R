@@ -20,28 +20,23 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' list <- showQueries(PolimiUrl)
 #'
-#' url <- <http_server_address>)
-#' login.GMQL(url, username="pippo",password="baudo")
-#' list <- showQueries(url)
-#' logout.GMQL()
-#' }
+#' @export
 #'
 showQueries <- function(url)
 {
   URL <- paste0(url,"/query")
   h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
-  #req <<- GET(URL, add_headers(h),verbose(data_in = TRUE,data_out = TRUE))
+  #req <- GET(URL, add_headers(h),verbose(data_in = TRUE,data_out = TRUE))
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed") #JSON
   if(req$status_code==200)
-  {
-    #listSample <- Reduce(c, content)
     return(content)
-  }
   else
-    stop(content$error)
+    print(content$error)
 }
 
 #' Save GMQL query
@@ -49,38 +44,45 @@ showQueries <- function(url)
 #' It saves the GMQL query into repository
 #'
 #' @import httr
+#'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #' @param queryName single string name of query
 #' @param queryTxt single string text of GMQL query
 #'
+#' @return no return value
+#'
 #' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
+#'
+#' @references
+#' Please, read for writing a GMQL query
+#' \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @details
 #' if error occured print the content error
 #'
 #' @examples
 #'
-#' \dontrun{
 #'
-#' url <- <http_server_address>
-#' login.GMQL(url)
-#' saveQuery(url,"prova1","<query_text>")
-#' logout.GMQL()
-#' }
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' saveQuery(PolimiUrl,"try_1", queryTxt = "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
+#' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;")
+#'
+#' @export
 #'
 saveQuery <- function(url,queryName,queryTxt)
 {
   URL <- paste0(url,"/query/",queryName,"/save")
   h <- c('Accept' = 'text/plain', 'X-Auth-Token' = authToken, 'Content-Type' = 'text/plain')
-  #req <<- POST(url, add_headers(h),verbose(data_in = TRUE,info = TRUE),body = queryTxt)
+  #req <- POST(url, add_headers(h),verbose(data_in = TRUE,info = TRUE),body = queryTxt)
   req <- httr::POST(URL, httr::add_headers(h),body = queryTxt)
   content <- httr::content(req)
 
   if(req$status_code==200)
     print(content) # print Saved
   else
-    stop(content$error)
+    print(content$error)
 }
 
 #' Save GMQL query from file
@@ -93,20 +95,31 @@ saveQuery <- function(url,queryName,queryTxt)
 #' @param queryName name of GMQL query
 #' @param filePath local file path where you write GMQL query
 #'
+#' @return no return value
+#'
+#' @references
+#' Please, read for writing a GMQL query
+#' \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
+#'
 #' @seealso \code{\link{saveQuery}}
 #'
 #' @details
+#' if you save a query with the same name of an other query already stored in repository
+#' you will overwrite it
 #' if error occured print the content error
+#'
 #'
 #' @examples
 #'
-#' \dontrun{
+#' test_path <- system.file("example",package = "GMQL")
+#' test_query <- file.path(test_path, "query1.txt")
 #'
-#' url <- <http_server_address>)
-#' login.GMQL(url, username="pippo",password="baudo")
-#' saveQuery.fromfile(url,"prova1","<query_file_path>")
-#' logout.GMQL()
-#' }
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(PolimiUrl)
+#' saveQuery.fromfile(PolimiUrl,"query1", test_query)
+#'
+#' @export
 #'
 saveQuery.fromfile <- function(url,queryName,filePath)
 {

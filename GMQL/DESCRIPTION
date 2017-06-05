@@ -1,17 +1,17 @@
 Package: GMQL
 Type: Package
 Title: GMQL function
-Version: 1.1.0
+Version: 1.2.0
 Author: Pallotta Simone, Masseroli Marco 
-Maintainer: Simone Pallotta <simonepallotta@hotmail.com>, Masseroli Marco <marco.masseroli@polimi.it>
+Maintainer: Simone Pallotta <simone.pallotta@mail.polimi.it>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: httr,rtracklayer,GenomicRanges,data.table,xml2,plyr,dplyr
-Depends: R(>= 2.7.0), rscala(<= 1.0.15)
+Imports: httr,rtracklayer,GenomicRanges,data.table,xml2,plyr,dplyr,S4Vectors,methods
+Depends: R(>= 3.3.2), rscala(<= 1.0.15)
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
-
+biocViews: Software,Infrastructure,DataImport

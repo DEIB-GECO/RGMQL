@@ -18,8 +18,8 @@
 #' }
 execute <- function()
 {
-  out <- frappeR$execute()
-  if(grepl("OK",out,ignore.case = T))
+  out <- WrappeR$execute()
+  if(grepl("OK",out,ignore.case = TRUE))
     print("Executed")
   else
     stop(out)
@@ -53,8 +53,8 @@ execute <- function()
 #' }
 materialize <- function(input_data, dir_out = getwd())
 {
-  out <- frappeR$materialize(input_data,dir_out)
-  if(grepl("No",out,ignore.case = T))
+  out <- WrappeR$materialize(input_data,dir_out)
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     NULL
@@ -90,7 +90,7 @@ take <- function(input_data, rows=0L)
     stop("rows cannot be negative")
 
   out <- WrappeR$take(input_data,rows)
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     NULL

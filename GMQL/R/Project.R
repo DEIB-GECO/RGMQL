@@ -32,8 +32,8 @@ project <-function(input_data, metadata = NULL, regions = NULL, metadata_update 
  # if(!is.character(regions) && !is.null(regions))
   #  stop("groupBy can be a string or an array of string")
 
- # out <- frappeR$project(metadata,regions,input_data)
-#  if(grepl("No",out,ignore.case = T))
+ # out <- WrappeR$project(metadata,regions,input_data)
+#  if(grepl("No",out,ignore.case = TRUE))
  #   stop(out)
  # else
   #  out

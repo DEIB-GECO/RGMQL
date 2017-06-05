@@ -1,22 +1,33 @@
-dir_out = "/Users/simone/Downloads/res"
 
-dir_in = "/Users/simone/Downloads/DATA_SET_VAR_GDM"
-dir_in_GTF = "/Users/simone/Downloads/DATA_SET_VAR_GTF"
-dir_in_GDM = "/Users/simone/Downloads/DATA_SET_VAR_GDM"
-dir_in_semi = "/Users/simone/Downloads/DATA_SET_VAR_GDM/files"
-dir_in_semi_GTF = "/Users/simone/Downloads/DATA_SET_VAR_GTF/files"
-dir_in_wrong = "/Users/simone/Downloads/DATA_SET"
-dir_in_web = "/Users/simone/Downloads/DATA_WEB/files"
-dir_in_tfarm = "/Users/simone/Downloads/job_TFARM"
+#internal
+.counter <- function(zero = 0)
+{
+  i <- zero
+  function() {
+    i <<- i + 1
+    toString <- as.character(i)
+  }
+}
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#move to internals
+.add_metadata <- function(files)
+{
+  x <- scan(files, what="", sep="\n")
+  y <- strsplit(x, "\t")
+  names(y) <- sapply(y, `[[`, 1)
+  listMeta <- lapply(y, `[`, -1)
+}
 
+#move to internals
+.schema_header <- function(datasetName)
+{
+  schema_name <- list.files(datasetName, pattern = "*.schema$",full.names = TRUE)
+  if(length(schema_name)==0)
+    stop("schema not present")
 
-predicate <- "(dataType == 'ChipSeq' AND view == 'Peaks' AND setType == 'exp' AND antibody_target == 'TEAD4')"
-
-
-# start.time <- Sys.time()
-# end.time <- Sys.time()
-# time.taken <- end.time - start.time
+  xml_schema <- xml2::read_xml(schema_name)
+  list_field <- xml2::as_list(xml_schema)
+  vector_field <- unlist(list_field)
+}
 
 

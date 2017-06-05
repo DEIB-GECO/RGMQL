@@ -1,23 +1,27 @@
 #' GMQL to TFARM matrix
-#' solo sample con ugual numero di righe
+#'
+#' create matrix for TFARM package
 #'
 #' @import xml2
-#' @import plyr
-#' @import dplyr
-#' @import data.table
-#' @import rtracklayer
+#' @importFrom  dplyr bind_cols
+#' @importFrom data.table fread
+#' @importFrom rtracklayer import
 #'
-#' @param GMQL_dataset_path
-#' @param metadata
-#' @param metadata_prefix
-#' @param regions
+#' @param GMQL_dataset_path  aaa
+#' @param metadata aaaaaa   aaa
+#' @param metadata_prefix a a a a a a a
+#' @param regions a a a a a a
 #'
-#' @details
+#' @return TFARM matrix
 #'
 #' @examples
 #'
-#' \dontrun{
-#' }
+#'
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' TFARMatrix(test_path,regions = c("pvalue","peak"))
+#'
+#'
+#' @export
 #'
 TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL, regions = NULL)
 {
@@ -26,8 +30,8 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
   if(!dir.exists(datasetName))
     stop("Directory does not exists")
 
-  gdm_meta_files <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = T)
-  gtf_meta_files <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = T)
+  gdm_meta_files <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = TRUE)
+  gtf_meta_files <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = TRUE)
 
   if(length(gdm_meta_files)==0 && length(gtf_meta_files)==0)
     stop("no samples present or no files format supported")
@@ -79,7 +83,7 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 
 .schema_header <- function(datasetName)
 {
-  schema_name <- list.files(datasetName, pattern = "*.schema$",full.names = T)
+  schema_name <- list.files(datasetName, pattern = "*.schema$",full.names = TRUE)
   if(length(schema_name)==0)
     stop("schema not present")
 
@@ -121,11 +125,8 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 
   df_only_regions <- dplyr::bind_cols(df_list)
   complete_df <- dplyr::bind_cols(df,df_only_regions)
-  g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,keep.extra.columns = T,
+  g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,keep.extra.columns = TRUE,
                                                start.field = "left",end.field = "right")
-
-
-
 }
 
 

@@ -4,7 +4,8 @@
 \alias{difference}
 \title{GMQL Operation: DIFFERENCE}
 \usage{
-difference(left_input_data, right_input_data, joinBy = NULL, is_exact = F)
+difference(left_input_data, right_input_data, joinBy = NULL,
+  is_exact = FALSE)
 }
 \arguments{
 \item{left_input_data}{"url-like" string taken from GMQL function}
@@ -33,10 +34,10 @@ are considered when performing the difference.
 
 initGMQL("gtf")
 path = /.../dataset_name
+path2 = /.../dataset2_name
 r = read(path)
-c = cover(2,3,input_data = r)
-d = difference(list(DEF("antibody_target"),FULL("cell_type")),left_input_data = r, right_input_data = c)
-d = difference(c("cell_type","age","cell_attribute","size"),left_input_data = r, right_input_data = c)
+r1 = read(path2)
+d = difference(r, r1, c("cell_type","age","cell_attribute","size"))
 }
 
 }

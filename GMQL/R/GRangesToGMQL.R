@@ -4,16 +4,25 @@
 #' All sample are in GDM (tab-separated values) file format
 #'
 #' @import xml2
-#' @import plyr
+#' @importFrom plyr revalue
+#' @importFrom rtracklayer export
+#' @importFrom utils write.table
+#' @importFrom methods is
+#' @importFrom S4Vectors metadata
+#' @import GenomicRanges
 #'
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
 #'
+#' @return no value return
+#'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf}}
+#'
 #'
 #'
 #' @details
 #' The GMQL dataset is made up by two differet file type
+#'
 #' \itemize{
 #' \item{metadata files: contains metadata associated to corrisponding sample}
 #' \item{region files: contains many chromosome regions }
@@ -25,17 +34,21 @@
 #'
 #' @examples
 #'
-#' \dontrun{
-#' g = Granges()
-#' g1 = Granges()
-#' grl = GRangesList(g,g1)
-#' path = "<path_folder_output>"
-#' exportGMQL.gdm(grl,path)
-#' }
+#' library(GenomicRanges)
+#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", score = 5L, GC = 0.45)
+#' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
+#' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
+#' grl = GRangesList(gr1,gr2)
+#' test_out_path <- system.file("example",package = "GMQL")
+#' exportGMQL.gdm(grl,test_out_path)
+#'
+#'
+#' @export
 #'
 exportGMQL.gdm <- function(samples, dir_out)
 {
-  .exportGMQL(samples,dir_out,to_GTF = F)
+  .exportGMQL(samples,dir_out,to_GTF = FALSE)
+  print("Export to GDM complete")
 }
 
 #' Create GMQL dataset from GrangesList
@@ -44,10 +57,18 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' All sample are in GTF file format
 #'
 #' @import xml2
-#' @import plyr
+#' @importFrom plyr revalue
+#' @importFrom rtracklayer export
+#' @importFrom methods is
+#' @importFrom utils write.table
+#' @importFrom S4Vectors metadata
+#' @import GenomicRanges
 #'
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
+#'
+#' @return no value return
+#'
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
@@ -56,34 +77,34 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' \itemize{
 #' \item{metadata files: contains metadata associated to corrisponding sample}
 #' \item{region files: contains many chromosome regions }
-#' \item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+#' \item{region schema file: XML file contains region attribute (e.g. chr, left, right, qvalue)}
 #' }
 #' regions sample file and metadata file are associated through file name:
 #' for example S_0001.gtf for regions file and S_0001.gtf.meta for its metadata
 #'
 #'
 #' @examples
-#' \dontrun{
-#' g = Granges()
-#' g1 = Granges()
-#' grl = GRangesList(g,g1)
-#' path = "<path_folder_output>"
-#' exportGMQL.gtf(grl,path)
-#' }
+#'
+#' library(GenomicRanges)
+#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", score = 5L, GC = 0.45)
+#' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
+#' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
+#' grl = GRangesList(gr1,gr2)
+#' test_out_path <- system.file("example",package = "GMQL")
+#' exportGMQL.gtf(grl,test_out_path)
+#'
+#' @export
 #'
 #'
 exportGMQL.gtf <- function(samples, dir_out)
 {
-  .exportGMQL(samples,dir_out,to_GTF = T)
+  .exportGMQL(samples,dir_out,to_GTF = TRUE)
+  print("Export to GTF complete")
 }
-
 
 
 .exportGMQL <- function(samples, dir_out,to_GTF)
 {
-  if(dir.exists(dir_out))
-    stop("Directory already exists")
-
   if(!is(samples,"GRangesList"))
     stop("samples must be a GrangesList")
 
@@ -100,7 +121,7 @@ exportGMQL.gtf <- function(samples, dir_out)
    #write region
     lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gtf")
-      export(x,sample_name,format = "gtf")
+      rtracklayer::export(x,sample_name,format = "gtf")
     },files_sub_dir)
 
     c = .counter(0)
@@ -118,7 +139,7 @@ exportGMQL.gtf <- function(samples, dir_out)
     lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gdm")
       region_frame <- data.frame(x)
-      write.table(region_frame,sample_name,col.names = F,row.names = F, sep = '\t',quote = F)
+      write.table(region_frame,sample_name,col.names = FALSE,row.names = FALSE, sep = '\t',quote = FALSE)
     },files_sub_dir)
 
     c = .counter(0)
@@ -149,7 +170,7 @@ exportGMQL.gtf <- function(samples, dir_out)
   file_meta_name = paste0(sample_name,".meta")
   data <- data.frame(names_list,value_list)
   names(data) <- NULL
-  write.table(data,file_meta_name,row.names = F,col.names = F, quote = F,sep = '\t')
+  write.table(data,file_meta_name,row.names = FALSE,col.names = FALSE, quote = FALSE,sep = '\t')
 }
 
 
@@ -190,13 +211,4 @@ exportGMQL.gtf <- function(samples, dir_out)
   xml2::write_xml(root,schema)
 }
 
-#move to internals
 
-.counter <- function(zero = 0)
-{
-  i <- zero
-  function() {
-    i <<- i + 1
-    toString <- as.character(i)
-  }
-}

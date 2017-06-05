@@ -12,6 +12,7 @@
 #' applied to each group, yielding to one sample in the result for each group.
 #' Input samples that do not satisfy the groupby condition are disregarded.
 #'
+#' @importFrom methods is
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
@@ -26,7 +27,7 @@
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
+#' 'function_aggregate' is an object of inherited class of class \code{\link{OPERATOR}}
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT,MEDIAN
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
@@ -45,6 +46,9 @@
 #' r2 = read(path2)
 #' c = cover(2,3,input_data = r)
 #' }
+#'
+#' @export
+#'
 cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
   .doVariant("COVER",minAcc,maxAcc,groupBy,aggregates,input_data)
@@ -54,6 +58,8 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #'
 #' returns the non-overlapping regions contributing to the cover,
 #' each with its accumulation index value, which is assigned to the AccIndex region attribute.
+#'
+#' @importFrom methods is
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
@@ -76,6 +82,7 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{summit}}
+#' @export
 #'
 histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
@@ -88,6 +95,8 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' where the number of intersecting regions is not increasing afterwards and stops
 #' at a position where either the number of intersecting regions decreases,
 #' or it violates the max accumulation index).
+#'
+#' @importFrom methods is
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
@@ -111,6 +120,7 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{histogram}}
 #'
+#' @export
 #'
 summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
@@ -121,6 +131,8 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #'
 #' returns the contiguous region that starts from the first end and stops at
 #' the last end of the regions which would contribute to each region of the COVER
+#'
+#' @importFrom methods is
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
@@ -145,6 +157,7 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' @seealso \code{\link{summit}} \code{\link{cover}} \code{\link{histogram}}
 #'
 #'
+#' @export
 #'
 flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 {
@@ -189,7 +202,7 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
     if(is.null(names)){
       warning("you did not assign a names to a list.\nWe build names for you")
       names <- sapply(aggregates, function(x) {
-        take_value.OPERATOR(x)
+        take_value(x)
       })
     }
     else {
@@ -209,12 +222,12 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
     metadata_matrix = NULL
 
   out <- switch(flag,
-                "COVER" = frappeR$cover(min,max,groupBy,metadata_matrix,input_data),
-                "FLAT" = frappeR$flat(min,max,groupBy,metadata_matrix,input_data),
-                "SUMMIT" = frappeR$summit(min,max,groupBy,metadata_matrix,input_data),
-                "HISTOGRAM" = frappeR$histogram(min,max,groupBy,metadata_matrix,input_data))
+                "COVER" = WrappeR$cover(min,max,groupBy,metadata_matrix,input_data),
+                "FLAT" = WrappeR$flat(min,max,groupBy,metadata_matrix,input_data),
+                "SUMMIT" = WrappeR$summit(min,max,groupBy,metadata_matrix,input_data),
+                "HISTOGRAM" = WrappeR$histogram(min,max,groupBy,metadata_matrix,input_data))
 
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

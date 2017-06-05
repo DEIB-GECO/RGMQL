@@ -8,29 +8,38 @@
 #' with at least one metadata value in common with semi join dataset
 #' If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 #'
-#' @param input_data "url-like" string taken from GMQL function
-#' @param predicate string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
-#' @param region_predicate string predicate made up by logical operation: AND,OR,NOT on schema region values
+#' @param input_data returned object from any GMQL function
+#' @param predicate single string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
+#' @param region_predicate single string predicate made up by logical operation: AND,OR,NOT on schema region values
 #' @param semi_join list of \code{\link{CONDITION}} objects every object contains the name of metadata to be used in semijoin,
-#' The CONDITION's available are: FULL, DEF, EXACT
+#' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+#' In the latter form all metadata are considered having DEF condition
+#' The CONDITION's available are:
+#' \itemize{
+#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+#' if they have a further prefixes, the two prefix sequence are identical}
+#' \item{DEF: Default evaluation, two attributes match if both end with value. }
+#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+#' }
 #' Every condition accepts only one string value. (e.g. DEF("cell_type") )
-#' @param semi_join_dataset "url-like" string taken from GMQL function used in semijoin
+#'
+#' @param semi_join_dataset returned object from any GMQL function used in semijoin
+#'
+#' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #' \dontrun{
 #'
-#' initGMQL("tab")
+#' initGMQL("gtf")
 #' path = "/<path_to_your_folder>/<your_dataset_name>"
 #' r = read(path)
 #' c = cover(2,3,input_data = r)
-#' s = select("NOT(Patient_age < 70 AND provider=='Polimi')",input_dat = r)
-#' s = select(region_predicate = "NOT(qValue > 0.001)", semi_join = list("cell_type","age",EXACT("cell")),
-#' semi_join_dataset = c,input_data = r )
-#' s = select("NOT(Patient_age < 70)", semi_join = c("cell_type","age","cell_attribute","size"),
-#' semi_join_dataset = c,input_data = r )
+#' s = select(input_data = r, "NOT(qValue > 0.001)", semi_join = list("cell_type",EXACT("cell")),
+#' semi_join_dataset = c)
 #' }
+#' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
                    semi_join_dataset = NULL)
@@ -60,7 +69,7 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
     join_condition_matrix <- .join_condition(semi_join)
   }
   out <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,input_data)
-  if(grepl("No",out,ignore.case = T) || grepl("expected",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE) || grepl("expected",out,ignore.case = TRUE))
     stop(out)
   else
     out

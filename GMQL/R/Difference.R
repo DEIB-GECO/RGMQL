@@ -25,13 +25,13 @@
 #'
 #' initGMQL("gtf")
 #' path = /.../dataset_name
+#' path2 = /.../dataset2_name
 #' r = read(path)
-#' c = cover(2,3,input_data = r)
-#' d = difference(list(DEF("antibody_target"),FULL("cell_type")),left_input_data = r, right_input_data = c)
-#' d = difference(c("cell_type","age","cell_attribute","size"),left_input_data = r, right_input_data = c)
+#' r1 = read(path2)
+#' d = difference(r, r1, c("cell_type","age","cell_attribute","size"))
 #' }
 #'
-difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact = F)
+difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact = FALSE)
 {
   if(!is.null(joinBy))
     join_condition_matrix <- .join_condition(joinBy)
@@ -39,7 +39,7 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact
     join_condition_matrix = NULL
 
   out <- WrappeR$difference(join_condition_matrix,right_input_data,left_input_data,is_exact)
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

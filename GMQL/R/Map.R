@@ -73,9 +73,9 @@ map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = N
   else
     join_condition_matrix = NULL
 
-  out<-frappeR$map(join_condition_matrix,aggregates,left_input_data,right_input_data)
+  out<-WrappeR$map(join_condition_matrix,aggregates,left_input_data,right_input_data)
 
-  if(grepl("No",out,ignore.case = T))
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out

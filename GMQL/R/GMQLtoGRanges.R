@@ -3,23 +3,26 @@
 #' It create a GrangesList from GMQL samples in dataset
 #' It reads only sample files in GTF format
 #'
-#' @import rtracklayer
-#' @import GenomicRanges
-#' @import S4Vectors
+#' @importFrom rtracklayer import
+#' @importClassesFrom GenomicRanges GRangesList
+#' @importFrom S4Vectors metadata
 #' @import xml2
 #'
 #'
 #' @param datasetName GMQL dataset folder path
+#'
+#' @return GrangesList containing all GMQL sample In dataset
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
 #'
 #' @examples
 #'
-#' \dontrun{
-#' path = "<path_folder_input>"
-#' grl = importGMQL.gtf(path)
-#' }
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' grl = importGMQL.gtf(test_path)
+#'
+#'
+#' @export
 #'
 importGMQL.gtf <- function(datasetName)
 {
@@ -31,7 +34,7 @@ importGMQL.gtf <- function(datasetName)
   if(length(list.files(datasetName))==0)
     stop("no samples present in this dataset")
 
-  regions <- list.files(datasetName, pattern = "*.gtf$",full.names = T)
+  regions <- list.files(datasetName, pattern = "*.gtf$",full.names = TRUE)
   if(length(regions) != 0)
   {
     name_samples <- lapply(regions, function(x){gsub("*.gtf", "", basename(x))})
@@ -42,7 +45,7 @@ importGMQL.gtf <- function(datasetName)
   else
     stop("No GTF files present")
 
-  meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = T)
+  meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = TRUE)
   if(length(meta) != 0)
   {
     meta_list <- lapply(meta, .add_metadata)
@@ -62,22 +65,24 @@ importGMQL.gtf <- function(datasetName)
 #' It create a GrangesList from GMQL samples in dataset
 #' It reads only sample files in GDM format
 #'
-#' @import GenomicRanges
-#' @import S4Vectors
+#' @importClassesFrom GenomicRanges GRangesList
+#' @importFrom S4Vectors metadata
+#' @importFrom utils read.delim
 #' @import xml2
 #'
 #' @param datasetName GMQL dataset folder path
 #'
+#' @return GrangesList containing all GMQL sample In dataset
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
 #'
 #' @examples
 #'
-#' \dontrun{
-#' path = "<path_folder_input>"
-#' grl = importGMQL.gdm(path)
-#' }
+#' test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' grl = importGMQL.gdm(test_path)
+#'
+#' @export
 #'
 importGMQL.gdm <- function(datasetName)
 {
@@ -89,7 +94,7 @@ importGMQL.gdm <- function(datasetName)
   if(length(list.files(datasetName))==0)
     stop("no samples present in this dataset")
 
-  regions <- list.files(datasetName, pattern = "*.gdm$",full.names = T)
+  regions <- list.files(datasetName, pattern = "*.gdm$",full.names = TRUE)
   if(length(regions) != 0)
   {
     name_samples <- lapply(regions, function(x){gsub("*.gdm", "", basename(x))})
@@ -99,7 +104,7 @@ importGMQL.gdm <- function(datasetName)
     names(vector_field)=NULL
     sampleList <- lapply(regions,function(x){
       df <- read.delim(x,col.names = vector_field,header = FALSE)
-      g <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = T,start.field = "left",end.field = "right")
+      g <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = TRUE,start.field = "left",end.field = "right")
     })
     names(sampleList) <- name_samples
     gRange_list <- GenomicRanges::GRangesList(sampleList)
@@ -107,7 +112,7 @@ importGMQL.gdm <- function(datasetName)
   else
     stop("No GDM files present")
 
-  meta <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = T)
+  meta <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = TRUE)
   if(length(meta) != 0)
   {
     meta_list <- lapply(meta, .add_metadata)
@@ -120,14 +125,5 @@ importGMQL.gdm <- function(datasetName)
   return(gRange_list)
 }
 
-
-#move to internals
-.add_metadata <- function(files)
-{
-  x <- scan(files, what="", sep="\n")
-  y <- strsplit(x, "\t")
-  names(y) <- sapply(y, `[[`, 1)
-  listMeta <- lapply(y, `[`, -1)
-}
 
 

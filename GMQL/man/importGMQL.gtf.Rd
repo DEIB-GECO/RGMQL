@@ -9,16 +9,18 @@ importGMQL.gtf(datasetName)
 \arguments{
 \item{datasetName}{GMQL dataset folder path}
 }
+\value{
+GrangesList containing all GMQL sample In dataset
+}
 \description{
 It create a GrangesList from GMQL samples in dataset
 It reads only sample files in GTF format
 }
 \examples{
 
-\dontrun{
-path = "<path_folder_input>"
-grl = importGMQL.gtf(path)
-}
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+grl = importGMQL.gtf(test_path)
+
 
 }
 \seealso{

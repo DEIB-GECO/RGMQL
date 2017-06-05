@@ -29,8 +29,8 @@
 #'
 union <- function(left_input_data,right_input_data)
 {
-  out <- frappeR$union(right_input_data,left_input_data)
-  if(grepl("No",out,ignore.case = T))
+  out <- WrappeR$union(right_input_data,left_input_data)
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out
