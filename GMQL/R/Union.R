@@ -16,16 +16,26 @@
 #' @param left_input_data "url-like" string taken from GMQL function
 #' @param right_input_data "url-like" string taken from GMQL function
 #'
+#' @return "url-like" string
+#'
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
+#'
 #' \dontrun{
 #'
-#' r = read(path)
-#' r2 = read(path2)
-#' c = cover(2,3,input_data = r)
-#' u = union(r2,c)
+#' library(rscala)
+#'
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' r = read(test_path)
+#' r2 = read(test_path2)
+#' u = union(r2,r)
 #' }
+#'
+#' @export
 #'
 union <- function(left_input_data,right_input_data)
 {

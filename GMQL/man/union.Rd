@@ -11,6 +11,9 @@ union(left_input_data, right_input_data)
 
 \item{right_input_data}{"url-like" string taken from GMQL function}
 }
+\value{
+"url-like" string
+}
 \description{
 It is used to integrate homogeneous or heterogeneous samples of two datasets within a single dataset
 for each sample of either input dataset, a result sample is created as follows:
@@ -26,12 +29,17 @@ For what concerns metadata, attributes of samples from the left (right) input da
 with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 }
 \examples{
+
 \dontrun{
 
-r = read(path)
-r2 = read(path2)
-c = cover(2,3,input_data = r)
-u = union(r2,c)
+library(rscala)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+r = read(test_path)
+r2 = read(test_path2)
+u = union(r2,r)
 }
 
 }

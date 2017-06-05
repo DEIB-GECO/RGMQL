@@ -2,23 +2,6 @@
 #       OPERATOR            #
 #############################
 
-#' OPERATOR object class
-#'
-#'
-#' OPERATOR object available are:
-#' \itemize{
-#' \item{SUM}
-#' \item{MIN}
-#' \item{MAX}
-#' \item{COUNT}
-#' \item{BAG}
-#' \item{AVG}
-#' }
-#'
-#' @details
-#' you never use a parent class OPERATOR()
-#'
-#'
 OPERATOR <- function(value)
 {
   op_list <- list(
@@ -38,26 +21,7 @@ check.META_OPERATOR <- function(value)
     stop("value: is not a string")
 }
 
-#' META_OPERATOR object class
-#'
-#'
-#' META_OPERATOR object available are:
-#' \itemize{
-#' \item{SUM}
-#' \item{MIN}
-#' \item{MAX}
-#' \item{COUNT}
-#' \item{BAG}
-#' \item{AVG}
-#' \item{STD}
-#' \item{MEDIAN}
-#' \item{Q1}
-#' \item{Q2}
-#' \item{Q3}
-#' }
-#' @details
-#' you never use a parent class META_OPERATOR()
-#'
+
 META_OPERATOR <- function(value)
 {
   op_list <- list(
@@ -98,6 +62,26 @@ take_value.META_OPERATOR <- function(obj){
   text
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 SUM <- function(value)
 {
   check.META_OPERATOR(value)
@@ -110,6 +94,26 @@ SUM <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 MIN <- function(value)
 {
   check.META_OPERATOR(value)
@@ -122,6 +126,26 @@ MIN <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 MAX <- function(value)
 {
   check.META_OPERATOR(value)
@@ -134,6 +158,26 @@ MAX <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 AVG <- function(value)
 {
   check.META_OPERATOR(value)
@@ -146,6 +190,26 @@ AVG <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 BAG <- function(value)
 {
   check.META_OPERATOR(value)
@@ -158,6 +222,26 @@ BAG <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 COUNT <- function()
 {
   list <- list()
@@ -171,7 +255,26 @@ as.character.COUNT <- function(obj) {
 }
 check.COUNT <- function(obj){}
 
-
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 STD <- function(value)
 {
   check.META_OPERATOR(value)
@@ -184,6 +287,26 @@ STD <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 MEDIAN <- function(value)
 {
   check.META_OPERATOR(value)
@@ -196,6 +319,26 @@ MEDIAN <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 Q1 <- function(value)
 {
   check.META_OPERATOR(value)
@@ -208,6 +351,26 @@ Q1 <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 Q2 <- function(value)
 {
   check.META_OPERATOR(value)
@@ -220,6 +383,26 @@ Q2 <- function(value)
   return(list)
 }
 
+#' OPERATOR object class
+#'
+#'
+#' OPERATOR object available are:
+#' \itemize{
+#' \item{SUM}
+#' \item{MIN}
+#' \item{MAX}
+#' \item{COUNT}
+#' \item{BAG}
+#' \item{AVG}
+#' \item{STD}
+#' \item{MEDIAN}
+#' \item{Q1}
+#' \item{Q2}
+#' \item{Q3}
+#' }
+#'
+#' @export
+#'
 Q3 <- function(value)
 {
   check.META_OPERATOR(value)

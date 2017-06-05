@@ -7,7 +7,7 @@
 #'
 #' @param input_data "url-like" string returned from GMQL function
 #' @param metadata a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class \code{\link{META_OPERATOR}}
+#' 'function_aggregate' is an object of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, STD, MEDIAN, Q1, Q1, Q3.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema

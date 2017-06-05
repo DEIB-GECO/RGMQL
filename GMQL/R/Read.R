@@ -9,6 +9,8 @@ if(getRversion() >= "3.1.0")
 #'
 #' Initialize and run GMQL server for executing GMQL query
 #'
+#' @import rscala
+#'
 #' @param output_format single string identifies the output format of sample files.
 #' Can be TAB, GTF, VCF or COLLECT
 #' \itemize{
@@ -102,7 +104,7 @@ read <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
   if(!remote_proc && !is_local)
     stop("you cannot use local processing with remote repository")
 
-  if(!is.character())
+  if(!is.character(DatasetFolder))
     stop("DatasetFolder: must be one string")
 
   if(length(DatasetFolder)!=1)

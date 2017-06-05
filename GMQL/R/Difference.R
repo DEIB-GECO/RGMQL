@@ -13,9 +13,9 @@
 #'
 #' @param right_input_data "url-like" string taken from GMQL function
 #' @param left_input_data "url-like" string taken from GMQL function
-#' @param joinBy list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
-#' The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
-#' Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )
+#' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in joinBy
+#' The CONDITION's available are: EXACT, FULL, DEF
+#' Every condition accepts only one string value. (e.g. DEF("cell_type") )
 #' @param is_exact logical
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

@@ -1,0 +1,25 @@
+asd.asd.assay	DNase-seq
+asd.asd.assembly	hg19
+asd.asd.audit_internal_action	experiment not submitted to GEO, out of date analysis
+biological_replicate(s)	2
+biosample_life_stage	unknown
+biosample_organism	Homo sapiens
+biosample_phase	S1
+biosample_sex	unknown
+biosample_term_id	EFO:0003045
+biosample_term_name	H9
+biosample_type	stem cell
+derived_from	ENCFF049FKX
+experiment_accession	ENCSR017OZH
+asd.asd.experiment_date_released	2016-08-01
+file_accession	ENCFF799EJV
+file_download_url	https://www.encodeproject.org/files/ENCFF799EJV/@@download/ENCFF799EJV.bed.gz
+file_format	bed narrowPeak
+file_status	archived
+lab	John Stamatoyannopoulos, UW
+library_made_from	DNA
+md5sum	0aebe097c630fb96331b827423571342
+output_type	peaks
+lol.lol.project	ENCODE
+lol.lol.read_length	36
+size	3566868

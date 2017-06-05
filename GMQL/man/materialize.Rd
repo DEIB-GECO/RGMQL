@@ -12,6 +12,9 @@ materialize(input_data, dir_out = getwd())
 \item{dir_out}{destination folder path.
 by default the working directory is set by R environment}
 }
+\value{
+no returned value
+}
 \description{
 It saves the contents of a dataset that contains samples metadata and samples regions.
 It is normally used to persist the contents of any dataset generated during a GMQL query.
@@ -22,14 +25,16 @@ For best performance, materialize the relevant data only.
 
 \dontrun{
 
+library(rscala)
+
 initGMQL("gtf")
-r = read(path)
-r2 = read(path2)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-materialize(input_data = m, dir_out = "/.../foldername")
-materialize(s,"/.../foldername")
+materialize(input_data = m, dir_out = test_path)
 }
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

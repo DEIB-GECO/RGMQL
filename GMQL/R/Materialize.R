@@ -3,19 +3,26 @@
 #' execute GMQL query.
 #' The function works only after invoking at least one materialize
 #'
+#'
+#' @return no returned value
+#'
 #' @examples
 #'
 #' \dontrun{
 #'
+#' library(rscala)
+#'
 #' initGMQL("gtf")
-#' r = read(path)
-#' r2 = read(path2)
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-#' materialize(input_data = m, dir_out = "/.../foldername")
-#' materialize(s,"/.../foldername")
+#' materialize(input_data = m, dir_out = test_path)
 #' execute()
 #' }
+#'
+#' @export
+#'
 execute <- function()
 {
   out <- WrappeR$execute()
@@ -37,20 +44,26 @@ execute <- function()
 #' @param dir_out destination folder path.
 #' by default the working directory is set by R environment
 #'
+#' @return no returned value
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #'
 #' \dontrun{
 #'
+#' library(rscala)
+#'
 #' initGMQL("gtf")
-#' r = read(path)
-#' r2 = read(path2)
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-#' materialize(input_data = m, dir_out = "/.../foldername")
-#' materialize(s,"/.../foldername")
+#' materialize(input_data = m, dir_out = test_path)
 #' }
+#'
+#' @export
+#'
 materialize <- function(input_data, dir_out = getwd())
 {
   out <- WrappeR$materialize(input_data,dir_out)
@@ -67,22 +80,27 @@ materialize <- function(input_data, dir_out = getwd())
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param rows number of rows that you want to retrieve an stored in memory
-#' by default is 0 that means all rows
+#' by default is 0 that means take all rows
 #'
-#' @return GrangesList
+#' @return GrangesList with associated metadata
 #'
 #'
 #' @examples
 #'
 #' \dontrun{
 #'
-#' initGMQL("collect")
-#' r = read(path)
-#' r2 = read(path2)
+#' library(rscala)
+#'
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' take(input_data = m, rows = 45)
 #' }
+#'
+#' @export
+#'
 take <- function(input_data, rows=0L)
 {
   rows <- as.integer(rows[1])
@@ -98,7 +116,6 @@ take <- function(input_data, rows=0L)
   reg <- WrappeR$get_reg()
   meta <- WrappeR$get_meta()
   schema <- WrappeR$get_schema()
-
 }
 
 

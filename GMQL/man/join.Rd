@@ -8,11 +8,11 @@ join(genometric_predicate = NULL, joinBy = NULL, output = "contig",
   right_input_data, left_input_data)
 }
 \arguments{
-\item{genometric_predicate}{is a concatenation of distal conditions by means of logical ANDs}
+\item{genometric_predicate}{is a concatenation of DISTAL object by means of logical ANDs}
 
-\item{joinBy}{list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
-The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
-Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
+\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in joinBy
+The CONDITION's available are: EXACT, FULL, DEF
+Every condition accepts only one string value. (e.g. DEF("cell_type") )}
 
 \item{output}{is one of four different values that declare which region is given in
 output for each input pair of left dataset and right dataset regions satisfying the genometric predicate:

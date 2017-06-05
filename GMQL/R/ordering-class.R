@@ -2,19 +2,6 @@
 #       ORDER              #
 ############################
 
-#' ORDER object class
-#'
-#'
-#' ORDER object available are:
-#' \itemize{
-#' \item{ASC}
-#' \item{DESC}
-#' }
-#'
-#' @details
-#' you never use a parent class ORDER()
-#'
-#'
 
 ORDER <- function(value)
 {
@@ -51,7 +38,18 @@ as.character.ORDER <- function(obj) {
   c(class,val)
 }
 
-
+#' ORDER object class
+#'
+#'
+#' ORDER object available are:
+#' \itemize{
+#' \item{ASC}
+#' \item{DESC}
+#' }
+#'
+#'
+#' @export
+#'
 DESC <- function(value)
 {
   check.ORDER(value)
@@ -64,6 +62,18 @@ DESC <- function(value)
   return(list)
 }
 
+#' ORDER object class
+#'
+#'
+#' ORDER object available are:
+#' \itemize{
+#' \item{ASC: Ascending order}
+#' \item{DESC: Descending order}
+#' }
+#'
+#'
+#' @export
+#'
 ASC <- function(value)
 {
   check.ORDER(value)

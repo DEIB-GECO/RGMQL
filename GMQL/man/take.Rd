@@ -10,10 +10,10 @@ take(input_data, rows = 0L)
 \item{input_data}{"url-like" string taken from GMQL function}
 
 \item{rows}{number of rows that you want to retrieve an stored in memory
-by default is 0 that means all rows}
+by default is 0 that means take all rows}
 }
 \value{
-GrangesList
+GrangesList with associated metadata
 }
 \description{
 GMQL Operation: TAKE
@@ -22,11 +22,14 @@ GMQL Operation: TAKE
 
 \dontrun{
 
-initGMQL("collect")
-r = read(path)
-r2 = read(path2)
+library(rscala)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 take(input_data = m, rows = 45)
 }
+
 }

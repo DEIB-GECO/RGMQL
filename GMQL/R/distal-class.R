@@ -3,24 +3,6 @@
 ############################
 
 
-#' DISTAL object class
-#'
-#'
-#' DISTAL object available are:
-#' \itemize{
-#' \item{UP}
-#' \item{DOWN}
-#' \item{DGE}
-#' \item{DLE}
-#' \item{MD}
-#' }
-#' @details
-#' you never use a parent class DISTAL()
-#'
-#'
-#'
-
-
 DISTAL <- function(value)
 {
   op_list <- list(
@@ -49,6 +31,20 @@ check.DISTAL <- function(value)
 
 }
 
+#' DISTAL object class
+#'
+#'
+#' DISTAL object available are:
+#' \itemize{
+#' \item{UP}
+#' \item{DOWN}
+#' \item{DGE}
+#' \item{DLE}
+#' \item{MD}
+#' }
+#'
+#' @export
+#'
 DLE <- function(value)
 {
   check.DISTAL(value)
@@ -61,6 +57,21 @@ DLE <- function(value)
   return(list)
 }
 
+
+#' DISTAL object class
+#'
+#'
+#' DISTAL object available are:
+#' \itemize{
+#' \item{UP}
+#' \item{DOWN}
+#' \item{DGE}
+#' \item{DLE}
+#' \item{MD}
+#' }
+#'
+#' @export
+#'
 DGE <- function(value)
 {
   check.DISTAL(value)
@@ -73,6 +84,20 @@ DGE <- function(value)
   return(list)
 }
 
+#' DISTAL object class
+#'
+#'
+#' DISTAL object available are:
+#' \itemize{
+#' \item{UP}
+#' \item{DOWN}
+#' \item{DGE}
+#' \item{DLE}
+#' \item{MD}
+#' }
+#'
+#' @export
+#'
 MD <- function(value)
 {
   check.DISTAL(value)
@@ -85,6 +110,21 @@ MD <- function(value)
   return(list)
 }
 
+
+#' DISTAL object class
+#'
+#'
+#' DISTAL object available are:
+#' \itemize{
+#' \item{UP}
+#' \item{DOWN}
+#' \item{DGE}
+#' \item{DLE}
+#' \item{MD}
+#' }
+#'
+#' @export
+#'
 UP <- function()
 {
   list <- list()
@@ -96,6 +136,21 @@ as.character.UP <- function(obj) {
   class <- class(obj)[1]
   c(class,"")
 }
+
+#' DISTAL object class
+#'
+#'
+#' DISTAL object available are:
+#' \itemize{
+#' \item{UP}
+#' \item{DOWN}
+#' \item{DGE}
+#' \item{DLE}
+#' \item{MD}
+#' }
+#'
+#' @export
+#'
 DOWN <- function()
 {
   list <- list()
@@ -103,6 +158,8 @@ DOWN <- function()
   class(list) <- c("DOWN","DISTAL")
   return(list)
 }
+
+
 as.character.DOWN <- function(obj) {
   class <- class(obj)[1]
   c(class,"")

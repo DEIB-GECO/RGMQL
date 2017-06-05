@@ -12,9 +12,9 @@ difference(left_input_data, right_input_data, joinBy = NULL,
 
 \item{right_input_data}{"url-like" string taken from GMQL function}
 
-\item{joinBy}{list of \code{\link{CONDITION}} objects where every object contains the name of metadata to be used in joinBy
-The CONDITION's available are: EXACT, FULLNAME, DEFAULT.
-Every condition accepts only one string value. (e.g. DEFAULT("cell_type") )}
+\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in joinBy
+The CONDITION's available are: EXACT, FULL, DEF
+Every condition accepts only one string value. (e.g. DEF("cell_type") )}
 
 \item{is_exact}{logical}
 }

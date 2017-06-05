@@ -6,6 +6,9 @@
 \usage{
 execute()
 }
+\value{
+no returned value
+}
 \description{
 execute GMQL query.
 The function works only after invoking at least one materialize
@@ -14,13 +17,15 @@ The function works only after invoking at least one materialize
 
 \dontrun{
 
+library(rscala)
+
 initGMQL("gtf")
-r = read(path)
-r2 = read(path2)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-materialize(input_data = m, dir_out = "/.../foldername")
-materialize(s,"/.../foldername")
+materialize(input_data = m, dir_out = test_path)
 execute()
 }
+
 }

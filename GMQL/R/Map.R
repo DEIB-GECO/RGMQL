@@ -56,22 +56,9 @@ map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = N
     metadata_matrix = NULL
 
   if(!is.null(joinBy))
-  {
-    if(!is.list(joinBy))
-      stop("joinBy have to be a list ")
-
-    if(!all(sapply(semi_join, function(x) is(x,"CONDITION") )))
-      stop("you must use CONDITION object for defining attibute in semijoin")
-
-    join_condition_matrix <- t(sapply(joinBy, function(x) {
-
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-
-    }))
-  }
+    join_condition_matrix <- .join_condition(joinBy)
   else
-    join_condition_matrix = NULL
+    join_condition_matrix <- NULL
 
   out<-WrappeR$map(join_condition_matrix,aggregates,left_input_data,right_input_data)
 

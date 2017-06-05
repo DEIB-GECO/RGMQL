@@ -14,7 +14,7 @@ select(input_data, predicate = NULL, region_predicate = NULL,
 
 \item{region_predicate}{single string predicate made up by logical operation: AND,OR,NOT on schema region values}
 
-\item{semi_join}{list of \code{\link{CONDITION}} objects every object contains the name of metadata to be used in semijoin,
+\item{semi_join}{list of CONDITION objects every object contains the name of metadata to be used in semijoin,
 or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
 In the latter form all metadata are considered having DEF condition
 The CONDITION's available are:
@@ -44,12 +44,13 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 \dontrun{
 
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 c = cover(2,3,input_data = r)
 s = select(input_data = r, "NOT(qValue > 0.001)", semi_join = list("cell_type",EXACT("cell")),
 semi_join_dataset = c)
 }
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
