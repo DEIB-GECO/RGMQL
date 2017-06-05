@@ -39,7 +39,7 @@
 #' s = select(input_data = r, "NOT(qValue > 0.001)", semi_join = list("cell_type",EXACT("cell")),
 #' semi_join_dataset = c)
 #' }
-#'
+#' a
 #' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,

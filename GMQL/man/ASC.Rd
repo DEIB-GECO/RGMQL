@@ -6,6 +6,9 @@
 \usage{
 ASC(value)
 }
+\value{
+no returned value
+}
 \description{
 ORDER object available are:
 \itemize{

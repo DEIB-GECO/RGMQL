@@ -21,6 +21,9 @@ Two style are allowed:
 }
 "mixed style" is not allowed}
 }
+\value{
+"url-like" string
+}
 \description{
 It generates new metadata attributes as result of aggregate functions applied to sample region attributes
 and adds them to the existing metadata attributes of the sample.

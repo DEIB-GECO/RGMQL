@@ -30,6 +30,9 @@ Every operator accepts a string value, execet for COUNT that cannot have a value
 Argument of 'function_aggregate' must exist in schema
 Two style are allowed:}
 }
+\value{
+"url-like" string
+}
 \description{
 returns the contiguous region that starts from the first end and stops at
 the last end of the regions which would contribute to each region of the COVER

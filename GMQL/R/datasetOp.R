@@ -287,7 +287,7 @@ deleteDataset <- function(url,datasetName)
 #' #### download dataset in r working directory
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(url = PolimiUrl,"test101","test")
-#' downloadDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS",path = getwd())
+#' downloadDataset(PolimiUrl,"dataset_test",path = getwd())
 #'
 #' @export
 #'

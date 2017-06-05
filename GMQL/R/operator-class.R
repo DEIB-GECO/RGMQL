@@ -79,7 +79,8 @@ take_value.META_OPERATOR <- function(obj){
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 SUM <- function(value)
@@ -111,7 +112,7 @@ SUM <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
 #' @export
 #'
 MIN <- function(value)
@@ -143,7 +144,8 @@ MIN <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 MAX <- function(value)
@@ -175,7 +177,8 @@ MAX <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 AVG <- function(value)
@@ -207,7 +210,7 @@ AVG <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
 #' @export
 #'
 BAG <- function(value)
@@ -239,7 +242,8 @@ BAG <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 COUNT <- function()
@@ -272,7 +276,8 @@ check.COUNT <- function(obj){}
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 STD <- function(value)
@@ -304,7 +309,7 @@ STD <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
 #' @export
 #'
 MEDIAN <- function(value)
@@ -336,7 +341,8 @@ MEDIAN <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 Q1 <- function(value)
@@ -368,7 +374,8 @@ Q1 <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 Q2 <- function(value)
@@ -400,7 +407,7 @@ Q2 <- function(value)
 #' \item{Q2}
 #' \item{Q3}
 #' }
-#'
+#' @return no returned value
 #' @export
 #'
 Q3 <- function(value)

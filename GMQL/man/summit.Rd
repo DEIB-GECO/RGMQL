@@ -28,7 +28,10 @@ Normally must be > 0, we admit value 0 and -1 as special value:
 The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 Every operator accepts a string value, execet for COUNT that cannot have a value.
 Argument of 'function_aggregate' must exist in schema
-Two style are allowed:}
+Two style are allowed}
+}
+\value{
+"url-like" string
 }
 \description{
 returns regions that start from a position

@@ -48,7 +48,8 @@ check.CONDITION <- function(value)
 #' \item{DEF: Default evaluation, two attributes match if both end with value. }
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 DEF <- function(value)
@@ -73,7 +74,8 @@ DEF <- function(value)
 #' \item{DEF: Default evaluation, two attributes match if both end with value. }
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 EXACT <- function(value)
@@ -98,7 +100,8 @@ EXACT <- function(value)
 #' \item{DEF: Default evaluation, two attributes match if both end with value. }
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 FULL <- function(value)

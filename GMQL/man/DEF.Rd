@@ -6,6 +6,9 @@
 \usage{
 DEF(value)
 }
+\value{
+no returned value
+}
 \description{
 CONDITION object available are:
 \itemize{

@@ -18,6 +18,8 @@
 #' }
 #' "mixed style" is not allowed
 #'
+#' @return "url-like" string
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples

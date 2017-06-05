@@ -6,6 +6,9 @@
 \usage{
 DLE(value)
 }
+\value{
+no returned value
+}
 \description{
 DISTAL object available are:
 \itemize{

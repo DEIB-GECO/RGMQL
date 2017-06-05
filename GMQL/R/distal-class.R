@@ -42,7 +42,8 @@ check.DISTAL <- function(value)
 #' \item{DLE}
 #' \item{MD}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 DLE <- function(value)
@@ -69,7 +70,8 @@ DLE <- function(value)
 #' \item{DLE}
 #' \item{MD}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 DGE <- function(value)
@@ -95,7 +97,8 @@ DGE <- function(value)
 #' \item{DLE}
 #' \item{MD}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 MD <- function(value)
@@ -122,7 +125,8 @@ MD <- function(value)
 #' \item{DLE}
 #' \item{MD}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 UP <- function()
@@ -148,7 +152,8 @@ as.character.UP <- function(obj) {
 #' \item{DLE}
 #' \item{MD}
 #' }
-#'
+#' @return no returned value
+
 #' @export
 #'
 DOWN <- function()

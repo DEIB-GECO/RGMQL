@@ -50,7 +50,7 @@ c = cover(2,3,input_data = r)
 s = select(input_data = r, "NOT(qValue > 0.001)", semi_join = list("cell_type",EXACT("cell")),
 semi_join_dataset = c)
 }
-
+a
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

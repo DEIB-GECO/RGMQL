@@ -47,7 +47,8 @@ as.character.ORDER <- function(obj) {
 #' \item{DESC}
 #' }
 #'
-#'
+#' @return no returned value
+
 #' @export
 #'
 DESC <- function(value)
@@ -71,7 +72,8 @@ DESC <- function(value)
 #' \item{DESC: Descending order}
 #' }
 #'
-#'
+#' @return no returned value
+
 #' @export
 #'
 ASC <- function(value)

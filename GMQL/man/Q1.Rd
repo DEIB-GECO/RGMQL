@@ -6,6 +6,9 @@
 \usage{
 Q1(value)
 }
+\value{
+no returned value
+}
 \description{
 OPERATOR object available are:
 \itemize{

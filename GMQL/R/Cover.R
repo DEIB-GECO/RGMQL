@@ -83,6 +83,7 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
+#' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{summit}}
@@ -120,7 +121,9 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
-#' Two style are allowed:
+#' Two style are allowed
+#'
+#' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{histogram}}
@@ -157,6 +160,7 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
+#' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{summit}} \code{\link{cover}} \code{\link{histogram}}
@@ -194,35 +198,7 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
   groupBy = groupBy[!duplicated(groupBy)]
 
   if(!is.null(aggregates))
-  {
-    if(!is.list(aggregates))
-      stop("aggregates must be a list")
-
-    if(!all(sapply(aggregates, function(x) is(x,"OPERATOR") )))
-    {
-      stop("you must use OPERATOR object for defining aggregates function")
-    }
-
-    names <- names(aggregates)
-    if(is.null(names)){
-      warning("you did not assign a names to a list.\nWe build names for you")
-      names <- sapply(aggregates, function(x) {
-        take_value(x)
-      })
-    }
-    else {
-      if(all(sapply(names, function(x) (x=="")))) {
-        stop("no partial names assignment to list")
-      }
-    }
-    aggregate_matrix <- t(sapply(aggregates, function(x) {
-
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-    }))
-    m_names <- matrix(names)
-    metadata_matrix <- cbind(m_names,aggregate_matrix)
-  }
+    metadata_matrix <- .aggregates(aggregates,"OPERATOR")
   else
     metadata_matrix = NULL
 

@@ -30,6 +30,9 @@ Every operator accepts a string value, execet for COUNT that cannot have a value
 Argument of 'function_aggregate' must exist in schema
 Two style are allowed:}
 }
+\value{
+"url-like" string
+}
 \description{
 returns the non-overlapping regions contributing to the cover,
 each with its accumulation index value, which is assigned to the AccIndex region attribute.
