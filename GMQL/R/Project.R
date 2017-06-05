@@ -13,15 +13,28 @@
 #'
 #' @param input_data string pointer taken from GMQL function
 #' @param predicate string made up by logical oepration: AND,OR,NOT
+#' @param metadata metadata
 #' @param region region
+#' @param metadata_update metadata_update
+#' @param regions_update regions_update
+#'
+#' @return "url-like" string
+#'
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
+#'
+#'
 #'
 #' @examples
 #' \dontrun{
 #'
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
+#' p = project(input_data = r)
 #' }
 #'
+#' @export
 #'
 #'
 project <-function(input_data, metadata = NULL, regions = NULL, metadata_update = NULL, regions_update = NULL)

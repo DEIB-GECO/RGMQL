@@ -33,6 +33,8 @@
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
 #'
+#' @return "url-like" string
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @seealso  \code{\link{summit}} \code{\link{flat}} \code{\link{histogram}}
@@ -40,10 +42,12 @@
 #' @examples
 #'
 #' \dontrun{
+#'
+#' library(rscala)
+#'
 #' initGMQL("gtf")
-#' path = "/<path_to_your_folder>/<your_dataset_name>"
-#' r = read(path)
-#' r2 = read(path2)
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' c = cover(2,3,input_data = r)
 #' }
 #'
@@ -82,6 +86,7 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #' @seealso \code{\link{flat}} \code{\link{cover}} \code{\link{summit}}
+#'
 #' @export
 #'
 histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)

@@ -4,10 +4,14 @@
 \alias{join}
 \title{GMQL Operation: JOIN}
 \usage{
-join(genometric_predicate = NULL, joinBy = NULL, output = "contig",
-  right_input_data, left_input_data)
+join(right_input_data, left_input_data, genometric_predicate = NULL,
+  joinBy = NULL, output = "contig")
 }
 \arguments{
+\item{right_input_data}{"url-like" string taken from GMQL function}
+
+\item{left_input_data}{"url-like" string taken from GMQL function}
+
 \item{genometric_predicate}{is a concatenation of DISTAL object by means of logical ANDs}
 
 \item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in joinBy
@@ -22,10 +26,9 @@ output for each input pair of left dataset and right dataset regions satisfying 
 \item{intersection}
 \item{contig}
 }}
-
-\item{right_input_data}{"url-like" string taken from GMQL function}
-
-\item{left_input_data}{"url-like" string taken from GMQL function}
+}
+\value{
+"url-like" string
 }
 \description{
 It takes in input two datasets, respectively known as nchor (left) and experiment (right) and returns
@@ -46,7 +49,6 @@ c = cover(2,3,input_data = r)
 j = join (list(list(UP(),MD(1)), list(DOWN(),DGE(5000))),right_input_data = r,left_input_data = c)
 
 }
-
 
 }
 \references{

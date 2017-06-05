@@ -77,30 +77,6 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
 }
 
 
-.join_condition <- function(conditions)
-{
-  if(is.list(conditions))
-  {
-    join_condition_matrix <- t(sapply(conditions, function(x) {
-      new_value = as.character(x)
-      if(length(new_value)==1)
-        new_value = c("DEF",new_value)
-      else if(!identical("DEF",new_value[1]) && !identical("FULL",new_value[1]) && !identical("EXACT",new_value[1]))
-        stop("no more than one value")
-      matrix <- matrix(new_value)
-    }))
-  }
-  else if(is.character(conditions))
-  {
-    join_condition_matrix <- t(sapply(conditions, function(x) {
-      new_value = c("DEF",x)
-      matrix <- matrix(new_value)
-    }))
-  }
-  else
-    stop("only list or character")
-}
-
 .check_predicate <- function(predicate_string)
 {
   if(!is.character(predicate_string))

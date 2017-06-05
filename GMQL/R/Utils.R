@@ -30,4 +30,60 @@
   vector_field <- unlist(list_field)
 }
 
+# aggregates factory
+.aggregates <- function(metadata,class)
+{
+  if(!is.list(metadata))
+    stop("metadata must be a list")
+
+  if(!all(sapply(metadata, function(x) is(x,class))))
+    stop("All elements should be META_OPERATOR object")
+
+  names <- names(metadata)
+  if(is.null(names))
+  {
+    warning("You did not assign a names to a list.\nWe build names for you")
+    names <- sapply(metadata, take_value.META_OPERATOR)
+  }
+  else
+  {
+    if("" %in% names)
+      stop("No partial names assignment is allowed")
+  }
+  aggregate_matrix <- t(sapply(metadata, function(x) {
+
+    new_value = as.character(x)
+    matrix <- matrix(new_value)
+
+  }))
+  m_names <- matrix(names)
+  metadata_matrix <- cbind(m_names,aggregate_matrix)
+}
+
+
+#meta join condition
+.join_condition <- function(conditions)
+{
+  if(is.list(conditions))
+  {
+    join_condition_matrix <- t(sapply(conditions, function(x) {
+      new_value = as.character(x)
+      if(length(new_value)==1)
+        new_value = c("DEF",new_value)
+      else if(!identical("DEF",new_value[1]) && !identical("FULL",new_value[1]) && !identical("EXACT",new_value[1]))
+        stop("no more than one value")
+      matrix <- matrix(new_value)
+    }))
+  }
+  else if(is.character(conditions))
+  {
+    join_condition_matrix <- t(sapply(conditions, function(x) {
+      new_value = c("DEF",x)
+      matrix <- matrix(new_value)
+    }))
+  }
+  else
+    stop("only list or character")
+}
+
 

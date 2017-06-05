@@ -15,43 +15,53 @@
 #' in both M1 and  M2
 #'
 #'
-#' @param left_input_data "url-like" string taken from GMQL function
-#' @param right_input_data "url-like" string taken from GMQL function
+#' @param left_input_data returned object from any GMQL function
+#' @param right_input_data returned object from any GMQL function
+#' @param aggregates a list of element in the form key = 'function_aggregate'.
+#' 'function_aggregate' is an object of class OPERATOR
+#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN.
+#' Every operator accepts a string value, execet for COUNT that cannot have a value.
+#' Argument of 'function_aggregate' must exist in schema
+#' Two style are allowed:
+#' \itemize{
+#' \item list of key-value pairs: e.g. sum = SUM("pvalue")
+#' \item list of values: e.g. SUM("pvalue")
+#' }
+#' "mixed style" is not allowed
+#' @param joinBy list of CONDITION objects every object contains the name of metadata to be used in semijoin,
+#' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+#' In the latter form all metadata are considered having DEF condition
+#' The CONDITION's available are:
+#' \itemize{
+#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+#' if they have a further prefixes, the two prefix sequence are identical}
+#' \item{DEF: Default evaluation, two attributes match if both end with value. }
+#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+#' }
+#' Every condition accepts only one string value. (e.g. DEF("cell_type") )
+#'
+#'
+#' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
+#' @examples
+#' \dontrun{
 #'
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' r = read(test_path)
+#' r2 = read(test_path2)
+#' m = map(r,r2)
+#' }
+#'
+#' @export
 #'
 map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 {
   if(!is.null(aggregates))
-  {
-    if(!is.list(aggregates))
-      stop("aggregates must be a list")
-
-    if(!all(sapply(aggregates, function(x) is(x,"OPERATOR") )))
-      stop("you must use OPERATOR object for defining aggregates function")
-
-    names <- names(aggregates)
-    if(is.null(names))
-    {
-      warning("you did not assign a names to a list.\nWe build names for you")
-      names <- sapply(aggregates, take_value.META_OPERATOR)
-    }
-    else
-    {
-      if("" %in% names)
-        stop("no partial names assignment to list")
-    }
-    aggregate_matrix <- t(sapply(aggregates, function(x) {
-
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-
-    }))
-    m_names <- matrix(names)
-    metadata_matrix <- cbind(m_names,aggregate_matrix)
-  }
+    metadata_matrix <- .aggregates(metadata,"OPERATOR")
   else
     metadata_matrix = NULL
 

@@ -29,11 +29,15 @@
 #' @param rtopg integer value specifying the first i samples in each group.
 #' default is 0 that means every sample must be considered
 #'
+#'
+#' @return "url-like" string
+#'
 #' @details
 #' mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
 #' only the first element will be used
 #' mtop and mtopg are mutalbe exclusive, so rtop and rtopg
 #' if you specified both, only mtop (rtop) is taken
+#'
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
@@ -41,14 +45,13 @@
 #' \dontrun{
 #'
 #' initGMQL("gtf")
-#' path = "/<path_to_your_folder>/<your_dataset_name>"
-#' r = read(path)
-#' c = cover(2,3,input_data = r)
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' s = select()
 #' o = order(DESC(Region_Count), mtop = 2, input_data = s)
-#' o = order(list(DESC(Region_Count)),regions_ordering = list(DESC(MutationCount),ASC(pvalue)),
-#' mtop = 5,rtopg = 1, input_data = c)
 #' }
+#'
+#' @export
 #'
 order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
                   regions_ordering = NULL,rtop = 0,rtopg = 0)

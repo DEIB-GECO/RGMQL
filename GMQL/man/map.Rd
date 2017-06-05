@@ -7,9 +7,36 @@
 map(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 }
 \arguments{
-\item{left_input_data}{"url-like" string taken from GMQL function}
+\item{left_input_data}{returned object from any GMQL function}
 
-\item{right_input_data}{"url-like" string taken from GMQL function}
+\item{right_input_data}{returned object from any GMQL function}
+
+\item{aggregates}{a list of element in the form key = 'function_aggregate'.
+'function_aggregate' is an object of class OPERATOR
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN.
+Every operator accepts a string value, execet for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist in schema
+Two style are allowed:
+\itemize{
+\item list of key-value pairs: e.g. sum = SUM("pvalue")
+\item list of values: e.g. SUM("pvalue")
+}
+"mixed style" is not allowed}
+
+\item{joinBy}{list of CONDITION objects every object contains the name of metadata to be used in semijoin,
+or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+In the latter form all metadata are considered having DEF condition
+The CONDITION's available are:
+\itemize{
+\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+if they have a further prefixes, the two prefix sequence are identical}
+\item{DEF: Default evaluation, two attributes match if both end with value. }
+\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+}
+Every condition accepts only one string value. (e.g. DEF("cell_type") )}
+}
+\value{
+"url-like" string
 }
 \description{
 It computes, for each sample in the right dataset, aggregates over the values of the right regions
@@ -26,6 +53,18 @@ metadata M1 and M2 respectively that satisfy the joinby condition are considered
 
 The clause consists of a list of metadata attribute names that must be present with equal values
 in both M1 and  M2
+}
+\examples{
+\dontrun{
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+r = read(test_path)
+r2 = read(test_path2)
+m = map(r,r2)
+}
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

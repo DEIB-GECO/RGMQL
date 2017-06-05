@@ -24,6 +24,8 @@
 #' \item{contig}
 #' }
 #'
+#' @return "url-like" string
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #'
@@ -38,10 +40,10 @@
 #'
 #' }
 #'
+#' @export
 #'
-
-join <- function(genometric_predicate = NULL, joinBy = NULL, output="contig",
-                 right_input_data, left_input_data)
+join <- function(right_input_data, left_input_data, genometric_predicate = NULL,
+                 joinBy = NULL, output="contig")
 {
   if(!is.list(genometric_predicate))
     stop("genometric_predicate must be list of lists")

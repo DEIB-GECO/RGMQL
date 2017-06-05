@@ -10,9 +10,18 @@ project(input_data, metadata = NULL, regions = NULL,
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
+\item{metadata}{metadata}
+
+\item{metadata_update}{metadata_update}
+
+\item{regions_update}{regions_update}
+
 \item{predicate}{string made up by logical oepration: AND,OR,NOT}
 
 \item{region}{region}
+}
+\value{
+"url-like" string
 }
 \description{
 It creates, from an existing dataset, a new dataset with all the samples from input dataset
@@ -28,9 +37,11 @@ It allows to:
 \examples{
 \dontrun{
 
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
+p = project(input_data = r)
 }
-
-
 
 }
 \references{

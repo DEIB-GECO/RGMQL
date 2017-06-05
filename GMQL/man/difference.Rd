@@ -18,6 +18,9 @@ Every condition accepts only one string value. (e.g. DEF("cell_type") )}
 
 \item{is_exact}{logical}
 }
+\value{
+"url-like" string
+}
 \description{
 It produces one sample in the result for each sample of the left operand,
 by keeping the same metadata of the left operand sample and only those regions
@@ -33,11 +36,11 @@ are considered when performing the difference.
 \dontrun{
 
 initGMQL("gtf")
-path = /.../dataset_name
-path2 = /.../dataset2_name
-r = read(path)
-r1 = read(path2)
-d = difference(r, r1, c("cell_type","age","cell_attribute","size"))
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+r = read(test_path)
+r2 = read(test_path2)
+d = difference(r, r2, c("cell_type","age","cell_attribute","size"))
 }
 
 }

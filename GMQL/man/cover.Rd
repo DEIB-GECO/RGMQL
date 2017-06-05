@@ -30,6 +30,9 @@ Every operator accepts a string value, execet for COUNT that cannot have a value
 Argument of 'function_aggregate' must exist in schema
 Two style are allowed:}
 }
+\value{
+"url-like" string
+}
 \description{
 it takes as input a dataset and returns another dataset (with a single sample, if no groupby option is specified)
 by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
@@ -46,10 +49,12 @@ Input samples that do not satisfy the groupby condition are disregarded.
 \examples{
 
 \dontrun{
+
+library(rscala)
+
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
-r2 = read(path2)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 c = cover(2,3,input_data = r)
 }
 

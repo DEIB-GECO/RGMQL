@@ -30,6 +30,9 @@ default is 0 that means every sample must be considered}
 \item{rtopg}{integer value specifying the first i samples in each group.
 default is 0 that means every sample must be considered}
 }
+\value{
+"url-like" string
+}
 \description{
 It is used to order either samples or sample regions or both,
 according to a set of metadata and/or region attributes, and/or region coordinates.
@@ -53,13 +56,10 @@ if you specified both, only mtop (rtop) is taken
 \dontrun{
 
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
-c = cover(2,3,input_data = r)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 s = select()
 o = order(DESC(Region_Count), mtop = 2, input_data = s)
-o = order(list(DESC(Region_Count)),regions_ordering = list(DESC(MutationCount),ASC(pvalue)),
-mtop = 5,rtopg = 1, input_data = c)
 }
 
 }

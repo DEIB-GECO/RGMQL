@@ -18,18 +18,22 @@
 #' Every condition accepts only one string value. (e.g. DEF("cell_type") )
 #' @param is_exact logical
 #'
+#' @return "url-like" string
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #' \dontrun{
 #'
 #' initGMQL("gtf")
-#' path = /.../dataset_name
-#' path2 = /.../dataset2_name
-#' r = read(path)
-#' r1 = read(path2)
-#' d = difference(r, r1, c("cell_type","age","cell_attribute","size"))
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' r = read(test_path)
+#' r2 = read(test_path2)
+#' d = difference(r, r2, c("cell_type","age","cell_attribute","size"))
 #' }
+#'
+#' @export
 #'
 difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact = FALSE)
 {

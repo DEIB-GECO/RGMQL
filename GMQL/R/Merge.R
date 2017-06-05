@@ -12,20 +12,22 @@
 #' @param input_data "url-like" string taken from GMQL function
 #' @param groupBy a vector of strings specifying grouping criteria
 #'
+#' @return "url-like" string
+#'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
 #'
 #' \dontrun{
-#' startGMQL()
-#' path = "/<path_to_your_folder>/<your_dataset_name>"
-#' r = read(path)
-#' s = select(input_data = r)
+#'
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
-#' m1 = merge(s,"antibody_targer")
-#' m2 = merge(input_data = s)
-#' m3 = merge(s)
 #' }
+#'
+#' @export
+#'
 merge <- function(input_data, groupBy = NULL)
 {
   if(!is.character(groupBy) && !is.null(groupBy))

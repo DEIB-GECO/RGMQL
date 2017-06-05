@@ -31,10 +31,11 @@ Aggregate functions are applied sample by sample.
 \dontrun{
 
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
 }
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

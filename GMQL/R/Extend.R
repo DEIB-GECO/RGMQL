@@ -25,40 +25,17 @@
 #' \dontrun{
 #'
 #' initGMQL("gtf")
-#' path = "/<path_to_your_folder>/<your_dataset_name>"
-#' r = read(path)
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
 #' e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
 #' }
+#'
+#' @export
+#'
 extend <-function(input_data, metadata = NULL)
 {
   if(!is.null(metadata))
-  {
-    if(!is.list(metadata))
-      stop("metadata must be a list")
-
-    if(!all(sapply(metadata, function(x) is(x,"META_OPERATOR") )))
-      stop("All elements should be META_OPERATOR object")
-
-    names <- names(metadata)
-    if(is.null(names))
-    {
-      warning("You did not assign a names to a list.\nWe build names for you")
-      names <- sapply(metadata, take_value.META_OPERATOR)
-    }
-    else
-    {
-      if("" %in% names)
-        stop("No partial names assignment is allowed")
-    }
-    aggregate_matrix <- t(sapply(metadata, function(x) {
-
-      new_value = as.character(x)
-      matrix <- matrix(new_value)
-
-    }))
-    m_names <- matrix(names)
-    metadata_matrix <- cbind(m_names,aggregate_matrix)
-  }
+    metadata_matrix <- .aggregates(metadata,"META_OPERATOR")
   else
     metadata_matrix <- NULL
 

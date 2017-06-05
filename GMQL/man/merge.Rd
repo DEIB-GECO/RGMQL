@@ -11,6 +11,9 @@ merge(input_data, groupBy = NULL)
 
 \item{groupBy}{a vector of strings specifying grouping criteria}
 }
+\value{
+"url-like" string
+}
 \description{
 It builds a dataset consisting of a single sample having as many regions
 as the numebr of regions of the input data and as many metadata as the union of
@@ -23,15 +26,13 @@ Samples whose names are not present in the grouping metadata parameter are disre
 \examples{
 
 \dontrun{
-startGMQL()
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
-s = select(input_data = r)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
-m1 = merge(s,"antibody_targer")
-m2 = merge(input_data = s)
-m3 = merge(s)
 }
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
