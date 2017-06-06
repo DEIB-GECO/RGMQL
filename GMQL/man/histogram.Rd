@@ -24,7 +24,7 @@ Normally must be > 0, we admit value 0 and -1 as special value:
 \item{groupBy}{a vector of strings specifying grouping criteria}
 
 \item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of class \code{\link{OPERATOR}}
+'function_aggregate' is an object of class OPERATOR
 The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 Every operator accepts a string value, execet for COUNT that cannot have a value.
 Argument of 'function_aggregate' must exist in schema

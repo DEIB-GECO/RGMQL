@@ -9,7 +9,7 @@
 #' Samples whose names are not present in the grouping metadata parameter are disregarded.
 #'
 #'
-#' @param input_data "url-like" string taken from GMQL function
+#' @param input_data returned object from any GMQL function
 #' @param groupBy a vector of strings specifying grouping criteria
 #'
 #' @return "url-like" string
@@ -25,19 +25,22 @@
 #' r = read(test_path)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 #' }
-#'
+#' .
 #' @export
 #'
 merge <- function(input_data, groupBy = NULL)
 {
-  if(!is.character(groupBy) && !is.null(groupBy))
-    stop("groupBy can be a string or an array of string")
+  if(!is.null(groupBy))
+  {
+    if(!is.character(groupBy))
+      stop("groupBy can be a string or an array of string")
 
-  groupBy = groupBy[!groupBy %in% ""]
-  groupBy = groupBy[!duplicated(groupBy)]
+    groupBy = groupBy[!groupBy %in% ""]
+    groupBy = groupBy[!duplicated(groupBy)]
 
-  if(length(groupBy)==0)
-    groupBy=NULL
+    if(length(groupBy)==0)
+      groupBy=NULL
+  }
 
   out <- WrappeR$merge(groupBy,input_data)
   if(grepl("No",out,ignore.case = TRUE))

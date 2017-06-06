@@ -6,10 +6,16 @@
 \usage{
 DEF(value)
 }
+\arguments{
+\item{value}{single string identifying name of metadata attribute}
+}
 \value{
-no returned value
+DEF condition object
 }
 \description{
+This class is used to create a condition object for input to GMQL function
+}
+\details{
 CONDITION object available are:
 \itemize{
 \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
@@ -17,4 +23,24 @@ if they have a further prefixes, the two prefix sequence are identical}
 \item{DEF: Default evaluation, two attributes match if both end with value. }
 \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 }
+}
+\examples{
+\dontrun{
+
+#' #### select with DEF condition
+#### the full condition is treated as DEF due to coercion
+s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
+semi_join_dataset = c)
+
+#### select with condition
+#### the first is FULL and the other ones are DEF
+s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
+semi_join_dataset = c)
+
+#### select with condition
+s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
+
+}
+.
+
 }

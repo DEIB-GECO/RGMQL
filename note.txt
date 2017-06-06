@@ -1,13 +1,35 @@
 NOTE:
-
+————————————
 se errore di cartella già esistente —> spark si disattiva
 
-———————————
+
+WEB SERVICE:
+—————————————
+
+auth operation: sistemare roxygen doc, example >80%
+browse op: sistemare roxygen doc, example >80% 
+exec op: sistemare roxygen doc, example >80% 
+dataset op: sistemare roxygen doc, example >80% 
+
+UTILS FUNC:
+———————————————
+
+GMQL —> ranges: sistemare roxygen doc, example >80% 
+ranges -> GMQL: sistemare roxygen doc, example >80% 
+TO TFARm: sistemare roxygen doc, example >80% 
+aggiungere controllo se regioni == NULL
+
+GMQL OPERATION:
+——————————————
+READ: aggiungere off e on remote processing in roxygen
 
 SELECT: manca controllo sulle regioni nel predicato
-	sistemare doc
+	controllare stop()
 
-CONDITION: come S3 CLASS in doc R
+CONDITION: ok
+ORDERING: sistemare doc
+
+ORDER: sistemare doc
 
 UNION: inserito left e right come prefisso, no il dataset
 
@@ -18,7 +40,7 @@ GROUP: non implementata
 META_OPERATOR: come S3 CLASS in doc
 
 
-ORDER: sistemare doc
+
 	
 
 
@@ -37,13 +59,3 @@ descrivere SCHEMA come S3 CLASS in doc
 descrivere BUILDER come S3 CLASS in doc
 
 
-WEB SERVICE:
-
-auth operation: sistemare roxygen doc
-
-browse op: sistemare doc
-ope dataset: sistemare doc
-exec: sistemare doc
-
-metadatafromsample error 404:  {"error":"Dataset not found: asd"} scriverlo diversamente
-stessa cosa regionfromsample

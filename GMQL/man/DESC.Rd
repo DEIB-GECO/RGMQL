@@ -6,10 +6,16 @@
 \usage{
 DESC(value)
 }
+\arguments{
+\item{value}{single string identifying name of metadata attribute}
+}
 \value{
-no returned value
+DESC ordering object
 }
 \description{
+This class is used to create an ordering object for input to GMQL function
+}
+\details{
 ORDER object available are:
 \itemize{
 \item{ASC}

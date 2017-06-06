@@ -13,8 +13,8 @@
 #' For what concerns metadata, attributes of samples from the left (right) input dataset are prefixed
 #' with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 #'
-#' @param left_input_data "url-like" string taken from GMQL function
-#' @param right_input_data "url-like" string taken from GMQL function
+#' @param left_input_data returned object from any GMQL function
+#' @param right_input_data returned object from any GMQL function
 #'
 #' @return "url-like" string
 #'
@@ -34,6 +34,7 @@
 #' r2 = read(test_path2)
 #' u = union(r2,r)
 #' }
+#' .
 #'
 #' @export
 #'

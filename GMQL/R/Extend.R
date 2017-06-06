@@ -5,7 +5,7 @@
 #' Aggregate functions are applied sample by sample.
 #'
 #'
-#' @param input_data "url-like" string returned from GMQL function
+#' @param input_data returned object from any GMQL function
 #' @param metadata a list of element in the form key = 'function_aggregate'.
 #' 'function_aggregate' is an object of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, STD, MEDIAN, Q1, Q1, Q3.
@@ -31,7 +31,7 @@
 #' r = read(test_path)
 #' e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
 #' }
-#'
+#' .
 #' @export
 #'
 extend <-function(input_data, metadata = NULL)

@@ -38,8 +38,11 @@ as.character.ORDER <- function(obj) {
   c(class,val)
 }
 
+
+
 #' ORDER object class
 #'
+#' This class is used to create an ordering object for input to GMQL function
 #'
 #' ORDER object available are:
 #' \itemize{
@@ -47,8 +50,9 @@ as.character.ORDER <- function(obj) {
 #' \item{DESC}
 #' }
 #'
-#' @return no returned value
-
+#' @param value single string identifying name of metadata attribute
+#'
+#' @return DESC ordering object
 #' @export
 #'
 DESC <- function(value)
@@ -65,15 +69,19 @@ DESC <- function(value)
 
 #' ORDER object class
 #'
+#' This class is used to create an ordering object for input to GMQL function
 #'
 #' ORDER object available are:
 #' \itemize{
-#' \item{ASC: Ascending order}
-#' \item{DESC: Descending order}
+#' \item{ASC: ascending ordering}
+#' \item{DESC: descending ordering}
 #' }
 #'
-#' @return no returned value
-
+#' @param value single string identifying name of metadata attribute
+#'
+#' @return ASC ordering object
+#'
+#'
 #' @export
 #'
 ASC <- function(value)

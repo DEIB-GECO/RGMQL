@@ -9,8 +9,8 @@ flat(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{"url-like" string taken from GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered during execution
-Normally must be > 0, we admit value 0 and -1 as special value:
+\item{minAcc}{minimum number of overlapping regions to be considered during execution.
+Normally it must be > 0, we admit value 0 and -1 as special value:
 \itemize{
 \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
 }}
@@ -24,11 +24,11 @@ Normally must be > 0, we admit value 0 and -1 as special value:
 \item{groupBy}{a vector of strings specifying grouping criteria}
 
 \item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of class \code{\link{OPERATOR}}
+'function_aggregate' is an object of class OPERATOR
 The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 Every operator accepts a string value, execet for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist in schema
-Two style are allowed:}
+Argument of 'function_aggregate' must exist in schema.
+Two styles are allowed:}
 }
 \value{
 "url-like" string

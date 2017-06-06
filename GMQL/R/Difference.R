@@ -11,18 +11,32 @@
 #' are considered when performing the difference.
 #'
 #'
-#' @param right_input_data "url-like" string taken from GMQL function
-#' @param left_input_data "url-like" string taken from GMQL function
-#' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in joinBy
-#' The CONDITION's available are: EXACT, FULL, DEF
-#' Every condition accepts only one string value. (e.g. DEF("cell_type") )
-#' @param is_exact logical
+#' @param right_input_data returned object from any GMQL function
+#' @param left_input_data returned object from any GMQL function
+#' @param joinBy list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
+#' or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
+#' In the latter form all metadata are considered having DEF condition
+#' The CONDITION's available are:
+#' \itemize{
+#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
+#' if they have a further prefixes, the two prefix sequence are identical}
+#' \item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
+#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+#' }
+#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
+#'
+#' @param is_exact logical value: TRUE means that the regions difference is executed only on regions in left_input_data
+#' with exactly the same coordinates of at least one region present in right_input_data
+#' if is_exact = FALSE the difference is executed on all regions in left_input_data that overlaps with at least one region in
+#' right_input_data (even just one base)
+#'
 #'
 #' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
+#'
 #' \dontrun{
 #'
 #' initGMQL("gtf")
@@ -32,6 +46,7 @@
 #' r2 = read(test_path2)
 #' d = difference(r, r2, c("cell_type","age","cell_attribute","size"))
 #' }
+#' .
 #'
 #' @export
 #'

@@ -11,17 +11,17 @@
 #' @param input_data returned object from any GMQL function
 #' @param predicate single string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
 #' @param region_predicate single string predicate made up by logical operation: AND,OR,NOT on schema region values
-#' @param semi_join list of CONDITION objects every object contains the name of metadata to be used in semijoin,
-#' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+#' @param semi_join list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
+#' or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
 #' In the latter form all metadata are considered having DEF condition
 #' The CONDITION's available are:
 #' \itemize{
-#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
 #' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{DEF: Default evaluation, two attributes match if both end with value. }
-#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
+#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
-#' Every condition accepts only one string value. (e.g. DEF("cell_type") )
+#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
 #'
 #' @param semi_join_dataset returned object from any GMQL function used in semijoin
 #'
@@ -36,10 +36,30 @@
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
 #' c = cover(2,3,input_data = r)
-#' s = select(input_data = r, "NOT(qValue > 0.001)", semi_join = list("cell_type",EXACT("cell")),
+#'
+#' #### select with condition
+#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
+#'
+#' #### select with DEF condition
+#' s = select(input_data = r, semi_join = list("cell_type","cell"), semi_join_dataset = c)
+#'
+#' #### select with DEF condition
+#' #### the full condition is treated as DEF due to coercion
+#' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
 #' semi_join_dataset = c)
+#'
+#' #### select with condition
+#' #### the first is FULL and the other ones are DEF
+#' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
+#' semi_join_dataset = c)
+#'
+#' #### select with predicate metadata
+#' s = select(input_data = r, "NOT(biosample_organism=='Homo sapiens' AND assembly=='hg19')")
+#'
+#' #### select with predicate on regions
+#' s = select(input_data = r, region_predicate = " score > 0.5 AND NOT(variant_type == 'SNP')")
 #' }
-#' a
+#' .
 #' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
@@ -62,9 +82,9 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
   else
   {
     if(!is.character(semi_join_dataset))
-      stop("semi_join_dataset: must be string")
+      stop("semi_join_dataset: no valid input")
 
-    if(is.character(semi_join_dataset) && length(semi_join_dataset)>1)
+    if(length(semi_join_dataset)>1)
       stop("semi_join_dataset: no multiple string")
 
     join_condition_matrix <- .join_condition(semi_join)
@@ -80,9 +100,9 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
 .check_predicate <- function(predicate_string)
 {
   if(!is.character(predicate_string))
-    stop("must be a string")
+    stop("no valid predicate")
 
-  if(is.character(predicate_string) && length(predicate_string)>1)
+  if(length(predicate_string)>1)
     stop("no multiple string")
 }
 

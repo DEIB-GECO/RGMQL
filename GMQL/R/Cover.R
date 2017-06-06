@@ -1,20 +1,20 @@
 #' GMQL Operation: COVER
 #'
-#' it takes as input a dataset and returns another dataset (with a single sample, if no groupby option is specified)
+#' it takes as input a dataset and returns another dataset (with a single sample, if no \emph{groupby} option is specified)
 #' by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
-#' The attributes of the output regions are the same as input_dataset:
+#' The attributes of the output regions are only the region coordinates:
 #' if aggregate functions are specified, new attributes with aggregate values over schema region values
 #' Output metadata are the union of the input ones, plus the metadata attributes JaccardIntersect and JaccardResult,
 #' representing global Jaccard Indexes for the considered dataset,
 #' computed as the correspondent region Jaccard Indexes but on the whole sample regions.
-#' If groupby clause is specified, the input samples are partitioned in groups,
+#' If \emph{groupby} clause is specified, the input samples are partitioned in groups,
 #' each with distinct values of the grouping metadata attributes, and the COVER operation is separately
 #' applied to each group, yielding to one sample in the result for each group.
-#' Input samples that do not satisfy the groupby condition are disregarded.
+#' Input samples that do not satisfy the \emph{groupby} condition are disregarded.
 #'
 #' @importFrom methods is
 #'
-#' @param input_data "url-like" string taken from GMQL function
+#' @param input_data returned object from any GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
 #' Normally must be > 0, we admit value 0 and -1 as special value:
 #' \itemize{
@@ -25,9 +25,20 @@
 #' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
 #' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
 #' }
-#' @param groupBy a vector of strings specifying grouping criteria
+#' @param groupBy list of CONDITION objects every object contains the name of metadata to be used in semijoin,
+#' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+#' In the latter form all metadata are considered having DEF condition
+#' The CONDITION's available are:
+#' \itemize{
+#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+#' if they have a further prefixes, the two prefix sequence are identical}
+#' \item{DEF: Default evaluation, two attributes match if both end with value. }
+#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+#' }
+#' Every condition accepts only one string value. (e.g. DEF("cell_type") )
+#'
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of inherited class of class \code{\link{OPERATOR}}
+#' 'function_aggregate' is an object of inherited class of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT,MEDIAN
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
@@ -78,7 +89,7 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
+#' 'function_aggregate' is an object of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
@@ -117,7 +128,7 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
+#' 'function_aggregate' is an object of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
@@ -143,8 +154,8 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' @importFrom methods is
 #'
 #' @param input_data "url-like" string taken from GMQL function
-#' @param minAcc minimum number of overlapping regions to be considered during execution
-#' Normally must be > 0, we admit value 0 and -1 as special value:
+#' @param minAcc minimum number of overlapping regions to be considered during execution.
+#' Normally it must be > 0, we admit value 0 and -1 as special value:
 #' \itemize{
 #' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
 #' }
@@ -155,11 +166,11 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' }
 #' @param groupBy a vector of strings specifying grouping criteria
 #' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class \code{\link{OPERATOR}}
+#' 'function_aggregate' is an object of class OPERATOR
 #' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
-#' Argument of 'function_aggregate' must exist in schema
-#' Two style are allowed:
+#' Argument of 'function_aggregate' must exist in schema.
+#' Two styles are allowed:
 #' @return "url-like" string
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
@@ -191,11 +202,14 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
   min = min[1]
   max = max[1]
 
-  if(!is.character(groupBy) && !is.null(groupBy))
-    stop("groupBy can be only null, single string or an array of string")
+  if(!is.null(groupBy))
+  {
+    if(!is.character(groupBy))
+      stop("groupBy can be only null, single string or an array of string")
 
-  groupBy = groupBy[!groupBy %in% ""]
-  groupBy = groupBy[!duplicated(groupBy)]
+    groupBy = groupBy[!groupBy %in% ""]
+    groupBy = groupBy[!duplicated(groupBy)]
+  }
 
   if(!is.null(aggregates))
     metadata_matrix <- .aggregates(aggregates,"OPERATOR")

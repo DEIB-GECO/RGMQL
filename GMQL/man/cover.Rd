@@ -7,7 +7,7 @@
 cover(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution
 Normally must be > 0, we admit value 0 and -1 as special value:
@@ -21,10 +21,20 @@ Normally must be > 0, we admit value 0 and -1 as special value:
 \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
 }}
 
-\item{groupBy}{a vector of strings specifying grouping criteria}
+\item{groupBy}{list of CONDITION objects every object contains the name of metadata to be used in semijoin,
+or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
+In the latter form all metadata are considered having DEF condition
+The CONDITION's available are:
+\itemize{
+\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
+if they have a further prefixes, the two prefix sequence are identical}
+\item{DEF: Default evaluation, two attributes match if both end with value. }
+\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+}
+Every condition accepts only one string value. (e.g. DEF("cell_type") )}
 
 \item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of inherited class of class \code{\link{OPERATOR}}
+'function_aggregate' is an object of inherited class of class OPERATOR
 The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT,MEDIAN
 Every operator accepts a string value, execet for COUNT that cannot have a value.
 Argument of 'function_aggregate' must exist in schema
@@ -34,17 +44,17 @@ Two style are allowed:}
 "url-like" string
 }
 \description{
-it takes as input a dataset and returns another dataset (with a single sample, if no groupby option is specified)
+it takes as input a dataset and returns another dataset (with a single sample, if no \emph{groupby} option is specified)
 by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
-The attributes of the output regions are the same as input_dataset:
+The attributes of the output regions are only the region coordinates:
 if aggregate functions are specified, new attributes with aggregate values over schema region values
 Output metadata are the union of the input ones, plus the metadata attributes JaccardIntersect and JaccardResult,
 representing global Jaccard Indexes for the considered dataset,
 computed as the correspondent region Jaccard Indexes but on the whole sample regions.
-If groupby clause is specified, the input samples are partitioned in groups,
+If \emph{groupby} clause is specified, the input samples are partitioned in groups,
 each with distinct values of the grouping metadata attributes, and the COVER operation is separately
 applied to each group, yielding to one sample in the result for each group.
-Input samples that do not satisfy the groupby condition are disregarded.
+Input samples that do not satisfy the \emph{groupby} condition are disregarded.
 }
 \examples{
 
