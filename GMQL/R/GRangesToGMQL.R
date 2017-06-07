@@ -111,11 +111,8 @@ exportGMQL.gtf <- function(samples, dir_out)
   dir.create(dir_out)
   files_sub_dir <- paste0(dir_out,"/files")
   dir.create(files_sub_dir)
-
   c = .counter()
-
-  col_names <- .get_schema_names(samples)
-
+  #col_names <- .get_schema_names(samples)
   if(to_GTF)
   {
    #write region
@@ -152,6 +149,8 @@ exportGMQL.gtf <- function(samples, dir_out)
     },files_sub_dir)
   }
 
+  col_names <- sapply(elementMetadata(samples[[1]]),class) # first regions to get column names
+
   #write schema XML
   .write_schema(col_names,files_sub_dir,to_GTF)
   c = .counter(0)
@@ -176,25 +175,30 @@ exportGMQL.gtf <- function(samples, dir_out)
 
 .get_schema_names <- function(samples)
 {
-  region_frame <- data.frame(samples[[1]]) # first regions to get column names
-  col_names <- names(region_frame)
-  col_names[!col_names %in% "width"] # elimino width
+
+  #col_names <- names(region_frame)
+  #col_names[!col_names %in% "width"] # elimino width
 }
 
-.write_schema <- function(node_list,directory,to_GTF)
+#cambiare
+.write_schema <- function(columns,directory,to_GTF)
 {
   if(to_GTF)
   {
-    correct_list_GTF = c("seqname", "source", "feature", "start","end", "score", "strand", "frame")
-    node_list <- plyr::revalue(node_list,c(type = "feature",phase = "frame",seqnames = "seqname"))
-    node_list <- node_list[base::order(match(node_list,correct_list_GTF))]
-
+    names(columns) <- plyr::revalue(names(columns),c(type = "feature",phase = "frame"))
+    fixed_element = c(seqname = "character", source = "character", feature = "character",
+                      start = "long", end = "long", score = "numeric", strand = "character",
+                      frame = "character")
+    node_list <- c(fixed_element, columns)
+    node_list <- node_list[!duplicated(names(node_list))]
+    #node_list <- node_list[base::order(match(node_list,correct_list_GTF))]
   }
   else
   {
-    correct_list_GDM = c("chr", "left", "right", "strand")
-    node_list <- plyr::revalue(node_list,c(seqnames = "chr",start = "left",end = "right"))
-    node_list <- node_list[base::order(match(node_list,correct_list_GDM))]
+    fixed_element = c(chr = "factor", left = "long", right = "long", strand = "character")
+    node_list <- c(fixed_element, columns)
+    #node_list <- plyr::revalue(node_list,c(seqnames = "chr",start = "left",end = "right"))
+    #node_list <- node_list[base::order(match(node_list,correct_list_GDM))]
   }
 
   schema <- paste0(directory,"/test.schema")
@@ -204,11 +208,28 @@ exportGMQL.gtf <- function(samples, dir_out)
   xml2::xml_add_child(root,"gmqlSchema")
   gmqlSchema <- xml2::xml_child(root,1)
 
-  lapply(node_list, function(x,gmqlSchema){
+  names_node <- names(node_list)
+
+  mapply(function(type,text){
     field <- xml2::xml_add_child(gmqlSchema,"field")
-    xml2::xml_text(field) <- x
-  },gmqlSchema)
+    if(identical(type,"factor") || identical(type,"character"))
+      xml2::xml_attr(field,"type") <- "STRING"
+    else if(identical(type,"numeric") || identical(type,"integer"))
+      xml2::xml_attr(field,"type") <- "DOUBLE"
+    else if(identical(type,"long"))
+      xml2::xml_attr(field,"type") <- "LONG"
+    else
+      xml2::xml_attr(field,"type") <- "NULL"
+
+    xml2::xml_text(field) <- text
+
+  },node_list,names_node)
   xml2::write_xml(root,schema)
+
+
+
 }
+
+
 
 
