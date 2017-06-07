@@ -172,15 +172,6 @@ exportGMQL.gtf <- function(samples, dir_out)
   write.table(data,file_meta_name,row.names = FALSE,col.names = FALSE, quote = FALSE,sep = '\t')
 }
 
-
-.get_schema_names <- function(samples)
-{
-
-  #col_names <- names(region_frame)
-  #col_names[!col_names %in% "width"] # elimino width
-}
-
-#cambiare
 .write_schema <- function(columns,directory,to_GTF)
 {
   if(to_GTF)
@@ -225,9 +216,6 @@ exportGMQL.gtf <- function(samples, dir_out)
 
   },node_list,names_node)
   xml2::write_xml(root,schema)
-
-
-
 }
 
 

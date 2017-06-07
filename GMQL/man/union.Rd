@@ -7,9 +7,9 @@
 union(left_input_data, right_input_data)
 }
 \arguments{
-\item{left_input_data}{"url-like" string taken from GMQL function}
+\item{left_input_data}{returned object from any GMQL function}
 
-\item{right_input_data}{"url-like" string taken from GMQL function}
+\item{right_input_data}{returned object from any GMQL function}
 }
 \value{
 "url-like" string
@@ -41,6 +41,7 @@ r = read(test_path)
 r2 = read(test_path2)
 u = union(r2,r)
 }
+.
 
 }
 \references{

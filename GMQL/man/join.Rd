@@ -8,23 +8,35 @@ join(right_input_data, left_input_data, genometric_predicate = NULL,
   joinBy = NULL, output = "contig")
 }
 \arguments{
-\item{right_input_data}{"url-like" string taken from GMQL function}
+\item{right_input_data}{returned object from any GMQL function}
 
-\item{left_input_data}{"url-like" string taken from GMQL function}
+\item{left_input_data}{returned object from any GMQL function}
 
 \item{genometric_predicate}{is a concatenation of DISTAL object by means of logical ANDs}
 
-\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in joinBy
-The CONDITION's available are: EXACT, FULL, DEF
-Every condition accepts only one string value. (e.g. DEF("cell_type") )}
-
-\item{output}{is one of four different values that declare which region is given in
-output for each input pair of left dataset and right dataset regions satisfying the genometric predicate:
+\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
+or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
+In the latter form all metadata are considered having DEF condition
+The CONDITION's available are:
 \itemize{
-\item{left}
-\item{right}
-\item{intersection}
-\item{contig}
+\item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
+if they have a further prefixes, the two prefix sequence are identical}
+\item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
+\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+}
+Every condition accepts only one string value. (e.g. FULL("cell_type") )}
+
+\item{output}{single string that declare which region is given in output for each input pair of left dataset
+right dataset regions satisfying the genometric predicate:
+\itemize{
+\item{left: outputs the anchor regions from left_input_data that satisfy the genometric predicate}
+\item{right: outputs the experiment regions from right_input_data that satisfy the genometric predicate}
+\item{int (intersection): outputs the overlapping part (intersection) of the left_input_data and right_input_data
+regions that satisfy the genometric predicate; if the intersection is empty, no output is produced}
+\item{contig: outputs the concatenation between the left_input_data and right_input_data regions that satisfy
+the genometric predicate, (i.e. the output regionis defined as having left (right) coordinates
+equal to the minimum (maximum) of the corresponding coordinate values in the left_input_data and right_input_data
+regions satisfying the genometric predicate)}
 }}
 }
 \value{
@@ -43,12 +55,12 @@ left or right respectively.
 \dontrun{
 
 initGMQL("gtf")
-path = "/<path_to_your_folder>/<your_dataset_name>"
-r = read(path)
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 c = cover(2,3,input_data = r)
 j = join (list(list(UP(),MD(1)), list(DOWN(),DGE(5000))),right_input_data = r,left_input_data = c)
-
 }
+.
 
 }
 \references{

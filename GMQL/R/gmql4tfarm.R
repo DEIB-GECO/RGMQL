@@ -75,7 +75,7 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 #' @importFrom data.table fread
 #'
 #' @param rangesList GrangesList object
-#' @param metadata
+#' @param metadata asas
 #' @param metadata_prefix a a a a a a a
 #' @param regions a a a a a a
 #'
@@ -99,7 +99,10 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
     stop("rangesList empty")
 
   meta_list <- metadata(rangesList)
-  samples <- .check_metadata_list(meta_list)
+  samples <- .check_metadata_list(metadata, metadata_prefix,meta_list)
+  if(length(unlist(samples))<=0)
+    samples <- rangesList
+
 
   granges <- .parse_Granges(samples,regions)
 
@@ -123,6 +126,7 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
 
 .check_metadata_list <- function(metadata,metadata_prefix,meta_list)
 {
+  vec_meta <- paste0(metadata_prefix,metadata)
   list <- lapply(meta_list, function(x){
     vec_names <- names(x)
     a <- sapply(vec_meta, function(y) {

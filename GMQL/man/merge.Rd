@@ -7,7 +7,7 @@
 merge(input_data, groupBy = NULL)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{groupBy}{a vector of strings specifying grouping criteria}
 }
@@ -32,7 +32,7 @@ test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 }
-
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
