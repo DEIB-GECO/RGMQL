@@ -12,11 +12,10 @@
 #'
 #'
 #' @param input_data string pointer taken from GMQL function
-#' @param predicate string made up by logical oepration: AND,OR,NOT
-#' @param metadata metadata
-#' @param region region
-#' @param metadata_update metadata_update
-#' @param regions_update regions_update
+#' @param metadata vector of string made up by metadata attribute
+#' @param region vector of string made up by schema field attribute
+#' @param all_but logical value
+#' @param regions_update single string predicate
 #'
 #' @return "url-like" string
 #'
@@ -33,21 +32,45 @@
 #' r = read(test_path)
 #' p = project(input_data = r)
 #' }
-#'
+#' .
 #' @export
 #'
 #'
-project <-function(input_data, metadata = NULL, regions = NULL, metadata_update = NULL, regions_update = NULL)
+project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,all_but = FALSE)
 {
- # if(!is.character(metadata) && !is.null(metadata))
- #   stop("groupBy can be a string or an array of string")
+  if(!is.null(metadata))
+  {
+    if(!is.character(metadata))
+      stop("metadata can be a string or an array of string")
 
- # if(!is.character(regions) && !is.null(regions))
-  #  stop("groupBy can be a string or an array of string")
+    metadata = metadata[!metadata %in% ""]
+    metadata = metadata[!duplicated(metadata)]
 
- # out <- WrappeR$project(metadata,regions,input_data)
-#  if(grepl("No",out,ignore.case = TRUE))
- #   stop(out)
- # else
-  #  out
+    if(length(metadata)==0)
+      metadata=NULL
+  }
+
+  if(!is.null(regions))
+  {
+    if(!is.character(regions))
+      stop("regions can be a string or an array of string")
+
+    regions = regions[!regions %in% ""]
+    regions = regions[!duplicated(regions)]
+
+    if(length(regions)==0)
+      regions=NULL
+  }
+  .check_predicate(regions_update)
+
+  if(length(all_but)>1)
+    warning("all_but: only the first element is taken")
+
+  all_but <- all_but[1]
+
+  out <- WrappeR$project(metadata,regions,regions_update,all_but,input_data)
+  if(grepl("No",out,ignore.case = TRUE))
+    stop(out)
+  else
+    out
 }
