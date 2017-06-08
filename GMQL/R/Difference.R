@@ -44,7 +44,16 @@
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 #' r = read(test_path)
 #' r2 = read(test_path2)
-#' d = difference(r, r2, c("cell_type","age","cell_attribute","size"))
+#'
+#' #### difference with condition
+#' d = difference(r,r2 list("cell_type",EXACT("cell_attribute")) )
+#'
+#' #### difference with DEF condition
+#' d = difference(r,r2 list("cell_type","cell") )
+#'
+#' #### select with condition
+#' #### the first is FULL and the other ones are DEF
+#' d = difference(r,r2, c(FULL("attribute_tag"),"cell_type","cell") )
 #' }
 #' .
 #'

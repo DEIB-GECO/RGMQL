@@ -47,9 +47,23 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
-#' s = select()
-#' o = order(DESC(Region_Count), mtop = 2, input_data = s)
+#' ### metadata ordering
+#' o = order(r,list(DESC(Region_Count)), mtop = 2)
+#'
+#' #### ascending
+#' o = order(list("treatment_type", "ID"), mtop = 2, input_data = r)
+#' o = order(c("treatment_type", "ID"), mtop = 2, input_data = r)
+#'
+#'### treatment_type ascending and ID descending
+#' o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
+#'
+#' ###regions ordering as ascending
+#' o = order(c("pvalue","length","name"), rtopg = 1, input_data = r)
+#'
+#' #' ###regions ordering as ascending and name descending
+#' o = order(list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
 #' }
+#' .
 #'
 #' @export
 #'
@@ -58,6 +72,9 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 {
   if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg))
     stop("mtop, rtop, rtopg and mtopg must be integer")
+
+  if(length(mtop)>0 || length(mtopg)>0 || length(rtop)>0 || length(rtopg)>0)
+    warning("only the first element is taken by rtop, mtop, mtopg, rtopg")
 
   # we consider only the first element even if input is a vector of Int
   # we cut the other arguments
@@ -82,9 +99,13 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 
   if(!is.null(metadata_ordering))
     meta_matrix <- .ordering_meta(metadata_ordering)
+  else
+    meta_matrix <- NULL
 
   if(!is.null(regions_ordering))
     region_matrix <- .ordering_meta(regions_ordering)
+  else
+    region_matrix <- NULL
 
   out <- WrappeR$order(meta_matrix,mtopg,mtop,region_matrix,rtopg,rtop,input_data)
   if(grepl("No",out,ignore.case = TRUE))
@@ -92,7 +113,6 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
   else
     out
 }
-
 
 
 .ordering_meta <- function(ordering)

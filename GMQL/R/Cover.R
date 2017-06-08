@@ -209,6 +209,9 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 
     groupBy = groupBy[!groupBy %in% ""]
     groupBy = groupBy[!duplicated(groupBy)]
+
+    if(length(groupBy)<=0)
+      groupBy=NULL
   }
 
   if(!is.null(aggregates))

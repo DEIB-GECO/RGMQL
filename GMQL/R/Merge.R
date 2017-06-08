@@ -23,6 +23,8 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
+#'
+#'
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 #' }
 #' .
@@ -33,7 +35,7 @@ merge <- function(input_data, groupBy = NULL)
   if(!is.null(groupBy))
   {
     if(!is.character(groupBy))
-      stop("groupBy can be a string or an array of string")
+      stop("groupBy: only character")
 
     groupBy = groupBy[!groupBy %in% ""]
     groupBy = groupBy[!duplicated(groupBy)]
