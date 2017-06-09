@@ -98,7 +98,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' @export
 #'
-read <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
+readDataset <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
 {
   remote_proc <- WrappeR$is_remote_processing()
   if(!remote_proc && !is_local)
@@ -122,6 +122,37 @@ read <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
   else
     out
 }
+
+#' GMQL Function: READ
+#'
+#' Read a GrangesList saving in Scala memory that can be referenced in R
+#'
+#' @export
+#'
+read <- function(samples)
+{
+  if(!is(samples,"GRangesList"))
+    stop("only GrangesList")
+
+
+  meta <- metadata(samples)
+  if(is.null(meta))
+  {
+  # se meta null create ones?
+  }
+  df <- data.frame(samples)
+  col_names <- sapply(df,class) # first regions to get column names
+
+ ## create datatframe from granes list and the if neede to matrix
+  ##take parsing type
+  out <- WrappeR$read()
+  if(grepl("No",out,ignore.case = TRUE))
+    stop(out)
+  else
+    out
+
+}
+
 
 .check_parser <- function(parser)
 {

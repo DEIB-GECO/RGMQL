@@ -308,6 +308,58 @@ downloadDataset <- function(url,datasetName,path = getwd())
   print("Download Complete")
 }
 
+#' Download Dataset in GrangesList
+#'
+#' It donwloads private dataset from repository to GrangesList
+#'
+#' @import httr
+#' @importClassesFrom GenomicRanges GRangesList
+#' @importFrom S4Vectors metadata
+
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
+#' @param datasetName name of dataset we want to get
+#'
+#' @return GrangesList containing all GMQL sample In dataset
+#'
+#' @details
+#' If error occured a specific error will be printed
+#'
+#'
+#' @examples
+#'
+#'
+#' @export
+#'
+downloadDatasetToGrangesList <- function(url,datasetName)
+{
+  list <- showSamplesFromDataset(url,datasetName)
+  samples <- list$samples
+  sample_list_name <- sapply(samples, function(x){
+    name <- x$name
+  })
+
+  sampleList <- lapply(samples, function(x){
+    name <- x$name
+    range <- regionFromSample(url,datasetName,name)
+  })
+
+  names(sampleList) <- sample_list_name
+  gRange_list <- GenomicRanges::GRangesList(sampleList)
+
+  meta_list <- lapply(samples, function(x){
+    name <- x$name
+    meta <- metadataFromSample(url,datasetName,name)
+  })
+  names(meta_list) <- sample_list_name
+  S4Vectors::metadata(gRange_list) <- meta_list
+
+  return(gRange_list)
+}
+
+
+
+
 #' Shows metadata list from dataset sample
 #'
 #' It retrieves metadata for a specific sample in dataset
