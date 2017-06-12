@@ -328,6 +328,10 @@ downloadDataset <- function(url,datasetName,path = getwd())
 #'
 #' @examples
 #'
+#' #### create grangeslist from dataset in repository
+#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' login.GMQL(url = PolimiUrl,"test101","test")
+#' downloadDatasetToGrangesList(PolimiUrl,"dataset_test")
 #'
 #' @export
 #'

@@ -21,7 +21,9 @@ if(getRversion() >= "3.1.0")
 #' \item{VCF: Text file format (most likely stored in a compressed manner).
 #' It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 #' }
-#' @param remote_processing logical
+#' @param remote_processing logical value specifying the processing mode.
+#' can be local (local machine) or remote (cluster).
+#'
 #'
 #' @return no returned value
 #'
@@ -35,7 +37,9 @@ if(getRversion() >= "3.1.0")
 #' library(rscala)
 #' initGMQL("tab",FALSE)
 #' }
+#' .
 #' @export
+#'
 #'
 initGMQL <- function(output_format, remote_processing = FALSE)
 {
@@ -54,7 +58,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' Read a GMQL dataset or any other folder containig some homogenus sample
 #' from disk, saving in Scala memory that can be referenced in R
-#'
+#' Also used to read a repository dataset.
 #'
 #' @param DatasetFolder folder path for GMQL dataset or datasetname on repository
 #' @param parser string used to parsing dataset files
@@ -69,8 +73,10 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' \item{CustomParser.}
 #' }
 #' Default is CustomParser.
-#' @param is_local logical value indicates if dataset is a local or remote dataset
+#' @param is_local logical value indicating if dataset is a local or remote dataset
 #' if the remote processing is off you cannot use a remote repository (error occured)
+#' @param url
+#' @param override logical value
 #'
 #' @return "url-like" string to dataset
 #'
@@ -85,12 +91,12 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' \dontrun{
 #'
-#' ### with CustomParser
+#' ### local with CustomParser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
 #'
-#'  #### with an other Parser
+#' ### local with other Parser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path,"ANNParser")
@@ -98,25 +104,62 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' @export
 #'
-readDataset <- function(DatasetFolder, parser = "CustomParser",is_local=TRUE)
+readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL, override= FALSE)
 {
   remote_proc <- WrappeR$is_remote_processing()
   if(!remote_proc && !is_local)
     stop("you cannot use local processing with remote repository")
 
-  if(!is.character(DatasetFolder))
-    stop("DatasetFolder: must be one string")
+  if(!is.character(dataset))
+    stop("dataset: invalid input")
 
-  if(length(DatasetFolder)!=1)
-    stop("DatasetFolder: no multiple string")
+  if(length(dataset)!=1)
+    stop("dataset: no multiple string")
 
+  if(length(override)>1)
+    warning("override not > 1")
+  override <- override[1]
   if(is_local)
-    if(!dir.exists(DatasetFolder))
+  {
+    remote_proc <- WrappeR$is_remote_processing()
+    if(remote_proc)
+    {
+      if(override)
+      {
+        list <- showDatasets(url)
+        name_dataset <- basename(dataset)
+        if(name_dataset %in% unlist(list$datasets))
+          deleteDataset(url,name_dataset)
+
+        uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
+      }
+      else
+      {
+        list <- showDatasets(url)
+        name_dataset <- basename(dataset)
+        if(name_dataset %in% unlist(list$datasets))
+          stop("dataset already exist in repository")
+
+        uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
+      }
+    }
+    if(!dir.exists(dataset))
       stop("folder does not exist")
+    schema_matrix <- NULL
+    schema_type <- NULL
+  }
+  else
+  {
+    list <- showSchemaFromDataset(url,DatasetFolder)
+    schema_names <- sapply(list$fields, function(x){x$name})
+    schema_type <- sapply(list$fields, function(x){x$fieldType})
+    schema_matrix <- cbind(schema_type,schema_names)
+    schema_type <- list$schemaType
+  }
 
   parser_name <- .check_parser(parser)
 
-  out <- WrappeR$readDataset(DatasetFolder,parser_name,is_local)
+  out <- WrappeR$readDataset(dataset,parser_name,is_local,schema_matrix)
   if(grepl("File",out,ignore.case = TRUE) || grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
@@ -134,18 +177,23 @@ read <- function(samples)
   if(!is(samples,"GRangesList"))
     stop("only GrangesList")
 
-
   meta <- metadata(samples)
-  if(is.null(meta))
-  {
-  # se meta null create ones?
+  if(is.null(meta)) {
+    meta_matrix <- matrix(c("Provider","Polimi", "Application", "R-GMQL"),ncol = 2,byrow = TRUE)
+  }
+  else {
+    unlist_meta <- unlist(meta)
+    names_meta <- names(unlist_meta)
+    names(unlist_meta) <- NULL
+    meta_matrix <- cbind(names_meta,unlist_meta)
   }
   df <- data.frame(samples)
-  col_names <- sapply(df,class) # first regions to get column names
-
- ## create datatframe from granes list and the if neede to matrix
-  ##take parsing type
-  out <- WrappeR$read()
+  df <- df[-2] #delete group and group_name
+  region_matrix <- as.matrix(sapply(df, as.character))
+  col_types <- sapply(df,class)
+  col_names <- names(col_types)
+  schema_matrix <- cbind(col_types,col_names)
+  out <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else

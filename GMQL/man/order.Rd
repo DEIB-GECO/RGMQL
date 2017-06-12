@@ -58,9 +58,23 @@ if you specified both, only mtop (rtop) is taken
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
-s = select()
-o = order(DESC(Region_Count), mtop = 2, input_data = s)
+### metadata ordering
+o = order(r,list(DESC(Region_Count)), mtop = 2)
+
+#### ascending
+o = order(list("treatment_type", "ID"), mtop = 2, input_data = r)
+o = order(c("treatment_type", "ID"), mtop = 2, input_data = r)
+
+### treatment_type ascending and ID descending
+o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
+
+###regions ordering as ascending
+o = order(c("pvalue","length","name"), rtopg = 1, input_data = r)
+
+#' ###regions ordering as ascending and name descending
+o = order(list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
 }
+.
 
 }
 \references{

@@ -50,7 +50,8 @@
 #' @export
 #'
 #'
-project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,all_but = FALSE)
+project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,
+                   metadata_update = NULL, all_but = FALSE)
 {
   if(!is.null(metadata))
   {
@@ -80,12 +81,15 @@ project <-function(input_data, metadata = NULL, regions = NULL, regions_update =
   if(!is.null(regions_update))
     .check_predicate(regions_update)
 
+  if(!is.null(metadata_update))
+    .check_predicate(metadata_update)
+
   if(length(all_but)>1)
     warning("all_but: only the first element is taken")
 
   all_but <- all_but[1]
 
-  out <- WrappeR$project(metadata,regions,regions_update,all_but,input_data)
+  out <- WrappeR$project(metadata,regions,regions_update,metadata_update,all_but,input_data)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else

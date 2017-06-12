@@ -45,24 +45,25 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 r = read(test_path)
-c = cover(2,3,input_data = r)
+r2 = read(test_path2)
 
 #### select with condition
-s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
+s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = r2)
 
 #### select with DEF condition
-s = select(input_data = r, semi_join = list("cell_type","cell"), semi_join_dataset = c)
+s = select(input_data = r, semi_join = list("cell_type","cell"), semi_join_dataset = r2)
 
 #### select with DEF condition
 #### the full condition is treated as DEF due to coercion
 s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
-semi_join_dataset = c)
+semi_join_dataset = r2)
 
 #### select with condition
 #### the first is FULL and the other ones are DEF
 s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
-semi_join_dataset = c)
+semi_join_dataset = r2)
 
 #### select with predicate metadata
 s = select(input_data = r, "NOT(biosample_organism=='Homo sapiens' AND assembly=='hg19')")

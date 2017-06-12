@@ -187,20 +187,8 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #move in internals
 .doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
 {
-  if(!is.numeric(minAcc) || !is.numeric(maxAcc))
-    stop("minAcc and maxAcc must be numeric")
-
-  if(minAcc < -1 || minAcc == 0)
-    stop("only -1 or any positive value")
-
-  if(maxAcc < -1)
-    stop("only 0,-1 or any positive value")
-
-  min = as.integer(minAcc)
-  max = as.integer(maxAcc)
-
-  min = min[1]
-  max = max[1]
+  min <- .check_cover_param(minAcc,TRUE)
+  max <- .check_cover_param(maxAcc,FALSE)
 
   if(!is.null(groupBy))
   {
@@ -230,3 +218,30 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
   else
     out
 }
+
+
+.check_cover_param <- function(param,is_min)
+{
+  if(length(param)>1)
+    warning("only the first element is taken")
+
+  param <- param[1]
+
+  if(is.numeric(param))
+  {
+    if(param<=0)
+      stop("only positive value")
+    else
+      return(as.integer(param))
+  }
+  else if(is.character(param))
+  {
+    if(is_min && identical(param,"ANY"))
+      stop("min cannot assume ANY as value")
+    return(param)
+  }
+  else
+    stop("invalid input data")
+}
+
+

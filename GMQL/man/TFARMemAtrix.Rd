@@ -10,6 +10,8 @@ TFARMemAtrix(rangesList, metadata = NULL, metadata_prefix = NULL,
 \arguments{
 \item{rangesList}{GrangesList object}
 
+\item{metadata}{asas}
+
 \item{metadata_prefix}{a a a a a a a}
 
 \item{regions}{a a a a a a}

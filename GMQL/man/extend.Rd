@@ -36,7 +36,9 @@ Aggregate functions are applied sample by sample.
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
-e = extend(list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")),input_data = r)
+
+### new metadata sum,c and m are added in metadata sample
+e = extend(input_data = r, list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")))
 }
 .
 }

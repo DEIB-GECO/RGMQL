@@ -118,7 +118,7 @@ exportGMQL.gtf <- function(samples, dir_out)
    #write region
     lapply(samples,function(x,dir){
       sample_name = paste0(dir,"/S_",c(),".gtf")
-      rtracklayer::export(x,sample_name,format = "gtf")
+      g <- rtracklayer::export(x,sample_name,format = "gtf")
     },files_sub_dir)
 
     c = .counter(0)

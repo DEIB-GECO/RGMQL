@@ -5,20 +5,21 @@
 \title{GMQL Operation: PROJECT}
 \usage{
 project(input_data, metadata = NULL, regions = NULL,
-  metadata_update = NULL, regions_update = NULL)
+  regions_update = NULL, all_but = FALSE)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
-\item{metadata}{metadata}
+\item{metadata}{vector of string made up by metadata attribute}
 
-\item{metadata_update}{metadata_update}
+\item{regions_update}{single string predicate}
 
-\item{regions_update}{regions_update}
+\item{all_but}{logical value indicating which schema filed attribute you want to exclude.
+If FALSE only the regions you choose is kept in the output of the project operation,
+if TRUE the schema region are all except ones include in region parameter.
+if regions is not defined all_but is not considerd.}
 
-\item{predicate}{string made up by logical oepration: AND,OR,NOT}
-
-\item{region}{region}
+\item{region}{vector of string made up by schema field attribute}
 }
 \value{
 "url-like" string
@@ -40,9 +41,20 @@ It allows to:
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
-p = project(input_data = r)
-}
 
+### preserving all region attributes and creating a new region attribute called length
+p = project(input_data = r,regions_update="length AS right - left")
+
+### preserving all region attributes apart from  score, and creating a new region attribute called new_score
+p = project(input_data = r, regions = "score" regions_update="length AS right - left", all_but=TRUE)
+
+### output dataset that contains the same samples as the input dataset. Each output sample only contains,
+### as region attributes, the four basic coordinates (chr, left, right, strand)
+### and the specified region attributes and as metadata attributes only the specified ones
+p = project(input_data = r, regions = c("variant_classification", "variant_type"),
+metadata = c("manually_curated","tissue_status", "tumor_ta") )
+}
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
