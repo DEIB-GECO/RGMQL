@@ -16,15 +16,7 @@
 #'
 #' @param input_data returned object from any GMQL function
 #' @param minAcc minimum number of overlapping regions to be considered during execution
-#' Normally must be > 0, we admit value 0 and -1 as special value:
-#' \itemize{
-#' \item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
-#' }
 #' @param maxAcc maximum number of overlapping regions to be considered during execution
-#' \itemize{
-#' \item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
-#' \item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
-#' }
 #' @param groupBy list of CONDITION objects every object contains the name of metadata to be used in semijoin,
 #' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
 #' In the latter form all metadata are considered having DEF condition
@@ -59,9 +51,9 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
-#' c = cover(2,3,input_data = r)
+#' c = cover(input_data = r,2,3)
 #' }
-#'
+#' .
 #' @export
 #'
 cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
@@ -218,7 +210,6 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
   else
     out
 }
-
 
 .check_cover_param <- function(param,is_min)
 {
