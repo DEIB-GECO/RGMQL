@@ -184,9 +184,9 @@ read <- function(samples)
   else {
     unlist_meta <- unlist(meta)
     names_meta <- names(unlist_meta)
-
-   # names(unlist_meta) <- NULL
-    meta_matrix <- cbind(names_meta,unlist_meta)
+    group_names <- gsub(".*_([1-9]*)\\..*","\\1", names_meta)
+    names(unlist_meta) <- NULL
+    meta_matrix <- cbind(group_names,names_meta,unlist_meta)
   }
   df <- data.frame(samples)
   df <- df[-2] #delete group and group_name
