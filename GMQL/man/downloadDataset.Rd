@@ -16,7 +16,7 @@ service name will be added automatically}
 by defualt is R working directory}
 }
 \value{
-no return value
+no object return
 }
 \description{
 It donwloads private dataset as zip file from repository to local path specified

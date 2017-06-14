@@ -16,7 +16,7 @@ list of datasets.
 Every dataset in the list is identified by:
 \itemize{
 \item{name: name of dataset}
-\item{owner: pulbic or name of the user}
+\item{owner: public or name of the user}
 }
 }
 \description{
@@ -27,6 +27,7 @@ If error occured a specific error will be printed
 }
 \examples{
 
+#### show dataset when logged as guest
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(url = PolimiUrl)
 list <- showDatasets(PolimiUrl)

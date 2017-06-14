@@ -7,7 +7,7 @@
 summit(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution
 Normally must be > 0, we admit value 0 and -1 as special value:
@@ -38,6 +38,19 @@ returns regions that start from a position
 where the number of intersecting regions is not increasing afterwards and stops
 at a position where either the number of intersecting regions decreases,
 or it violates the max accumulation index).
+}
+\examples{
+
+\dontrun{
+
+library(rscala)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
+c = summit(input_data = r,2,3)
+}
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

@@ -7,7 +7,7 @@
 flat(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution.
 Normally it must be > 0, we admit value 0 and -1 as special value:
@@ -36,6 +36,19 @@ Two styles are allowed:}
 \description{
 returns the contiguous region that starts from the first end and stops at
 the last end of the regions which would contribute to each region of the COVER
+}
+\examples{
+
+\dontrun{
+
+library(rscala)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
+c = flat(input_data = r,2,3)
+}
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

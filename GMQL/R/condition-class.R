@@ -71,7 +71,7 @@ check.CONDITION <- function(value)
 #' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 #'
 #' }
-#' .
+#'
 #'
 #' @export
 #'
@@ -120,7 +120,7 @@ DEF <- function(value)
 #' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 #'
 #' }
-#' .
+#'
 #'
 #' @export
 #'
@@ -168,7 +168,7 @@ EXACT <- function(value)
 #' #### select with condition
 #' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 #' }
-#' .
+#'
 #'
 #' @export
 #'

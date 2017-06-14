@@ -5,7 +5,7 @@
 \title{GMQL Operation: PROJECT}
 \usage{
 project(input_data, metadata = NULL, regions = NULL,
-  regions_update = NULL, all_but = FALSE)
+  regions_update = NULL, metadata_update = NULL, all_but = FALSE)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}

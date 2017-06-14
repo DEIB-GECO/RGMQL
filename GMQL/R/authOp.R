@@ -122,13 +122,13 @@ logout.GMQL <- function(url)
 
 #' Sign up to GMQL
 #'
-#' Sign up to GMQL rest services suite
+#' Sign up to GMQL REST services suite
 #'
 #' @import httr
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param name single string first name of the user (can contain space)
+#' @param name single string name of the user (can contain space)
 #' @param lastname single string last name of the user (can contain space)
 #' @param mail single string email (as spacified in RFC format)
 #' @param username single string name you want to authenticate with

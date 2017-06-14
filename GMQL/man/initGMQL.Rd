@@ -18,10 +18,11 @@ It is a tab-delimited text format based on the general feature format}
 It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 }}
 
-\item{remote_processing}{logical}
+\item{remote_processing}{logical value specifying the processing mode.
+can be local (local machine) or remote (cluster).}
 }
 \value{
-no returned value
+no object return
 }
 \description{
 Initialize and run GMQL server for executing GMQL query
@@ -36,4 +37,5 @@ Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala met
 library(rscala)
 initGMQL("tab",FALSE)
 }
+.
 }

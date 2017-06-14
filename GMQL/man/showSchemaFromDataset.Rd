@@ -11,7 +11,8 @@ showSchemaFromDataset(url, datasetName)
 service name will be added automatically}
 
 \item{datasetName}{name of dataset we want to get
-if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below}
+if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
+otherwise no prefix needed}
 }
 \value{
 list of region schema fields.

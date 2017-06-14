@@ -13,7 +13,7 @@ service name will be added automatically}
 \item{datasetName}{name of dataset we want to get}
 }
 \value{
-GrangesList containing all GMQL sample In dataset
+GrangesList containing all GMQL sample in dataset
 }
 \description{
 It donwloads private dataset from repository to GrangesList

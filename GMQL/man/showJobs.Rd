@@ -16,8 +16,6 @@ Every job in the list is identified by:
 \itemize{
 \item{id: id of job used for log, trace and stop}
 }
-
-no return value
 }
 \description{
 It show all Jobs (runnig, succeded or failed) run by user

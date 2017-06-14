@@ -9,17 +9,9 @@ cover(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered during execution
-Normally must be > 0, we admit value 0 and -1 as special value:
-\itemize{
-\item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
-}}
+\item{minAcc}{minimum number of overlapping regions to be considered during execution}
 
-\item{maxAcc}{maximum number of overlapping regions to be considered during execution
-\itemize{
-\item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
-\item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
-}}
+\item{maxAcc}{maximum number of overlapping regions to be considered during execution}
 
 \item{groupBy}{list of CONDITION objects every object contains the name of metadata to be used in semijoin,
 or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
@@ -46,11 +38,13 @@ Two style are allowed:}
 \description{
 it takes as input a dataset and returns another dataset (with a single sample, if no \emph{groupby} option is specified)
 by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
-The attributes of the output regions are only the region coordinates:
-if aggregate functions are specified, new attributes with aggregate values over schema region values
-Output metadata are the union of the input ones, plus the metadata attributes JaccardIntersect and JaccardResult,
-representing global Jaccard Indexes for the considered dataset,
-computed as the correspondent region Jaccard Indexes but on the whole sample regions.
+The attributes of the output regions are only the region coordinates, and Jaccard indexes ( JaccardIntersect and JaccardResult).
+Jaccard Indexes are standard measures of similarity of the contributing regions, added as default region attributes.
+The JaccardIntersect index is calculated as the ratio between the lengths of the intersection
+and of the union of the contributing regions; the JaccardResult index is calculated as the ratio
+between the lengths of the result and of the union of the contributing regions.
+If aggregate functions are specified, new attributes with aggregate values over schema region values;
+Output metadata are the union of the input ones.
 If \emph{groupby} clause is specified, the input samples are partitioned in groups,
 each with distinct values of the grouping metadata attributes, and the COVER operation is separately
 applied to each group, yielding to one sample in the result for each group.
@@ -65,9 +59,9 @@ library(rscala)
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
-c = cover(2,3,input_data = r)
+c = cover(input_data = r,2,3)
 }
-
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

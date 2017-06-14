@@ -4,12 +4,11 @@
 \alias{readDataset}
 \title{GMQL Function: READ}
 \usage{
-readDataset(DatasetFolder, parser = "CustomParser", is_local = TRUE)
+readDataset(dataset, parser = "CustomParser", is_local = TRUE, url = NULL,
+  override = FALSE)
 }
 \arguments{
-\item{DatasetFolder}{folder path for GMQL dataset or datasetname on repository}
-
-\item{parser}{string used to parsing dataset files
+\item{parser}{single string used to parsing dataset files
 The Parser's available are:
 \itemize{
 \item{BedParser}
@@ -22,8 +21,12 @@ The Parser's available are:
 }
 Default is CustomParser.}
 
-\item{is_local}{logical value indicates if dataset is a local or remote dataset
+\item{is_local}{logical value indicating if dataset is a local or remote dataset
 if the remote processing is off you cannot use a remote repository (error occured)}
+
+\item{override}{logical value}
+
+\item{DatasetFolder}{single string folder path for GMQL dataset or datasetname on repository}
 }
 \value{
 "url-like" string to dataset
@@ -31,6 +34,7 @@ if the remote processing is off you cannot use a remote repository (error occure
 \description{
 Read a GMQL dataset or any other folder containig some homogenus sample
 from disk, saving in Scala memory that can be referenced in R
+Also used to read a repository dataset.
 }
 \details{
 Normally a GMQL dataset contains an XML schema file that contains
@@ -42,12 +46,12 @@ the parser defined without reading any XML schema
 
 \dontrun{
 
-### with CustomParser
+### local with CustomParser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
 
- #### with an other Parser
+### local with other Parser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path,"ANNParser")

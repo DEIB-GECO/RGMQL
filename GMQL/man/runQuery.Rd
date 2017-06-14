@@ -10,18 +10,18 @@ runQuery(url, fileName, query, output_gtf = TRUE)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{fileName}{name of file}
+\item{fileName}{single string name of the file}
 
-\item{query}{text of query}
+\item{query}{single string text of the query}
 
-\item{output_gtf}{logical: file format for sample generating from query
+\item{output_gtf}{logical: file format for samples generated from query
 the possiblities are: GTF or TAB}
 }
 \value{
-no return value
+no object return
 }
 \description{
-It runs a GMQL query
+It runs a GMQL query as single string
 }
 \details{
 If error occured a specific error will be printed

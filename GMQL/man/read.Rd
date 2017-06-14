@@ -6,6 +6,12 @@
 \usage{
 read(samples)
 }
+\arguments{
+\item{samples}{GrangesList}
+}
+\value{
+"url-like" string to dataset
+}
 \description{
 Read a GrangesList saving in Scala memory that can be referenced in R
 }

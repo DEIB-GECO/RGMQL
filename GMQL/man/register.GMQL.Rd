@@ -10,7 +10,7 @@ register.GMQL(url, name, lastname, mail, username, password)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{name}{single string first name of the user (can contain space)}
+\item{name}{single string name of the user (can contain space)}
 
 \item{lastname}{single string last name of the user (can contain space)}
 
@@ -24,7 +24,7 @@ service name will be added automatically}
 no object return
 }
 \description{
-Sign up to GMQL rest services suite
+Sign up to GMQL REST services suite
 }
 \details{
 After registration you receive an authentication token.

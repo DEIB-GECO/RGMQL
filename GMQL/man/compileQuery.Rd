@@ -10,13 +10,13 @@ compileQuery(url, query)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{query}{text query}
+\item{query}{single string text of the query}
 }
 \value{
-no return value
+no object return
 }
 \description{
-It compiles a GMQL query
+It compiles a GMQL query as single string
 }
 \examples{
 

@@ -10,15 +10,15 @@ runQuery.fromfile(url, fileName, filePath, output_gtf = TRUE)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{fileName}{name of file}
+\item{fileName}{single string name of the file}
 
-\item{filePath}{path of txt files where you wrote a query}
+\item{filePath}{single string path of txt files where you wrote a query}
 
 \item{output_gtf}{logical: file format for sample generating from query
 the possiblities are: GTF or TAB}
 }
 \value{
-no return value
+no object return
 }
 \description{
 It runs a GMQL query from file

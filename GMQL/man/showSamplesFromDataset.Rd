@@ -10,7 +10,9 @@ showSamplesFromDataset(url, datasetName)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{datasetName}{name of dataset we want to get}
+\item{datasetName}{name of dataset we want to get
+if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
+otherwise no prefix needed}
 }
 \value{
 list of samples in dataset.

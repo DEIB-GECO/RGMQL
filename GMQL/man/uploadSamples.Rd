@@ -24,15 +24,16 @@ schemaName available are:
 \item{BED}
 \item{BEDGRAPH}
 }
-if schema is NULL it looking for a XML schema file to read}
+if schema is NULL it's looking for a XML schema file to read}
 
 \item{isGMQL}{logical value indicating whether is GMQL dataset or not}
 }
 \value{
-no return value
+no object return
 }
 \description{
-It uploads folder containing dataset files: a new dataset will be created on repository
+It uploads an folder (GMQL or not) containing dataset files:
+a new dataset will be created on repository
 }
 \details{
 If error occured a specific error will be printed

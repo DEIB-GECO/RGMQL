@@ -10,10 +10,10 @@ compileQuery.fromfile(url, filePath)
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{filePath}{path of txt files where you wrote a query}
+\item{filePath}{single string path of txt files where you wrote a query}
 }
 \value{
-no return value
+no object return
 }
 \description{
 It compiles a GMQL query from file

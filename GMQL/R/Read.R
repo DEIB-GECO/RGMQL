@@ -25,7 +25,7 @@ if(getRversion() >= "3.1.0")
 #' can be local (local machine) or remote (cluster).
 #'
 #'
-#' @return no returned value
+#' @return no object return
 #'
 #' @details
 #' Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
@@ -60,8 +60,8 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' from disk, saving in Scala memory that can be referenced in R
 #' Also used to read a repository dataset.
 #'
-#' @param DatasetFolder folder path for GMQL dataset or datasetname on repository
-#' @param parser string used to parsing dataset files
+#' @param DatasetFolder single string folder path for GMQL dataset or datasetname on repository
+#' @param parser single string used to parsing dataset files
 #' The Parser's available are:
 #' \itemize{
 #' \item{BedParser}
@@ -170,6 +170,10 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
 #'
 #' Read a GrangesList saving in Scala memory that can be referenced in R
 #'
+#' @param samples GrangesList
+#'
+#' @return "url-like" string to dataset
+#'
 #' @export
 #'
 read <- function(samples)
@@ -184,16 +188,23 @@ read <- function(samples)
   else {
     unlist_meta <- unlist(meta)
     names_meta <- names(unlist_meta)
-    group_names <- gsub(".*_([1-9]*)\\..*","\\1", names_meta)
+    group_names <- gsub(".*_([0-9]*)\\..*","\\1", names_meta)
     names(unlist_meta) <- NULL
     meta_matrix <- cbind(group_names,names_meta,unlist_meta)
   }
   df <- data.frame(samples)
-  df <- df[-2] #delete group and group_name
+  df <- df[-2] #delete group_name
   region_matrix <- as.matrix(sapply(df, as.character))
+  region_matrix<- region_matrix[,setdiff(colnames(region_matrix),"width")]
+  indx <- which(is.na(region_matrix))
+  region_matrix[indx] <- "NA"
   col_types <- sapply(df,class)
   col_names <- names(col_types)
+  #re order the schema?
+  col_names <- plyr::revalue(col_names,c(type = "feature",phase = "frame",seqnames = "seqname"))
   schema_matrix <- cbind(col_types,col_names)
+  schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width")),]
+  rownames(schema_matrix) <- NULL
   out <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)

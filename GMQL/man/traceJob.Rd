@@ -13,7 +13,7 @@ service name will be added automatically}
 \item{job_id}{single string id of the job}
 }
 \value{
-text log
+text trace log
 }
 \description{
 It traces a specific current job

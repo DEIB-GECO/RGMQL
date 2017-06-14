@@ -7,7 +7,7 @@
 histogram(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution
 Normally must be > 0, we admit value 0 and -1 as special value:
@@ -36,6 +36,19 @@ Two style are allowed:}
 \description{
 returns the non-overlapping regions contributing to the cover,
 each with its accumulation index value, which is assigned to the AccIndex region attribute.
+}
+\examples{
+
+\dontrun{
+
+library(rscala)
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
+c = histogram(input_data = r,2,3)
+}
+.
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

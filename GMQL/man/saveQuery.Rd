@@ -15,7 +15,7 @@ service name will be added automatically}
 \item{queryTxt}{single string text of GMQL query}
 }
 \value{
-no return value
+no object return
 }
 \description{
 It saves the GMQL query into repository

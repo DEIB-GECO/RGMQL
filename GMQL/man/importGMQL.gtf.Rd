@@ -7,7 +7,7 @@
 importGMQL.gtf(datasetName)
 }
 \arguments{
-\item{datasetName}{GMQL dataset folder path}
+\item{datasetName}{single string GMQL dataset folder path}
 }
 \value{
 GrangesList containing all GMQL sample In dataset

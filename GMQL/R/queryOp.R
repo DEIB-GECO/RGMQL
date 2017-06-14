@@ -5,13 +5,12 @@
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
+#'
 #' @return list of jobs
 #' Every job in the list is identified by:
 #' \itemize{
 #' \item{id: id of job used for log, trace and stop}
 #' }
-#'
-#' @return no return value
 #'
 #' @seealso \code{\link{showJobLog}} @seealso \code{\link{stopJob}} @seealso \code{\link{traceJob}}
 #'
@@ -90,7 +89,7 @@ showJobLog <- function(url,job_id)
 #' service name will be added automatically
 #' @param job_id single string id of the job
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -128,7 +127,7 @@ stopJob <- function(url,job_id)
 #' service name will be added automatically
 #' @param job_id single string id of the job
 #'
-#' @return  text log
+#' @return text trace log
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -161,18 +160,18 @@ traceJob <- function(url, job_id)
 
 #' Run GMQL query
 #'
-#' It runs a GMQL query
+#' It runs a GMQL query as single string
 #'
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param fileName name of file
-#' @param query text of query
-#' @param output_gtf logical: file format for sample generating from query
+#' @param fileName single string name of the file
+#' @param query single string text of the query
+#' @param output_gtf logical: file format for samples generated from query
 #' the possiblities are: GTF or TAB
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -214,12 +213,12 @@ runQuery <- function(url,fileName,query,output_gtf = TRUE)
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param fileName name of file
-#' @param filePath path of txt files where you wrote a query
+#' @param fileName single string name of the file
+#' @param filePath single string path of txt files where you wrote a query
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -255,15 +254,15 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = TRUE)
 
 #' Compile GMQL query
 #'
-#' It compiles a GMQL query
+#' It compiles a GMQL query as single string
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param query text query
+#' @param query single string text of the query
 #'
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @examples
 #'
@@ -295,9 +294,9 @@ compileQuery <- function(url ,query)
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param filePath path of txt files where you wrote a query
+#' @param filePath single string path of txt files where you wrote a query
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
 #' If error occured a specific error will be printed

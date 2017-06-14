@@ -50,7 +50,7 @@ showQueries <- function(url)
 #' @param queryName single string name of query
 #' @param queryTxt single string text of GMQL query
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 #'
@@ -92,10 +92,10 @@ saveQuery <- function(url,queryName,queryTxt)
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param queryName name of GMQL query
-#' @param filePath local file path where you write GMQL query
+#' @param queryName single string name of the GMQL query
+#' @param filePath single string local file path where you write GMQL query
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @references
 #' Please, read for writing a GMQL query

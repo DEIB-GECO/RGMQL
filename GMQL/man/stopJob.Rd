@@ -13,7 +13,7 @@ service name will be added automatically}
 \item{job_id}{single string id of the job}
 }
 \value{
-no return value
+no object return
 }
 \description{
 It stops a specific current job

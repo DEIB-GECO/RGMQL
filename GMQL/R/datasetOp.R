@@ -11,7 +11,7 @@
 #' Every dataset in the list is identified by:
 #' \itemize{
 #' \item{name: name of dataset}
-#' \item{owner: pulbic or name of the user}
+#' \item{owner: public or name of the user}
 #' }
 #'
 #' @seealso \code{\link{deleteDataset}}
@@ -21,6 +21,7 @@
 #'
 #' @examples
 #'
+#' #### show dataset when logged as guest
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' list <- showDatasets(PolimiUrl)
@@ -51,6 +52,8 @@ showDatasets <- function(url)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
+#' if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
+#' otherwise no prefix needed
 #'
 #' @return list of samples in dataset.
 #'
@@ -98,6 +101,7 @@ showSamplesFromDataset <- function(url,datasetName)
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
 #' if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
+#' otherwise no prefix needed
 #'
 #' @return list of region schema fields.
 #'
@@ -109,6 +113,7 @@ showSamplesFromDataset <- function(url,datasetName)
 #'
 #' @details
 #' If error occured a specific error will be printed
+#'
 #'
 #' @examples
 #'
@@ -136,7 +141,8 @@ showSchemaFromDataset <- function(url,datasetName)
 #' Upload dataset
 #'
 #'
-#' It uploads folder containing dataset files: a new dataset will be created on repository
+#' It uploads an folder (GMQL or not) containing dataset files:
+#' a new dataset will be created on repository
 #'
 #'
 #' @param url single string url of server: it must contain the server address and base url;
@@ -152,12 +158,13 @@ showSchemaFromDataset <- function(url,datasetName)
 #' \item{BED}
 #' \item{BEDGRAPH}
 #' }
-#' if schema is NULL it looking for a XML schema file to read
+#' if schema is NULL it's looking for a XML schema file to read
 #' @param isGMQL logical value indicating whether is GMQL dataset or not
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
+#'
 #' If error occured a specific error will be printed
 #'
 #' @examples
@@ -228,9 +235,9 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param datasetName name of dataset we want to get
+#' @param datasetName name of dataset we want to delete
 #'
-#' @return no return value
+#' @return no object return
 #'
 #'
 #' @details
@@ -246,6 +253,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 #' login.GMQL(url = PolimiUrl,"test101","test")
 #' deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
 #' }
+#'
 #' @export
 #'
 deleteDataset <- function(url,datasetName)
@@ -276,7 +284,7 @@ deleteDataset <- function(url,datasetName)
 #' @param path local path folder where store dataset
 #' by defualt is R working directory
 #'
-#' @return no return value
+#' @return no object return
 #'
 #' @details
 #' If error occured a specific error will be printed
@@ -320,7 +328,7 @@ downloadDataset <- function(url,datasetName,path = getwd())
 #' service name will be added automatically
 #' @param datasetName name of dataset we want to get
 #'
-#' @return GrangesList containing all GMQL sample In dataset
+#' @return GrangesList containing all GMQL sample in dataset
 #'
 #' @details
 #' If error occured a specific error will be printed

@@ -82,6 +82,8 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' regions sample file and metadata file are associated through file name:
 #' for example S_0001.gtf for regions file and S_0001.gtf.meta for its metadata
 #'
+#' @details
+#'
 #'
 #' @examples
 #'

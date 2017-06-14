@@ -7,7 +7,7 @@
 importGMQL.gdm(datasetName)
 }
 \arguments{
-\item{datasetName}{GMQL dataset folder path}
+\item{datasetName}{single string GMQL dataset folder path}
 }
 \value{
 GrangesList containing all GMQL sample In dataset
@@ -23,5 +23,5 @@ grl = importGMQL.gdm(test_path)
 
 }
 \seealso{
-\code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
+\code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf} }
 }
