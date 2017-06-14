@@ -67,13 +67,15 @@
 #'
 #' @export
 #'
-order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
-                  regions_ordering = NULL,rtop = 0,rtopg = 0)
+order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,mtopp = 0,
+                  regions_ordering = NULL,rtop = 0,rtopg = 0,topp = 0)
 {
-  if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg))
+  if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg)
+     || !is.numeric(mtopp)|| !is.numeric(rtopp))
     stop("mtop, rtop, rtopg and mtopg must be integer")
 
-  if(length(mtop)>0 || length(mtopg)>0 || length(rtop)>0 || length(rtopg)>0)
+  if(length(mtop)>0 || length(mtopg)>0 || length(rtop)>0 || length(rtopg)>0
+     || length(mtopp)>0 || length(rtopp)>0)
     warning("only the first element is taken by rtop, mtop, mtopg, rtopg")
 
   # we consider only the first element even if input is a vector of Int
@@ -81,9 +83,11 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 
   mtop = as.integer(mtop[1])
   mtog = as.integer(mtopg[1])
+  mtopp = as.integer(mtopp[1])
 
   rtop = as.integer(rtop[1])
   rtopg = as.integer(rtopg[1])
+  rtopp = as.integer(rtopp[1])
 
   if(mtop > 0 && mtopg >0)
   {
@@ -91,10 +95,34 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     mtopg = 0
   }
 
+  if(mtop >0 && mtopp>0)
+  {
+    warning("cannot be used together.\nWe set mtopg = 0")
+    mtopp = 0
+  }
+
+  if(mtopg >0 && mtopp>0)
+  {
+    warning("cannot be used together.\nWe set mtopg = 0")
+    mtopp = 0
+  }
+
   if(rtop > 0 && rtopg >0)
   {
-    warning("cannot be used together.\nWe set rtopg = 0")
+    warning("cannot be used together.\nWe set mtopg = 0")
     rtopg = 0
+  }
+
+  if(rtop >0 && rtopp>0)
+  {
+    warning("cannot be used together.\nWe set mtopg = 0")
+    rtopp = 0
+  }
+
+  if(rtopg >0 && rtopp>0)
+  {
+    warning("cannot be used together.\nWe set mtopg = 0")
+    rtopp = 0
   }
 
   if(!is.null(metadata_ordering))
@@ -107,7 +135,7 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
   else
     region_matrix <- NULL
 
-  out <- WrappeR$order(meta_matrix,mtopg,mtop,region_matrix,rtopg,rtop,input_data)
+  out <- WrappeR$order(meta_matrix,mtopg,mtop,mtopp,region_matrix,rtopg,rtop,rtopp,input_data)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
@@ -138,6 +166,5 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
   else
     stop("only list or character")
 }
-
 
 

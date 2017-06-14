@@ -196,8 +196,8 @@ read <- function(samples)
   df <- df[-2] #delete group_name
   region_matrix <- as.matrix(sapply(df, as.character))
   region_matrix<- region_matrix[,setdiff(colnames(region_matrix),"width")]
-  indx <- which(is.na(region_matrix))
-  region_matrix[indx] <- "NA"
+  #indx <- which(is.na(region_matrix))
+  #region_matrix[indx] <- "NA"
   col_types <- sapply(df,class)
   col_names <- names(col_types)
   #re order the schema?
