@@ -15,18 +15,18 @@ exportGMQL.gtf(samples, dir_out)
 no value return
 }
 \description{
-It create Gmql dataset from GRangesList
-All sample are in GTF file format
+It create GMQL dataset from GRangesList.
+All samples are in GTF file format
 }
 \details{
 The GMQL dataset is made up by two differet file type
 \itemize{
-\item{metadata files: contains metadata associated to corrisponding sample}
-\item{region files: contains many chromosome regions }
-\item{region schema file: XML file contains region attribute (e.g. chr, left, right, qvalue)}
+\item{metadata files: contain metadata associated to corrisponding sample}
+\item{region files: contains many genomic regions }
+\item{region schema file: XML file contains region attributes (e.g. chr, left, right, qvalue)}
 }
-regions sample file and metadata file are associated through file name:
-for example S_0001.gtf for regions file and S_0001.gtf.meta for its metadata
+region sample files and metadata files are associated through file name:
+for example S_0001.gtf for region file and S_0001.gtf.meta for its metadata file
 
 
 }

@@ -43,5 +43,5 @@ register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
 
 }
 \seealso{
-\code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+\code{\link{login.GMQL}} \code{\link{logout.GMQL}}
 }

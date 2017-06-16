@@ -71,7 +71,7 @@ s = select(input_data = r, "NOT(biosample_organism=='Homo sapiens' AND assembly=
 #### select with predicate on regions
 s = select(input_data = r, region_predicate = " score > 0.5 AND NOT(variant_type == 'SNP')")
 }
-.
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

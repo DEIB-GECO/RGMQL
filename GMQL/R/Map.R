@@ -55,7 +55,7 @@
 #' r2 = read(test_path2)
 #' m = map(r,r2)
 #' }
-#'
+#' ""
 #' @export
 #'
 map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)

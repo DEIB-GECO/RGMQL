@@ -22,12 +22,13 @@ It traces a specific current job
 If error occured a specific error will be printed
 }
 \examples{
-
+\dontrun{
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(PolimiUrl,"test101","test")
 list_jobs <- showJobs(PolimiUrl)
 jobs_1 <- list_jobs$jobs[[1]]
 traceJob(PolimiUrl,jobs_1)
-
+}
+""
 
 }

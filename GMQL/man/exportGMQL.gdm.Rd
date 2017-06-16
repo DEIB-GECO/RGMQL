@@ -15,19 +15,19 @@ exportGMQL.gdm(samples, dir_out)
 no value return
 }
 \description{
-It create Gmql dataset from GRangesList
-All sample are in GDM (tab-separated values) file format
+It create GMQL dataset from GRangesList.
+All samples are in GDM (tab-separated values) file format
 }
 \details{
 The GMQL dataset is made up by two differet file type
 
 \itemize{
-\item{metadata files: contains metadata associated to corrisponding sample}
-\item{region files: contains many chromosome regions }
-\item{region schema file: XML file contains region attribute (e.g. chr, start, end, pvalue)}
+\item{metadata files: contain metadata associated to corrisponding sample}
+\item{region files: contain many genomic regions }
+\item{region schema file: XML file contains region attributes (e.g. chr, start, end, pvalue)}
 }
-regions sample file and metadata file are associated through file name:
-for example S_0001.gdm for regions file and S_0001.gdm.meta for its metadata
+region sample files and metadata files are associated through file name:
+for example S_0001.gdm for region file and S_0001.gdm.meta for its metadata file
 }
 \examples{
 

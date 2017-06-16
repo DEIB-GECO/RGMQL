@@ -50,7 +50,7 @@ test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
 c = summit(input_data = r,2,3)
 }
-.
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

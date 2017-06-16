@@ -31,7 +31,8 @@
 #' right_input_data (even just one base)
 #'
 #'
-#' @return "url-like" string
+#' @return "url-like" string:
+#' for example dataset0/select2/difference3
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
@@ -54,8 +55,9 @@
 #' #### select with condition
 #' #### the first is FULL and the other ones are DEF
 #' d = difference(r,r2, c(FULL("attribute_tag"),"cell_type","cell") )
+#'
 #' }
-#' .
+#' ""
 #'
 #' @export
 #'

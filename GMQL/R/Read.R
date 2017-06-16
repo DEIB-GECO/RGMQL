@@ -37,7 +37,7 @@ if(getRversion() >= "3.1.0")
 #' library(rscala)
 #' initGMQL("tab",FALSE)
 #' }
-#' .
+#' ""
 #' @export
 #'
 #'
@@ -75,7 +75,8 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' Default is CustomParser.
 #' @param is_local logical value indicating if dataset is a local or remote dataset
 #' if the remote processing is off you cannot use a remote repository (error occured)
-#' @param url
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name will be added automatically
 #' @param override logical value
 #'
 #' @return "url-like" string to dataset
@@ -101,7 +102,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path,"ANNParser")
 #' }
-#'
+#' ""
 #' @export
 #'
 readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL, override= FALSE)
@@ -150,7 +151,7 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
   }
   else
   {
-    list <- showSchemaFromDataset(url,DatasetFolder)
+    list <- showSchemaFromDataset(url,name_dataset)
     schema_names <- sapply(list$fields, function(x){x$name})
     schema_type <- sapply(list$fields, function(x){x$fieldType})
     schema_matrix <- cbind(schema_type,schema_names)
@@ -174,6 +175,12 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
 #'
 #' @return "url-like" string to dataset
 #'
+#' @examples
+#'
+#' \dontrun{
+#' }
+#' ""
+#'
 #' @export
 #'
 read <- function(samples)
@@ -183,6 +190,7 @@ read <- function(samples)
 
   meta <- metadata(samples)
   if(is.null(meta)) {
+    warning("GrangesList has no metadata. we provide two metadata for you")
     meta_matrix <- matrix(c("Provider","Polimi", "Application", "R-GMQL"),ncol = 2,byrow = TRUE)
   }
   else {
@@ -196,15 +204,14 @@ read <- function(samples)
   df <- df[-2] #delete group_name
   region_matrix <- as.matrix(sapply(df, as.character))
   region_matrix<- region_matrix[,setdiff(colnames(region_matrix),"width")]
-  #indx <- which(is.na(region_matrix))
-  #region_matrix[indx] <- "NA"
   col_types <- sapply(df,class)
   col_names <- names(col_types)
   #re order the schema?
   col_names <- plyr::revalue(col_names,c(type = "feature",phase = "frame",seqnames = "seqname"))
-  schema_matrix <- cbind(col_types,col_names)
-  schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width")),]
+  schema_matrix <- cbind(toupper(col_types),col_names)
+  schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width","seqnames","strand","end","start")),]
   rownames(schema_matrix) <- NULL
+  colnames(schema_matrix) <- NULL
   out <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)

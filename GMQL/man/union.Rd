@@ -41,7 +41,7 @@ r = read(test_path)
 r2 = read(test_path2)
 u = union(r2,r)
 }
-.
+""
 
 }
 \references{

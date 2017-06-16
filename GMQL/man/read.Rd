@@ -15,3 +15,10 @@ read(samples)
 \description{
 Read a GrangesList saving in Scala memory that can be referenced in R
 }
+\examples{
+
+\dontrun{
+}
+""
+
+}

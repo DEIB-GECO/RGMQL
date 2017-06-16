@@ -29,7 +29,7 @@ PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(url = PolimiUrl,"test101","test")
 deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
 }
-
+""
 }
 \seealso{
 \code{\link{downloadDataset}}

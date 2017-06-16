@@ -1,7 +1,7 @@
 Package: GMQL
 Type: Package
 Title: GMQL function
-Version: 1.2.0
+Version: 0.99.0
 Author: Pallotta Simone, Masseroli Marco 
 Maintainer: Simone Pallotta <simone.pallotta@mail.polimi.it>
 Description: More about what it does (maybe more than one line)

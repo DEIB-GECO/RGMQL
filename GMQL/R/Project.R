@@ -46,12 +46,11 @@
 #' p = project(input_data = r, regions = c("variant_classification", "variant_type"),
 #' metadata = c("manually_curated","tissue_status", "tumor_ta") )
 #' }
-#' .
+#' ""
 #' @export
 #'
 #'
-project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,
-                   metadata_update = NULL, all_but = FALSE)
+project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,all_but = FALSE)
 {
   if(!is.null(metadata))
   {
@@ -81,9 +80,9 @@ project <-function(input_data, metadata = NULL, regions = NULL, regions_update =
   if(!is.null(regions_update))
     .check_predicate(regions_update)
 
-  if(!is.null(metadata_update))
-    .check_predicate(metadata_update)
-
+  #if(!is.null(metadata_update))
+   # .check_predicate(metadata_update)
+  metadata_update <- NULL
   if(length(all_but)>1)
     warning("all_but: only the first element is taken")
 

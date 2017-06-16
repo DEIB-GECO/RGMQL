@@ -14,29 +14,32 @@
 #'
 #'
 #' @param input_data "url-like" string taken from GMQL function
-#' @param metadata_ordering list of \code{\link{ORDER}} objects where every object contains the name of metadata
+#' @param metadata_ordering list of ORDER objects where every object contains the name of metadata
 #' The ORDER's available are: ASC, DESC
 #' Every condition accepts only one string value. (e.g. ASC("cell_type") )
 #' @param mtop integer value specifying the first k samples.
 #' default is 0 that means every sample must be considered
 #' @param mtopg integer value specifying the first j samples in each group.
 #' default is 0 that means every sample must be considered
-#' @param regions_ordering list of \code{\link{ORDER}} objects where every object contains the name of region schema value
+#' @param mtopp integer value specifying the first j samples in each group.
+#' default is 0 that means every sample must be considered
+#' @param regions_ordering list of ORDER objects where every object contains the name of region schema value
 #' The ORDER's available are: ASC, DESC.
 #' Every condition accepts only one string value. (e.g. DESC("pvalue") )
 #' @param rtop integer value specifying the first m samples in each group.
 #' default is 0 that means every sample must be considered
 #' @param rtopg integer value specifying the first i samples in each group.
 #' default is 0 that means every sample must be considered
+#' @param rtopp integer value specifying the first i samples in each group.
+#' default is 0 that means every sample must be considered
 #'
 #'
 #' @return "url-like" string
 #'
 #' @details
-#' mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
+#' mtop, mtopg,mtopp, rtop, rtopg and rtopp are normally numbers: if you specify a vector,
 #' only the first element will be used
-#' mtop and mtopg are mutalbe exclusive, so rtop and rtopg
-#' if you specified both, only mtop (rtop) is taken
+#' mtop and mtopg and mtopp are mutalbe exclusive, so rtop and rtopg and rtopp
 #'
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
@@ -58,17 +61,17 @@
 #' o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
 #'
 #' ###regions ordering as ascending
-#' o = order(c("pvalue","length","name"), rtopg = 1, input_data = r)
+#' o = order(regions_ordering = c("pvalue","length","name"), rtopg = 1, input_data = r)
 #'
 #' #' ###regions ordering as ascending and name descending
-#' o = order(list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
+#' o = order(regions_ordering = list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
 #' }
-#' .
+#' ""
 #'
 #' @export
 #'
 order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,mtopp = 0,
-                  regions_ordering = NULL,rtop = 0,rtopg = 0,topp = 0)
+                  regions_ordering = NULL,rtop = 0,rtopg = 0,rtopp = 0)
 {
   if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || !is.numeric(rtopg)
      || !is.numeric(mtopp)|| !is.numeric(rtopp))
@@ -97,31 +100,31 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,mtop
 
   if(mtop >0 && mtopp>0)
   {
-    warning("cannot be used together.\nWe set mtopg = 0")
+    warning("cannot be used together.\nWe set mtopp = 0")
     mtopp = 0
   }
 
   if(mtopg >0 && mtopp>0)
   {
-    warning("cannot be used together.\nWe set mtopg = 0")
+    warning("cannot be used together.\nWe set mtopp = 0")
     mtopp = 0
   }
 
   if(rtop > 0 && rtopg >0)
   {
-    warning("cannot be used together.\nWe set mtopg = 0")
+    warning("cannot be used together.\nWe set rtopg = 0")
     rtopg = 0
   }
 
   if(rtop >0 && rtopp>0)
   {
-    warning("cannot be used together.\nWe set mtopg = 0")
+    warning("cannot be used together.\nWe set rtopp = 0")
     rtopp = 0
   }
 
   if(rtopg >0 && rtopp>0)
   {
-    warning("cannot be used together.\nWe set mtopg = 0")
+    warning("cannot be used together.\nWe set rtopp = 0")
     rtopp = 0
   }
 

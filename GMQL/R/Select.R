@@ -60,7 +60,7 @@
 #' #### select with predicate on regions
 #' s = select(input_data = r, region_predicate = " score > 0.5 AND NOT(variant_type == 'SNP')")
 #' }
-#' .
+#' ""
 #' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,

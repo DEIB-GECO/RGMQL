@@ -54,7 +54,7 @@ p = project(input_data = r, regions = "score" regions_update="length AS right - 
 p = project(input_data = r, regions = c("variant_classification", "variant_type"),
 metadata = c("manually_curated","tissue_status", "tumor_ta") )
 }
-.
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

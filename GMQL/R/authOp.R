@@ -81,7 +81,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #'
-#' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @seealso \code{\link{register.GMQL}} \code{\link{login.GMQL}}
 #'
 #' @details
 #' After logout the authentication token will be invalidated.
@@ -135,7 +135,7 @@ logout.GMQL <- function(url)
 #' @param password single string password you want to authenticate with
 #'
 #'
-#' @seealso \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @seealso \code{\link{login.GMQL}} \code{\link{logout.GMQL}}
 #'
 #' @details
 #' After registration you receive an authentication token.

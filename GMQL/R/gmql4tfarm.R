@@ -54,7 +54,7 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
   }
   else
   {
-    samples_file <- .check_metadata(metadata,metadata_prefix,gtf_meta_files)
+    samples_file <- .check_metadata_files(metadata,metadata_prefix,gtf_meta_files)
     samples_to_read <- unlist(samples_file)
     if(length(samples_to_read)>0)
       samples_to_read <- gsub(".meta$", "", samples_to_read)
@@ -85,7 +85,8 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 #'
 #'
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' TFARMemAtrix(test_path,regions = c("pvalue","peak"))
+#' grl <- importGMQL.gtf(test_path)
+#' TFARMemAtrix(grl,regions = c("pvalue","peak"))
 #'
 #'
 #' @export
@@ -112,15 +113,15 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
 {
   g1 <- region_list[[1]]
   elementMetadata(g1) <- NULL
-  DF_list <- lapply(region_list, function(g_x){
-    if(!is.null(regions))
+  if(!is.null(regions))
+  {
+    DF_list <- lapply(region_list, function(g_x){
       meta <- elementMetadata(g_x)[regions]
-    else
-      meta <- elementMetadata(g_x)
-    data.frame(meta)
-  })
-  DF_only_regions <- dplyr::bind_cols(DF_list)
-  elementMetadata(g1) <- DF_only_regions
+      data.frame(meta)
+    })
+    DF_only_regions <- dplyr::bind_cols(DF_list)
+    elementMetadata(g1) <- DF_only_regions
+  }
   g1
 }
 
@@ -160,16 +161,16 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
 {
   g1 <- rtracklayer::import(con = gtf_region_files[1], format = "gtf")
   elementMetadata(g1) <- NULL
-  DF_list <- lapply(gtf_region_files, function(x){
-    g_x <- rtracklayer::import(con = x, format = "gtf")
-    if(!is.null(regions))
+  if(!is.null(regions))
+  {
+    DF_list <- lapply(gtf_region_files, function(x){
+      g_x <- rtracklayer::import(con = x, format = "gtf")
       meta <- elementMetadata(g_x)[regions]
-    else
-      meta <- elementMetadata(g_x)
-    data.frame(meta)
-    })
-  DF_only_regions <- dplyr::bind_cols(DF_list)
-  elementMetadata(g1) <- DF_only_regions
+      data.frame(meta)
+      })
+    DF_only_regions <- dplyr::bind_cols(DF_list)
+    elementMetadata(g1) <- DF_only_regions
+  }
   g1
 }
 
@@ -180,20 +181,27 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
   col_names <- names(df)
   df <-  df[c("chr","left","right","strand")]
 
-  df_list <- lapply(gdm_region_files,function(x,regions,vector_field){
+  if(!is.null(regions))
+  {
+    df_list <- lapply(gdm_region_files,function(x,regions,vector_field){
 
-    region_frame <- data.table::fread(x,col.names = vector_field,header = FALSE,sep = '\t')
-    col_names <- names(region_frame)
-    if(!is.null(regions))
-      col_names <- col_names[col_names %in% regions] #delete column not choosen by input
-    r <- region_frame[col_names]
-  },regions,vector_field)
+      region_frame <- data.table::fread(x,col.names = vector_field,header = FALSE,sep = '\t')
+      col_names <- names(region_frame)
+      if(!is.null(regions))
+        col_names <- col_names[col_names %in% regions] #delete column not choosen by input
+      r <- region_frame[col_names]
+    },regions,vector_field)
 
 
-  df_only_regions <- dplyr::bind_cols(df_list)
-  complete_df <- dplyr::bind_cols(df,df_only_regions)
-  g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,keep.extra.columns = TRUE,
-                                               start.field = "left",end.field = "right")
+    df_only_regions <- dplyr::bind_cols(df_list)
+    complete_df <- dplyr::bind_cols(df,df_only_regions)
+    g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,keep.extra.columns = TRUE,
+                                                 start.field = "left",end.field = "right")
+  }
+  else
+    g <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = TRUE,
+                                                 start.field = "left",end.field = "right")
+
 }
 
 

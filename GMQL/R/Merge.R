@@ -23,11 +23,10 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = read(test_path)
-#'
-#'
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 #' }
-#' .
+#'
+#' ""
 #' @export
 #'
 merge <- function(input_data, groupBy = NULL)

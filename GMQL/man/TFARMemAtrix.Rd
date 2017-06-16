@@ -26,7 +26,8 @@ create matrix for TFARM package directly by GrangesList
 
 
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-TFARMemAtrix(test_path,regions = c("pvalue","peak"))
+grl <- importGMQL.gtf(test_path)
+TFARMemAtrix(grl,regions = c("pvalue","peak"))
 
 
 }

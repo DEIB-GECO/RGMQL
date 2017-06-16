@@ -84,11 +84,10 @@ showSamplesFromDataset <- function(url,datasetName)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
-  {
     return(content)
-  }
+
 }
 
 
@@ -132,7 +131,7 @@ showSchemaFromDataset <- function(url,datasetName)
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
     return(content)
 }
@@ -164,17 +163,18 @@ showSchemaFromDataset <- function(url,datasetName)
 #' @return no object return
 #'
 #' @details
-#'
-#' If error occured a specific error will be printed
+#' If no error occured print "Upload Complete" otherwise a specific error will be printed
 #'
 #' @examples
 #'
+#' \dontrun{
 #' ## upload of GMQL dataset with no schema selection
 #' test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)
-#'
+#' }
+#' ""
 #' @export
 #'
 uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE)
@@ -222,7 +222,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
   req <- httr::POST(URL, body = list_files ,httr::add_headers(h))
   content <- httr::content(req)
   if(req$status_code !=200)
-    stop(content)
+    print(content)
   else
     print("upload Complete")
 }
@@ -241,7 +241,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 #'
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If no error occured print "Deleted Dataset" otherwise a specific error will be printed
 #'
 #' @seealso \code{\link{downloadDataset}}
 #'
@@ -253,7 +253,7 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 #' login.GMQL(url = PolimiUrl,"test101","test")
 #' deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
 #' }
-#'
+#' ""
 #' @export
 #'
 deleteDataset <- function(url,datasetName)
@@ -267,9 +267,7 @@ deleteDataset <- function(url,datasetName)
   if(req$status_code !=200)
     print(content$error)
   else
-  {
     print(content$result)
-  }
 }
 
 #' Download Dataset

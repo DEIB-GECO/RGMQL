@@ -23,6 +23,7 @@ If error occured a specific error will be printed
 }
 \examples{
 
+\dontrun{
 ## login with test user
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(PolimiUrl,"test101","test")
@@ -31,5 +32,6 @@ list_jobs <- showJobs(PolimiUrl)
 jobs_1 <- list_jobs$jobs[[1]]
 ## show log
 showJobLog(PolimiUrl,jobs_1)
-
+}
+""
 }

@@ -5,12 +5,12 @@
 \title{GMQL operation: ORDER}
 \usage{
 order(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
-  regions_ordering = NULL, rtop = 0, rtopg = 0)
+  mtopp = 0, regions_ordering = NULL, rtop = 0, rtopg = 0, rtopp = 0)
 }
 \arguments{
 \item{input_data}{"url-like" string taken from GMQL function}
 
-\item{metadata_ordering}{list of \code{\link{ORDER}} objects where every object contains the name of metadata
+\item{metadata_ordering}{list of ORDER objects where every object contains the name of metadata
 The ORDER's available are: ASC, DESC
 Every condition accepts only one string value. (e.g. ASC("cell_type") )}
 
@@ -20,7 +20,7 @@ default is 0 that means every sample must be considered}
 \item{mtopg}{integer value specifying the first j samples in each group.
 default is 0 that means every sample must be considered}
 
-\item{regions_ordering}{list of \code{\link{ORDER}} objects where every object contains the name of region schema value
+\item{regions_ordering}{list of ORDER objects where every object contains the name of region schema value
 The ORDER's available are: ASC, DESC.
 Every condition accepts only one string value. (e.g. DESC("pvalue") )}
 
@@ -74,7 +74,7 @@ o = order(c("pvalue","length","name"), rtopg = 1, input_data = r)
 #' ###regions ordering as ascending and name descending
 o = order(list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
 }
-.
+""
 
 }
 \references{

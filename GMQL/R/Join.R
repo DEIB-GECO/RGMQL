@@ -38,6 +38,7 @@
 #' }
 #'
 #' @return "url-like" string
+#' for example dataset0/select1/extend4/join5
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
@@ -51,7 +52,7 @@
 #' c = cover(2,3,input_data = r)
 #' j = join (list(list(UP(),MD(1)), list(DOWN(),DGE(5000))),right_input_data = r,left_input_data = c)
 #' }
-#' .
+#' ""
 #'
 #' @export
 #'

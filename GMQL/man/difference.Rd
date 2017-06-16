@@ -30,7 +30,8 @@ if is_exact = FALSE the difference is executed on all regions in left_input_data
 right_input_data (even just one base)}
 }
 \value{
-"url-like" string
+"url-like" string:
+for example dataset0/select2/difference3
 }
 \description{
 It produces one sample in the result for each sample of the left operand,
@@ -62,8 +63,9 @@ d = difference(r,r2 list("cell_type","cell") )
 #### select with condition
 #### the first is FULL and the other ones are DEF
 d = difference(r,r2, c(FULL("attribute_tag"),"cell_type","cell") )
+
 }
-.
+""
 
 }
 \references{

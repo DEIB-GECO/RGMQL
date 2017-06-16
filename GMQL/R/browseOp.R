@@ -1,6 +1,6 @@
 #' Shows all Queries
 #'
-#' It shows all the GMQL query saved to repository
+#' It shows all the GMQL query saved on repository
 #'
 #' @import httr
 #'
@@ -59,7 +59,10 @@ showQueries <- function(url)
 #' \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @details
+#' #' if you save a query with the same name of an other query already stored in repository
+#' you will overwrite it
 #' if error occured print the content error
+#' if no error occured print "Saved" otherwise print the content error
 #'
 #' @examples
 #'
@@ -107,8 +110,7 @@ saveQuery <- function(url,queryName,queryTxt)
 #' @details
 #' if you save a query with the same name of an other query already stored in repository
 #' you will overwrite it
-#' if error occured print the content error
-#'
+#' if no error occured print "Saved" otherwise print the content error#'
 #'
 #' @examples
 #'

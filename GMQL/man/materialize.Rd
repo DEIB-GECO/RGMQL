@@ -34,7 +34,7 @@ s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = test_path)
 }
-
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

@@ -55,7 +55,7 @@
 #' r = read(test_path)
 #' c = cover(input_data = r,2,3)
 #' }
-#' .
+#' ""
 #' @export
 #'
 cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
@@ -104,7 +104,7 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #' r = read(test_path)
 #' c = histogram(input_data = r,2,3)
 #' }
-#' .
+#' ""
 #' @export
 #'
 histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
@@ -156,7 +156,7 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #' r = read(test_path)
 #' c = summit(input_data = r,2,3)
 #' }
-#' .
+#' ""
 #' @export
 #'
 summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
@@ -206,7 +206,7 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #' r = read(test_path)
 #' c = flat(input_data = r,2,3)
 #' }
-#' .
+#' ""
 #' @export
 #'
 #' @export

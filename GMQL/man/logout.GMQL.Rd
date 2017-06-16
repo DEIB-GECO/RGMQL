@@ -35,5 +35,5 @@ logout.GMQL(PolimiUrl)
 
 }
 \seealso{
-\code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+\code{\link{register.GMQL}} \code{\link{login.GMQL}}
 }

@@ -56,6 +56,7 @@ showJobs <- function(url)
 #'
 #' @examples
 #'
+#' \dontrun{
 #' ## login with test user
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
@@ -64,7 +65,8 @@ showJobs <- function(url)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' ## show log
 #' showJobLog(PolimiUrl,jobs_1)
-#'
+#' }
+#' ""
 #' @export
 #'
 showJobLog <- function(url,job_id)
@@ -97,12 +99,14 @@ showJobLog <- function(url,job_id)
 #'
 #' @examples
 #'
+#' \dontrun{
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' list_jobs <- showJobs(PolimiUrl)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' stopJob(PolimiUrl,jobs_1)
-#'
+#' }
+#' ""
 #' @export
 #'
 stopJob <- function(url,job_id)
@@ -133,13 +137,14 @@ stopJob <- function(url,job_id)
 #' If error occured a specific error will be printed
 #'
 #' @examples
-#'
+#' \dontrun{
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' list_jobs <- showJobs(PolimiUrl)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' traceJob(PolimiUrl,jobs_1)
-#'
+#' }
+#' ""
 #'
 #' @export
 #'

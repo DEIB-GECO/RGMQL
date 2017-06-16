@@ -34,7 +34,7 @@
 #' r2 = read(test_path2)
 #' u = union(r2,r)
 #' }
-#' .
+#' ""
 #'
 #' @export
 #'

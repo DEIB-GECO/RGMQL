@@ -24,6 +24,9 @@ Default is CustomParser.}
 \item{is_local}{logical value indicating if dataset is a local or remote dataset
 if the remote processing is off you cannot use a remote repository (error occured)}
 
+\item{url}{single string url of server: it must contain the server address and base url;
+service name will be added automatically}
+
 \item{override}{logical value}
 
 \item{DatasetFolder}{single string folder path for GMQL dataset or datasetname on repository}
@@ -56,5 +59,5 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path,"ANNParser")
 }
-
+""
 }

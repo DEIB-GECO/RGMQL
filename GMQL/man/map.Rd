@@ -64,7 +64,7 @@ r = read(test_path)
 r2 = read(test_path2)
 m = map(r,r2)
 }
-
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

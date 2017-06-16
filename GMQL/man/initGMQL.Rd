@@ -37,5 +37,5 @@ Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala met
 library(rscala)
 initGMQL("tab",FALSE)
 }
-.
+""
 }

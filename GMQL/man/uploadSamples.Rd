@@ -40,10 +40,12 @@ If error occured a specific error will be printed
 }
 \examples{
 
+\dontrun{
 ## upload of GMQL dataset with no schema selection
 test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(url = PolimiUrl)
 uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)
-
+}
+""
 }

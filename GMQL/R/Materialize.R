@@ -20,7 +20,7 @@
 #' materialize(input_data = m, dir_out = test_path)
 #' execute()
 #' }
-#'
+#' ""
 #' @export
 #'
 execute <- function()
@@ -61,7 +61,7 @@ execute <- function()
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
 #' }
-#'
+#' ""
 #' @export
 #'
 materialize <- function(input_data, dir_out = getwd())
@@ -70,7 +70,7 @@ materialize <- function(input_data, dir_out = getwd())
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    NULL
+    invisible(NULL)
 }
 
 #' GMQL Operation: TAKE
@@ -98,7 +98,7 @@ materialize <- function(input_data, dir_out = getwd())
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' take(input_data = m, rows = 45)
 #' }
-#'
+#' ""
 #' @export
 #'
 take <- function(input_data, rows=0L)
@@ -110,8 +110,6 @@ take <- function(input_data, rows=0L)
   out <- WrappeR$take(input_data,rows)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
-  else
-    NULL
 
   reg <- WrappeR$get_reg()
   meta <- WrappeR$get_meta()

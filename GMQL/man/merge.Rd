@@ -34,7 +34,7 @@ r = read(test_path)
 
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = r)
 }
-.
+""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
