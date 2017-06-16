@@ -6,16 +6,38 @@
 \usage{
 MD(value)
 }
+\arguments{
+\item{value}{single string identifying number of regions put on distal condition}
+}
 \value{
 no returned value
 }
 \description{
+This class is used to create instances of distal object
+to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+that require distal condition on value
+}
+\details{
 DISTAL object available are:
 \itemize{
-\item{UP}
-\item{DOWN}
-\item{DGE}
-\item{DLE}
-\item{MD}
+\item{UP: called the upstream clause, which refers to the upstream  directions of the genome}
+\item{DOWN: called the downstream clause, which refers to the downstream directions of the genome}
+\item{DGE: denotes the  greater-equal distance clause, which selects all the regions of the experiment such
+that their distance from the anchor region is greater than, or equal to, 'value' bases.}
+\item{DLE: denotes the  less-equal distance clause, which selects all the regions of the experiment such
+that their distance from the anchor region is less than, or equal to, 'value' bases.
+There are two special less-equal distances clauses: DLE(-1) searches for regions of the experiment which
+overlap with the anchor region (regardless the extent of the overlap),
+while DLE(0) searched for experiment regions adjacent to, or overlapping, the anchor region}
+\item{MD: denotes the minimum distance clause, which selects the first 'value' regions of an experiment
+sample at minimal distance from an anchor region of an anchor dataset sample.
+In case of ties (i.e., regions at the same distance from the anchor region),
+all tied experiment regions are kept in the result, even if they would exceed the limit of value;}
 }
+}
+\examples{
+\dontrun{
+
+}
+""
 }

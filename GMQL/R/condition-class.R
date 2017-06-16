@@ -40,7 +40,8 @@ check.CONDITION <- function(value)
 
 #' CONDITION object class
 #'
-#' This class is used to create a condition object for input to GMQL function
+#' This class is used to create instances of condition object
+#' to be used in GMQL functions that require evaluation condition on value
 #'
 #' CONDITION object available are:
 #' \itemize{
@@ -50,28 +51,29 @@ check.CONDITION <- function(value)
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
 #'
-#' @param value single string identifying name of metadata attribute
+#' @param value single string identifying name of metadata attribute you
+#' want to put in evaluation
 #'
 #' @return DEF condition object
 #'
 #' @examples
 #' \dontrun{
 #'
-#' #' #### select with DEF condition
+#' #### select with DEF condition
 #' #### the full condition is treated as DEF due to coercion
-#' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
+#' s = select(input_data = r, semi_join = c("cell_type","cell"),
 #' semi_join_dataset = c)
 #'
 #' #### select with condition
 #' #### the first is FULL and the other ones are DEF
-#' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
+#' s = select(input_data = r, semi_join = c(DEF("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
 #' #### select with condition
-#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
+#' s = select(input_data = r, semi_join = list("cell_type",DEF("cell")), semi_join_dataset = c)
 #'
 #' }
-#'
+#' ""
 #'
 #' @export
 #'
@@ -89,7 +91,8 @@ DEF <- function(value)
 
 #' CONDITION object class
 #'
-#' This class is used to create a condition object for input to GMQL function
+#' This class is used to create instances of condition object
+#' to be used in GMQL functions that require evaluation condition on value
 #'
 #' CONDITION object available are:
 #' \itemize{
@@ -99,28 +102,29 @@ DEF <- function(value)
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
 #'
-#' @param value single string identifying name of metadata attribute
+#' @param value single string identifying name of metadata attribute you
+#' want to put in evaluation
 #'
 #' @return EXACT condition object
 #'
 #' @examples
 #' \dontrun{
 #'
-#' #' #### select with DEF condition
+#' #### select with DEF condition
 #' #### the full condition is treated as DEF due to coercion
-#' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
+#' s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 #' semi_join_dataset = c)
 #'
 #' #### select with condition
 #' #### the first is FULL and the other ones are DEF
-#' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
+#' s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
 #' #### select with condition
 #' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 #'
 #' }
-#'
+#' ""
 #'
 #' @export
 #'
@@ -138,7 +142,8 @@ EXACT <- function(value)
 
 #' CONDITION object class
 #'
-#' This class is used to create a condition object for input to GMQL function
+#' This class is used to create instances of condition object
+#' to be used in GMQL functions that require evaluation condition on value
 #'
 #' CONDITION object available are:
 #' \itemize{
@@ -148,14 +153,15 @@ EXACT <- function(value)
 #' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
 #'
-#' @param value single string identifying name of metadata attribute
+#' @param value single string identifying name of metadata attribute you
+#' want to put in evaluation
 #'
 #' @return FULL condition object
 #'
 #' @examples
 #' \dontrun{
 #'
-#' #' #### select with DEF condition
+#' #### select with DEF condition
 #' #### the full condition is treated as DEF due to coercion
 #' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
 #' semi_join_dataset = c)
@@ -165,10 +171,8 @@ EXACT <- function(value)
 #' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
-#' #### select with condition
-#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 #' }
-#'
+#' ""
 #'
 #' @export
 #'

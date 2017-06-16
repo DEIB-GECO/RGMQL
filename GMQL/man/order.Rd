@@ -20,6 +20,9 @@ default is 0 that means every sample must be considered}
 \item{mtopg}{integer value specifying the first j samples in each group.
 default is 0 that means every sample must be considered}
 
+\item{mtopp}{integer value specifying the first j samples in each group.
+default is 0 that means every sample must be considered}
+
 \item{regions_ordering}{list of ORDER objects where every object contains the name of region schema value
 The ORDER's available are: ASC, DESC.
 Every condition accepts only one string value. (e.g. DESC("pvalue") )}
@@ -28,6 +31,9 @@ Every condition accepts only one string value. (e.g. DESC("pvalue") )}
 default is 0 that means every sample must be considered}
 
 \item{rtopg}{integer value specifying the first i samples in each group.
+default is 0 that means every sample must be considered}
+
+\item{rtopp}{integer value specifying the first i samples in each group.
 default is 0 that means every sample must be considered}
 }
 \value{
@@ -47,10 +53,9 @@ grouping by identical values of ordering attributes
 and then selects the first k samples or regions of each group
 }
 \details{
-mtop, mtopg, rtop and rtopg are normally numbers: if you specify a vector,
+mtop, mtopg,mtopp, rtop, rtopg and rtopp are normally numbers: if you specify a vector,
 only the first element will be used
-mtop and mtopg are mutalbe exclusive, so rtop and rtopg
-if you specified both, only mtop (rtop) is taken
+mtop and mtopg and mtopp are mutalbe exclusive, so rtop and rtopg and rtopp
 }
 \examples{
 \dontrun{
@@ -69,10 +74,10 @@ o = order(c("treatment_type", "ID"), mtop = 2, input_data = r)
 o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
 
 ###regions ordering as ascending
-o = order(c("pvalue","length","name"), rtopg = 1, input_data = r)
+o = order(regions_ordering = c("pvalue","length","name"), rtopg = 1, input_data = r)
 
 #' ###regions ordering as ascending and name descending
-o = order(list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
+o = order(regions_ordering = list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
 }
 ""
 

@@ -12,14 +12,12 @@ if(getRversion() >= "3.1.0")
 #' @import rscala
 #'
 #' @param output_format single string identifies the output format of sample files.
-#' Can be TAB, GTF, VCF or COLLECT
+#' Can be TAB, GTF or COLLECT
 #' \itemize{
 #' \item{TAB: tab delimited file format}
 #' \item{GTF: file format used to hold information about gene structure.
 #' It is a tab-delimited text format based on the general feature format}
 #' \item{COLLECT: used for storing output in memory}
-#' \item{VCF: Text file format (most likely stored in a compressed manner).
-#' It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 #' }
 #' @param remote_processing logical value specifying the processing mode.
 #' can be local (local machine) or remote (cluster).
@@ -45,9 +43,9 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 {
   out_format <- toupper(output_format)
 
-  if(!identical(out_format,"TAB") && !identical(out_format,"VCF") && !identical(out_format,"GTF")
+  if(!identical(out_format,"TAB")  && !identical(out_format,"GTF")
      && !identical(out_format,"COLLECT"))
-    stop("output_format must be TAB, GTF, VCF or COLLECT")
+    stop("output_format must be TAB, GTF or COLLECT")
 
   scalaCompiler <- rscala::scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
   assign("WrappeR",scalaCompiler$do('it.polimi.genomics.r.Wrapper'),.GlobalEnv)
@@ -234,20 +232,35 @@ read <- function(samples)
 
 
 
-# Disable remote processing
-
-off_remote_processing<- function()
+#' Disable or Enable remote processing
+#'
+#' It allows to enable or disable remote processing
+#'
+#' @param is_remote logical value, if TRUE you will set a remote query processing mode otherwise will be local
+#'
+#' @examples
+#' \dontrun{
+#'
+#' }
+#' ""
+#'
+#' @export
+#'
+remote_processing<-function(is_remote)
 {
-  WrappeR$remote_processing(FALSE)
-  print("remote proessing off")
-}
+  if(!is.logical(is_remote))
+    stop("must be logical")
 
-# Enable remote processing
+  if(length(is_remote)>1)
+    warning("only the first element is taken")
 
-on_remote_processing<- function()
-{
-  WrappeR$remote_processing(TRUE)
-  print("remote proessing on")
+  is_remote <- is_remote[1]
+
+  out <- WrappeR$remote_processing(is_remote)
+  if(grepl("cannot",out,ignore.case = TRUE))
+    stop(out)
+  else
+    print(out)
 }
 
 

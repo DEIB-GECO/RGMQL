@@ -19,7 +19,7 @@ Every query in the list is identified by:
 }
 }
 \description{
-It shows all the GMQL query saved to repository
+It shows all the GMQL query saved on repository
 }
 \details{
 if error occured print the content error

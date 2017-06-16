@@ -12,7 +12,7 @@ join(right_input_data, left_input_data, genometric_predicate = NULL,
 
 \item{left_input_data}{returned object from any GMQL function}
 
-\item{genometric_predicate}{is a concatenation of DISTAL object by means of logical ANDs}
+\item{genometric_predicate}{is a list of lists of DISTAL object by means of logical ANDs}
 
 \item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
 or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
@@ -41,6 +41,7 @@ regions satisfying the genometric predicate)}
 }
 \value{
 "url-like" string
+for example dataset0/select1/extend4/join5
 }
 \description{
 It takes in input two datasets, respectively known as nchor (left) and experiment (right) and returns

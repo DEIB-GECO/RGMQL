@@ -21,7 +21,10 @@ no object return
 It saves the GMQL query into repository
 }
 \details{
+#' if you save a query with the same name of an other query already stored in repository
+you will overwrite it
 if error occured print the content error
+if no error occured print "Saved" otherwise print the content error
 }
 \examples{
 

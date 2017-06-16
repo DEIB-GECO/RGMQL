@@ -6,22 +6,47 @@
 \usage{
 SUM(value)
 }
+\arguments{
+\item{value}{single string identifying name of metadata attribute}
+}
 \value{
 no returned value
 }
 \description{
+This class is used to create instances of operator object
+to be used in GMQL functions that require operator on value
+}
+\details{
 OPERATOR object available are:
 \itemize{
-\item{SUM}
-\item{MIN}
-\item{MAX}
-\item{COUNT}
-\item{BAG}
-\item{AVG}
-\item{STD}
-\item{MEDIAN}
-\item{Q1}
-\item{Q2}
-\item{Q3}
+\item{SUM: prepared input parameter to be passed to library function sum,
+performing all the type conversion needed}
+\item{MIN: prepared input parameter to be passed to library function minimum,
+performing all the type conversion needed}
+\item{MAX: prepared input parameter to be passed to library function maximum,
+performing all the type conversion needed}
+\item{COUNT: prepared input parameter to be passed to library function count,
+performing all the type conversion needed}
+\item{BAG: prepared input parameter to be passed to library function bag,
+this function creates comma-separated strings of distinct attribute values,
+performing all the type conversion needed}
+\item{AVG: prepared input parameter to be passed to library function arithmetic mean,
+performing all the type conversion needed}
+\item{STD: prepared input parameter to be passed to library function deviation standard,
+performing all the type conversion needed}
+\item{MEDIAN: prepared input parameter to be passed to library function median,
+performing all the type conversion needed}
+\item{Q1: prepared input parameter to be passed to library function first quartile,
+performing all the type conversion needed}
+\item{Q2: prepared input parameter to be passed to library function second quartile,
+performing all the type conversion needed}
+\item{Q3: prepared input parameter to be passed to library function third quartile,
+performing all the type conversion needed}
 }
+}
+\examples{
+\dontrun{
+
+}
+
 }

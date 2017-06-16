@@ -8,14 +8,12 @@ initGMQL(output_format, remote_processing = FALSE)
 }
 \arguments{
 \item{output_format}{single string identifies the output format of sample files.
-Can be TAB, GTF, VCF or COLLECT
+Can be TAB, GTF or COLLECT
 \itemize{
 \item{TAB: tab delimited file format}
 \item{GTF: file format used to hold information about gene structure.
 It is a tab-delimited text format based on the general feature format}
 \item{COLLECT: used for storing output in memory}
-\item{VCF: Text file format (most likely stored in a compressed manner).
-It contains meta-information lines, a header line, data lines each containing information about a position in the genome.}
 }}
 
 \item{remote_processing}{logical value specifying the processing mode.

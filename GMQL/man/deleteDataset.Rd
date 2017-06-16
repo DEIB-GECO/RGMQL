@@ -19,7 +19,7 @@ no object return
 It deletes single private dataset from repository specified by name
 }
 \details{
-If error occured a specific error will be printed
+If no error occured print "Deleted Dataset" otherwise a specific error will be printed
 }
 \examples{
 

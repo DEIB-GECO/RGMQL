@@ -13,12 +13,18 @@ ASC(value)
 ASC ordering object
 }
 \description{
-This class is used to create an ordering object for input to GMQL function
+This class is used to create instances of order object
+to be used in GMQL functions that require ordering on value
 }
 \details{
 ORDER object available are:
 \itemize{
-\item{ASC: ascending ordering}
-\item{DESC: descending ordering}
+\item{ASC: ascending order}
+\item{DESC: desceding order}
 }
+}
+\examples{
+\dontrun{
+}
+""
 }

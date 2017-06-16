@@ -8,25 +8,31 @@ TFARMatrix(GMQL_dataset_path, metadata = NULL, metadata_prefix = NULL,
   regions = NULL)
 }
 \arguments{
-\item{GMQL_dataset_path}{aaa}
+\item{GMQL_dataset_path}{single string GMQL dataset folder path}
 
-\item{metadata}{aaaaaa   aaa}
+\item{metadata}{vector of character containing names of metadata to be searched for in metdata files.
+data will be extracted if at least one condition is satisfied:
+this condition will be logically "ANDed" with prefix filtering (see below )
+if NULL no filtering action occured (i.e every sample will be taken for regions filtering)}
 
-\item{metadata_prefix}{a a a a a a a}
+\item{metadata_prefix}{vector of character that will filter metadata containing rispectively every element
+of this vector.
+number of elelment in both vector must match}
 
-\item{regions}{a a a a a a}
+\item{regions}{vector of character that will extract only region attribute specified
+if NULL no regions will be taken and the output will be only GRanges made up by the first attribute
+(seqnames,start,end,strand)}
 }
 \value{
-TFARM matrix
+granges with selected regions (if any) in elementMetadata
 }
 \description{
-create matrix for TFARM package
+Auxiliary function to interface GMQL suite to an exeternal package called TFARM
+It prepares data in the correct format for TFARM processing
 }
 \examples{
 
-
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 TFARMatrix(test_path,regions = c("pvalue","peak"))
-
 
 }

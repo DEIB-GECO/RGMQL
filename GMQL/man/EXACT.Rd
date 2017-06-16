@@ -7,13 +7,15 @@
 EXACT(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute}
+\item{value}{single string identifying name of metadata attribute you
+want to put in evaluation}
 }
 \value{
 EXACT condition object
 }
 \description{
-This class is used to create a condition object for input to GMQL function
+This class is used to create instances of condition object
+to be used in GMQL functions that require evaluation condition on value
 }
 \details{
 CONDITION object available are:
@@ -27,20 +29,20 @@ if they have a further prefixes, the two prefix sequence are identical}
 \examples{
 \dontrun{
 
-#' #### select with DEF condition
+#### select with DEF condition
 #### the full condition is treated as DEF due to coercion
-s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
+s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 semi_join_dataset = c)
 
 #### select with condition
 #### the first is FULL and the other ones are DEF
-s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
+s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
 semi_join_dataset = c)
 
 #### select with condition
 s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
 
 }
-
+""
 
 }
