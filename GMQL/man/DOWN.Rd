@@ -14,7 +14,7 @@ no returned value
 }
 \description{
 This class is used to create instances of distal object
-to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 that require distal condition on value
 }
 \details{

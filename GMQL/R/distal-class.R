@@ -34,7 +34,7 @@ check.DISTAL <- function(value)
 #' DISTAL object class
 #'
 #' This class is used to create instances of distal object
-#' to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+#' to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 #' that require distal condition on value
 #'
 #' DISTAL object available are:
@@ -81,7 +81,7 @@ DLE <- function(value)
 #' DISTAL object class
 #'
 #' This class is used to create instances of distal object
-#' to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+#' to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 #' that require distal condition on value
 #'
 #' DISTAL object available are:
@@ -128,7 +128,7 @@ DGE <- function(value)
 #' DISTAL object class
 #'
 #' This class is used to create instances of distal object
-#' to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+#' to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 #' that require distal condition on value
 #'
 #' DISTAL object available are:
@@ -175,7 +175,7 @@ MD <- function(value)
 #' DISTAL object class
 #'
 #' This class is used to create instances of distal object
-#' to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+#' to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 #' that require distal condition on value
 #'
 #' DISTAL object available are:
@@ -221,7 +221,7 @@ as.character.UP <- function(obj) {
 #' DISTAL object class
 #'
 #' This class is used to create instances of distal object
-#' to be used in GMQL functions \link{\code{JOIN}} in genometric predicate parameter
+#' to be used in GMQL functions \code{\link{JOIN}} in genometric predicate parameter
 #' that require distal condition on value
 #'
 #' DISTAL object available are:
