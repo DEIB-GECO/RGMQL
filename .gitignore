@@ -3,10 +3,8 @@
 .Rproj.user
 .Rproj.user/**
 .Rapp.history
-GMQL/inst/java/GMQL.jar
-GMQL/.Rproj.user
-GMQL/.RData
-GMQL/.Rhistory
-GMQL/.Rapp.history
-GMQL/.Rproj.user.*
-GMQL/.Rproj.user/**
+.RData
+GMQL.Rproj
+inst/java/GMQL.jar
+
+
