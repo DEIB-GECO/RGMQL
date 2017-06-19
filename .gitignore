@@ -4,7 +4,7 @@
 .Rproj.user/**
 .Rapp.history
 .RData
-GMQL.Rproj
+RGMQL.Rproj
 inst/java/GMQL.jar
 
 

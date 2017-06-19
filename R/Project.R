@@ -19,6 +19,7 @@
 #' if TRUE the schema region are all except ones include in region parameter.
 #' if regions is not defined all_but is not considerd.
 #' @param regions_update single string predicate
+#' @param metadata_update single string predicate
 #'
 #' @return "url-like" string
 #'
@@ -50,7 +51,8 @@
 #' @export
 #'
 #'
-project <-function(input_data, metadata = NULL, regions = NULL, regions_update = NULL,all_but = FALSE)
+project <-function(input_data, metadata = NULL,metadata_update=NULL,
+                   regions = NULL, regions_update = NULL,all_but = FALSE)
 {
   if(!is.null(metadata))
   {
@@ -79,10 +81,10 @@ project <-function(input_data, metadata = NULL, regions = NULL, regions_update =
 
   if(!is.null(regions_update))
     .check_predicate(regions_update)
-
-  #if(!is.null(metadata_update))
-   # .check_predicate(metadata_update)
-  metadata_update <- NULL
+  
+  if(!is.null(metadata_update))
+    .check_predicate(metadata_update)
+  
   if(length(all_but)>1)
     warning("all_but: only the first element is taken")
 
