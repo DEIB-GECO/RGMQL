@@ -47,8 +47,6 @@ initGMQL <- function(output_format, remote_processing = FALSE)
      && !identical(out_format,"COLLECT"))
     stop("output_format must be TAB, GTF or COLLECT")
 
-  scalaCompiler <- rscala::scala(classpath = './inst/java/GMQL.jar',command.line.options = "-J-Xmx4g")
-  assign("WrappeR",scalaCompiler$do('it.polimi.genomics.r.Wrapper'),.GlobalEnv)
   WrappeR$initGMQL(out_format,remote_processing)
 }
 
