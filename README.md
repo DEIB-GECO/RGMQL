@@ -1,26 +1,28 @@
 # RGMQL
 
-## Settings
+This package works with java 1.8 and scala 2.11.8
 
-put scala in folder OSX /usr/local/
-create symbolic links as instruction below
+## Settings OSX
 
-sudo ln -s /usr/local/scala-2.11.8 /usr/local/scala
-sudo ln -s /usr/local/scala-2.11.8 /usr/local/share/scala
+edit .bash_profile, add environment variable
 
-edit .bash_profile, add these
-
-export SCALA_HOME=/usr/local/share/scala
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_79.jdk/Contents/Home
+export SCALA_HOME="<scala_path>"
+export JAVA_HOME="<java_path>"
 export PATH=$PATH
 
 edit /etc/paths add these
 
-/usr/local/scala/bin
 $SCALA_HOME/bin
 $JAVA_HOME/bin
 
-this setting prevents warning in RStudio when creating scala interpreter object
+
+## Settings Windows
+
+create environment variable JAVA_HOME and SCALA_HOME
+
+
+
+this settings prevents warning in RStudio when creating scala interpreter object
 
 cat: /no such file or directory
 
@@ -36,17 +38,3 @@ Searching for a suitable Scala installation.
 
 don-t worry is ok!
 
-(I don't know what happen with other R "editor" or using R through command line)
-
-## for local "compiling"
-
-I didn't put the jar file in repository cause are ~ 100MB
-after cloned or downloaded the git create a folder "inst" inside GMQL then create folder "java" inside it
-we should have this structure:
-
-GMQL
- |-->inst
-      |-->java
-
-then copy the "uber-GMQL-R-1.0.jar" file inside "java".
-rename it to GMQL.jar or create a symbolic link GMQL.jar
