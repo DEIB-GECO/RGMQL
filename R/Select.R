@@ -22,7 +22,10 @@
 #' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
 #' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#'
+#' 
+#' @param semi_join_negation single logical value: T => semijoin is perfomed considering 
+#' semi_join NOT IN semi_join_dataset, 
+#' F => semijoin is performed considering semi_join IN semi_join_dataset
 #' @param semi_join_dataset returned object from any GMQL function used in semijoin
 #'
 #' @return "url-like" string
@@ -64,7 +67,7 @@
 #' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
-                   semi_join_dataset = NULL)
+                   semi_join_negation = NULL, semi_join_dataset = NULL)
 {
   if(!is.null(predicate))
     .check_predicate(predicate)

@@ -8,7 +8,7 @@
 #' The operation is separately applied to each group, yielding one sample in the result for each group.
 #' Samples whose names are not present in the grouping metadata parameter are disregarded.
 #'
-#'
+#' @importFrom rscala scalaNull
 #' @param input_data returned object from any GMQL function
 #' @param groupBy a vector of strings specifying grouping criteria
 #'
@@ -38,14 +38,15 @@ merge <- function(input_data, groupBy = NULL)
 
     groupBy = groupBy[!groupBy %in% ""]
     groupBy = groupBy[!duplicated(groupBy)]
-
-    if(length(groupBy)==0)
-      groupBy=NULL
+   # out <- WrappeR$merge(I(as.character(groupBy)),input_data)
+    out <- WrappeR$merge(groupBy,input_data)
   }
-
-  out <- WrappeR$merge(groupBy,input_data)
+  else
+    out <- WrappeR$merge(scalaNull("Any"),input_data)
+  
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
     out
 }
+

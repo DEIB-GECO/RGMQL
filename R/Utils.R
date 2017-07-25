@@ -80,7 +80,7 @@
     conditions = conditions[!conditions %in% ""]
     conditions = conditions[!duplicated(conditions)]
     if(length(conditions)<=0)
-      join_condition_matrix <- NULL
+      join_condition_matrix <- ""
     else
     {
       join_condition_matrix <- t(sapply(conditions, function(x) {

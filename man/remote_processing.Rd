@@ -7,13 +7,23 @@
 remote_processing(is_remote)
 }
 \arguments{
-\item{is_remote}{logical value, if TRUE you will set a remote query processing mode otherwise will be local}
+\item{is_remote}{sinble logical value, TRUE you will set a remote query processing mode 
+otherwise will be local}
 }
 \description{
 It allows to enable or disable remote processing
 }
+\details{
+The invocation of this function allow to change mode of processing.
+Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
+(or take)
+}
 \examples{
 \dontrun{
+
+initGMQL("tab")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = read(test_path)
 
 }
 ""

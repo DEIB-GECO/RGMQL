@@ -3,7 +3,11 @@
 #' execute GMQL query.
 #' The function works only after invoking at least one materialize
 #'
-#'
+#' @details 
+#' 
+#' After invoking execution function, all varialbe associated to DAG will be removed
+#' from scala enviroment, although the associated R variable will remain stored in R environment
+#' 
 #' @return no returned value
 #'
 #' @examples

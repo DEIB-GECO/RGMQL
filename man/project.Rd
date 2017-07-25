@@ -4,13 +4,15 @@
 \alias{project}
 \title{GMQL Operation: PROJECT}
 \usage{
-project(input_data, metadata = NULL, regions = NULL,
-  regions_update = NULL, all_but = FALSE)
+project(input_data, metadata = NULL, metadata_update = NULL,
+  regions = NULL, regions_update = NULL, all_but = FALSE)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
 \item{metadata}{vector of string made up by metadata attribute}
+
+\item{metadata_update}{single string predicate}
 
 \item{regions_update}{single string predicate}
 

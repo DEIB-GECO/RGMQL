@@ -25,9 +25,6 @@ if(getRversion() >= "3.1.0")
 #'
 #' @return no object return
 #'
-#' @details
-#' Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
-#'
 #' @examples
 #'
 #' \dontrun{
@@ -37,7 +34,6 @@ if(getRversion() >= "3.1.0")
 #' }
 #' ""
 #' @export
-#'
 #'
 initGMQL <- function(output_format, remote_processing = FALSE)
 {
@@ -73,7 +69,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' if the remote processing is off you cannot use a remote repository (error occured)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param override logical value
+#' @param override single logical value
 #'
 #' @return "url-like" string to dataset
 #'
@@ -116,6 +112,11 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
   if(length(override)>1)
     warning("override not > 1")
   override <- override[1]
+  
+  if(length(is_local)>1)
+    warning("is_local not > 1")
+  is_local <- is_local[1]
+  
   if(is_local)
   {
     remote_proc <- WrappeR$is_remote_processing()
@@ -127,8 +128,6 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
         name_dataset <- basename(dataset)
         if(name_dataset %in% unlist(list$datasets))
           deleteDataset(url,name_dataset)
-
-        uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
       }
       else
       {
@@ -136,9 +135,8 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
         name_dataset <- basename(dataset)
         if(name_dataset %in% unlist(list$datasets))
           stop("dataset already exist in repository")
-
-        uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
       }
+      uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
     }
     if(!dir.exists(dataset))
       stop("folder does not exist")
@@ -233,12 +231,23 @@ read <- function(samples)
 #' Disable or Enable remote processing
 #'
 #' It allows to enable or disable remote processing
-#'
-#' @param is_remote logical value, if TRUE you will set a remote query processing mode otherwise will be local
+#' 
+#' 
+#' @details 
+#' The invocation of this function allow to change mode of processing.
+#' Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
+#' (or take)
+#' 
+#' @param is_remote sinble logical value, TRUE you will set a remote query processing mode 
+#' otherwise will be local
 #'
 #' @examples
 #' \dontrun{
-#'
+#' 
+#' initGMQL("tab")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = read(test_path)
+#' 
 #' }
 #' ""
 #'
@@ -247,10 +256,10 @@ read <- function(samples)
 remote_processing<-function(is_remote)
 {
   if(!is.logical(is_remote))
-    stop("must be logical")
+    stop("only logical value")
 
   if(length(is_remote)>1)
-    warning("only the first element is taken")
+    warning("is_remote no > 1")
 
   is_remote <- is_remote[1]
 

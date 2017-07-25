@@ -25,9 +25,6 @@ no object return
 \description{
 Initialize and run GMQL server for executing GMQL query
 }
-\details{
-Instantiate in .GlobalEnv a scala singleton (Wrapper) used to call its scala methods
-}
 \examples{
 
 \dontrun{

@@ -27,7 +27,7 @@ if the remote processing is off you cannot use a remote repository (error occure
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{override}{logical value}
+\item{override}{single logical value}
 
 \item{DatasetFolder}{single string folder path for GMQL dataset or datasetname on repository}
 }
