@@ -66,8 +66,7 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact
   if(!is.null(joinBy))
     join_condition_matrix <- .join_condition(joinBy)
   else
-    #join_condition_matrix <- scalaNull("Array[Array[String]]")
-    join_condition_matrix <- matrix("0",nrow = 0,ncol = 1) #temporary solution
+    join_condition_matrix <- scalaNull("Array[Array[String]]")
   out <- WrappeR$difference(join_condition_matrix,right_input_data,left_input_data,is_exact)
   
   if(grepl("No",out,ignore.case = TRUE))

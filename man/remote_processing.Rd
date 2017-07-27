@@ -16,16 +16,14 @@ It allows to enable or disable remote processing
 \details{
 The invocation of this function allow to change mode of processing.
 Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
-(or take)
+(or take) function
 }
 \examples{
-\dontrun{
 
-initGMQL("tab")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
+# initialize with remote processing off
+initGMQL("tab",remote_processing=FALSE)
 
-}
-""
+# change processing mode to remote
+remote_processing(TRUE)
 
 }

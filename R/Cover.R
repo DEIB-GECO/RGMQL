@@ -47,7 +47,6 @@
 #' @examples
 #'
 #' \dontrun{
-#'
 #' library(rscala)
 #'
 #' initGMQL("gtf")
@@ -231,13 +230,16 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
     groupBy = groupBy[!duplicated(groupBy)]
 
     if(length(groupBy)<=0)
-      groupBy=NULL
+      groupBy <- scalaNull("Array[String]")
   }
+  else
+    groupBy <- scalaNull("Array[String]")
+  
 
   if(!is.null(aggregates))
     metadata_matrix <- .aggregates(aggregates,"OPERATOR")
   else
-    metadata_matrix = NULL
+    metadata_matrix <- scalaNull("Array[Array[String]]")
 
   out <- switch(flag,
                 "COVER" = WrappeR$cover(min,max,groupBy,metadata_matrix,input_data),

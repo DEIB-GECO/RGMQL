@@ -66,6 +66,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
     print(content$errorString)
   else
   {
+
     assign("authToken",content$authToken,.GlobalEnv)
     print(paste("your Token is",authToken))
   }

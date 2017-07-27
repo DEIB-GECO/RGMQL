@@ -27,10 +27,8 @@ Initialize and run GMQL server for executing GMQL query
 }
 \examples{
 
-\dontrun{
-
+# initialize GMQL with local processing
 library(rscala)
 initGMQL("tab",FALSE)
-}
-""
+
 }

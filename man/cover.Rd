@@ -53,7 +53,6 @@ Input samples that do not satisfy the \emph{groupby} condition are disregarded.
 \examples{
 
 \dontrun{
-
 library(rscala)
 
 initGMQL("gtf")

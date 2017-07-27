@@ -8,6 +8,8 @@ readDataset(dataset, parser = "CustomParser", is_local = TRUE, url = NULL,
   override = FALSE)
 }
 \arguments{
+\item{dataset}{single string folder path for GMQL dataset or datasetname on repository}
+
 \item{parser}{single string used to parsing dataset files
 The Parser's available are:
 \itemize{
@@ -28,8 +30,6 @@ if the remote processing is off you cannot use a remote repository (error occure
 service name will be added automatically}
 
 \item{override}{single logical value}
-
-\item{DatasetFolder}{single string folder path for GMQL dataset or datasetname on repository}
 }
 \value{
 "url-like" string to dataset
@@ -47,17 +47,16 @@ the parser defined without reading any XML schema
 }
 \examples{
 
-\dontrun{
-
 ### local with CustomParser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
+r = readDataset(test_path)
 
+\dontrun{
 ### local with other Parser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path,"ANNParser")
+r = readDataset(test_path,"ANNParser")
 }
 ""
 }

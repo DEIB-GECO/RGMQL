@@ -1,10 +1,3 @@
-if(getRversion() >= "2.15.1")
-  utils::globalVariables("WrappeR")
-
-if(getRversion() >= "3.1.0")
-  utils::suppressForeignCheck("WrappeR")
-
-
 #' Init GMQL Server
 #'
 #' Initialize and run GMQL server for executing GMQL query
@@ -27,12 +20,10 @@ if(getRversion() >= "3.1.0")
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
+#' # initialize GMQL with local processing
 #' library(rscala)
 #' initGMQL("tab",FALSE)
-#' }
-#' ""
+#' 
 #' @export
 #'
 initGMQL <- function(output_format, remote_processing = FALSE)
@@ -52,7 +43,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' from disk, saving in Scala memory that can be referenced in R
 #' Also used to read a repository dataset.
 #'
-#' @param DatasetFolder single string folder path for GMQL dataset or datasetname on repository
+#' @param dataset single string folder path for GMQL dataset or datasetname on repository
 #' @param parser single string used to parsing dataset files
 #' The Parser's available are:
 #' \itemize{
@@ -82,17 +73,16 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
 #' ### local with CustomParser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
-#'
+#' r = readDataset(test_path)
+#' 
+#' \dontrun{
 #' ### local with other Parser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path,"ANNParser")
+#' r = readDataset(test_path,"ANNParser")
 #' }
 #' ""
 #' @export
@@ -119,6 +109,9 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
   
   if(is_local)
   {
+    if(!dir.exists(dataset))
+      stop("folder does not exist")
+
     remote_proc <- WrappeR$is_remote_processing()
     if(remote_proc)
     {
@@ -138,10 +131,9 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
       }
       uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
     }
-    if(!dir.exists(dataset))
-      stop("folder does not exist")
-    schema_matrix <- NULL
-    schema_type <- NULL
+    
+    schema_matrix <- scalaNull("Array[Array[String]]")
+    schema_type <- scalaNull("String")
   }
   else
   {
@@ -172,6 +164,8 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
 #' @examples
 #'
 #' \dontrun{
+#' 
+#' 
 #' }
 #' ""
 #'
@@ -236,20 +230,18 @@ read <- function(samples)
 #' @details 
 #' The invocation of this function allow to change mode of processing.
 #' Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
-#' (or take)
+#' (or take) function
 #' 
 #' @param is_remote sinble logical value, TRUE you will set a remote query processing mode 
 #' otherwise will be local
 #'
 #' @examples
-#' \dontrun{
 #' 
-#' initGMQL("tab")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
+#' # initialize with remote processing off
+#' initGMQL("tab",remote_processing=FALSE)
 #' 
-#' }
-#' ""
+#' # change processing mode to remote
+#' remote_processing(TRUE)
 #'
 #' @export
 #'
@@ -264,10 +256,7 @@ remote_processing<-function(is_remote)
   is_remote <- is_remote[1]
 
   out <- WrappeR$remote_processing(is_remote)
-  if(grepl("cannot",out,ignore.case = TRUE))
-    stop(out)
-  else
-    print(out)
+  print(out)
 }
 
 
