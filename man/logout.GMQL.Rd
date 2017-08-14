@@ -8,18 +8,19 @@ logout.GMQL(url)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 }
 \value{
-no object return
+None
 }
 \description{
 Logout from GMQL REST services suite
+using the proper GMQL web service available on a remote server
 }
 \details{
 After logout the authentication token will be invalidated.
 The authentication token is removed from Global environment
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

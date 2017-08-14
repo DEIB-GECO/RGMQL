@@ -1,11 +1,12 @@
 #' Shows all Queries
 #'
-#' It shows all the GMQL query saved on repository
+#' It shows all the GMQL query saved on repository 
+#' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
 #'
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #'
 #' @return list of queries
 #' Every query in the list is identified by:
@@ -16,7 +17,7 @@
 #' @seealso \code{\link{saveQuery}}
 #'
 #' @details
-#' if error occured print the content error
+#' if error occures, a specific error is printed
 #'
 #' @examples
 #'
@@ -42,15 +43,16 @@ showQueries <- function(url)
 #' Save GMQL query
 #'
 #' It saves the GMQL query into repository
+#' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
 #'
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param queryName single string name of query
 #' @param queryTxt single string text of GMQL query
 #'
-#' @return no object return
+#' @return None
 #'
 #' @seealso \code{\link{showQueries}} \code{\link{saveQuery.fromfile}}
 #'
@@ -59,10 +61,9 @@ showQueries <- function(url)
 #' \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @details
-#' #' if you save a query with the same name of an other query already stored in repository
-#' you will overwrite it
-#' if error occured print the content error
-#' if no error occured print "Saved" otherwise print the content error
+#' if you save a query with the same name of an other query already stored in repository
+#' you will overwrite it,
+#' if no error occures print "Saved" otherwise print the content error
 #'
 #' @examples
 #'
@@ -91,14 +92,15 @@ saveQuery <- function(url,queryName,queryTxt)
 #' Save GMQL query from file
 #'
 #' It saves the GMQL query into repository taken from file
+#' using the proper GMQL web service available on a remote server
 #'
 #'
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param queryName single string name of the GMQL query
-#' @param filePath single string local file path where you write GMQL query
+#' @param filePath single string local file path containing a GMQL query
 #'
-#' @return no object return
+#' @return None
 #'
 #' @references
 #' Please, read for writing a GMQL query
@@ -109,8 +111,8 @@ saveQuery <- function(url,queryName,queryTxt)
 #'
 #' @details
 #' if you save a query with the same name of an other query already stored in repository
-#' you will overwrite it
-#' if no error occured print "Saved" otherwise print the content error#'
+#' you will overwrite it,
+#' if no error occures print "Saved" otherwise print the content error
 #'
 #' @examples
 #'

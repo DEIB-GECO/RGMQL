@@ -7,15 +7,15 @@
 remote_processing(is_remote)
 }
 \arguments{
-\item{is_remote}{sinble logical value, TRUE you will set a remote query processing mode 
-otherwise will be local}
+\item{is_remote}{single logical value used in order to set the processing mode.
+TRUE you will set a remote query processing mode otherwise will be local}
 }
 \description{
 It allows to enable or disable remote processing
 }
 \details{
 The invocation of this function allow to change mode of processing.
-Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
+The switch is possible at the beginning, when you didn't run any query at all, or after an execution 
 (or take) function
 }
 \examples{

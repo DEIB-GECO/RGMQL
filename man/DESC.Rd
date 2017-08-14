@@ -2,29 +2,34 @@
 % Please edit documentation in R/ordering-class.R
 \name{DESC}
 \alias{DESC}
-\title{ORDER object class}
+\title{ORDER object class constructor}
 \usage{
 DESC(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute}
+\item{value}{single string identifying name of metadata and/or region attribute}
 }
 \value{
 DESC ordering object
 }
 \description{
-This class is used to create instances of order object
-to be used in GMQL functions that require ordering on value
-}
-\details{
-ORDER object available are:
-\itemize{
-\item{ASC: ascending order}
-\item{DESC: desceding order}
-}
+This class constructor is used to create instances of ORDER object
+to be used in GMQL functions that require ordering on value.
+It define a descending order for input value
 }
 \examples{
+
+### local with CustomParser
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = readDataset(test_path)
+
+### treatment_type and ID descending
+o = order(list(DESC(treatment_type),DESC(ID)), mtop = 2, input_data = r)
+
 \dontrun{
+### treatment_type ascending and ID descending
+o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
 }
-""
+
 }

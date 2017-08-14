@@ -17,10 +17,10 @@ It is a tab-delimited text format based on the general feature format}
 }}
 
 \item{remote_processing}{logical value specifying the processing mode.
-can be local (local machine) or remote (cluster).}
+True for processing on cluster (remote), false for local processing (local machine)}
 }
 \value{
-no object return
+None
 }
 \description{
 Initialize and run GMQL server for executing GMQL query

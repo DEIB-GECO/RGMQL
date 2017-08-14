@@ -13,10 +13,9 @@
 #' \item{COLLECT: used for storing output in memory}
 #' }
 #' @param remote_processing logical value specifying the processing mode.
-#' can be local (local machine) or remote (cluster).
+#' True for processing on cluster (remote), false for local processing (local machine)
 #'
-#'
-#' @return no object return
+#' @return None
 #'
 #' @examples
 #'
@@ -34,6 +33,9 @@ initGMQL <- function(output_format, remote_processing = FALSE)
      && !identical(out_format,"COLLECT"))
     stop("output_format must be TAB, GTF or COLLECT")
 
+  if(!is.logical(remote_processing) || length(remote_processing) >1)
+    stop("remote_processing: invalid input or length > 1")
+  
   WrappeR$initGMQL(out_format,remote_processing)
 }
 
@@ -41,8 +43,8 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #'
 #' Read a GMQL dataset or any other folder containig some homogenus sample
 #' from disk, saving in Scala memory that can be referenced in R
-#' Also used to read a repository dataset.
-#'
+#' Also used to read a repository dataset in case of remote processing.
+#' 
 #' @param dataset single string folder path for GMQL dataset or datasetname on repository
 #' @param parser single string used to parsing dataset files
 #' The Parser's available are:
@@ -56,14 +58,18 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' \item{CustomParser.}
 #' }
 #' Default is CustomParser.
-#' @param is_local logical value indicating if dataset is a local or remote dataset
-#' if the remote processing is off you cannot use a remote repository (error occured)
+#' @param is_local single logical value indicating local or remote dataset
+#' if the remote processing is off you cannot set is_local=FALSE (an error occured)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' @param override single logical value
-#'
-#' @return "url-like" string to dataset
-#'
+#' useful only in remote processing
+#' @param override single logical value used in order to determine the overriding of reading
+#' dataset into repository, if an other dataset with the same name already exist into repostiory 
+#' and override value is FALSE an error occures.
+#' useful only in remote processing
+#' 
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
 #'
 #' @details
 #' Normally a GMQL dataset contains an XML schema file that contains
@@ -72,7 +78,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' the parser defined without reading any XML schema
 #'
 #' @examples
-#'
+#' 
 #' ### local with CustomParser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -84,7 +90,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path,"ANNParser")
 #' }
-#' ""
+#' 
 #' @export
 #'
 readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL, override= FALSE)
@@ -92,21 +98,16 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
   remote_proc <- WrappeR$is_remote_processing()
   if(!remote_proc && !is_local)
     stop("you cannot use local processing with remote repository")
-
-  if(!is.character(dataset))
-    stop("dataset: invalid input")
-
-  if(length(dataset)!=1)
-    stop("dataset: no multiple string")
-
-  if(length(override)>1)
-    warning("override not > 1")
-  override <- override[1]
   
-  if(length(is_local)>1)
-    warning("is_local not > 1")
-  is_local <- is_local[1]
+  if(!is.character(dataset) || length(dataset) >1)
+    stop("dataset: invalid input or length > 1")
   
+  if(!is.logical(override) || length(override) >1)
+    stop("override: invalid input or length > 1")
+  
+  if(!is.logical(is_local) || length(is_local) >1)
+    stop("is_local: invalid input or length > 1")
+
   if(is_local)
   {
     if(!dir.exists(dataset))
@@ -150,21 +151,21 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
   if(grepl("File",out,ignore.case = TRUE) || grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }
 
 #' GMQL Function: READ
 #'
-#' Read a GrangesList saving in Scala memory that can be referenced in R
+#' Read a GrangesList saving in scala memory that can be referenced in R
 #'
 #' @param samples GrangesList
 #'
-#' @return "url-like" string to dataset
-#'
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
+#' 
 #' @examples
 #'
 #' \dontrun{
-#' 
 #' 
 #' }
 #' ""
@@ -195,17 +196,25 @@ read <- function(samples)
   col_types <- sapply(df,class)
   col_names <- names(col_types)
   #re order the schema?
-  col_names <- plyr::revalue(col_names,c(type = "feature",phase = "frame",seqnames = "seqname"))
-  schema_matrix <- cbind(toupper(col_types),col_names)
-  schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width","seqnames","strand","end","start")),]
+  if("phase" %in% col_names) # if GTF
+  {
+    col_names <- plyr::revalue(col_names,c(type = "feature",phase = "frame",seqnames = "seqname"))
+    schema_matrix <- cbind(toupper(col_types),col_names)
+    schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width")),]
+  }
+  else
+  {
+    col_names <- plyr::revalue(col_names,c(start = "left", end = "right", seqnarmes = "chr"))
+    schema_matrix <- cbind(toupper(col_types),col_names)
+    schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width")),]
+  }
   rownames(schema_matrix) <- NULL
   colnames(schema_matrix) <- NULL
   out <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
-
+    DAGgraph(out)
 }
 
 
@@ -220,20 +229,17 @@ read <- function(samples)
   parser
 }
 
-
-
 #' Disable or Enable remote processing
 #'
 #' It allows to enable or disable remote processing
 #' 
-#' 
 #' @details 
 #' The invocation of this function allow to change mode of processing.
-#' Thw switch is posible at the beginning when you didn't run any query at all, or after an execution 
+#' The switch is possible at the beginning, when you didn't run any query at all, or after an execution 
 #' (or take) function
 #' 
-#' @param is_remote sinble logical value, TRUE you will set a remote query processing mode 
-#' otherwise will be local
+#' @param is_remote single logical value used in order to set the processing mode.
+#' TRUE you will set a remote query processing mode otherwise will be local
 #'
 #' @examples
 #' 
@@ -247,13 +253,8 @@ read <- function(samples)
 #'
 remote_processing<-function(is_remote)
 {
-  if(!is.logical(is_remote))
-    stop("only logical value")
-
-  if(length(is_remote)>1)
-    warning("is_remote no > 1")
-
-  is_remote <- is_remote[1]
+  if(!is.logical(is_remote) || length(is_remote)>1)
+    stop("is_remote: invalid input or length > 1")
 
   out <- WrappeR$remote_processing(is_remote)
   print(out)

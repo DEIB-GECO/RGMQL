@@ -2,51 +2,38 @@
 % Please edit documentation in R/operator-class.R
 \name{BAG}
 \alias{BAG}
-\title{OPERATOR object class}
+\title{OPERATOR object class constructor}
 \usage{
 BAG(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute}
+\item{value}{single string identifying name of region attribute}
 }
 \value{
-no returned value
+BAG Operator object
 }
 \description{
-This class is used to create instances of operator object
-to be used in GMQL functions that require operator on value
-}
-\details{
-OPERATOR object available are:
-\itemize{
-\item{SUM: prepared input parameter to be passed to library function sum,
-performing all the type conversion needed}
-\item{MIN: prepared input parameter to be passed to library function minimum,
-performing all the type conversion needed}
-\item{MAX: prepared input parameter to be passed to library function maximum,
-performing all the type conversion needed}
-\item{COUNT: prepared input parameter to be passed to library function count,
-performing all the type conversion needed}
-\item{BAG: prepared input parameter to be passed to library function bag,
-this function creates comma-separated strings of distinct attribute values,
-performing all the type conversion needed}
-\item{AVG: prepared input parameter to be passed to library function arithmetic mean,
-performing all the type conversion needed}
-\item{STD: prepared input parameter to be passed to library function deviation standard,
-performing all the type conversion needed}
-\item{MEDIAN: prepared input parameter to be passed to library function median,
-performing all the type conversion needed}
-\item{Q1: prepared input parameter to be passed to library function first quartile,
-performing all the type conversion needed}
-\item{Q2: prepared input parameter to be passed to library function second quartile,
-performing all the type conversion needed}
-\item{Q3: prepared input parameter to be passed to library function third quartile,
-performing all the type conversion needed}
-}
+This class constructor is used to create instances of OPERATOR object
+to be used in GMQL functions that require operator on value,
+it prepared input parameter to be passed to library function bag,
+this function creates comma-separated strings of distinct attribute values
+performing all the type conversion needed
 }
 \examples{
-\dontrun{
+
+### local with CustomParser
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+data = readDataset(test_path)
+
+### copies all samples of DATA into OUT dataset, and then for each of them adds another 
+metadata attribute,  allScores, which is the aggregation comma-separated list of all the 
+distinct values that the attribute  score takes in the sample.
+out = extend(input_data = data, list(allScore = BAG("score"))
 
 }
-
+\seealso{
+\code{\link{MIN}} \code{\link{MAX}} \code{\link{AVG}} \code{\link{COUNT}}
+\code{\link{SUM}} \code{\link{STD}} \code{\link{MEDIAN}} \code{\link{Q1}} \code{\link{Q2}}
+\code{\link{Q3}}
 }

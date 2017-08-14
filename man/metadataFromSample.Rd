@@ -8,20 +8,21 @@ metadataFromSample(url, datasetName, sampleName)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
-\item{datasetName}{name of dataset we want to get}
+\item{datasetName}{single string name of dataset to get}
 
-\item{sampleName}{sample name we want to get}
+\item{sampleName}{single string sample name to get}
 }
 \value{
 list of metadata in the form 'key = value'
 }
 \description{
-It retrieves metadata for a specific sample in dataset
+It retrieves metadata for a specific sample in dataset using the proper GMQL web service 
+available on a remote server
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

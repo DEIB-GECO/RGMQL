@@ -7,12 +7,12 @@ if(getRversion() >= "3.1.0")
 #' Login to GMQL
 #'
 #' Login to GMQL REST services suite as a registered user, specifiyng username and password,
-#' or as guest
-#'
+#' or as guest using the proper GMQL web service available on a remote server
+#' 
 #' @import httr
-#'
+#' 
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param username single string name used during signup
 #' @param password single string password used during signup
 #'
@@ -24,16 +24,18 @@ if(getRversion() >= "3.1.0")
 #' As token remains vaild on server (until the next login / registration) a user can safely use a token for
 #' a previous session as a convenience, this token is saved in Global environment to perform
 #' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
-#' @return no object return
+#' @return None
 #'
 #' @examples
+#' 
 #' ### login as guest
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #'
-#' ##### login with username and password
+#' ### login with username and password
+#' ### this account is a test account don't use it 
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #'
@@ -66,7 +68,6 @@ login.GMQL <- function(url,username = NULL, password = NULL)
     print(content$errorString)
   else
   {
-
     assign("authToken",content$authToken,.GlobalEnv)
     print(paste("your Token is",authToken))
   }
@@ -74,21 +75,22 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 
 
 #' Logout from GMQL
-#'
+#' 
 #' Logout from GMQL REST services suite
+#' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
 #'
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #'
 #' @seealso \code{\link{register.GMQL}} \code{\link{login.GMQL}}
 #'
 #' @details
 #' After logout the authentication token will be invalidated.
 #' The authentication token is removed from Global environment
-#' If error occured a specific error will be printed
-#'
+#' If error occures a specific error is printed
+#' 
 #' @examples
 #'
 #' #### login as guest, then logout
@@ -101,7 +103,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' login.GMQL(PolimiUrl,"test101","test")
 #' logout.GMQL(PolimiUrl)
 #'
-#' @return no object return
+#' @return None
 #'
 #' @export
 #'
@@ -124,6 +126,7 @@ logout.GMQL <- function(url)
 #' Sign up to GMQL
 #'
 #' Sign up to GMQL REST services suite
+#' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
 #'
@@ -135,21 +138,21 @@ logout.GMQL <- function(url)
 #' @param username single string name you want to authenticate with
 #' @param password single string password you want to authenticate with
 #'
-#'
 #' @seealso \code{\link{login.GMQL}} \code{\link{logout.GMQL}}
 #'
 #' @details
-#' After registration you receive an authentication token.
+#' After registration you receive an authentication token, (i.e you are logged in after sing up,
+#' no need to subsequent calling of login function)
 #' As token remains vaild on server (until the next login / registration) a user can safely use a token for
 #' a previous session as a convenience, this token is saved in Global environment to perform
 #' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
-#' @return no object return
+#' @return None
 #'
 #' @examples
 #'
-#' ##### this user already exist, is a test account
+#' ##### this user already exist, it's a test account
 #' ##### don't use it
 #' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")

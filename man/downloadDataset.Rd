@@ -10,19 +10,20 @@ downloadDataset(url, datasetName, path = getwd())
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically}
 
-\item{datasetName}{name of dataset we want to get}
+\item{datasetName}{single string name of dataset we want to get}
 
-\item{path}{local path folder where store dataset
+\item{path}{single string local path folder where store dataset,
 by defualt is R working directory}
 }
 \value{
-no object return
+None
 }
 \description{
-It donwloads private dataset as zip file from repository to local path specified
+It donwloads private dataset as zip file from repository to local path specified 
+using the proper GMQL web service available on a remote server
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

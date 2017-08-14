@@ -30,50 +30,42 @@ c.CONDITION <- function(...)
 
 check.CONDITION <- function(value)
 {
-  if(!is.character(value))
-    stop("value: no valid input")
-
-  if(length(value)>1)
-    stop("value: no multiple string")
+  if(!is.character(value) || length(value)>1)
+    stop("value: no valid input or length > 1")
 }
 
 
-#' CONDITION object class
+#' CONDITION object class constructor
 #'
-#' This class is used to create instances of condition object
-#' to be used in GMQL functions that require evaluation condition on value
+#' This class constructor is used to create instances of CONDITION object
+#' to be used in GMQL functions that require evaluation on value
+#' This constructor define a DEF (DEFAULT) evaluation of the input value.
+#' DEF evaluation: two attributes match if both end with value. 
 #'
-#' CONDITION object available are:
-#' \itemize{
-#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-#' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{DEF: Default evaluation, two attributes match if both end with value. }
-#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-#' }
-#'
-#' @param value single string identifying name of metadata attribute you
-#' want to put in evaluation
+#' @param value single string identifying name of metadata and/or region attribute
+#' to be evaluated
 #'
 #' @return DEF condition object
 #'
+#' @seealso \code{\link{FULL}} \code{\link{EXACT}}
+#' 
 #' @examples
-#' \dontrun{
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = readDataset(test_path)
 #'
 #' #### select with DEF condition
-#' #### the full condition is treated as DEF due to coercion
 #' s = select(input_data = r, semi_join = c("cell_type","cell"),
 #' semi_join_dataset = c)
-#'
-#' #### select with condition
-#' #### the first is FULL and the other ones are DEF
+#' 
+#' \dontrun{
+#' #### select with DEF condition declared explicitily
 #' s = select(input_data = r, semi_join = c(DEF("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
-#' #### select with condition
-#' s = select(input_data = r, semi_join = list("cell_type",DEF("cell")), semi_join_dataset = c)
-#'
 #' }
-#' ""
+#' 
 #'
 #' @export
 #'
@@ -89,42 +81,41 @@ DEF <- function(value)
   return(list)
 }
 
-#' CONDITION object class
+#' CONDITION object class constructor
 #'
-#' This class is used to create instances of condition object
-#' to be used in GMQL functions that require evaluation condition on value
+#' This class constructor is used to create instances of CONDITION object
+#' to be used in GMQL functions that require evaluation on value
+#' This constructor define a EXACT evaluation of the input value.
+#' EXACT evaluation: only attributes exactly as value will match; no further prefixes are allowed. 
 #'
-#' CONDITION object available are:
-#' \itemize{
-#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-#' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{DEF: Default evaluation, two attributes match if both end with value. }
-#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-#' }
-#'
-#' @param value single string identifying name of metadata attribute you
-#' want to put in evaluation
+#' @param value single string identifying name of metadata and/or region attribute
+#' to be evaluated
 #'
 #' @return EXACT condition object
 #'
 #' @examples
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = readDataset(test_path)
+#' 
+#' #### select with condition
+#' #### the first and the third attribute are DEF the second one is EXACT
+#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = c)
+#'
 #' \dontrun{
 #'
 #' #### select with DEF condition
-#' #### the full condition is treated as DEF due to coercion
+#' #### the EXACT condition is treated as DEF due to coercion
 #' s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 #' semi_join_dataset = c)
 #'
 #' #### select with condition
-#' #### the first is FULL and the other ones are DEF
+#' #### the first is EXACT and the other ones are DEF
 #' s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
-#' #### select with condition
-#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
-#'
 #' }
-#' ""
 #'
 #' @export
 #'
@@ -140,29 +131,33 @@ EXACT <- function(value)
   return(list)
 }
 
-#' CONDITION object class
+#' CONDITION object class constructor
 #'
-#' This class is used to create instances of condition object
-#' to be used in GMQL functions that require evaluation condition on value
+#' This class constructor is used to create instances of CONDITION object
+#' to be used in GMQL functions that require evaluation on value
+#' This constructor define a FULL (FULLNAME) evaluation of the input value.
+#' FULL evaluation: two attributes match if they both end with value and,
+#' if they have further prefixes, the two prefix sequences are identical
 #'
-#' CONDITION object available are:
-#' \itemize{
-#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-#' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{DEF: Default evaluation, two attributes match if both end with value. }
-#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-#' }
-#'
-#' @param value single string identifying name of metadata attribute you
-#' want to put in evaluation
-#'
+#' @param value single string identifying name of metadata and/or region attribute
+#' to be evaluated
+#' 
 #' @return FULL condition object
 #'
 #' @examples
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = readDataset(test_path)
+#' 
+#' #### select with condition
+#' #### the first and the third attribute are DEF the second one is FULL
+#' s = select(input_data = r, semi_join = list("cell_type",FULL("cell"),attribute_tag), semi_join_dataset = c)
+#'
 #' \dontrun{
 #'
 #' #### select with DEF condition
-#' #### the full condition is treated as DEF due to coercion
+#' #### the FULL condition is treated as DEF due to coercion
 #' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
 #' semi_join_dataset = c)
 #'
@@ -172,7 +167,6 @@ EXACT <- function(value)
 #' semi_join_dataset = c)
 #'
 #' }
-#' ""
 #'
 #' @export
 #'

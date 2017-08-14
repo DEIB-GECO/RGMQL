@@ -34,10 +34,10 @@
 .aggregates <- function(metadata,class)
 {
   if(!is.list(metadata))
-    stop("metadata must be a list")
+    stop("metadata: invalid input")
 
   if(!all(sapply(metadata, function(x) is(x,class))))
-    stop("All elements should be META_OPERATOR object")
+    stop("All elements must be META_OPERATOR object")
 
   names <- names(metadata)
   if(is.null(names))

@@ -2,29 +2,37 @@
 % Please edit documentation in R/ordering-class.R
 \name{ASC}
 \alias{ASC}
-\title{ORDER object class}
+\title{ORDER object class constructor}
 \usage{
 ASC(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute}
+\item{value}{single string identifying name of metadata and/or region attribute}
 }
 \value{
 ASC ordering object
 }
 \description{
-This class is used to create instances of order object
-to be used in GMQL functions that require ordering on value
-}
-\details{
-ORDER object available are:
-\itemize{
-\item{ASC: ascending order}
-\item{DESC: desceding order}
-}
+This class constructor is used to create instances of ORDER object
+to be used in GMQL functions that require ordering on value.
+It define an ascending order for input value
 }
 \examples{
+
+### local with CustomParser
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = readDataset(test_path)
+
+###regions ordering as ascending
+o = order(regions_ordering = c("pvalue","length","name"), rtopg = 1, input_data = r)
+
 \dontrun{
+#' ###regions ordering as ascending
+o = order(regions_ordering = list(ASC("pvalue"),ASC("length"),ASC("name")), rtopg = 1, input_data = r)
+
+### pvalue ascending and length descending
+o = order(list("pvalue", DESC(length)), mtop = 2, input_data = r)
 }
-""
+
 }

@@ -8,18 +8,18 @@ login.GMQL(url, username = NULL, password = NULL)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{username}{single string name used during signup}
 
 \item{password}{single string password used during signup}
 }
 \value{
-no object return
+None
 }
 \description{
 Login to GMQL REST services suite as a registered user, specifiyng username and password,
-or as guest
+or as guest using the proper GMQL web service available on a remote server
 }
 \details{
 if both username and password are NULL you will be logged as guest
@@ -27,14 +27,16 @@ After login you will receive an authentication token.
 As token remains vaild on server (until the next login / registration) a user can safely use a token for
 a previous session as a convenience, this token is saved in Global environment to perform
 subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
+
 ### login as guest
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(PolimiUrl)
 
-##### login with username and password
+### login with username and password
+### this account is a test account don't use it 
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(PolimiUrl,"test101","test")
 

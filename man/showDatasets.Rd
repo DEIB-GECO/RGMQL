@@ -8,7 +8,7 @@ showDatasets(url)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 }
 \value{
 list of datasets.
@@ -20,10 +20,11 @@ Every dataset in the list is identified by:
 }
 }
 \description{
-It show all GMQL dataset stored in repository
+It show all GMQL dataset stored in repository using the proper GMQL web service 
+available on a remote server
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

@@ -8,22 +8,23 @@ saveQuery.fromfile(url, queryName, filePath)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{queryName}{single string name of the GMQL query}
 
-\item{filePath}{single string local file path where you write GMQL query}
+\item{filePath}{single string local file path containing a GMQL query}
 }
 \value{
-no object return
+None
 }
 \description{
 It saves the GMQL query into repository taken from file
+using the proper GMQL web service available on a remote server
 }
 \details{
 if you save a query with the same name of an other query already stored in repository
-you will overwrite it
-if no error occured print "Saved" otherwise print the content error#'
+you will overwrite it,
+if no error occures print "Saved" otherwise print the content error
 }
 \examples{
 

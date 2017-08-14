@@ -10,15 +10,15 @@ read(samples)
 \item{samples}{GrangesList}
 }
 \value{
-"url-like" string to dataset
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
-Read a GrangesList saving in Scala memory that can be referenced in R
+Read a GrangesList saving in scala memory that can be referenced in R
 }
 \examples{
 
 \dontrun{
-
 
 }
 ""

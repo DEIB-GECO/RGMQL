@@ -8,23 +8,23 @@ saveQuery(url, queryName, queryTxt)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{queryName}{single string name of query}
 
 \item{queryTxt}{single string text of GMQL query}
 }
 \value{
-no object return
+None
 }
 \description{
 It saves the GMQL query into repository
+using the proper GMQL web service available on a remote server
 }
 \details{
-#' if you save a query with the same name of an other query already stored in repository
-you will overwrite it
-if error occured print the content error
-if no error occured print "Saved" otherwise print the content error
+if you save a query with the same name of an other query already stored in repository
+you will overwrite it,
+if no error occures print "Saved" otherwise print the content error
 }
 \examples{
 

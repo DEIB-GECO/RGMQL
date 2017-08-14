@@ -8,11 +8,11 @@ showSchemaFromDataset(url, datasetName)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
-\item{datasetName}{name of dataset we want to get
+\item{datasetName}{name of dataset to get
 if the dataset is a public dataset, we have to add "public." as prefix, as shown in the example below
-otherwise no prefix needed}
+otherwise no prefix is needed}
 }
 \value{
 list of region schema fields.
@@ -24,10 +24,11 @@ Every field in the list is identified by:
 }
 }
 \description{
-It shows the region schema of a specific GMQL dataset
+It shows the region attribute schema of a specific GMQL dataset using the proper GMQL 
+web service available on a remote server
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

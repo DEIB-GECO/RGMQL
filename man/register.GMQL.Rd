@@ -21,21 +21,23 @@ service name will be added automatically}
 \item{password}{single string password you want to authenticate with}
 }
 \value{
-no object return
+None
 }
 \description{
 Sign up to GMQL REST services suite
+using the proper GMQL web service available on a remote server
 }
 \details{
-After registration you receive an authentication token.
+After registration you receive an authentication token, (i.e you are logged in after sing up,
+no need to subsequent calling of login function)
 As token remains vaild on server (until the next login / registration) a user can safely use a token for
 a previous session as a convenience, this token is saved in Global environment to perform
 subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 
-##### this user already exist, is a test account
+##### this user already exist, it's a test account
 ##### don't use it
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")

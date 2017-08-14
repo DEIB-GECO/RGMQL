@@ -2,47 +2,42 @@
 % Please edit documentation in R/condition-class.R
 \name{DEF}
 \alias{DEF}
-\title{CONDITION object class}
+\title{CONDITION object class constructor}
 \usage{
 DEF(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute you
-want to put in evaluation}
+\item{value}{single string identifying name of metadata and/or region attribute
+to be evaluated}
 }
 \value{
 DEF condition object
 }
 \description{
-This class is used to create instances of condition object
-to be used in GMQL functions that require evaluation condition on value
-}
-\details{
-CONDITION object available are:
-\itemize{
-\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{DEF: Default evaluation, two attributes match if both end with value. }
-\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-}
+This class constructor is used to create instances of CONDITION object
+to be used in GMQL functions that require evaluation on value
+This constructor define a DEF (DEFAULT) evaluation of the input value.
+DEF evaluation: two attributes match if both end with value.
 }
 \examples{
-\dontrun{
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = readDataset(test_path)
 
 #### select with DEF condition
-#### the full condition is treated as DEF due to coercion
 s = select(input_data = r, semi_join = c("cell_type","cell"),
 semi_join_dataset = c)
 
-#### select with condition
-#### the first is FULL and the other ones are DEF
+\dontrun{
+#### select with DEF condition declared explicitily
 s = select(input_data = r, semi_join = c(DEF("attribute_tag"),"cell_type","cell"),
 semi_join_dataset = c)
 
-#### select with condition
-s = select(input_data = r, semi_join = list("cell_type",DEF("cell")), semi_join_dataset = c)
+}
+
 
 }
-""
-
+\seealso{
+\code{\link{FULL}} \code{\link{EXACT}}
 }

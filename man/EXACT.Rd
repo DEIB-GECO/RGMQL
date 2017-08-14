@@ -2,47 +2,45 @@
 % Please edit documentation in R/condition-class.R
 \name{EXACT}
 \alias{EXACT}
-\title{CONDITION object class}
+\title{CONDITION object class constructor}
 \usage{
 EXACT(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata attribute you
-want to put in evaluation}
+\item{value}{single string identifying name of metadata and/or region attribute
+to be evaluated}
 }
 \value{
 EXACT condition object
 }
 \description{
-This class is used to create instances of condition object
-to be used in GMQL functions that require evaluation condition on value
-}
-\details{
-CONDITION object available are:
-\itemize{
-\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{DEF: Default evaluation, two attributes match if both end with value. }
-\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-}
+This class constructor is used to create instances of CONDITION object
+to be used in GMQL functions that require evaluation on value
+This constructor define a EXACT evaluation of the input value.
+EXACT evaluation: only attributes exactly as value will match; no further prefixes are allowed.
 }
 \examples{
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+r = readDataset(test_path)
+
+#### select with condition
+#### the first and the third attribute are DEF the second one is EXACT
+s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = c)
+
 \dontrun{
 
 #### select with DEF condition
-#### the full condition is treated as DEF due to coercion
+#### the EXACT condition is treated as DEF due to coercion
 s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 semi_join_dataset = c)
 
 #### select with condition
-#### the first is FULL and the other ones are DEF
+#### the first is EXACT and the other ones are DEF
 s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
 semi_join_dataset = c)
 
-#### select with condition
-s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = c)
-
 }
-""
 
 }

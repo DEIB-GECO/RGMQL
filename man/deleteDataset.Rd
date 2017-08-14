@@ -8,18 +8,19 @@ deleteDataset(url, datasetName)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
-\item{datasetName}{name of dataset we want to delete}
+\item{datasetName}{single string name of dataset to delete}
 }
 \value{
-no object return
+None
 }
 \description{
-It deletes single private dataset from repository specified by name
+It deletes single private dataset specified by name from repository using the proper GMQL 
+web service available on a remote server
 }
 \details{
-If no error occured print "Deleted Dataset" otherwise a specific error will be printed
+If no error occures print "Deleted Dataset", otherwise a specific error is printed
 }
 \examples{
 
@@ -29,7 +30,7 @@ PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(url = PolimiUrl,"test101","test")
 deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
 }
-""
+
 }
 \seealso{
 \code{\link{downloadDataset}}

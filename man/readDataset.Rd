@@ -23,21 +23,26 @@ The Parser's available are:
 }
 Default is CustomParser.}
 
-\item{is_local}{logical value indicating if dataset is a local or remote dataset
-if the remote processing is off you cannot use a remote repository (error occured)}
+\item{is_local}{single logical value indicating local or remote dataset
+if the remote processing is off you cannot set is_local=FALSE (an error occured)}
 
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name will be added automatically
+useful only in remote processing}
 
-\item{override}{single logical value}
+\item{override}{single logical value used in order to determine the overriding of reading
+dataset into repository, if an other dataset with the same name already exist into repostiory 
+and override value is FALSE an error occures.
+useful only in remote processing}
 }
 \value{
-"url-like" string to dataset
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 Read a GMQL dataset or any other folder containig some homogenus sample
 from disk, saving in Scala memory that can be referenced in R
-Also used to read a repository dataset.
+Also used to read a repository dataset in case of remote processing.
 }
 \details{
 Normally a GMQL dataset contains an XML schema file that contains
@@ -58,5 +63,5 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path,"ANNParser")
 }
-""
+
 }

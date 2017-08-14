@@ -2,8 +2,8 @@ Package: GMQL
 Type: Package
 Title: GMQL function
 Version: 0.99.0
-Author: Pallotta Simone, Masseroli Marco 
-Maintainer: Simone Pallotta <simone.pallotta@mail.polimi.it>
+Author: Simone Pallotta, Marco Masseroli
+Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
 License: Artistic-2.0

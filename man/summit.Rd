@@ -10,28 +10,33 @@ summit(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \item{input_data}{returned object from any GMQL function}
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution
-Normally must be > 0, we admit value 0 and -1 as special value:
-\itemize{
-\item {-1: means ALL and sets the minimum to the number of samples in the input dataset}
-}}
+normally is a single integer number, declared also as string.
+minAcc accept also special keyword: ALL
+ALL sets the minimum to the number of samples in the input dataset}
 
 \item{maxAcc}{maximum number of overlapping regions to be considered during execution
-\itemize{
-\item {0: means ANY and acts as a wildcard and can be used only as maxAcc value}
-\item {-1: means ALL and sets the maximum to the number of samples in the input dataset}
-}}
+normally is a single integer number, declared also as string.
+maxAcc accept also special keyword: ALL and ANY
+ALL sets the maximum to the number of samples in the input dataset
+ANY acts as a wildcard, consider all areas defined to any amount of overlapping}
 
 \item{groupBy}{a vector of strings specifying grouping criteria}
 
 \item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of class OPERATOR
-The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT.
-Every operator accepts a string value, execet for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist in schema
-Two style are allowed}
+'function_aggregate' is an object of OPERATOR class
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN
+Every operator accepts a string value, except for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist as region attribute
+Two style are allowed:
+\itemize{
+\item list of key-value pairs: e.g. sum = SUM("pvalue")
+\item list of values: e.g. SUM("pvalue")
+}
+"mixed style" is not allowed}
 }
 \value{
-"url-like" string
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 returns regions that start from a position
@@ -41,16 +46,18 @@ or it violates the max accumulation index).
 }
 \examples{
 
-\dontrun{
+### This GMQL statement computes the result grouping the input \\emph{exp} samples by the values 
+of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample is generated 
+for each cell type.
+Output regions are produced by extracting the highest accumulation overlapping 
+(sub)regions according to the methodologies described above;
 
-library(rscala)
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
-c = summit(input_data = r,2,3)
-}
-""
+exp = read(test_path)
+res = summit(input_data = exp,2,4, c("cell"))
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

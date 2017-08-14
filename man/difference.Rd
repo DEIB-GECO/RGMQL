@@ -12,60 +12,59 @@ difference(left_input_data, right_input_data, joinBy = NULL,
 
 \item{right_input_data}{returned object from any GMQL function}
 
-\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
-or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
-In the latter form all metadata are considered having DEF condition
-The CONDITION's available are:
-\itemize{
-\item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
-\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-}
-Every condition accepts only one string value. (e.g. FULL("cell_type") )}
+\item{joinBy}{list of CONDITION objects, or simple string concatenation 
+(i.e c("cell_type", "attribute_tag", "size")).
+Every object contains the name of metadata attributes to be used in \emph{joinBy}.
+For details of CONDITION objects see:  
+\code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
+Every condition accepts only one string value. (e.g. FULL("cell_type") ).}
 
-\item{is_exact}{logical value: TRUE means that the regions difference is executed only on regions in left_input_data
-with exactly the same coordinates of at least one region present in right_input_data
-if is_exact = FALSE the difference is executed on all regions in left_input_data that overlaps with at least one region in
-right_input_data (even just one base)}
+\item{is_exact}{single logical value: TRUE means that the region difference is executed only 
+on regions in left_input_data with exactly the same coordinates of at least one region present 
+in right_input_data, if is_exact = FALSE the difference is executed on all regions in 
+left_input_data that overlap with at least one region in right_input_data (even just one base).}
 }
 \value{
-"url-like" string:
-for example dataset0/select2/difference3
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 It produces one sample in the result for each sample of the left operand,
-by keeping the same metadata of the left operand sample and only those regions
-(with their schema and values) of the left operand sample which do not intersect with any region
+by keeping the same metadata of the left input sample and only those regions
+(with their schema and values) of the left input sample which do not intersect with any region
 in the right operand sample.
-The optional joinby clause is used to extract a subset of couples
-from the cartesian product of two dataset Dleft x Dright
+The optional \emph{joinby} clause is used to extract a subset of couples
+from the cartesian product of two dataset \emph{left_input_data} x \emph{right_input_data}
 on which to apply the DIFFERENCE operator:
 only those samples that have the same value for each attribute
 are considered when performing the difference.
 }
 \examples{
 
-\dontrun{
+#### This GMQL statement returns all the regions in the first dataset that do not 
+overlap any region in the second dataset.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-r = read(test_path)
-r2 = read(test_path2)
+r_left = read(test_path)
+r_right = read(test_path2)
+out = difference(r_left,r_right)
 
-#### difference with condition
-d = difference(r,r2 list("cell_type",EXACT("cell_attribute")) )
+\dontrun{
+### This GMQL statement extracts for every pair of samples s1 ∈ EXP1 and s2 ∈ EXP2
+having the same value of the metadata attribute \\emph{antibody_target} 
+the regions that appear in s1  but do not overlap any region in s2; 
+metadata of the result are the same as the metadata of s1.
 
-#### difference with DEF condition
-d = difference(r,r2 list("cell_type","cell") )
-
-#### select with condition
-#### the first is FULL and the other ones are DEF
-d = difference(r,r2, c(FULL("attribute_tag"),"cell_type","cell") )
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+exp1 = read(test_path)
+exp2 = read(test_path2)
+out = difference(exp1,exp2, c("antibody_target"))
 
 }
-""
 
 }
 \references{

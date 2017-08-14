@@ -9,41 +9,44 @@ cover(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered during execution}
+\item{minAcc}{minimum number of overlapping regions to be considered during execution
+normally is a single integer number, declared also as string.
+minAcc accept also special keyword: ALL
+ALL sets the minimum to the number of samples in the input dataset}
 
-\item{maxAcc}{maximum number of overlapping regions to be considered during execution}
+\item{maxAcc}{maximum number of overlapping regions to be considered during execution
+normally is a single integer number, declared also as string.
+maxAcc accept also special keyword: ALL and ANY
+ALL sets the maximum to the number of samples in the input dataset
+ANY acts as a wildcard, consider all areas defined to any amount of overlapping}
 
-\item{groupBy}{list of CONDITION objects every object contains the name of metadata to be used in semijoin,
-or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
-In the latter form all metadata are considered having DEF condition
-The CONDITION's available are:
-\itemize{
-\item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{DEF: Default evaluation, two attributes match if both end with value. }
-\item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-}
-Every condition accepts only one string value. (e.g. DEF("cell_type") )}
+\item{groupBy}{a vector of strings specifying grouping criteria}
 
 \item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of inherited class of class OPERATOR
-The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT,MEDIAN
-Every operator accepts a string value, execet for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist in schema
-Two style are allowed:}
+'function_aggregate' is an object of OPERATOR class
+The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN
+Every operator accepts a string value, except for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist as region attribute
+Two style are allowed:
+\itemize{
+\item list of key-value pairs: e.g. sum = SUM("pvalue")
+\item list of values: e.g. SUM("pvalue")
+}
+"mixed style" is not allowed}
 }
 \value{
-"url-like" string
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 it takes as input a dataset and returns another dataset (with a single sample, if no \emph{groupby} option is specified)
-by “collapsing” the input samples and their regions according to certain rules specified by the input parameters.
-The attributes of the output regions are only the region coordinates, and Jaccard indexes ( JaccardIntersect and JaccardResult).
+by “collapsing” the input dataset samples and their regions according to certain rules specified by the input parameters.
+The attributes of the output genomic regions are only the region coordinates, and Jaccard indexes ( JaccardIntersect and JaccardResult).
 Jaccard Indexes are standard measures of similarity of the contributing regions, added as default region attributes.
 The JaccardIntersect index is calculated as the ratio between the lengths of the intersection
 and of the union of the contributing regions; the JaccardResult index is calculated as the ratio
-between the lengths of the result and of the union of the contributing regions.
-If aggregate functions are specified, new attributes with aggregate values over schema region values;
+between the lengths of region and the union of the contributing regions.
+If aggregate functions are specified, new attributes are added.
 Output metadata are the union of the input ones.
 If \emph{groupby} clause is specified, the input samples are partitioned in groups,
 each with distinct values of the grouping metadata attributes, and the COVER operation is separately
@@ -52,15 +55,27 @@ Input samples that do not satisfy the \emph{groupby} condition are disregarded.
 }
 \examples{
 
-\dontrun{
-library(rscala)
+### This GMQL statement produces an output dataset with a single output sample. 
+The COVER operation considers all areas defined by a minimum of two overlapping regions 
+in the input samples, up to any amount of overlapping regions.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
-c = cover(input_data = r,2,3)
+exp = read(test_path)
+res = cover(input_data = exp,2,"ANY")
+
+\dontrun{
+### This GMQL statement computes the result grouping the input \\emph{exp} samples by the values of 
+their \\emph{cell} metadata attribute, 
+thus one output \\emph{res} sample is generated for each cell type; 
+output regions are produced where at least 2 and at most 3 regions of grouped \\emph{exp} samples 
+overlap, setting as attributes of the resulting regions the minimum pValue of the overlapping regions 
+(\\emph{min_pvalue}) and their Jaccard indexes (JaccardIntersect and JaccardResult).
+
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+exp = read(test_path)
+res = cover(input_data = exp,2,3, c("cell"), list(min_pValue = MIN(pValue)))
 }
-""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/operator-class.R
 \name{AVG}
 \alias{AVG}
-\title{OPERATOR object class}
+\title{OPERATOR object class constructor}
 \usage{
 AVG(value)
 }
@@ -10,43 +10,29 @@ AVG(value)
 \item{value}{single string identifying name of metadata attribute}
 }
 \value{
-no returned value
+AVG Operator object
 }
 \description{
-This class is used to create instances of operator object
-to be used in GMQL functions that require operator on value
-}
-\details{
-OPERATOR object available are:
-\itemize{
-\item{SUM: prepared input parameter to be passed to library function sum,
-performing all the type conversion needed}
-\item{MIN: prepared input parameter to be passed to library function minimum,
-performing all the type conversion needed}
-\item{MAX: prepared input parameter to be passed to library function maximum,
-performing all the type conversion needed}
-\item{COUNT: prepared input parameter to be passed to library function count,
-performing all the type conversion needed}
-\item{BAG: prepared input parameter to be passed to library function bag,
-this function creates comma-separated strings of distinct attribute values,
-performing all the type conversion needed}
-\item{AVG: prepared input parameter to be passed to library function arithmetic mean,
-performing all the type conversion needed}
-\item{STD: prepared input parameter to be passed to library function deviation standard,
-performing all the type conversion needed}
-\item{MEDIAN: prepared input parameter to be passed to library function median,
-performing all the type conversion needed}
-\item{Q1: prepared input parameter to be passed to library function first quartile,
-performing all the type conversion needed}
-\item{Q2: prepared input parameter to be passed to library function second quartile,
-performing all the type conversion needed}
-\item{Q3: prepared input parameter to be passed to library function third quartile,
-performing all the type conversion needed}
-}
+This class constructor is used to create instances of OPERATOR object
+to be used in GMQL functions that require operator on value,
+it prepared input parameter to be passed to library function arithmetic mean,
+performing all the type conversion needed
 }
 \examples{
-\dontrun{
+
+### local with CustomParser
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+exp = readDataset(test_path)
+
+### The following cover operation produces output regions where at least 2 and at most 3 regions of
+exp overlap, having as resulting region attributes the avg signal of the overlapping regions;
+the result has one sample for each input cell.
+res = cover(input_data = exp,2,3, c("cell"), list(avg_signal = AVG(signal)))
 
 }
-
+\seealso{
+\code{\link{MIN}} \code{\link{MAX}} \code{\link{SUM}} \code{\link{COUNT}}
+\code{\link{BAG}} \code{\link{STD}} \code{\link{MEDIAN}} \code{\link{Q1}} \code{\link{Q2}}
+\code{\link{Q3}}
 }

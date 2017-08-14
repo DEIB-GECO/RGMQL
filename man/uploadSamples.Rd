@@ -9,13 +9,13 @@ uploadSamples(url, datasetName, folderPath, schemaName = NULL,
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
-\item{datasetName}{name of dataset we want to get}
+\item{datasetName}{name of dataset to get}
 
-\item{folderPath}{local path to the folder containing the samples}
+\item{folderPath}{single string local path to the folder containing the samples}
 
-\item{schemaName}{name of schema used to parse the samples
+\item{schemaName}{single string name of schema used to parse the samples
 schemaName available are:
 \itemize{
 \item{NARROWPEAK}
@@ -26,26 +26,27 @@ schemaName available are:
 }
 if schema is NULL it's looking for a XML schema file to read}
 
-\item{isGMQL}{logical value indicating whether is GMQL dataset or not}
+\item{isGMQL}{single logical value indicating whether is GMQL dataset or not}
 }
 \value{
-no object return
+None
 }
 \description{
-It uploads an folder (GMQL or not) containing dataset files:
-a new dataset will be created on repository
+It uploads a folder (GMQL or not) containing sample files using the proper GMQL 
+web service available on a remote server: a new dataset is created on repository
 }
 \details{
-If no error occured print "Upload Complete" otherwise a specific error will be printed
+If no error occures print "Upload Complete", otherwise a specific error is printed
 }
 \examples{
 
 \dontrun{
-## upload of GMQL dataset with no schema selection
+
+### upload of GMQL dataset with no schema selection
 test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(url = PolimiUrl)
 uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)
 }
-""
+
 }

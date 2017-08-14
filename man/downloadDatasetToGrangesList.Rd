@@ -8,18 +8,18 @@ downloadDatasetToGrangesList(url, datasetName)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
-\item{datasetName}{name of dataset we want to get}
+\item{datasetName}{single string name of dataset we want to get}
 }
 \value{
 GrangesList containing all GMQL sample in dataset
 }
 \description{
-It donwloads private dataset from repository to GrangesList
+It donwloads private dataset from repository saving into R environemnt as GrangesList
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

@@ -4,7 +4,7 @@
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #'
 #' @return list of jobs
 #' Every job in the list is identified by:
@@ -15,7 +15,7 @@
 #' @seealso \code{\link{showJobLog}} @seealso \code{\link{stopJob}} @seealso \code{\link{traceJob}}
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #' @examples
 #'
@@ -45,14 +45,14 @@ showJobs <- function(url)
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param job_id single string id of the job
 #'
 #' @return log text
 #'
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #' @examples
 #'
@@ -66,7 +66,7 @@ showJobs <- function(url)
 #' ## show log
 #' showJobLog(PolimiUrl,jobs_1)
 #' }
-#' ""
+#' 
 #' @export
 #'
 showJobLog <- function(url,job_id)
@@ -88,13 +88,13 @@ showJobLog <- function(url,job_id)
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param job_id single string id of the job
 #'
-#' @return no object return
+#' @return None
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #'
 #' @examples
@@ -106,7 +106,7 @@ showJobLog <- function(url,job_id)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' stopJob(PolimiUrl,jobs_1)
 #' }
-#' ""
+#' 
 #' @export
 #'
 stopJob <- function(url,job_id)
@@ -134,7 +134,7 @@ stopJob <- function(url,job_id)
 #' @return text trace log
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #' @examples
 #' \dontrun{
@@ -144,7 +144,7 @@ stopJob <- function(url,job_id)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' traceJob(PolimiUrl,jobs_1)
 #' }
-#' ""
+#' 
 #'
 #' @export
 #'
@@ -152,11 +152,10 @@ traceJob <- function(url, job_id)
 {
   URL <- paste0(url,"/jobs/",job_id,"/trace")
   h <- c('X-Auth-Token' = authToken,'Accept'= 'Application/json')
-  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    stop(content$error)
+    print(content$error)
   else
     return(content)
 
@@ -170,16 +169,16 @@ traceJob <- function(url, job_id)
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param fileName single string name of the file
 #' @param query single string text of the query
 #' @param output_gtf logical: file format for samples generated from query
 #' the possiblities are: GTF or TAB
 #'
-#' @return no object return
+#' @return None
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #'
 #' @examples
@@ -217,16 +216,16 @@ runQuery <- function(url,fileName,query,output_gtf = TRUE)
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param fileName single string name of the file
-#' @param filePath single string path of txt files where you wrote a query
+#' @param filePath single string path of txt files containing a GMQL query
 #' @param output_gtf logical: file format for sample generating from query
 #' the possiblities are: GTF or TAB
 #'
-#' @return no object return
+#' @return None
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #' @examples
 #'
@@ -259,15 +258,16 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = TRUE)
 
 #' Compile GMQL query
 #'
-#' It compiles a GMQL query as single string
+#' It compiles a GMQL query as single string using the proper GMQL web service available 
+#' on a remote server
 #'
 #' @import httr
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
+#' service name is added automatically
 #' @param query single string text of the query
 #'
 #'
-#' @return no object return
+#' @return None
 #'
 #' @examples
 #'
@@ -283,8 +283,6 @@ compileQuery <- function(url ,query)
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
   URL <- paste0(url,"/queries/compile")
-
-  #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
@@ -295,16 +293,17 @@ compileQuery <- function(url ,query)
 
 #' Compile GMQL query from file
 #'
-#' It compiles a GMQL query from file
+#' It compiles a GMQL query from file using the proper GMQL web service available 
+#' on a remote server
 #'
 #' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
-#' @param filePath single string path of txt files where you wrote a query
+#' service name is added automatically
+#' @param filePath single string path of txt files containing a GMQL query
 #'
-#' @return no object return
+#' @return None
 #'
 #' @details
-#' If error occured a specific error will be printed
+#' If error occures a specific error is printed
 #'
 #'
 #' @examples

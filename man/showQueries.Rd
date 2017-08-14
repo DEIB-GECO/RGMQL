@@ -8,7 +8,7 @@ showQueries(url)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 }
 \value{
 list of queries
@@ -19,10 +19,11 @@ Every query in the list is identified by:
 }
 }
 \description{
-It shows all the GMQL query saved on repository
+It shows all the GMQL query saved on repository 
+using the proper GMQL web service available on a remote server
 }
 \details{
-if error occured print the content error
+if error occures, a specific error is printed
 }
 \examples{
 
