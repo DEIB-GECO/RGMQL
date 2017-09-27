@@ -18,7 +18,7 @@ service name is added automatically}
 None
 }
 \description{
-Login to GMQL REST services suite as a registered user, specifiyng username and password,
+Login to GMQL REST services suite as a registered user, specifying username and password,
 or as guest using the proper GMQL web service available on a remote server
 }
 \details{
@@ -32,7 +32,7 @@ If error occures a specific error is printed
 \examples{
 
 ### login as guest
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 
 ### login with username and password

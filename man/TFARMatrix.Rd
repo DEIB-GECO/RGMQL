@@ -10,7 +10,7 @@ TFARMatrix(GMQL_dataset_path, metadata = NULL, metadata_prefix = NULL,
 \arguments{
 \item{GMQL_dataset_path}{single string GMQL dataset folder path}
 
-\item{metadata}{vector of character containing names of metadata to be searched for in metdata files.
+\item{metadata}{vector of character containing names of metadata to be searched for in metadata files.
 data will be extracted if at least one condition is satisfied:
 this condition will be logically "ANDed" with prefix filtering (see below )
 if NULL no filtering action occured (i.e every sample will be taken for regions filtering)}

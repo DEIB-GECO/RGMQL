@@ -30,12 +30,12 @@ s = select(input_data = r, semi_join = c("cell_type","cell"),
 semi_join_dataset = c)
 
 \dontrun{
+
 #### select with DEF condition declared explicitily
 s = select(input_data = r, semi_join = c(DEF("attribute_tag"),"cell_type","cell"),
 semi_join_dataset = c)
 
 }
-
 
 }
 \seealso{

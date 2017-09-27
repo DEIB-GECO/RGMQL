@@ -15,7 +15,7 @@
 #'
 #' @param input_data "url-like" string taken from GMQL function
 #' @param metadata_ordering list of ORDER objects where every object contains the name of metadata
-#' The ORDER's available are: ASC, DESC
+#' The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
 #' Every condition accepts only one string value. (e.g. ASC("cell_type") )
 #' @param mtop integer value specifying the first k samples.
 #' default is 0 that means every sample must be considered

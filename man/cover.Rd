@@ -9,24 +9,34 @@ cover(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered during execution
-normally is a single integer number, declared also as string.
-minAcc accept also special keyword: ALL
+\item{minAcc}{minimum number of overlapping regions to be considered during executio.n
+Is a single integer number, declared also as string.
+minAcc accept ALL and string like (ALL+N)/K as special keyword 
 ALL sets the minimum to the number of samples in the input dataset}
 
-\item{maxAcc}{maximum number of overlapping regions to be considered during execution
-normally is a single integer number, declared also as string.
-maxAcc accept also special keyword: ALL and ANY
+\item{maxAcc}{maximum number of overlapping regions to be considered during execution.
+Is a single integer number, declared also as string.
+maxAcc accept ALL, ANY and string like (ALL+N)/K as special keyword 
 ALL sets the maximum to the number of samples in the input dataset
 ANY acts as a wildcard, consider all areas defined to any amount of overlapping}
 
-\item{groupBy}{a vector of strings specifying grouping criteria}
+\item{groupBy}{list of CONDITION objects, or simple string concatenation 
+(i.e c("cell_type","attribute_tag","size")).
+Every object contains the name of metadata to be used in \emph{groupby}.
+For details of CONDITION objects see:
+\code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
 
-\item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of OPERATOR class
-The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN
-Every operator accepts a string value, except for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist as region attribute
+Every condition accepts only one string value. (e.g. DEF("cell_type") )
+In case of single concatenation with no CONDITION, all metadata are considering as DEF}
+
+\item{aggregates}{list of element in the form \emph{key} = \emph{function_aggregate}.
+The \emph{function_aggregate} is an object of class OPERATOR
+The aggregate functions available are: \code{\link{MIN}}, \code{\link{MAX}},
+\code{\link{SUM}}, \code{\link{BAG}}, \code{\link{AVG}}, \code{\link{COUNT}},
+\code{\link{STD}}, \code{\link{MEDIAN}}, \code{\link{Q1}}, \code{\link{Q2}}, 
+\code{\link{Q3}}.
+Every operator accepts a string value, execet for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist in schema
 Two style are allowed:
 \itemize{
 \item list of key-value pairs: e.g. sum = SUM("pvalue")
@@ -41,7 +51,7 @@ as input for the subsequent GMQL function
 \description{
 it takes as input a dataset and returns another dataset (with a single sample, if no \emph{groupby} option is specified)
 by “collapsing” the input dataset samples and their regions according to certain rules specified by the input parameters.
-The attributes of the output genomic regions are only the region coordinates, and Jaccard indexes ( JaccardIntersect and JaccardResult).
+The attributes of the output genomic regions are only the region coordinates, and Jaccard indexes (JaccardIntersect and JaccardResult).
 Jaccard Indexes are standard measures of similarity of the contributing regions, added as default region attributes.
 The JaccardIntersect index is calculated as the ratio between the lengths of the intersection
 and of the union of the contributing regions; the JaccardResult index is calculated as the ratio
@@ -65,12 +75,12 @@ exp = read(test_path)
 res = cover(input_data = exp,2,"ANY")
 
 \dontrun{
-### This GMQL statement computes the result grouping the input \\emph{exp} samples by the values of 
-their \\emph{cell} metadata attribute, 
-thus one output \\emph{res} sample is generated for each cell type; 
-output regions are produced where at least 2 and at most 3 regions of grouped \\emph{exp} samples 
+### This GMQL statement computes the result grouping the input exp samples by the values of 
+their cell metadata attribute, 
+thus one output res sample is generated for each cell type; 
+output regions are produced where at least 2 and at most 3 regions of grouped exp samples 
 overlap, setting as attributes of the resulting regions the minimum pValue of the overlapping regions 
-(\\emph{min_pvalue}) and their Jaccard indexes (JaccardIntersect and JaccardResult).
+(min_pvalue) and their Jaccard indexes (JaccardIntersect and JaccardResult).
 
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = read(test_path)

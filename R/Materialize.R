@@ -8,23 +8,18 @@
 #' After invoking execution function, all varialbe associated to DAG will be removed
 #' from scala enviroment, although the associated R variable will remain stored in R environment
 #' 
-#' @return no returned value
+#' @return None
 #'
 #' @examples
 #'
-#' \dontrun{
-#'
-#' library(rscala)
-#'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
+#' r = readDataset(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
 #' execute()
-#' }
-#' ""
+#' 
 #' @export
 #'
 execute <- function()
@@ -44,19 +39,15 @@ execute <- function()
 #' For best performance, materialize the relevant data only.
 #'
 #'
-#' @param input_data "url-like" string taken from GMQL function
+#' @param input_data returned object from any GMQL function
 #' @param dir_out destination folder path.
-#' by default the working directory is set by R environment
+#' by default is current working directory of the R process
 #'
-#' @return no returned value
+#' @return None
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
-#'
-#' \dontrun{
-#'
-#' library(rscala)
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -64,13 +55,12 @@ execute <- function()
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
-#' }
-#' ""
+#' 
 #' @export
 #'
 materialize <- function(input_data, dir_out = getwd())
 {
-  out <- WrappeR$materialize(input_data,dir_out)
+  out <- WrappeR$materialize(input_data$value,dir_out)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
@@ -82,8 +72,8 @@ materialize <- function(input_data, dir_out = getwd())
 #'
 #' @import GenomicRanges
 #'
-#' @param input_data "url-like" string taken from GMQL function
-#' @param rows number of rows that you want to retrieve an stored in memory
+#' @param input_data returned object from any GMQL function
+#' @param rows number of rows that you want to retrieve and stored in memory
 #' by default is 0 that means take all rows
 #'
 #' @return GrangesList with associated metadata
@@ -111,13 +101,14 @@ take <- function(input_data, rows=0L)
   if(rows<0)
     stop("rows cannot be negative")
 
-  out <- WrappeR$take(input_data,rows)
+  out <- WrappeR$take(input_data$value,rows)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
 
   reg <- WrappeR$get_reg()
   meta <- WrappeR$get_meta()
   schema <- WrappeR$get_schema()
+  "taken"
 }
 
 

@@ -7,7 +7,7 @@
 execute()
 }
 \value{
-no returned value
+None
 }
 \description{
 execute GMQL query.
@@ -19,17 +19,12 @@ from scala enviroment, although the associated R variable will remain stored in 
 }
 \examples{
 
-\dontrun{
-
-library(rscala)
-
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
+r = readDataset(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = test_path)
 execute()
-}
-""
+
 }

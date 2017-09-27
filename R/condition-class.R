@@ -60,12 +60,12 @@ check.CONDITION <- function(value)
 #' semi_join_dataset = c)
 #' 
 #' \dontrun{
+#' 
 #' #### select with DEF condition declared explicitily
 #' s = select(input_data = r, semi_join = c(DEF("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
 #' }
-#' 
 #'
 #' @export
 #'
@@ -86,13 +86,16 @@ DEF <- function(value)
 #' This class constructor is used to create instances of CONDITION object
 #' to be used in GMQL functions that require evaluation on value
 #' This constructor define a EXACT evaluation of the input value.
-#' EXACT evaluation: only attributes exactly as value will match; no further prefixes are allowed. 
+#' EXACT evaluation: only attributes exactly as value will match; 
+#' no further prefixes are allowed. 
 #'
 #' @param value single string identifying name of metadata and/or region attribute
 #' to be evaluated
 #'
 #' @return EXACT condition object
-#'
+#' 
+#' @seealso \code{\link{DEF}} \code{\link{FULL}}
+#' 
 #' @examples
 #' 
 #' initGMQL("gtf")
@@ -101,7 +104,7 @@ DEF <- function(value)
 #' 
 #' #### select with condition
 #' #### the first and the third attribute are DEF the second one is EXACT
-#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = c)
+#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = r)
 #'
 #' \dontrun{
 #'
@@ -143,7 +146,9 @@ EXACT <- function(value)
 #' to be evaluated
 #' 
 #' @return FULL condition object
-#'
+#' 
+#' @seealso \code{\link{DEF}} \code{\link{EXACT}}
+#' 
 #' @examples
 #' 
 #' initGMQL("gtf")

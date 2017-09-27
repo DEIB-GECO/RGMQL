@@ -14,17 +14,14 @@ join(right_input_data, left_input_data, genometric_predicate = NULL,
 
 \item{genometric_predicate}{is a list of lists of DISTAL object by means of logical ANDs}
 
-\item{joinBy}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
-or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
-In the latter form all metadata are considered having DEF condition
-The CONDITION's available are:
-\itemize{
-\item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
-\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-}
-Every condition accepts only one string value. (e.g. FULL("cell_type") )}
+\item{joinBy}{list of CONDITION objects, or simple string concatenation 
+(i.e c("cell_type","attribute_tag","size")).
+Every object contains the name of metadata to be used in \emph{groupby}.
+For details of CONDITION objects see:
+\code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
+
+Every condition accepts only one string value. (e.g. DEF("cell_type") )
+In case of single concatenation with no CONDITION, all metadata are considering as DEF}
 
 \item{output}{single string that declare which region is given in output for each input pair of left dataset
 right dataset regions satisfying the genometric predicate:
@@ -40,8 +37,8 @@ regions satisfying the genometric predicate)}
 }}
 }
 \value{
-"url-like" string
-for example dataset0/select1/extend4/join5
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 It takes in input two datasets, respectively known as nchor (left) and experiment (right) and returns
@@ -55,13 +52,7 @@ left or right respectively.
 \examples{
 \dontrun{
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
-c = cover(2,3,input_data = r)
-j = join (list(list(UP(),MD(1)), list(DOWN(),DGE(5000))),right_input_data = r,left_input_data = c)
 }
-""
 
 }
 \references{

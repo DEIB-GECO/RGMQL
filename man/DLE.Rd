@@ -18,3 +18,6 @@ None
 }
 ""
 }
+\seealso{
+\code{\link{DGE}} \code{\link{MD}}  \code{\link{DOWN}} \code{\link{UP}}
+}

@@ -19,6 +19,7 @@ For this purpose GMQL has been proposed a high-level, declarative GenoMetric Que
 ## Purpose
 
 This package provides a set of functions to create, manipulate and extract genomic data from different datasources from local and remote datasets.
+
 These functios allow performing complex queries without the knowledge of GMQL syntax
 
 # Dataset

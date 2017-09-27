@@ -6,7 +6,7 @@ if(getRversion() >= "3.1.0")
 
 #' Login to GMQL
 #'
-#' Login to GMQL REST services suite as a registered user, specifiyng username and password,
+#' Login to GMQL REST services suite as a registered user, specifying username and password,
 #' or as guest using the proper GMQL web service available on a remote server
 #' 
 #' @import httr
@@ -31,14 +31,16 @@ if(getRversion() >= "3.1.0")
 #' @examples
 #' 
 #' ### login as guest
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #'
+#' \dontrun{
+#' 
 #' ### login with username and password
-#' ### this account is a test account don't use it 
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
-#'
+#' 
+#' }
 #' @export
 #'
 login.GMQL <- function(url,username = NULL, password = NULL)
@@ -94,14 +96,16 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' @examples
 #'
 #' #### login as guest, then logout
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' logout.GMQL(PolimiUrl)
 #'
+#' \dontrun{
 #' ##### login with username and password, then logout
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' logout.GMQL(PolimiUrl)
+#' }
 #'
 #' @return None
 #'
@@ -151,12 +155,11 @@ logout.GMQL <- function(url)
 #' @return None
 #'
 #' @examples
-#'
+#' 
 #' ##### this user already exist, it's a test account
 #' ##### don't use it
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
-#'
 #'
 #' @export
 #'

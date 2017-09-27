@@ -11,7 +11,7 @@ order(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 \item{input_data}{"url-like" string taken from GMQL function}
 
 \item{metadata_ordering}{list of ORDER objects where every object contains the name of metadata
-The ORDER's available are: ASC, DESC
+The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
 Every condition accepts only one string value. (e.g. ASC("cell_type") )}
 
 \item{mtop}{integer value specifying the first k samples.

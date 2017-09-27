@@ -17,7 +17,8 @@ EXACT condition object
 This class constructor is used to create instances of CONDITION object
 to be used in GMQL functions that require evaluation on value
 This constructor define a EXACT evaluation of the input value.
-EXACT evaluation: only attributes exactly as value will match; no further prefixes are allowed.
+EXACT evaluation: only attributes exactly as value will match; 
+no further prefixes are allowed.
 }
 \examples{
 
@@ -27,7 +28,7 @@ r = readDataset(test_path)
 
 #### select with condition
 #### the first and the third attribute are DEF the second one is EXACT
-s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = c)
+s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_tag), semi_join_dataset = r)
 
 \dontrun{
 
@@ -43,4 +44,7 @@ semi_join_dataset = c)
 
 }
 
+}
+\seealso{
+\code{\link{DEF}} \code{\link{FULL}}
 }

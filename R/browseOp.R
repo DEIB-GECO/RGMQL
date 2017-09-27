@@ -21,7 +21,7 @@
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' list <- showQueries(PolimiUrl)
 #'
@@ -68,7 +68,7 @@ showQueries <- function(url)
 #' @examples
 #'
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' saveQuery(PolimiUrl,"try_1", queryTxt = "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
 #' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;")
@@ -119,7 +119,7 @@ saveQuery <- function(url,queryName,queryTxt)
 #' test_path <- system.file("example",package = "GMQL")
 #' test_query <- file.path(test_path, "query1.txt")
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' saveQuery.fromfile(PolimiUrl,"query1", test_query)
 #'

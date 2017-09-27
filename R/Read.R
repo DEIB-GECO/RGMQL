@@ -59,7 +59,7 @@ initGMQL <- function(output_format, remote_processing = FALSE)
 #' }
 #' Default is CustomParser.
 #' @param is_local single logical value indicating local or remote dataset
-#' if the remote processing is off you cannot set is_local=FALSE (an error occured)
+#' if the remote processing is off you cannot set is_local=FALSE (an error occures)
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
 #' useful only in remote processing

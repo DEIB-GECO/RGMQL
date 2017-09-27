@@ -11,22 +11,32 @@ histogram(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 
 \item{minAcc}{minimum number of overlapping regions to be considered during execution
 normally is a single integer number, declared also as string.
-minAcc accept also special keyword: ALL
+minAcc accept ALL and string like (ALL+N)/K as special keyword 
 ALL sets the minimum to the number of samples in the input dataset}
 
 \item{maxAcc}{maximum number of overlapping regions to be considered during execution
 normally is a single integer number, declared also as string.
-maxAcc accept also special keyword: ALL and ANY
+maxAcc accept ALL, ANY and string like (ALL+N)/K as special keyword 
 ALL sets the maximum to the number of samples in the input dataset
 ANY acts as a wildcard, consider all areas defined to any amount of overlapping}
 
-\item{groupBy}{a vector of strings specifying grouping criteria}
+\item{groupBy}{list of CONDITION objects, or simple string concatenation 
+(i.e c("cell_type","attribute_tag","size")).
+Every object contains the name of metadata to be used in \emph{groupby}.
+For details of CONDITION objects see:
+\code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
 
-\item{aggregates}{a list of element in the form key = 'function_aggregate'.
-'function_aggregate' is an object of OPERATOR class
-The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN
-Every operator accepts a string value, except for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist as region attribute
+Every condition accepts only one string value. (e.g. DEF("cell_type") )
+In case of single concatenation with no CONDITION, all metadata are considering as DEF}
+
+\item{aggregates}{list of element in the form \emph{key} = \emph{function_aggregate}.
+The \emph{function_aggregate} is an object of class OPERATOR
+The aggregate functions available are: \code{\link{MIN}}, \code{\link{MAX}},
+\code{\link{SUM}}, \code{\link{BAG}}, \code{\link{AVG}}, \code{\link{COUNT}},
+\code{\link{STD}}, \code{\link{MEDIAN}}, \code{\link{Q1}}, \code{\link{Q2}}, 
+\code{\link{Q3}}.
+Every operator accepts a string value, execet for COUNT that cannot have a value.
+Argument of 'function_aggregate' must exist in schema
 Two style are allowed:
 \itemize{
 \item list of key-value pairs: e.g. sum = SUM("pvalue")

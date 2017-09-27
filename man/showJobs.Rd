@@ -8,7 +8,7 @@ showJobs(url)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 }
 \value{
 list of jobs
@@ -21,7 +21,7 @@ Every job in the list is identified by:
 It show all Jobs (runnig, succeded or failed) run by user
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 

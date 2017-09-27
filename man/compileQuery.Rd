@@ -8,15 +8,16 @@ compileQuery(url, query)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{query}{single string text of the query}
 }
 \value{
-no object return
+None
 }
 \description{
-It compiles a GMQL query as single string
+It compiles a GMQL query as single string using the proper GMQL web service available 
+on a remote server
 }
 \examples{
 

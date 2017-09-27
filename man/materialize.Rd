@@ -7,13 +7,13 @@
 materialize(input_data, dir_out = getwd())
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
 \item{dir_out}{destination folder path.
-by default the working directory is set by R environment}
+by default is current working directory of the R process}
 }
 \value{
-no returned value
+None
 }
 \description{
 It saves the contents of a dataset that contains samples metadata and samples regions.
@@ -23,18 +23,13 @@ For best performance, materialize the relevant data only.
 }
 \examples{
 
-\dontrun{
-
-library(rscala)
-
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = read(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = test_path)
-}
-""
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

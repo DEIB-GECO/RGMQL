@@ -24,7 +24,7 @@ The Parser's available are:
 Default is CustomParser.}
 
 \item{is_local}{single logical value indicating local or remote dataset
-if the remote processing is off you cannot set is_local=FALSE (an error occured)}
+if the remote processing is off you cannot set is_local=FALSE (an error occures)}
 
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically

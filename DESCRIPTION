@@ -4,13 +4,24 @@ Title: GMQL function
 Version: 0.99.0
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description: This package brings GMQL functionalities into R environemnt.
+    GMQL stands for Genometric Query Language for extracting regions of interest from 
+    experiments and for computing their properties, 
+    with high-level operations for manipulating regions and for measuring their distances
+    This package offers flexible, robust, high performance functions to perform GMQL queries.
+    It provides two different approaches in writing GMQL queries:
+        a) REST based GMQL calls
+        b) standard R APIs
+    The REST approach allows user to manage remote big genomic dataset hosted in complex cluster based infrastructure.
+    Multiple REST invocation can run concurrently on remote infrastructure allowing user to test progress of every call.
+    The R APIs allow user to works with local data using batch-like approach where single invocation must be invoked sequentially
+    The REST approach allows to perform text-based GMQL queries while standard APIs implement distinct function for every GMQL operation.
+    The package provides a rich set of ancillary classes used by R APIs that allows sophisticated input/output management and sorting.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: rscala(>= 2.2.2), httr, GenomicRanges, rtracklayer, data.table, utils, plyr, xml2, methods, S4Vectors, dplyr
+Imports: rscala(>= 2.2.3), httr, GenomicRanges, rtracklayer, data.table, utils, plyr, xml2, methods, S4Vectors, dplyr
 Depends: R(>= 3.3.2)
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown

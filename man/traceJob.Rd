@@ -19,7 +19,7 @@ text trace log
 It traces a specific current job
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 \dontrun{
@@ -29,6 +29,6 @@ list_jobs <- showJobs(PolimiUrl)
 jobs_1 <- list_jobs$jobs[[1]]
 traceJob(PolimiUrl,jobs_1)
 }
-""
+
 
 }

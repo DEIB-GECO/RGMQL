@@ -9,7 +9,7 @@
 #' @importFrom rtracklayer import
 #'
 #' @param GMQL_dataset_path  single string GMQL dataset folder path
-#' @param metadata vector of character containing names of metadata to be searched for in metdata files.
+#' @param metadata vector of character containing names of metadata to be searched for in metadata files.
 #' data will be extracted if at least one condition is satisfied:
 #' this condition will be logically "ANDed" with prefix filtering (see below )
 #' if NULL no filtering action occured (i.e every sample will be taken for regions filtering)

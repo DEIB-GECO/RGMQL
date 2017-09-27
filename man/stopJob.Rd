@@ -8,18 +8,18 @@ stopJob(url, job_id)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{job_id}{single string id of the job}
 }
 \value{
-no object return
+None
 }
 \description{
 It stops a specific current job
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 
@@ -30,5 +30,5 @@ list_jobs <- showJobs(PolimiUrl)
 jobs_1 <- list_jobs$jobs[[1]]
 stopJob(PolimiUrl,jobs_1)
 }
-""
+
 }

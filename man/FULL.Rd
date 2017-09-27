@@ -45,3 +45,6 @@ semi_join_dataset = c)
 }
 
 }
+\seealso{
+\code{\link{DEF}} \code{\link{EXACT}}
+}

@@ -7,9 +7,9 @@
 take(input_data, rows = 0L)
 }
 \arguments{
-\item{input_data}{"url-like" string taken from GMQL function}
+\item{input_data}{returned object from any GMQL function}
 
-\item{rows}{number of rows that you want to retrieve an stored in memory
+\item{rows}{number of rows that you want to retrieve and stored in memory
 by default is 0 that means take all rows}
 }
 \value{

@@ -17,9 +17,11 @@
 #'
 #' @param left_input_data returned object from any GMQL function
 #' @param right_input_data returned object from any GMQL function
-#' @param aggregates a list of element in the form key = 'function_aggregate'.
-#' 'function_aggregate' is an object of class OPERATOR
-#' The aggregate functions available are: MIN, MAX, SUM, BAG, AVG, COUNT, MEDIAN.
+#' @param aggregates list of element in the form \emph{key} = \emph{function_aggregate}.
+#' The \emph{function_aggregate} is an object of class OPERATOR
+#' The aggregate functions available are: \code{\link{MIN}}, \code{\link{MAX}},
+#' \code{\link{SUM}}, \code{\link{BAG}}, \code{\link{AVG}}, \code{\link{COUNT}},
+#' \code{\link{STD}}, \code{\link{MEDIAN}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
 #' Every operator accepts a string value, execet for COUNT that cannot have a value.
 #' Argument of 'function_aggregate' must exist in schema
 #' Two style are allowed:
@@ -28,20 +30,18 @@
 #' \item list of values: e.g. SUM("pvalue")
 #' }
 #' "mixed style" is not allowed
-#' @param joinBy list of CONDITION objects every object contains the name of metadata to be used in semijoin,
-#' or simple string concatenation c("cell_type","attribute_tag","size") without declaring condition.
-#' In the latter form all metadata are considered having DEF condition
-#' The CONDITION's available are:
-#' \itemize{
-#' \item{FULL: Fullname evaluation, two attributes match if they both end with value and,
-#' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{DEF: Default evaluation, two attributes match if both end with value. }
-#' \item{EXACT: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
-#' }
+#'
+#' @param joinBy list of CONDITION objects, or simple string concatenation 
+#' (i.e c("cell_type","attribute_tag","size")).
+#' Every object contains the name of metadata to be used in \emph{groupby}.
+#' For details of CONDITION objects see:
+#' \code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
+#' 
 #' Every condition accepts only one string value. (e.g. DEF("cell_type") )
-#'
-#'
-#' @return "url-like" string
+#' In case of single concatenation with no CONDITION, all metadata are considering as DEF
+#' 
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
@@ -63,12 +63,12 @@ map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = N
   if(!is.null(aggregates))
     metadata_matrix <- .aggregates(metadata,"OPERATOR")
   else
-    metadata_matrix = NULL
+    metadata_matrix = scalaNull("Array[Array[String]]")
 
   if(!is.null(joinBy))
     join_condition_matrix <- .join_condition(joinBy)
   else
-    join_condition_matrix <- NULL
+    join_condition_matrix <- scalaNull("Array[Array[String]]")
 
   out<-WrappeR$map(join_condition_matrix,aggregates,left_input_data,right_input_data)
 

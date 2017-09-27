@@ -4,7 +4,6 @@
 #' and adds them to the existing metadata attributes of the sample.
 #' Aggregate functions are applied sample by sample.
 #'
-#'
 #' @param input_data returned object from any GMQL function
 #' @param metadata list of element in the form \emph{key} = \emph{function_aggregate}.
 #' The \emph{function_aggregate} is an object of class OPERATOR
@@ -20,23 +19,36 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @return "url-like" string
-#' for example dataset0/select1/extend4
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
-#'
+#' 
 #' @examples
-#'
-#' \dontrun{
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
+#' r = readDataset(test_path)
 #'
-#' ### new metadata sum,c and m are added in metadata sample
-#' e = extend(input_data = r, list(sum = SUM("pvalue"),c = COUNT(), m = AVG("score")))
+#' ### it counts the regions in each sample and stores their number as value of the new metadata 
+#' RegionCount attribute of the sample.
+#' e = extend(input_data = r, list(RegionCount = COUNT())
+#' \dontrun{
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' exp = readDataset(test_path)
+#'
+#' ### it copies all samples of exp dataset into res dataset, and then calculates 
+#' for each of them two new metadata attributes:
+#' 1. RegionCount is the number of sample regions;
+#' 2. MinP is the minimum Pvalue of the sample regions.
+#' res sample regions are the same as the ones in exp.
+#' 
+#' res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN(pValue))
+#' 
 #' }
-#' ""
+#' 
 #' @export
 #'
 extend <-function(input_data, metadata = NULL)
@@ -44,9 +56,9 @@ extend <-function(input_data, metadata = NULL)
   if(!is.null(metadata))
     metadata_matrix <- .aggregates(metadata,"META_OPERATOR")
   else
-    metadata_matrix <- NULL
+    metadata_matrix <- scalaNull("Array[Array[String]]")
 
-  out <- WrappeR$extend(metadata_matrix,input_data)
+  out <- WrappeR$extend(metadata_matrix,input_data$value)
 
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)

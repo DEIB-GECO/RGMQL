@@ -8,7 +8,7 @@ runQuery(url, fileName, query, output_gtf = TRUE)
 }
 \arguments{
 \item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically}
+service name is added automatically}
 
 \item{fileName}{single string name of the file}
 
@@ -18,13 +18,13 @@ service name will be added automatically}
 the possiblities are: GTF or TAB}
 }
 \value{
-no object return
+None
 }
 \description{
 It runs a GMQL query as single string
 }
 \details{
-If error occured a specific error will be printed
+If error occures a specific error is printed
 }
 \examples{
 
