@@ -12,7 +12,8 @@ union(left_input_data, right_input_data)
 \item{right_input_data}{returned object from any GMQL function}
 }
 \value{
-"url-like" string
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 It is used to integrate homogeneous or heterogeneous samples of two datasets within a single dataset
@@ -29,19 +30,17 @@ For what concerns metadata, attributes of samples from the left (right) input da
 with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 }
 \examples{
-
-\dontrun{
-
-library(rscala)
+### it creates a dataset called full which contains all samples from the datasets 
+data1 and data2 whose schema is defined by merging data1 and data2 dataset schemas 
+(union of all the attributes present in the two input datasets).
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-r = read(test_path)
-r2 = read(test_path2)
-u = union(r2,r)
-}
-""
+data1 = readDataset(test_path)
+data2 = readDataset(test_path2)
+full = union(r2,r)
+
 
 }
 \references{

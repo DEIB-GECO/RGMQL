@@ -40,8 +40,8 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' r_left = read(test_path)
-#' r_right = read(test_path2)
+#' r_left = readDataset(test_path)
+#' r_right = readDataset(test_path2)
 #' out = difference(r_left,r_right)
 #' 
 #' \dontrun{
@@ -53,8 +53,8 @@
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' exp1 = read(test_path)
-#' exp2 = read(test_path2)
+#' exp1 = readDataset(test_path)
+#' exp2 = readDataset(test_path2)
 #' out = difference(exp1,exp2, c("antibody_target"))
 #'
 #' }
@@ -67,11 +67,12 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact
     join_condition_matrix <- .join_condition(joinBy)
   else
     join_condition_matrix <- scalaNull("Array[Array[String]]")
-  out <- WrappeR$difference(join_condition_matrix,right_input_data,left_input_data,is_exact)
+  
+  out <- WrappeR$difference(join_condition_matrix,right_input_data$value,left_input_data$value,is_exact)
   
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }
 

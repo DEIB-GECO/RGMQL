@@ -39,9 +39,8 @@ If error occures a specific error is printed
 
 ##### this user already exist, it's a test account
 ##### don't use it
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
-
 
 }
 \seealso{

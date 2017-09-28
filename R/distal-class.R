@@ -51,10 +51,21 @@ check.DISTAL <- function(value)
 #' @seealso \code{\link{DGE}} \code{\link{MD}}  \code{\link{DOWN}} \code{\link{UP}}
 #' 
 #' @examples
-#' \dontrun{
+#' 
+#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+#' and takes the first/closest one for each TSS, 
+#' provided that such distance is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' from the same provider (joinby clause).
+#' 
+#' #' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' TSS = readDataset(test_path)
+#' HM = readDataset(test_path2)
+#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
 #'
-#' }
-#' ""
 #' @export
 #'
 DLE <- function(value)
@@ -84,10 +95,21 @@ DLE <- function(value)
 #' @seealso \code{\link{DLE}} \code{\link{MD}}  \code{\link{DOWN}} \code{\link{UP}}
 #' 
 #' @examples
-#' \dontrun{
+#' 
+#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+#' and takes the first/closest one for each TSS, 
+#' provided that such distance is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' from the same provider (joinby clause).
+#' 
+#' #' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' TSS = readDataset(test_path)
+#' HM = readDataset(test_path2)
+#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DGE("120000"))),c("provider"),region_output="RIGHT")
 #'
-#' }
-#' ""
 #' @export
 #'
 DGE <- function(value)
@@ -120,10 +142,21 @@ DGE <- function(value)
 #' @seealso \code{\link{DLE}} \code{\link{DGE}}  \code{\link{DOWN}} \code{\link{UP}}
 #' 
 #' @examples
-#' \dontrun{
+#' 
+#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+#' and takes the first/closest one for each TSS, 
+#' provided that such distance is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' from the same provider (joinby clause).
+#' 
+#' #' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' TSS = readDataset(test_path)
+#' HM = readDataset(test_path2)
+#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DGE("120000"))),c("provider"),region_output="RIGHT")
 #'
-#' }
-#' ""
 #' @export
 #'
 MD <- function(value)
@@ -155,10 +188,21 @@ MD <- function(value)
 #' @seealso \code{\link{DLE}} \code{\link{DGE}}  \code{\link{DOWN}} \code{\link{MD}}
 #' 
 #' @examples
-#' \dontrun{
-#'
-#' }
-#' ""
+#' 
+#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+#' and takes the first/closest one for each TSS, 
+#' provided that such distance is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' from the same provider (joinby clause).
+#' 
+#' #' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' TSS = readDataset(test_path)
+#' HM = readDataset(test_path2)
+#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DGE("120000"),UP)),c("provider"),region_output="RIGHT")
+#' 
 #' @export
 #'
 UP <- function()
@@ -189,10 +233,22 @@ as.character.UP <- function(obj) {
 #' @seealso \code{\link{DLE}} \code{\link{DGE}}  \code{\link{UP}} \code{\link{MD}}
 #' 
 #' @examples
-#' \dontrun{
-#'
-#' }
-#' ""
+#' 
+#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+#' and takes the first/closest one for each TSS, 
+#' provided that such distance is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
+#' from the same provider (joinby clause).
+#' 
+#' #' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+#' TSS = readDataset(test_path)
+#' HM = readDataset(test_path2)
+#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DGE("12000"),DOWN)),c("provider"),region_output="RIGHT")
+#' 
+#' 
 #' @export
 #'
 DOWN <- function()

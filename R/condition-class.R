@@ -113,11 +113,6 @@ DEF <- function(value)
 #' s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 #' semi_join_dataset = c)
 #'
-#' #### select with condition
-#' #### the first is EXACT and the other ones are DEF
-#' s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
-#' semi_join_dataset = c)
-#'
 #' }
 #'
 #' @export
@@ -164,11 +159,6 @@ EXACT <- function(value)
 #' #### select with DEF condition
 #' #### the FULL condition is treated as DEF due to coercion
 #' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
-#' semi_join_dataset = c)
-#'
-#' #### select with condition
-#' #### the first is FULL and the other ones are DEF
-#' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
 #' semi_join_dataset = c)
 #'
 #' }

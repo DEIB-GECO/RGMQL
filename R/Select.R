@@ -9,7 +9,7 @@
 #' If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 #'
 #' @param input_data returned object from any GMQL function
-#' @param predicate single string predicate made up by logical oepration: AND,OR,NOT on metadata attribute
+#' @param predicate single string predicate made up by logical operation: AND,OR,NOT on metadata attribute
 #' @param region_predicate single string predicate made up by logical operation: AND,OR,NOT on schema region values
 #' @param semi_join list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
 #' or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
@@ -26,44 +26,44 @@
 #' @param semi_join_negation single logical value: T => semijoin is perfomed considering 
 #' semi_join NOT IN semi_join_dataset, 
 #' F => semijoin is performed considering semi_join IN semi_join_dataset
-#' @param semi_join_dataset returned object from any GMQL function used in semijoin
+#' @param semi_join_dataset returned object from any GMQL function
 #'
-#' @return "url-like" string
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
+#' 
+#' ### it selects from input data samples of patients younger than 70 years old, 
+#' based on filtering on sample metadata attribute Patient_age
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' input = readDataset(test_path)
+#' s=select(input,"Patient_age < 70")
+#' 
 #' \dontrun{
-#'
+#' 
+#' It creates a new dataset called 'jun_tf' by selecting those samples and their 
+#' regions from the existing 'data' dataset such that:
+#' \itemize{
+#' \item{each output sample has a metadata attribute called antibody_target with value JUN}
+#' \item{each output sample also has not a metadata attribute called cell that has the same value 
+#' of at least one of the values that a metadata attribute equally called cell has in at least one 
+#' sample of the 'join_data' dataset}
+#' \item{for each sample satisfying previous condition,only its regions that have a region attribute called
+#' pValue with the associated value less than 0.01 are conserved in output}
+#' }
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' r = read(test_path)
-#' r2 = read(test_path2)
-#'
-#' #### select with condition
-#' s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = r2)
-#'
-#' #### select with DEF condition
-#' s = select(input_data = r, semi_join = list("cell_type","cell"), semi_join_dataset = r2)
-#'
-#' #### select with DEF condition
-#' #### the full condition is treated as DEF due to coercion
-#' s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
-#' semi_join_dataset = r2)
-#'
-#' #### select with condition
-#' #### the first is FULL and the other ones are DEF
-#' s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
-#' semi_join_dataset = r2)
-#'
-#' #### select with predicate metadata
-#' s = select(input_data = r, "NOT(biosample_organism=='Homo sapiens' AND assembly=='hg19')")
-#'
-#' #### select with predicate on regions
-#' s = select(input_data = r, region_predicate = " score > 0.5 AND NOT(variant_type == 'SNP')")
+#' data = readDataset(test_path)
+#' join_data = readDataset(test_path2)
+#' jun_tf=select(data,"antibody_target == 'JUM', "pValue < 0.01",c("cell"), T , semi_join_dataset=join_data )
+#' 
 #' }
-#' ""
+#'
 #' @export
 #'
 select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_join = NULL,
@@ -71,33 +71,46 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
 {
   if(!is.null(predicate))
     .check_predicate(predicate)
+  else
+    predicate <- scalaNull("String")
 
   if(!is.null(region_predicate))
     .check_predicate(region_predicate)
+  else
+    region_predicate <- scalaNull("String")
 
-  if(is.null(semi_join) && is.null(semi_join_dataset)) {
-    join_condition_matrix <- NULL
+  if(is.null(semi_join) && is.null(semi_join_dataset) && is.null(semi_join_negation)) {
+    join_condition_matrix <- scalaNull("Array[Array[String]]")
+    semi_join_dataset <- scalaNull("String")
+    semi_join_negation <- scalaNull("Boolean")
   }
-  else if(is.null(semi_join) || is.null(semi_join_dataset)) {
+  else if(is.null(semi_join) || is.null(semi_join_dataset) || is.null(semi_join_negation)) {
     warning("You did not set correctly semijoin parameters.\nAll parameters have to be set.\nSelect function will be invoked without semijoin expression")
-    semi_join_dataset <- NULL
-    join_condition_matrix <- NULL
+    semi_join_dataset <- scalaNull("String")
+    semi_join_negation <- scalaNull("Boolean")
+    join_condition_matrix <- scalaNull("Array[Array[String]]")
   }
   else
   {
+    semi_join_dataset <- semi_join_dataset$value
+    
     if(!is.character(semi_join_dataset))
       stop("semi_join_dataset: no valid input")
 
     if(length(semi_join_dataset)>1)
       stop("semi_join_dataset: no multiple values")
-
+     
+    if(!is.logical(semi_join_negation))
+      stop("semi_join_negation: no valid input")
+    
     join_condition_matrix <- .join_condition(semi_join)
   }
-  out <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,input_data)
+  out <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,
+                        semi_join_negation,input_data$value)
   if(grepl("No",out,ignore.case = TRUE) || grepl("expected",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }
 
 

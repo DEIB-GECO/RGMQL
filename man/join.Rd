@@ -5,14 +5,16 @@
 \title{GMQL Operation: JOIN}
 \usage{
 join(right_input_data, left_input_data, genometric_predicate = NULL,
-  joinBy = NULL, output = "contig")
+  joinBy = NULL, region_output = "contig")
 }
 \arguments{
 \item{right_input_data}{returned object from any GMQL function}
 
 \item{left_input_data}{returned object from any GMQL function}
 
-\item{genometric_predicate}{is a list of lists of DISTAL object by means of logical ANDs}
+\item{genometric_predicate}{is a list of lists of DISTAL object by means of logical ANDs
+For details of DISTAL objects see:
+\code{\link{DLE}}, \code{\link{DGE}}, \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}}
 
 \item{joinBy}{list of CONDITION objects, or simple string concatenation 
 (i.e c("cell_type","attribute_tag","size")).
@@ -23,7 +25,7 @@ For details of CONDITION objects see:
 Every condition accepts only one string value. (e.g. DEF("cell_type") )
 In case of single concatenation with no CONDITION, all metadata are considering as DEF}
 
-\item{output}{single string that declare which region is given in output for each input pair of left dataset
+\item{region_output}{single string that declare which region is given in output for each input pair of left dataset
 right dataset regions satisfying the genometric predicate:
 \itemize{
 \item{left: outputs the anchor regions from left_input_data that satisfy the genometric predicate}
@@ -50,9 +52,19 @@ The output metadata are the union of the input metadata, with their attribute na
 left or right respectively.
 }
 \examples{
-\dontrun{
 
-}
+### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+and takes the first/closest one for each TSS, 
+provided that such distance is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+from the same provider (joinby clause).
+
+#' initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+TSS = readDataset(test_path)
+HM = readDataset(test_path2)
+join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
 
 }
 \references{

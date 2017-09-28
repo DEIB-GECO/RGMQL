@@ -25,14 +25,16 @@ If error occures a specific error is printed
 \examples{
 
 #### login as guest, then logout
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 logout.GMQL(PolimiUrl)
 
+\dontrun{
 ##### login with username and password, then logout
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl,"test101","test")
 logout.GMQL(PolimiUrl)
+}
 
 }
 \seealso{

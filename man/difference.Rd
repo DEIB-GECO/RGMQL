@@ -49,8 +49,8 @@ overlap any region in the second dataset.
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-r_left = read(test_path)
-r_right = read(test_path2)
+r_left = readDataset(test_path)
+r_right = readDataset(test_path2)
 out = difference(r_left,r_right)
 
 \dontrun{
@@ -62,8 +62,8 @@ metadata of the result are the same as the metadata of s1.
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-exp1 = read(test_path)
-exp2 = read(test_path2)
+exp1 = readDataset(test_path)
+exp2 = readDataset(test_path2)
 out = difference(exp1,exp2, c("antibody_target"))
 
 }

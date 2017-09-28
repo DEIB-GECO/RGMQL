@@ -16,33 +16,32 @@
 #' @param left_input_data returned object from any GMQL function
 #' @param right_input_data returned object from any GMQL function
 #'
-#' @return "url-like" string
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
 #'
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
-#'
-#' \dontrun{
-#'
-#' library(rscala)
-#'
+#' ### it creates a dataset called full which contains all samples from the datasets 
+#' data1 and data2 whose schema is defined by merging data1 and data2 dataset schemas 
+#' (union of all the attributes present in the two input datasets).
+#' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' r = read(test_path)
-#' r2 = read(test_path2)
-#' u = union(r2,r)
-#' }
-#' ""
+#' data1 = readDataset(test_path)
+#' data2 = readDataset(test_path2)
+#' full = union(r2,r)
+#' 
 #'
 #' @export
 #'
 union <- function(left_input_data,right_input_data)
 {
-  out <- WrappeR$union(right_input_data,left_input_data)
+  out <- WrappeR$union(right_input_data$value,left_input_data$value)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }

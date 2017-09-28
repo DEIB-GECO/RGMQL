@@ -20,10 +20,21 @@ In this case DGE: denotes the greater-equal distance clause, which selects all t
 that their distance from the anchor region is greater than, or equal to, 'value' bases.
 }
 \examples{
-\dontrun{
 
-}
-""
+HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
+### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
+and takes the first/closest one for each TSS, 
+provided that such distance is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+from the same provider (joinby clause).
+
+#' initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+TSS = readDataset(test_path)
+HM = readDataset(test_path2)
+join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DGE("120000"))),c("provider"),region_output="RIGHT")
+
 }
 \seealso{
 \code{\link{DLE}} \code{\link{MD}}  \code{\link{DOWN}} \code{\link{UP}}

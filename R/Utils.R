@@ -111,3 +111,14 @@
   xin <- sapply(envirs, function(e) xobj %in% ls(envir=get(e)))
   envirs[xin] 
 }
+
+
+
+#  if(!is.null(groupBy))
+#{
+#  if(!is.character(groupBy))
+#    stop("groupBy: only character")
+#  
+#  groupBy = groupBy[!groupBy %in% ""]
+#  groupBy = groupBy[!duplicated(groupBy)]
+  # out <- WrappeR$merge(I(as.character(groupBy)),input_data)

@@ -63,6 +63,6 @@ extend <-function(input_data, metadata = NULL)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }
 

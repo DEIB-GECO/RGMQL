@@ -19,10 +19,9 @@ DOWN is true when region of experiment is in the downstream genome of the anchor
 When this clause is not present, distal conditions apply to both the directions of the genome.
 }
 \examples{
-\dontrun{
 
-}
 ""
+
 }
 \seealso{
 \code{\link{DLE}} \code{\link{DGE}}  \code{\link{UP}} \code{\link{MD}}

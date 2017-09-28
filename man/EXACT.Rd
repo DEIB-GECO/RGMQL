@@ -37,11 +37,6 @@ s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),attribute_
 s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
 semi_join_dataset = c)
 
-#### select with condition
-#### the first is EXACT and the other ones are DEF
-s = select(input_data = r, semi_join = c(EXACT("attribute_tag"),"cell_type","cell"),
-semi_join_dataset = c)
-
 }
 
 }

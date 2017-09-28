@@ -10,7 +10,7 @@ select(input_data, predicate = NULL, region_predicate = NULL,
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{predicate}{single string predicate made up by logical oepration: AND,OR,NOT on metadata attribute}
+\item{predicate}{single string predicate made up by logical operation: AND,OR,NOT on metadata attribute}
 
 \item{region_predicate}{single string predicate made up by logical operation: AND,OR,NOT on schema region values}
 
@@ -30,10 +30,11 @@ Every condition accepts only one string value. (e.g. FULL("cell_type") )}
 semi_join NOT IN semi_join_dataset, 
 F => semijoin is performed considering semi_join IN semi_join_dataset}
 
-\item{semi_join_dataset}{returned object from any GMQL function used in semijoin}
+\item{semi_join_dataset}{returned object from any GMQL function}
 }
 \value{
-"url-like" string
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function
 }
 \description{
 It extracts a subset of samples from the input dataset.
@@ -43,39 +44,6 @@ If semijoin clauses are specified they are applied, too.
 When semijoin is defined, it extracts those samples containing all metadata attribute defined in semijoin clause
 with at least one metadata value in common with semi join dataset
 If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
-}
-\examples{
-\dontrun{
-
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-r = read(test_path)
-r2 = read(test_path2)
-
-#### select with condition
-s = select(input_data = r, semi_join = list("cell_type",EXACT("cell")), semi_join_dataset = r2)
-
-#### select with DEF condition
-s = select(input_data = r, semi_join = list("cell_type","cell"), semi_join_dataset = r2)
-
-#### select with DEF condition
-#### the full condition is treated as DEF due to coercion
-s = select(input_data = r, semi_join = c("cell_type","cell",FULL("attribute_tag")),
-semi_join_dataset = r2)
-
-#### select with condition
-#### the first is FULL and the other ones are DEF
-s = select(input_data = r, semi_join = c(FULL("attribute_tag"),"cell_type","cell"),
-semi_join_dataset = r2)
-
-#### select with predicate metadata
-s = select(input_data = r, "NOT(biosample_organism=='Homo sapiens' AND assembly=='hg19')")
-
-#### select with predicate on regions
-s = select(input_data = r, region_predicate = " score > 0.5 AND NOT(variant_type == 'SNP')")
-}
-""
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
