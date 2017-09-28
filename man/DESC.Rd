@@ -19,17 +19,12 @@ It define a descending order for input value
 }
 \examples{
 
-### local with CustomParser
+### it orders the samples according to the Region_count metadata attribute and takes the two samples 
+that have the highest count. 
+
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
-
-### treatment_type and ID descending
-o = order(list(DESC(treatment_type),DESC(ID)), mtop = 2, input_data = r)
-
-\dontrun{
-### treatment_type ascending and ID descending
-o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
-}
+o = order(r,list(DESC(Region_Count)), mtop = 2)
 
 }

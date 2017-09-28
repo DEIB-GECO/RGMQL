@@ -35,7 +35,7 @@
 #'
 #' @examples
 #' 
-#' ### it selects from input data samples of patients younger than 70 years old, 
+#' ## it selects from input data samples of patients younger than 70 years old, 
 #' based on filtering on sample metadata attribute Patient_age
 #' 
 #' initGMQL("gtf")

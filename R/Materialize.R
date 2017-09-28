@@ -69,21 +69,21 @@ materialize <- function(input_data, dir_out = getwd())
 
 #' GMQL Operation: TAKE
 #'
+#' It saves the contents of a dataset that contains samples metadata and samples regions.
+#' It is normally used to store in memoery the contents of any dataset generated during a GMQL query.
+#' the operation can be very time-consuming.
+#' If you have invoked any materialization before take function, all those dataset will be materialized 
+#' as folder (like if execution was invoked)
 #'
 #' @import GenomicRanges
 #'
 #' @param input_data returned object from any GMQL function
-#' @param rows number of rows that you want to retrieve and stored in memory
-#' by default is 0 that means take all rows
+#' @param rows number of rows for each sample regions that you want to retrieve and stored in memory
+#' by default is 0 that means take all rows for each sample
 #'
 #' @return GrangesList with associated metadata
 #'
-#'
 #' @examples
-#'
-#' \dontrun{
-#'
-#' library(rscala)
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -91,8 +91,7 @@ materialize <- function(input_data, dir_out = getwd())
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' take(input_data = m, rows = 45)
-#' }
-#' ""
+#' 
 #' @export
 #'
 take <- function(input_data, rows=0L)
@@ -108,7 +107,35 @@ take <- function(input_data, rows=0L)
   reg <- WrappeR$get_reg()
   meta <- WrappeR$get_meta()
   schema <- WrappeR$get_schema()
-  "taken"
+
+  reg_data_frame <- as.data.frame(reg)
+  list <- split(reg_data_frame, reg_data_frame[1])
+  names <- c("seqname","start","end","strand",schema)
+  
+  sampleList <- lapply(list, function(x){
+    x <- x[-1]
+    names(x) <- names
+    g <- GenomicRanges::makeGRangesFromDataFrame(x,keep.extra.columns = TRUE,
+                                                 start.field = "start",end.field = "end")
+  })
+  gRange_list <- GRangesList(sampleList)
+  
+  meta_list <- .metadata_from_frame_to_list(meta)
+  
+  S4Vectors::metadata(gRange_list) <- meta_list
+  return(gRange_list)
+}
+
+.metadata_from_frame_to_list <- function(metadata_frame)
+{
+  meta_frame <- as.data.frame(metadata_frame)
+  list <- split(meta_frame, meta_frame[1])
+  name_value_list <- lapply(list, function(x){
+    x <- x[-1]
+  })
+  meta_list <- lapply(name_value_list, function(x){
+    setNames(as.list(as.character(x[[2]])), x[[1]])
+  })
 }
 
 

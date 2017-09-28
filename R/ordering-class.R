@@ -50,18 +50,13 @@ as.character.ORDER <- function(obj) {
 #' 
 #' @examples
 #' 
-#' ### local with CustomParser
+#' ### it orders the samples according to the Region_count metadata attribute and takes the two samples 
+#' that have the highest count. 
+#'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path)
-#' 
-#' ### treatment_type and ID descending
-#' o = order(list(DESC(treatment_type),DESC(ID)), mtop = 2, input_data = r)
-#' 
-#' \dontrun{
-#' ### treatment_type ascending and ID descending
-#' o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
-#' }
+#' o = order(r,list(DESC(Region_Count)), mtop = 2)
 #' 
 #' @export
 #'
@@ -89,21 +84,14 @@ DESC <- function(value)
 #'
 #' @examples
 #' 
-#' ### local with CustomParser
+#' ### it extracts the first 5 samples on the basis of their region counter 
+#' (those with the smaller RegionCount) and then, for each of them, 
+#' 7 regions on the basis of their mutation counter (those with the higher MutationCount).
+#'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path)
-#' 
-#' ###regions ordering as ascending
-#' o = order(regions_ordering = c("pvalue","length","name"), rtopg = 1, input_data = r)
-#'
-#' \dontrun{
-#' #' ###regions ordering as ascending
-#' o = order(regions_ordering = list(ASC("pvalue"),ASC("length"),ASC("name")), rtopg = 1, input_data = r)
-#'
-#' ### pvalue ascending and length descending
-#' o = order(list("pvalue", DESC(length)), mtop = 2, input_data = r)
-#' }
+#' o = order(r,list(ASC(Region_Count)), mtop = 5,regions_ordering = list(DESC(MutationCount)),rtop=7)
 #' 
 #' @export
 #'

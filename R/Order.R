@@ -34,8 +34,9 @@
 #' default is 0 that means every sample must be considered
 #'
 #'
-#' @return "url-like" string
-#'
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function
+#' #'
 #' @details
 #' mtop, mtopg,mtopp, rtop, rtopg and rtopp are normally numbers: if you specify a vector,
 #' only the first element will be used
@@ -45,28 +46,27 @@
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #' @examples
-#' \dontrun{
+#' 
+#' ### it orders the samples according to the Region_count metadata attribute and takes the two samples 
+#' that have the highest count. 
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
-#' ### metadata ordering
+#' r = readDataset(test_path)
 #' o = order(r,list(DESC(Region_Count)), mtop = 2)
+#' 
+#' \dontrun{
+#' 
+#' ### it extracts the first 5 samples on the basis of their region counter 
+#' (those with the smaller RegionCount) and then, for each of them, 
+#' 7 regions on the basis of their mutation counter (those with the higher MutationCount).
 #'
-#' #### ascending
-#' o = order(list("treatment_type", "ID"), mtop = 2, input_data = r)
-#' o = order(c("treatment_type", "ID"), mtop = 2, input_data = r)
-#'
-#'### treatment_type ascending and ID descending
-#' o = order(list("treatment_type", DESC(ID)), mtop = 2, input_data = r)
-#'
-#' ###regions ordering as ascending
-#' o = order(regions_ordering = c("pvalue","length","name"), rtopg = 1, input_data = r)
-#'
-#' #' ###regions ordering as ascending and name descending
-#' o = order(regions_ordering = list("pvalue","length",DESC(name)), rtopg = 1, input_data = r)
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' r = readDataset(test_path)
+#' o = order(r,list(ASC(Region_Count)), mtop = 5,regions_ordering = list(DESC(MutationCount)),rtop=7)
+#'  
 #' }
-#' ""
 #'
 #' @export
 #'
@@ -131,18 +131,18 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,mtop
   if(!is.null(metadata_ordering))
     meta_matrix <- .ordering_meta(metadata_ordering)
   else
-    meta_matrix <- NULL
+    meta_matrix <- scalaNull("Array[Array[String]]")
 
   if(!is.null(regions_ordering))
     region_matrix <- .ordering_meta(regions_ordering)
   else
-    region_matrix <- NULL
+    region_matrix <- scalaNull("Array[Array[String]]")
 
-  out <- WrappeR$order(meta_matrix,mtopg,mtop,mtopp,region_matrix,rtopg,rtop,rtopp,input_data)
+  out <- WrappeR$order(meta_matrix,mtopg,mtop,mtopp,region_matrix,rtopg,rtop,rtopp,input_data$value)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }
 
 
