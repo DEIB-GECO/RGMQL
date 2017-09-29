@@ -12,13 +12,13 @@
 #' @param predicate single string predicate made up by logical operation: AND,OR,NOT on metadata attribute
 #' @param region_predicate single string predicate made up by logical operation: AND,OR,NOT on schema region values
 #' @param semi_join list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
-#' or simple string concatenation of name of metadata (e.g c("cell_type","attribute_tag","size") ) without declaring condition.
+#' or simple string concatenation of name of metadata, e.g c("cell_type","attribute_tag","size") without declaring condition.
 #' In the latter form all metadata are considered having DEF condition
 #' The CONDITION's available are:
 #' \itemize{
 #' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
 #' if they have a further prefixes, the two prefix sequence are identical}
-#' \item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value. }
+#' \item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value}
 #' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
 #' }
 #' Every condition accepts only one string value. (e.g. FULL("cell_type") )
@@ -44,7 +44,7 @@
 #' s=select(input,"Patient_age < 70")
 #' 
 #' 
-#' \dontrun {
+#' \dontrun{
 #' 
 #' It creates a new dataset called 'jun_tf' by selecting those samples and their 
 #' regions from the existing 'data' dataset such that:

@@ -11,7 +11,7 @@
 #'
 #' @param datasetName single string GMQL dataset folder path
 #'
-#' @return GrangesList containing all GMQL sample In dataset
+#' @return GrangesList containing all GMQL samples in dataset
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
 #'
@@ -72,7 +72,7 @@ importGMQL.gtf <- function(datasetName)
 #'
 #' @param datasetName single string GMQL dataset folder path
 #'
-#' @return GrangesList containing all GMQL sample In dataset
+#' @return GrangesList containing all GMQL samples in dataset
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf} }
 #'

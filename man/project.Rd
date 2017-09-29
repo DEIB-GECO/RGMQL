@@ -5,26 +5,33 @@
 \title{GMQL Operation: PROJECT}
 \usage{
 project(input_data, metadata = NULL, metadata_update = NULL,
-  regions = NULL, regions_update = NULL, all_but = FALSE)
+  all_but_meta = FALSE, regions = NULL, regions_update = NULL,
+  all_but_reg = FALSE)
 }
 \arguments{
 \item{input_data}{string pointer taken from GMQL function}
 
 \item{metadata}{vector of string made up by metadata attribute}
 
-\item{metadata_update}{single string predicate}
+\item{metadata_update}{single string predicate made up by operation on metadata attribute}
 
-\item{regions_update}{single string predicate}
+\item{all_but_meta}{logical value indicating which metadata you want to exclude.
+If FALSE only the metadata you choose is kept in the output of the project operation,
+if TRUE the metadata are all except ones include in region parameter.
+if metadata is not defined \emph{all_but_meta} is not considerd.}
 
-\item{all_but}{logical value indicating which schema filed attribute you want to exclude.
+\item{regions_update}{single string predicate made up by operation on schema field attribute}
+
+\item{all_but_reg}{logical value indicating which schema filed attribute you want to exclude.
 If FALSE only the regions you choose is kept in the output of the project operation,
 if TRUE the schema region are all except ones include in region parameter.
-if regions is not defined all_but is not considerd.}
+if regions is not defined \emph{all_but_reg} is not considerd.}
 
 \item{region}{vector of string made up by schema field attribute}
 }
 \value{
-"url-like" string
+DAGgraph class object. It contains the value associated to the graph used 
+as input for the subsequent GMQL function#'
 }
 \description{
 It creates, from an existing dataset, a new dataset with all the samples from input dataset
@@ -38,25 +45,35 @@ It allows to:
 }
 }
 \examples{
-\dontrun{
+
+## it creates a new dataset called CTCF_NORM_SCORE by preserving all region attributes apart from score,
+and creating a new region attribute called new_score by dividing the existing score value 
+of each region by 1000.0 and incrementing it by 100.
+It also generates, for each sample of the new dataset, 
+a new metadata attribute called normalized with value 1, which can be used in future selections.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
+input = readDataset(test_path)
+CTCF_NORM_SCORE = project(input,metadata_update="normalized AS 1",
+regions_update="new_score AS (score / 1000.0) + 100" , regions=c("score"),all_but_reg=T,)
 
-### preserving all region attributes and creating a new region attribute called length
-p = project(input_data = r,regions_update="length AS right - left")
 
-### preserving all region attributes apart from  score, and creating a new region attribute called new_score
-p = project(input_data = r, regions = "score" regions_update="length AS right - left", all_but=TRUE)
+\dontrun{
+### it produces an output dataset that contains the same samples as the input dataset. 
+Each output sample only contains, as region attributes, 
+the four basic coordinates (chr, left, right, strand) and the specified region attributes 
+'variant_classification' and 'variant_type', and as metadata attributes only the specified ones, 
+i.e. manually_curated__tissue_status and manually_curated__tumor_tag.
 
-### output dataset that contains the same samples as the input dataset. Each output sample only contains,
-### as region attributes, the four basic coordinates (chr, left, right, strand)
-### and the specified region attributes and as metadata attributes only the specified ones
-p = project(input_data = r, regions = c("variant_classification", "variant_type"),
-metadata = c("manually_curated","tissue_status", "tumor_ta") )
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+DS_in = readDataset(test_path)
+DS_out = project(DS_in,regions=c("variant_classification", "variant_type"), 
+metadata=c("manually_curated__tissue_status","manually_curated__tumor_tag"))
+
 }
-""
+
 }
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}

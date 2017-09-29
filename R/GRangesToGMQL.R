@@ -14,7 +14,7 @@
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
 #'
-#' @return no value return
+#' @return None
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf}}
 #'
@@ -67,7 +67,7 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' @param samples GrangesList
 #' @param dir_out folder path where create a folder and write all the sample files
 #'
-#' @return no value return
+#' @return None
 #'
 #'
 #' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }

@@ -12,7 +12,7 @@ exportGMQL.gdm(samples, dir_out)
 \item{dir_out}{folder path where create a folder and write all the sample files}
 }
 \value{
-no value return
+None
 }
 \description{
 It create GMQL dataset from GRangesList.

@@ -32,6 +32,34 @@
 #'
 #' @examples
 #' 
+#' ## it creates a new dataset called CTCF_NORM_SCORE by preserving all region attributes apart from score,
+#' and creating a new region attribute called new_score by dividing the existing score value 
+#' of each region by 1000.0 and incrementing it by 100.
+#' It also generates, for each sample of the new dataset, 
+#' a new metadata attribute called normalized with value 1, which can be used in future selections.
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' input = readDataset(test_path)
+#' CTCF_NORM_SCORE = project(input,metadata_update="normalized AS 1",
+#' regions_update="new_score AS (score / 1000.0) + 100" , regions=c("score"),all_but_reg=T,)
+#' 
+#' 
+#' \dontrun{
+#' ### it produces an output dataset that contains the same samples as the input dataset. 
+#' Each output sample only contains, as region attributes, 
+#' the four basic coordinates (chr, left, right, strand) and the specified region attributes 
+#' 'variant_classification' and 'variant_type', and as metadata attributes only the specified ones, 
+#' i.e. manually_curated__tissue_status and manually_curated__tumor_tag.
+#' 
+#' initGMQL("gtf")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' DS_in = readDataset(test_path)
+#' DS_out = project(DS_in,regions=c("variant_classification", "variant_type"), 
+#' metadata=c("manually_curated__tissue_status","manually_curated__tumor_tag"))
+#' 
+#' }
+#' 
 #' @export
 #'
 #'

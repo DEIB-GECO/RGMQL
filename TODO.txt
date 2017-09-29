@@ -1,7 +1,0 @@
-read.R
-
-aggiungere data per grangeslist in example
-aggiugnere example con data
-
-
-//delete warning eventually

@@ -10,7 +10,7 @@ importGMQL.gtf(datasetName)
 \item{datasetName}{single string GMQL dataset folder path}
 }
 \value{
-GrangesList containing all GMQL sample In dataset
+GrangesList containing all GMQL samples in dataset
 }
 \description{
 It create a GrangesList from GMQL samples in dataset
