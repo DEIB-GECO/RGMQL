@@ -117,7 +117,11 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
   samples <- .check_metadata_list(metadata, metadata_prefix,meta_list)
   if(length(unlist(samples))<=0)
     samples <- rangesList
-
+  else
+  {
+    index <- unlist(samples)
+    samples <- rangesList[c(index)]
+  }
 
   granges <- .parse_Granges(samples,regions)
 
@@ -142,16 +146,20 @@ TFARMemAtrix <- function(rangesList, metadata = NULL,metadata_prefix = NULL, reg
 .check_metadata_list <- function(metadata,metadata_prefix,meta_list)
 {
   vec_meta <- paste0(metadata_prefix,metadata)
-  list <- lapply(meta_list, function(x){
+  list <- mapply(function(x,index){
     vec_names <- names(x)
     a <- sapply(vec_meta, function(y) {
-      grep(y,vec_names) })
+      which(y==vec_names)
+      #grep(y,vec_names) 
+      })
 
     ## we would like that manage more index from grep
     found <- as.logical(length(unlist(a)))
     #if found retrieve samples that has at least one choosen metadata
-    if(found){x}
-  })
+    if(found){
+      index
+    }
+  }, meta_list, seq_along(meta_list))
 }
 
 .check_metadata_files <- function(metadata,metadata_prefix,meta_files)
