@@ -14,14 +14,13 @@ None
 }
 \description{
 This class constructor is used to create instances of DISTAL object
-to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-that require distal condition on value
+to be used in GMQL functions that use genometric predicate parameter
+requiring distal condition on value
 In this case DGE: denotes the greater-equal distance clause, which selects all the regions of the experiment such
 that their distance from the anchor region is greater than, or equal to, 'value' bases.
 }
 \examples{
 
-HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
 ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
 it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
 and takes the first/closest one for each TSS, 

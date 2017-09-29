@@ -10,89 +10,84 @@
 #' \item{Create new metadata and/or region attributes in the result}
 #' }
 #'
-#'
 #' @param input_data string pointer taken from GMQL function
 #' @param metadata vector of string made up by metadata attribute
 #' @param region vector of string made up by schema field attribute
-#' @param all_but logical value indicating which schema filed attribute you want to exclude.
+#' @param all_but_reg logical value indicating which schema filed attribute you want to exclude.
 #' If FALSE only the regions you choose is kept in the output of the project operation,
 #' if TRUE the schema region are all except ones include in region parameter.
-#' if regions is not defined all_but is not considerd.
-#' @param regions_update single string predicate
-#' @param metadata_update single string predicate
+#' if regions is not defined \emph{all_but_reg} is not considerd.
+#' @param all_but_meta logical value indicating which metadata you want to exclude.
+#' If FALSE only the metadata you choose is kept in the output of the project operation,
+#' if TRUE the metadata are all except ones include in region parameter.
+#' if metadata is not defined \emph{all_but_meta} is not considerd.
+#' @param regions_update single string predicate made up by operation on schema field attribute
+#' @param metadata_update single string predicate made up by operation on metadata attribute
 #'
-#' @return "url-like" string
-#'
+#' @return DAGgraph class object. It contains the value associated to the graph used 
+#' as input for the subsequent GMQL function#'
 #'
 #' @references \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 #'
 #'
-#'
 #' @examples
-#' \dontrun{
-#'
-#' initGMQL("gtf")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
-#'
-#' ### preserving all region attributes and creating a new region attribute called length
-#' p = project(input_data = r,regions_update="length AS right - left")
-#'
-#' ### preserving all region attributes apart from  score, and creating a new region attribute called new_score
-#' p = project(input_data = r, regions = "score" regions_update="length AS right - left", all_but=TRUE)
-#'
-#' ### output dataset that contains the same samples as the input dataset. Each output sample only contains,
-#' ### as region attributes, the four basic coordinates (chr, left, right, strand)
-#' ### and the specified region attributes and as metadata attributes only the specified ones
-#' p = project(input_data = r, regions = c("variant_classification", "variant_type"),
-#' metadata = c("manually_curated","tissue_status", "tumor_ta") )
-#' }
-#' ""
+#' 
 #' @export
 #'
 #'
-project <-function(input_data, metadata = NULL,metadata_update=NULL,
-                   regions = NULL, regions_update = NULL,all_but = FALSE)
+project <-function(input_data, metadata = NULL,metadata_update=NULL,all_but_meta = FALSE,
+                   regions = NULL, regions_update = NULL,all_but_reg=FALSE)
 {
   if(!is.null(metadata))
   {
     if(!is.character(metadata))
-      stop("metadata: only character")
+      stop("metadata: no valid input")
 
-    metadata = metadata[!metadata %in% ""]
-    metadata = metadata[!duplicated(metadata)]
+    metadata <- metadata[!metadata %in% ""]
+    metadata <- metadata[!duplicated(metadata)]
 
     if(length(metadata)==0)
-      metadata=NULL
+      metadata <- scalaNull("Array[String]")
   }
+  else
+    metadata <- scalaNull("Array[String]")
 
   if(!is.null(regions))
   {
     if(!is.character(regions))
-      stop("regions: only character")
+      stop("regions: no valid input")
 
     regions = regions[!regions %in% ""]
     regions = regions[!duplicated(regions)]
 
     if(length(regions)==0)
-      regions=NULL
-
+      regions <- scalaNull("Array[String]")
   }
+  else
+    regions <- scalaNull("Array[String]")
 
   if(!is.null(regions_update))
     .check_predicate(regions_update)
+  else
+    regions_update <- scalaNull("String")
   
   if(!is.null(metadata_update))
     .check_predicate(metadata_update)
+  else
+    metadata_update <- scalaNull("String")
   
-  if(length(all_but)>1)
-    warning("all_but: only the first element is taken")
-
-  all_but <- all_but[1]
-
-  out <- WrappeR$project(metadata,regions,regions_update,metadata_update,all_but,input_data)
+  if(length(all_but_meta)>1)
+    warning("all_but_meta: no multiple values")
+  
+  if(length(all_but_reg)>1)
+    warning("all_but_reg: no multiple values")
+  all_but_reg <- all_but_reg[1]
+  all_but_meta <- all_but_meta[1]
+  
+  out <- WrappeR$project(metadata,metadata_update,all_but_meta,
+                         regions,regions_update,all_but_reg,input_data$value)
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
-    out
+    DAGgraph(out)
 }

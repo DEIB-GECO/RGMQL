@@ -15,8 +15,8 @@ None
 }
 \description{
 This class constructor is used to create instances of DISTAL object
-to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-that require distal condition on value
+to be used in GMQL functions that use genometric predicate parameter
+requiring distal condition on value
 In this case MD: denotes the minimum distance clause, which selects the 'value' regions of the experiment 
 at minimial distance from the anchor region.
 When there are ties (i.e., regions at the same distance from the anchor region), 

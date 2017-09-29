@@ -36,13 +36,13 @@ check.DISTAL <- function(value)
 #' DISTAL object class constructor
 #'
 #' This class constructor is used to create instances of DISTAL object
-#' to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-#' that require distal condition on value
+#' to be used in GMQL functions that use genometric predicate parameter
+#' requiring distal condition on value
 #' In this case DLE: denotes the  less-equal distance clause, which selects all the regions of the experiment such
 #' that their distance from the anchor region is less than, or equal to, 'value' bases.
 #' There are two special less-equal distances clauses: DLE(-1) searches for regions of the experiment which
 #' overlap with the anchor region (regardless the extent of the overlap),
-#' while DLE(0) searched for experiment regions adjacent to, or overlapping, the anchor region}
+#' while DLE(0) searched for experiment regions adjacent to, or overlapping, the anchor region
 #' 
 #' @param value single string identifying distance between genomic regions in base pairs, 
 #'
@@ -52,20 +52,20 @@ check.DISTAL <- function(value)
 #' 
 #' @examples
 #' 
-#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
-#' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+#' ### Given a dataset HM and one called TSS with a sample including Transcription Start Site annotations,
 #' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
 #' and takes the first/closest one for each TSS, 
-#' provided that such distance is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' provided that such distance is lesser than 120K bases and joined TSS and HM samples are obtained 
 #' from the same provider (joinby clause).
 #' 
-#' #' initGMQL("gtf")
+#' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 #' TSS = readDataset(test_path)
 #' HM = readDataset(test_path2)
-#' join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
+#' join_data = join(TSS,HM,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
 #'
+#' 
 #' @export
 #'
 DLE <- function(value)
@@ -80,12 +80,11 @@ DLE <- function(value)
   return(list)
 }
 
-
 #' DISTAL object class constructor
 #'
 #' This class constructor is used to create instances of DISTAL object
-#' to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-#' that require distal condition on value
+#' to be used in GMQL functions that use genometric predicate parameter
+#' requiring distal condition on value
 #' In this case DGE: denotes the greater-equal distance clause, which selects all the regions of the experiment such
 #' that their distance from the anchor region is greater than, or equal to, 'value' bases.
 #' 
@@ -96,7 +95,6 @@ DLE <- function(value)
 #' 
 #' @examples
 #' 
-#' HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
 #' ### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
 #' it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
 #' and takes the first/closest one for each TSS, 
@@ -128,8 +126,8 @@ DGE <- function(value)
 #' DISTAL object class constructor
 #'
 #' This class constructor is used to create instances of DISTAL object
-#' to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-#' that require distal condition on value
+#' to be used in GMQL functions that use genometric predicate parameter
+#' requiring distal condition on value
 #' In this case MD: denotes the minimum distance clause, which selects the 'value' regions of the experiment 
 #' at minimial distance from the anchor region.
 #' When there are ties (i.e., regions at the same distance from the anchor region), 
@@ -175,8 +173,8 @@ MD <- function(value)
 #' DISTAL object class constructor
 #'
 #' This class constructor is used to create instances of DISTAL object
-#' to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-#' that require distal condition on value
+#' to be used in GMQL functions that use genometric predicate parameter
+#' requiring distal condition on value
 #' In this case UP: denotes the upstream direction of the genome.
 #' They are interpreted as predicates that must hold on the regions of the experiment; 
 #' UP is true when region of experiment is in the upstream genome of the anchor region.
@@ -264,3 +262,4 @@ as.character.DOWN <- function(obj) {
   class <- class(obj)[1]
   c(class,"")
 }
+

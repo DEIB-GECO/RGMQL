@@ -12,21 +12,31 @@ DLE(value)
 \value{
 None
 }
+\description{
+This class constructor is used to create instances of DISTAL object
+to be used in GMQL functions that use genometric predicate parameter
+requiring distal condition on value
+In this case DLE: denotes the  less-equal distance clause, which selects all the regions of the experiment such
+that their distance from the anchor region is less than, or equal to, 'value' bases.
+There are two special less-equal distances clauses: DLE(-1) searches for regions of the experiment which
+overlap with the anchor region (regardless the extent of the overlap),
+while DLE(0) searched for experiment regions adjacent to, or overlapping, the anchor region
+}
 \examples{
 
-HM_TSS = JOIN(MD(1), DLE(120000); output: RIGHT; joinby: provider) TSS HM;
-### Given a dataset 'hm' and one called 'tss' with a sample including Transcription Start Site annotations,
+### Given a dataset HM and one called TSS with a sample including Transcription Start Site annotations,
 it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
 and takes the first/closest one for each TSS, 
-provided that such distance is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+provided that such distance is lesser than 120K bases and joined TSS and HM samples are obtained 
 from the same provider (joinby clause).
 
-#' initGMQL("gtf")
+initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 TSS = readDataset(test_path)
 HM = readDataset(test_path2)
-join_data = join(tss,hm,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
+join_data = join(TSS,HM,genometric_predicate=list(list(MD("1"),DLE("120000"))),c("provider"),region_output="RIGHT")
+
 
 }
 \seealso{

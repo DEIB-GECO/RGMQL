@@ -45,6 +45,41 @@ When semijoin is defined, it extracts those samples containing all metadata attr
 with at least one metadata value in common with semi join dataset
 If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
 }
+\examples{
+
+## it selects from input data samples of patients younger than 70 years old, 
+based on filtering on sample metadata attribute Patient_age
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+input = readDataset(test_path)
+s=select(input,"Patient_age < 70")
+
+
+\dontrun {
+
+It creates a new dataset called 'jun_tf' by selecting those samples and their 
+regions from the existing 'data' dataset such that:
+\\itemize{
+\\item{each output sample has a metadata attribute called antibody_target with value JUN}
+\\item{each output sample also has not a metadata attribute called cell that has the same value 
+of at least one of the values that a metadata attribute equally called cell has in at least one 
+sample of the 'join_data' dataset}
+\\item{for each sample satisfying previous condition,only its regions that have a region attribute called
+pValue with the associated value less than 0.01 are conserved in output}
+}
+
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+data = readDataset(test_path)
+join_data = readDataset(test_path2)
+jun_tf=select(data,"antibody_target == 'JUN'", "pValue < 0.01",c("cell"), T , semi_join_dataset=join_data )
+
+
+}
+
+}
 \references{
 \url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

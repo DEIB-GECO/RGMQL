@@ -11,8 +11,8 @@ None
 }
 \description{
 This class constructor is used to create instances of DISTAL object
-to be used in GMQL functions \code{\link{join}} in genometric predicate parameter
-that require distal condition on value
+to be used in GMQL functions that use genometric predicate parameter
+requiring distal condition on value
 In this case UP: denotes the upstream direction of the genome.
 They are interpreted as predicates that must hold on the regions of the experiment; 
 UP is true when region of experiment is in the upstream genome of the anchor region.

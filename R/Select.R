@@ -43,7 +43,8 @@
 #' input = readDataset(test_path)
 #' s=select(input,"Patient_age < 70")
 #' 
-#' \dontrun{
+#' 
+#' \dontrun {
 #' 
 #' It creates a new dataset called 'jun_tf' by selecting those samples and their 
 #' regions from the existing 'data' dataset such that:
@@ -55,12 +56,14 @@
 #' \item{for each sample satisfying previous condition,only its regions that have a region attribute called
 #' pValue with the associated value less than 0.01 are conserved in output}
 #' }
+#' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 #' data = readDataset(test_path)
 #' join_data = readDataset(test_path2)
-#' jun_tf=select(data,"antibody_target == 'JUM', "pValue < 0.01",c("cell"), T , semi_join_dataset=join_data )
+#' jun_tf=select(data,"antibody_target == 'JUN'", "pValue < 0.01",c("cell"), T , semi_join_dataset=join_data )
+#' 
 #' 
 #' }
 #'
