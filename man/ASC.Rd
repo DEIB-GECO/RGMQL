@@ -19,13 +19,13 @@ It define an ascending order for input value
 }
 \examples{
 
-### it extracts the first 5 samples on the basis of their region counter 
-(those with the smaller RegionCount) and then, for each of them, 
-7 regions on the basis of their mutation counter (those with the higher MutationCount).
+## it get the first 5 samples on the basis of their region counter, 
+## those with the smaller RegionCount and then for each of them, 7 regions on the basis of 
+## their score, those with the higher score
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
-o = order(r,list(ASC(Region_Count)), mtop = 5,regions_ordering = list(DESC(MutationCount)),rtop=7)
+o = order(r,list(ASC("Region_Count")), mtop = 5,regions_ordering = list(DESC("score")),rtop=7)
 
 }

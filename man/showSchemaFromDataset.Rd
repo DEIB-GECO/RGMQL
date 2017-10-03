@@ -33,7 +33,7 @@ If error occures a specific error is printed
 \examples{
 
 ### show schema of public dataset
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(url = PolimiUrl)
 list <- showSchemaFromDataset(PolimiUrl,"public.GRCh38_ENCODE_BROAD_MAY_2017")
 

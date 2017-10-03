@@ -50,13 +50,13 @@ as.character.ORDER <- function(obj) {
 #' 
 #' @examples
 #' 
-#' ### it orders the samples according to the Region_count metadata attribute and takes the two samples 
-#' that have the highest count. 
+#' ## it orders the samples according to the Region_count metadata attribute and takes the two samples 
+#' ## that have the highest count. 
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path)
-#' o = order(r,list(DESC(Region_Count)), mtop = 2)
+#' o = order(r,list(DESC("Region_Count")), mtop = 2)
 #' 
 #' @export
 #'
@@ -84,14 +84,14 @@ DESC <- function(value)
 #'
 #' @examples
 #' 
-#' ### it extracts the first 5 samples on the basis of their region counter 
-#' (those with the smaller RegionCount) and then, for each of them, 
-#' 7 regions on the basis of their mutation counter (those with the higher MutationCount).
-#'
+#' ## it get the first 5 samples on the basis of their region counter, 
+#' ## those with the smaller RegionCount and then for each of them, 7 regions on the basis of 
+#' ## their score, those with the higher score
+#' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path)
-#' o = order(r,list(ASC(Region_Count)), mtop = 5,regions_ordering = list(DESC(MutationCount)),rtop=7)
+#' o = order(r,list(ASC("Region_Count")), mtop = 5,regions_ordering = list(DESC("score")),rtop=7)
 #' 
 #' @export
 #'

@@ -23,7 +23,8 @@
 #' @examples
 #'
 #' #### show dataset when logged as guest
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' 
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' list <- showDatasets(PolimiUrl)
 #'
@@ -72,7 +73,7 @@ showDatasets <- function(url)
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' list <- showSamplesFromDataset(PolimiUrl,"public.GRCh38_ENCODE_BROAD_MAY_2017")
 #'
@@ -120,7 +121,7 @@ showSamplesFromDataset <- function(url,datasetName)
 #' @examples
 #'
 #' ### show schema of public dataset
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' list <- showSchemaFromDataset(PolimiUrl,"public.GRCh38_ENCODE_BROAD_MAY_2017")
 #'
@@ -174,7 +175,7 @@ showSchemaFromDataset <- function(url,datasetName)
 #' 
 #' ### upload of GMQL dataset with no schema selection
 #' test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(url = PolimiUrl)
 #' uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)
 #' }
@@ -253,10 +254,13 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 #' @examples
 #'
 #' \dontrun{
-#'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-#' login.GMQL(url = PolimiUrl,"test101","test")
+#' 
+#' ### this dataset does not exist
+#' 
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
 #' deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
+#' 
 #' }
 #' 
 #' @export
@@ -297,9 +301,11 @@ deleteDataset <- function(url,datasetName)
 #' @examples
 #'
 #' #### download dataset in r working directory
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-#' login.GMQL(url = PolimiUrl,"test101","test")
-#' downloadDataset(PolimiUrl,"dataset_test",path = getwd())
+#' #### in this case we try to download public dataset
+#' 
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' downloadDataset(PolimiUrl,"public.HG19_BED_ANNOTATION",path = getwd())
 #'
 #' @export
 #'
@@ -313,11 +319,13 @@ downloadDataset <- function(url,datasetName,path = getwd())
   #print(content$result)
   content <- httr::content(req)
   if(req$status_code !=200)
-    stop(content)
-
-  zip_path = paste0(path,"/",datasetName,".zip")
-  writeBin(content,zip_path)
-  print("Download Complete")
+    print(content)
+  else
+  {
+    zip_path = paste0(path,"/",datasetName,".zip")
+    writeBin(content,zip_path)
+    print("Download Complete")
+  }
 }
 
 #' Download Dataset in GrangesList
@@ -340,11 +348,13 @@ downloadDataset <- function(url,datasetName,path = getwd())
 #'
 #' @examples
 #'
-#' #### create grangeslist from dataset in repository
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-#' login.GMQL(url = PolimiUrl,"test101","test")
-#' downloadDatasetToGrangesList(PolimiUrl,"dataset_test")
-#'
+#' \dontrun{
+#' #### create grangeslist from public dataset HG19_BED_ANNOTATION got from repository
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' downloadDatasetToGrangesList(PolimiUrl,"public.HG19_BED_ANNOTATION")
+#' }
+#' 
 #' @export
 #'
 downloadDatasetToGrangesList <- function(url,datasetName)
@@ -396,9 +406,9 @@ downloadDatasetToGrangesList <- function(url,datasetName)
 #' @examples
 #'
 #' ## download metadata with real test login
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-#' login.GMQL(url = PolimiUrl,"test101","test")
-#' metadataFromSample(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS","S_00000")
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' metadataFromSample(PolimiUrl,"public.HG19_BED_ANNOTATION","genes")
 #'
 #' @export
 #'
@@ -448,10 +458,12 @@ metadataFromSample <- function(url, datasetName,sampleName)
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-#' login.GMQL(url = PolimiUrl,"test101","test")
-#' regionFromSample(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS","S_00000")
-#'
+#' 
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
+#' login.GMQL(url = PolimiUrl)
+#' regionFromSample(PolimiUrl,"public.HG19_BED_ANNOTATION","genes")
+#' 
+#' 
 #' @export
 #'
 regionFromSample <- function(url, datasetName,sampleName)
@@ -466,7 +478,7 @@ regionFromSample <- function(url, datasetName,sampleName)
   else
   {
     list <- showSchemaFromDataset(url,datasetName)
-    schema_type <- list$schemaType
+    schema_type <- list$type
 
     temp <- tempfile("temp") #use temporary files
     write.table(content,temp,quote = FALSE,sep = '\t',col.names = FALSE,row.names = FALSE)
@@ -478,9 +490,15 @@ regionFromSample <- function(url, datasetName,sampleName)
         name <- x$name
       })
       df <- data.table::fread(temp,header = FALSE,sep = "\t")
+      a <- df[1,2]
+      if(is.na(as.numeric(a)))
+        df <- df[-1]
       data.table::setnames(df,vector_field)
-      samples <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = TRUE,start.field = "left",end.field = "right")
-    }
+      samples <- GenomicRanges::makeGRangesFromDataFrame(df,keep.extra.columns = TRUE,
+                                                         start.field = "left",
+                                                         end.field = "right",
+                                                         strand.field="strand")
+      }
     unlink(temp)
     return(samples)
   }

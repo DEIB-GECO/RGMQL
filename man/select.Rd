@@ -48,7 +48,7 @@ If no metadata in common beetween input dataset and semi join dataset, no sample
 \examples{
 
 ## it selects from input data samples of patients younger than 70 years old, 
-based on filtering on sample metadata attribute Patient_age
+## based on filtering on sample metadata attribute Patient_age
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")

@@ -26,10 +26,10 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 data = readDataset(test_path)
 
-### copies all samples of DATA into OUT dataset, and then for each of them adds another 
-metadata attribute,  allScores, which is the aggregation comma-separated list of all the 
-distinct values that the attribute  score takes in the sample.
-out = extend(input_data = data, list(allScore = BAG("score"))
+## copies all samples of DATA into OUT dataset, and then for each of them adds another 
+## metadata attribute,  allScores, which is the aggregation comma-separated list of all the 
+## distinct values that the attribute  score takes in the sample.
+out = extend(input_data = data, list(allScore = BAG("score")))
 
 }
 \seealso{

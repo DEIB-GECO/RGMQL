@@ -29,13 +29,6 @@ PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 logout.GMQL(PolimiUrl)
 
-\dontrun{
-##### login with username and password, then logout
-PolimiUrl = "http://130.186.13.219/gmql-rest"
-login.GMQL(PolimiUrl,"test101","test")
-logout.GMQL(PolimiUrl)
-}
-
 }
 \seealso{
 \code{\link{register.GMQL}} \code{\link{login.GMQL}}

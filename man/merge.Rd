@@ -33,15 +33,15 @@ Samples whose names are not present in the grouping metadata parameter are disre
 }
 \examples{
 
-### it creates a dataset called merged which contains one sample for each antibody_target value 
-found within the metadata of the exp dataset sample; 
-each created sample contains all regions from all 'exp' samples with a specific value for their 
-antibody_target metadata attribute.
+## it creates a dataset called merged which contains one sample for each antibody_target value 
+## found within the metadata of the exp dataset sample; 
+## each created sample contains all regions from all 'exp' samples with a specific value for their 
+## antibody_target metadata attribute.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = readDataset(test_path)
-merged = merge(input_data = exp, groupBy = c("antibody_targer"))
+merged = merge(input_data = exp, groupBy = c("antibody_target"))
 
 }
 \references{

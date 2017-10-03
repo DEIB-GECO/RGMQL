@@ -25,7 +25,7 @@ If error occures a specific error is printed
 }
 \examples{
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 list_jobs <- showJobs(PolimiUrl)
 

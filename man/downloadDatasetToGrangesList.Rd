@@ -23,9 +23,11 @@ If error occures a specific error is printed
 }
 \examples{
 
-#### create grangeslist from dataset in repository
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-login.GMQL(url = PolimiUrl,"test101","test")
-downloadDatasetToGrangesList(PolimiUrl,"dataset_test")
+\dontrun{
+#### create grangeslist from public dataset HG19_BED_ANNOTATION got from repository
+PolimiUrl = "http://130.186.13.219/gmql-rest"
+login.GMQL(url = PolimiUrl)
+downloadDatasetToGrangesList(PolimiUrl,"public.HG19_BED_ANNOTATION")
+}
 
 }

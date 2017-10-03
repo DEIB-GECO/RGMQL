@@ -30,16 +30,16 @@ For what concerns metadata, attributes of samples from the left (right) input da
 with the strings LEFT (RIGHT), so as to trace the dataset to which they originally belonged.
 }
 \examples{
-### it creates a dataset called full which contains all samples from the datasets 
-data1 and data2 whose schema is defined by merging data1 and data2 dataset schemas 
-(union of all the attributes present in the two input datasets).
+## it creates a dataset called full which contains all samples from the datasets 
+## data1 and data2 whose schema is defined by merging data1 and data2 dataset schemas 
+## (union of all the attributes present in the two input datasets).
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
 data1 = readDataset(test_path)
 data2 = readDataset(test_path2)
-full = union(r2,r)
+full = union(data1,data2)
 
 
 }

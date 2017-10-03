@@ -20,14 +20,14 @@ If FALSE only the metadata you choose is kept in the output of the project opera
 if TRUE the metadata are all except ones include in region parameter.
 if metadata is not defined \emph{all_but_meta} is not considerd.}
 
+\item{regions}{vector of string made up by schema field attribute}
+
 \item{regions_update}{single string predicate made up by operation on schema field attribute}
 
 \item{all_but_reg}{logical value indicating which schema filed attribute you want to exclude.
 If FALSE only the regions you choose is kept in the output of the project operation,
 if TRUE the schema region are all except ones include in region parameter.
 if regions is not defined \emph{all_but_reg} is not considerd.}
-
-\item{region}{vector of string made up by schema field attribute}
 }
 \value{
 DAGgraph class object. It contains the value associated to the graph used 
@@ -47,24 +47,24 @@ It allows to:
 \examples{
 
 ## it creates a new dataset called CTCF_NORM_SCORE by preserving all region attributes apart from score,
-and creating a new region attribute called new_score by dividing the existing score value 
-of each region by 1000.0 and incrementing it by 100.
-It also generates, for each sample of the new dataset, 
-a new metadata attribute called normalized with value 1, which can be used in future selections.
+## and creating a new region attribute called new_score by dividing the existing score value 
+## of each region by 1000.0 and incrementing it by 100.
+## It also generates, for each sample of the new dataset, 
+## a new metadata attribute called normalized with value 1, which can be used in future selections.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 input = readDataset(test_path)
-CTCF_NORM_SCORE = project(input,metadata_update="normalized AS 1",
-regions_update="new_score AS (score / 1000.0) + 100" , regions=c("score"),all_but_reg=T,)
+CTCF_NORM_SCORE = project(input,metadata_update="normalized AS 1", regions_update="new_score AS (score / 1000.0) + 100" , regions=c("score"), all_but_reg=TRUE)
 
 
 \dontrun{
-### it produces an output dataset that contains the same samples as the input dataset. 
-Each output sample only contains, as region attributes, 
-the four basic coordinates (chr, left, right, strand) and the specified region attributes 
-'variant_classification' and 'variant_type', and as metadata attributes only the specified ones, 
-i.e. manually_curated__tissue_status and manually_curated__tumor_tag.
+
+## it produces an output dataset that contains the same samples as the input dataset. 
+## Each output sample only contains, as region attributes, 
+## the four basic coordinates (chr, left, right, strand) and the specified region attributes 
+## 'variant_classification' and 'variant_type', and as metadata attributes only the specified ones, 
+## i.e. manually_curated__tissue_status and manually_curated__tumor_tag.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")

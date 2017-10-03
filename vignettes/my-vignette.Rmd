@@ -35,7 +35,7 @@ Data are encoded in human readable format using plain text file.
 	Each region sample file owns its metadata file.
 	All these files must reside in unique folder called files.
 	
-![GMQL dataset folder](../inst/doc/fig/dataset_gmql.png)
+![GMQL dataset folder](dataset_gmql.png)
 	
 - Generic text based dataset:\newline\newline
   Dataset composed by heterogeneous sample organised in simple text files probably 
@@ -127,9 +127,13 @@ for execution the subsequent GMQL operation.
 
 ### Queries
 
-Thwe core concept of GMQL package is build a query as the  name *GMQL* suggest.
-Unfortunatley is not the same as any query language.
-the building of query is more like a batch workflow
+The core concept of GMQL package is build a query as the  name *GMQL* suggest.
+Unfortunatley is not the same as any query language (e.g SQL) where the query is composed by only
+select statement with parameter 
+Thq query in GMQL is a set of operation che finiscoono con almeno una materialzie.
+Vediamone un esempio:
+
+
 
 ### Execution
 

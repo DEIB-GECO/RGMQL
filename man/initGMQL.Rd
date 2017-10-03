@@ -4,7 +4,7 @@
 \alias{initGMQL}
 \title{Init GMQL Server}
 \usage{
-initGMQL(output_format, remote_processing = FALSE)
+initGMQL(output_format = "gtf", remote_processing = FALSE)
 }
 \arguments{
 \item{output_format}{single string identifies the output format of sample files.

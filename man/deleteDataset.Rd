@@ -26,9 +26,12 @@ If no error occures print "Deleted Dataset", otherwise a specific error is print
 
 \dontrun{
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-login.GMQL(url = PolimiUrl,"test101","test")
+### this dataset does not exist
+
+PolimiUrl = "http://130.186.13.219/gmql-rest"
+login.GMQL(url = PolimiUrl)
 deleteDataset(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS")
+
 }
 
 }

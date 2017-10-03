@@ -25,9 +25,9 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = readDataset(test_path)
 
-### This statement copies all samples of exp into res dataset, and then calculates new 
-metadata attributes for each of them: q1_score is the first quartile of score of the sample regions.
-res = extend(input_data = exp, list(q1_score = Q1(score))
+## This statement copies all samples of exp into res dataset, and then calculates new 
+## metadata attributes for each of them: q1_score is the first quartile of score of the sample regions.
+res = extend(input_data = exp, list(q1_score = Q1("score")))
 
 
 }

@@ -35,13 +35,6 @@ If error occures a specific error is printed
 PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 
-\dontrun{
-
-### login with username and password
-PolimiUrl = "http://130.186.13.219/gmql-rest"
-login.GMQL(PolimiUrl,"test101","test")
-
-}
 }
 \seealso{
 \code{\link{register.GMQL}} \code{\link{logout.GMQL}}

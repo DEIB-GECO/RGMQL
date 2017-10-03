@@ -65,26 +65,26 @@ Input samples that do not satisfy the \emph{groupby} condition are disregarded.
 }
 \examples{
 
-### This GMQL statement produces an output dataset with a single output sample. 
-The COVER operation considers all areas defined by a minimum of two overlapping regions 
-in the input samples, up to any amount of overlapping regions.
+## This GMQL statement produces an output dataset with a single output sample. 
+## The COVER operation considers all areas defined by a minimum of two overlapping regions 
+## in the input samples, up to any amount of overlapping regions.
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-exp = read(test_path)
+exp = readDataset(test_path)
 res = cover(input_data = exp,2,"ANY")
 
 \dontrun{
-### This GMQL statement computes the result grouping the input exp samples by the values of 
-their cell metadata attribute, 
-thus one output res sample is generated for each cell type; 
-output regions are produced where at least 2 and at most 3 regions of grouped exp samples 
-overlap, setting as attributes of the resulting regions the minimum pValue of the overlapping regions 
-(min_pvalue) and their Jaccard indexes (JaccardIntersect and JaccardResult).
+## This GMQL statement computes the result grouping the input exp samples by the values of 
+## their cell metadata attribute, 
+## thus one output res sample is generated for each cell type; 
+## output regions are produced where at least 2 and at most 3 regions of grouped exp samples 
+## overlap, setting as attributes of the resulting regions the minimum pvalue of the overlapping regions 
+## (min_pvalue) and their Jaccard indexes (JaccardIntersect and JaccardResult).
 
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = read(test_path)
-res = cover(input_data = exp,2,3, c("cell"), list(min_pValue = MIN(pValue)))
+res = cover(input_data = exp,2,3, c("cell"), list(min_pValue = MIN("pvalue")))
 }
 }
 \references{

@@ -17,10 +17,6 @@ as input for the subsequent GMQL function
 Read a GrangesList saving in scala memory that can be referenced in R
 }
 \examples{
-
-\dontrun{
-
-}
-""
+"prova prova"
 
 }

@@ -56,16 +56,16 @@ or it violates the max accumulation index).
 }
 \examples{
 
-### This GMQL statement computes the result grouping the input \\emph{exp} samples by the values 
-of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample is generated 
-for each cell type.
-Output regions are produced by extracting the highest accumulation overlapping 
-(sub)regions according to the methodologies described above;
+## This GMQL statement computes the result grouping the input \\emph{exp} samples by the values 
+## of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample is generated 
+## for each cell type.
+## Output regions are produced by extracting the highest accumulation overlapping 
+## (sub)regions according to the methodologies described above;
 
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-exp = read(test_path)
+exp = readDataset(test_path)
 res = summit(input_data = exp,2,4, c("cell"))
 
 }

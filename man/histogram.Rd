@@ -54,17 +54,17 @@ each with its accumulation index value, which is assigned to the AccIndex region
 }
 \examples{
 
-### This GMQL statement computes the result grouping the input \\emph{exp} samples 
-by the values of their \\emph{cell} metadata attribute, 
-thus one output \\emph{res} sample is generated for each cell type. 
-Output regions are produced by dividing results from COVER in contiguous subregions 
-according to the varying accumulation values (from 2 to 4 in this case): 
-one region for each accumulation value;
+## This GMQL statement computes the result grouping the input \\emph{exp} samples 
+## by the values of their \\emph{cell} metadata attribute, 
+## thus one output \\emph{res} sample is generated for each cell type. 
+## Output regions are produced by dividing results from COVER in contiguous subregions 
+## according to the varying accumulation values (from 2 to 4 in this case): 
+## one region for each accumulation value;
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-exp = read(test_path)
-res = histogram(exp, 2,4,groupBy = c("cell")) exp 
+exp = readDataset(test_path)
+res = histogram(exp, 2,4,groupBy = c("cell"))
 
 }
 \references{

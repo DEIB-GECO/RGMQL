@@ -28,7 +28,7 @@ r = readDataset(test_path)
 
 #### select with condition
 #### the first and the third attribute are DEF the second one is FULL
-s = select(input_data = r, semi_join = list("cell_type",FULL("cell"),attribute_tag), semi_join_dataset = c)
+s = select(input_data = r, semi_join = list("cell_type",FULL("cell"),"attribute_tag"), semi_join_dataset = c)
 
 \dontrun{
 

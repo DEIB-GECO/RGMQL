@@ -27,8 +27,10 @@ If error occures a specific error is printed
 }
 \examples{
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-login.GMQL(url = PolimiUrl,"test101","test")
-regionFromSample(PolimiUrl,"job_test1_test101_20170604_180908_RESULT_DS","S_00000")
+
+PolimiUrl = "http://130.186.13.219/gmql-rest"
+login.GMQL(url = PolimiUrl)
+regionFromSample(PolimiUrl,"public.HG19_BED_ANNOTATION","genes")
+
 
 }

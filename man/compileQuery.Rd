@@ -21,7 +21,7 @@ on a remote server
 }
 \examples{
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 compileQuery(PolimiUrl, "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
 MATERIALIZE DATA_SET_VAR INTO RESULT_DS;")

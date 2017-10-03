@@ -68,6 +68,8 @@ initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 #' and override value is FALSE an error occures.
 #' useful only in remote processing
 #' 
+#' @importFrom methods is
+#' 
 #' @return DAGgraph class object. It contains the value associated to the graph used 
 #' as input for the subsequent GMQL function
 #'
@@ -158,17 +160,16 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
 #'
 #' Read a GrangesList saving in scala memory that can be referenced in R
 #'
+#'
+#' @importFrom S4Vectors metadata
 #' @param samples GrangesList
+#' 
 #'
 #' @return DAGgraph class object. It contains the value associated to the graph used 
 #' as input for the subsequent GMQL function
 #' 
 #' @examples
-#'
-#' \dontrun{
-#' 
-#' }
-#' ""
+#' "prova prova"
 #'
 #' @export
 #'
@@ -177,7 +178,7 @@ read <- function(samples)
   if(!is(samples,"GRangesList"))
     stop("only GrangesList")
 
-  meta <- metadata(samples)
+  meta <- S4Vectors::metadata(samples)
   if(is.null(meta)) {
     warning("GrangesList has no metadata. we provide two metadata for you")
     meta_matrix <- matrix(c("Provider","Polimi", "Application", "R-GMQL"),ncol = 2,byrow = TRUE)

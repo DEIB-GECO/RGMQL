@@ -39,7 +39,6 @@ default is 0 that means every sample must be considered}
 \value{
 DAGgraph class object. It contains the value associated to the graph used 
 as input for the subsequent GMQL function
-#'
 }
 \description{
 It is used to order either samples or sample regions or both,
@@ -61,26 +60,13 @@ mtop and mtopg and mtopp are mutalbe exclusive, so rtop and rtopg and rtopp
 }
 \examples{
 
-### it orders the samples according to the Region_count metadata attribute and takes the two samples 
-that have the highest count. 
+## it orders the samples according to the Region_count metadata attribute and takes the two samples 
+## that have the highest count. 
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
-o = order(r,list(DESC(Region_Count)), mtop = 2)
-
-\dontrun{
-
-### it extracts the first 5 samples on the basis of their region counter 
-(those with the smaller RegionCount) and then, for each of them, 
-7 regions on the basis of their mutation counter (those with the higher MutationCount).
-
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = readDataset(test_path)
-o = order(r,list(ASC(Region_Count)), mtop = 5,regions_ordering = list(DESC(MutationCount)),rtop=7)
- 
-}
+o = order(r,list(DESC("Region_Count")), mtop = 2)
 
 }
 \references{

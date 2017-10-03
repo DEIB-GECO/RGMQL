@@ -37,8 +37,8 @@ If error occures a specific error is printed
 }
 \examples{
 
-##### this user already exist, it's a test account
-##### don't use it
+### this user already exist, it's a test account, don't use it!!!
+
 PolimiUrl = "http://130.186.13.219/gmql-rest"
 register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
 

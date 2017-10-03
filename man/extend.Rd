@@ -38,22 +38,22 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
 
-### it counts the regions in each sample and stores their number as value of the new metadata 
-RegionCount attribute of the sample.
-e = extend(input_data = r, list(RegionCount = COUNT())
+## it counts the regions in each sample and stores their number as value of the new metadata 
+## RegionCount attribute of the sample.
+e = extend(input_data = r, list(RegionCount = COUNT()))
 \dontrun{
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = readDataset(test_path)
 
-### it copies all samples of exp dataset into res dataset, and then calculates 
-for each of them two new metadata attributes:
-1. RegionCount is the number of sample regions;
-2. MinP is the minimum Pvalue of the sample regions.
-res sample regions are the same as the ones in exp.
+## it copies all samples of exp dataset into res dataset, and then calculates 
+## for each of them two new metadata attributes:
+##  1. RegionCount is the number of sample regions;
+##  2. MinP is the minimum pvalue of the sample regions.
+## res sample regions are the same as the ones in exp.
 
-res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN(pValue))
+res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN(pvalue)))
 
 }
 

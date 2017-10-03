@@ -28,8 +28,10 @@ If error occures a specific error is printed
 \examples{
 
 #### download dataset in r working directory
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
-login.GMQL(url = PolimiUrl,"test101","test")
-downloadDataset(PolimiUrl,"dataset_test",path = getwd())
+#### in this case we try to download public dataset
+
+PolimiUrl = "http://130.186.13.219/gmql-rest"
+login.GMQL(url = PolimiUrl)
+downloadDataset(PolimiUrl,"public.HG19_BED_ANNOTATION",path = getwd())
 
 }

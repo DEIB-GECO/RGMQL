@@ -31,26 +31,26 @@
 }
 
 # aggregates factory
-.aggregates <- function(metadata,class)
+.aggregates <- function(meta_data,class)
 {
-  if(!is.list(metadata))
-    stop("metadata: invalid input")
+  if(!is.list(meta_data))
+    stop("meta_data: invalid input")
 
-  if(!all(sapply(metadata, function(x) is(x,class))))
+  if(!all(sapply(meta_data, function(x) is(x,class))))
     stop("All elements must be META_OPERATOR object")
 
-  names <- names(metadata)
+  names <- names(meta_data)
   if(is.null(names))
   {
     warning("You did not assign a names to a list.\nWe build names for you")
-    names <- sapply(metadata, take_value.META_OPERATOR)
+    names <- sapply(meta_data, take_value.META_OPERATOR)
   }
   else
   {
     if("" %in% names)
       stop("No partial names assignment is allowed")
   }
-  aggregate_matrix <- t(sapply(metadata, function(x) {
+  aggregate_matrix <- t(sapply(meta_data, function(x) {
 
     new_value = as.character(x)
     matrix <- matrix(new_value)

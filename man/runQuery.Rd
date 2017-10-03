@@ -28,7 +28,7 @@ If error occures a specific error is printed
 }
 \examples{
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 runQuery(PolimiUrl, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
 MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)

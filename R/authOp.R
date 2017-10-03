@@ -34,13 +34,6 @@ if(getRversion() >= "3.1.0")
 #' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #'
-#' \dontrun{
-#' 
-#' ### login with username and password
-#' PolimiUrl = "http://130.186.13.219/gmql-rest"
-#' login.GMQL(PolimiUrl,"test101","test")
-#' 
-#' }
 #' @export
 #'
 login.GMQL <- function(url,username = NULL, password = NULL)
@@ -100,13 +93,6 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' login.GMQL(PolimiUrl)
 #' logout.GMQL(PolimiUrl)
 #'
-#' \dontrun{
-#' ##### login with username and password, then logout
-#' PolimiUrl = "http://130.186.13.219/gmql-rest"
-#' login.GMQL(PolimiUrl,"test101","test")
-#' logout.GMQL(PolimiUrl)
-#' }
-#'
 #' @return None
 #'
 #' @export
@@ -156,8 +142,8 @@ logout.GMQL <- function(url)
 #'
 #' @examples
 #' 
-#' ##### this user already exist, it's a test account
-#' ##### don't use it
+#' ### this user already exist, it's a test account, don't use it!!!
+#' 
 #' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
 #'

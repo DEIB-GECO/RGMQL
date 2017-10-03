@@ -34,8 +34,8 @@
 #'
 #' @examples
 #'
-#' #### This GMQL statement returns all the regions in the first dataset that do not 
-#' overlap any region in the second dataset.
+#' ## This GMQL statement returns all the regions in the first dataset that do not 
+#' ## overlap any region in the second dataset.
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -45,10 +45,10 @@
 #' out = difference(r_left,r_right)
 #' 
 #' \dontrun{
-#' ### This GMQL statement extracts for every pair of samples s1 in EXP1 and s2 in EXP2
-#' having the same value of the metadata attribute 'antibody_target'
-#' the regions that appear in s1 but do not overlap any region in s2; 
-#' metadata of the result are the same as the metadata of s1.
+#' ## This GMQL statement extracts for every pair of samples s1 in EXP1 and s2 in EXP2
+#' ## having the same value of the metadata attribute 'antibody_target'
+#' ## the regions that appear in s1 but do not overlap any region in s2; 
+#' ## metadata of the result are the same as the metadata of s1.
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")

@@ -28,6 +28,7 @@ if error occures, a specific error is printed
 \examples{
 
 PolimiUrl = "http://130.186.13.219/gmql-rest"
+
 login.GMQL(PolimiUrl)
 list <- showQueries(PolimiUrl)
 

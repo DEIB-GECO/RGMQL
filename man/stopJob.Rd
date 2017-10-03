@@ -24,7 +24,7 @@ If error occures a specific error is printed
 \examples{
 
 \dontrun{
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl,"test101","test")
 list_jobs <- showJobs(PolimiUrl)
 jobs_1 <- list_jobs$jobs[[1]]

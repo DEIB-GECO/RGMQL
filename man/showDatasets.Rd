@@ -29,7 +29,8 @@ If error occures a specific error is printed
 \examples{
 
 #### show dataset when logged as guest
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(url = PolimiUrl)
 list <- showDatasets(PolimiUrl)
 

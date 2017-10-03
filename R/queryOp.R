@@ -19,7 +19,7 @@
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' list_jobs <- showJobs(PolimiUrl)
 #'
@@ -58,7 +58,7 @@ showJobs <- function(url)
 #'
 #' \dontrun{
 #' ## login with test user
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' ## list all jobs
 #' list_jobs <- showJobs(PolimiUrl)
@@ -100,7 +100,7 @@ showJobLog <- function(url,job_id)
 #' @examples
 #'
 #' \dontrun{
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' list_jobs <- showJobs(PolimiUrl)
 #' jobs_1 <- list_jobs$jobs[[1]]
@@ -138,7 +138,7 @@ stopJob <- function(url,job_id)
 #'
 #' @examples
 #' \dontrun{
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl,"test101","test")
 #' list_jobs <- showJobs(PolimiUrl)
 #' jobs_1 <- list_jobs$jobs[[1]]
@@ -183,7 +183,7 @@ traceJob <- function(url, job_id)
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' runQuery(PolimiUrl, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
 #' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
@@ -231,7 +231,7 @@ runQuery <- function(url,fileName,query,output_gtf = TRUE)
 #'
 #' ## run query: output GTF
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' test_path <- system.file("example",package = "GMQL")
 #' test_query <- file.path(test_path, "query1.txt")
@@ -239,7 +239,6 @@ runQuery <- function(url,fileName,query,output_gtf = TRUE)
 #'
 #' ## run query: output GDM (tabulated)
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' test_path <- system.file("example",package = "GMQL")
 #' test_query <- file.path(test_path, "query1.txt")
@@ -271,7 +270,7 @@ runQuery.fromfile <- function(url,fileName,filePath,output_gtf = TRUE)
 #'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' compileQuery(PolimiUrl, "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
 #' MATERIALIZE DATA_SET_VAR INTO RESULT_DS;")
@@ -305,10 +304,9 @@ compileQuery <- function(url ,query)
 #' @details
 #' If error occures a specific error is printed
 #'
-#'
 #' @examples
 #'
-#' PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+#' PolimiUrl = "http://130.186.13.219/gmql-rest"
 #' login.GMQL(PolimiUrl)
 #' test_path <- system.file("example",package = "GMQL")
 #' test_query <- file.path(test_path, "query1.txt")

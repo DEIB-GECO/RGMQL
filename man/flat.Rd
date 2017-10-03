@@ -54,15 +54,15 @@ the last end of the regions which would contribute to each region of the COVER
 }
 \examples{
 
-### This GMQL statement computes the result grouping the input \\emph{exp} samples by 
-the values of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample 
-is generated for each cell type. 
-Output regions are produced by concatenating all regions which would have been used 
-to construct a COVER(2,4) statement on the same dataset; 
+## This GMQL statement computes the result grouping the input \\emph{exp} samples by 
+## the values of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample 
+## is generated for each cell type. 
+## Output regions are produced by concatenating all regions which would have been used 
+## to construct a COVER(2,4) statement on the same dataset; 
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-exp = read(test_path)
+exp = readDataset(test_path)
 res = flat(input_data = exp,2,4, c("cell"))
 
 }

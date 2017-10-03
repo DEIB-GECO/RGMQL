@@ -30,7 +30,7 @@ If error occures a specific error is printed
 
 ## run query: output GTF
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
+PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(PolimiUrl)
 test_path <- system.file("example",package = "GMQL")
 test_query <- file.path(test_path, "query1.txt")
@@ -38,7 +38,6 @@ runQuery(PolimiUrl, "query_1", test_query, output_gtf = FALSE)
 
 ## run query: output GDM (tabulated)
 
-PolimiUrl = "http://genomic.elet.polimi.it/gmql-rest"
 login.GMQL(PolimiUrl)
 test_path <- system.file("example",package = "GMQL")
 test_query <- file.path(test_path, "query1.txt")

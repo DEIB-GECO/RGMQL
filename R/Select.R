@@ -36,7 +36,7 @@
 #' @examples
 #' 
 #' ## it selects from input data samples of patients younger than 70 years old, 
-#' based on filtering on sample metadata attribute Patient_age
+#' ## based on filtering on sample metadata attribute Patient_age
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -108,6 +108,7 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
     
     join_condition_matrix <- .join_condition(semi_join)
   }
+  
   out <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,
                         semi_join_negation,input_data$value)
   if(grepl("No",out,ignore.case = TRUE) || grepl("expected",out,ignore.case = TRUE))

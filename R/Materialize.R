@@ -18,8 +18,10 @@
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
-#' execute()
 #' 
+#' \dontrun{
+#' execute()
+#' }
 #' @export
 #'
 execute <- function()
@@ -51,7 +53,7 @@ execute <- function()
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
+#' r = readDataset(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
@@ -76,7 +78,8 @@ materialize <- function(input_data, dir_out = getwd())
 #' as folder (like if execution was invoked)
 #'
 #' @import GenomicRanges
-#'
+#' @importFrom stats setNames
+#' 
 #' @param input_data returned object from any GMQL function
 #' @param rows number of rows for each sample regions that you want to retrieve and stored in memory
 #' by default is 0 that means take all rows for each sample
@@ -87,10 +90,10 @@ materialize <- function(input_data, dir_out = getwd())
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' r = read(test_path)
+#' r = readDataset(test_path)
 #' s = select(input_data = r)
 #' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-#' take(input_data = m, rows = 45)
+#' g <- take(input_data = m, rows = 45)
 #' 
 #' @export
 #'
@@ -134,7 +137,7 @@ take <- function(input_data, rows=0L)
     x <- x[-1]
   })
   meta_list <- lapply(name_value_list, function(x){
-    setNames(as.list(as.character(x[[2]])), x[[1]])
+    stats::setNames(as.list(as.character(x[[2]])), x[[1]])
   })
 }
 

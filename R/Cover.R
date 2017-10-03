@@ -59,26 +59,26 @@
 #'
 #' @examples
 #' 
-#' ### This GMQL statement produces an output dataset with a single output sample. 
-#' The COVER operation considers all areas defined by a minimum of two overlapping regions 
-#' in the input samples, up to any amount of overlapping regions.
+#' ## This GMQL statement produces an output dataset with a single output sample. 
+#' ## The COVER operation considers all areas defined by a minimum of two overlapping regions 
+#' ## in the input samples, up to any amount of overlapping regions.
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' exp = read(test_path)
+#' exp = readDataset(test_path)
 #' res = cover(input_data = exp,2,"ANY")
 #'
 #' \dontrun{
-#' ### This GMQL statement computes the result grouping the input exp samples by the values of 
-#' their cell metadata attribute, 
-#' thus one output res sample is generated for each cell type; 
-#' output regions are produced where at least 2 and at most 3 regions of grouped exp samples 
-#' overlap, setting as attributes of the resulting regions the minimum pValue of the overlapping regions 
-#' (min_pvalue) and their Jaccard indexes (JaccardIntersect and JaccardResult).
+#' ## This GMQL statement computes the result grouping the input exp samples by the values of 
+#' ## their cell metadata attribute, 
+#' ## thus one output res sample is generated for each cell type; 
+#' ## output regions are produced where at least 2 and at most 3 regions of grouped exp samples 
+#' ## overlap, setting as attributes of the resulting regions the minimum pvalue of the overlapping regions 
+#' ## (min_pvalue) and their Jaccard indexes (JaccardIntersect and JaccardResult).
 #' 
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = read(test_path)
-#' res = cover(input_data = exp,2,3, c("cell"), list(min_pValue = MIN(pValue)))
+#' res = cover(input_data = exp,2,3, c("cell"), list(min_pValue = MIN("pvalue")))
 #' }
 #' @export
 #'
@@ -136,17 +136,17 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 #'
 #' @examples
 #'
-#' ### This GMQL statement computes the result grouping the input \emph{exp} samples 
-#' by the values of their \emph{cell} metadata attribute, 
-#' thus one output \emph{res} sample is generated for each cell type. 
-#' Output regions are produced by dividing results from COVER in contiguous subregions 
-#' according to the varying accumulation values (from 2 to 4 in this case): 
-#' one region for each accumulation value;
+#' ## This GMQL statement computes the result grouping the input \emph{exp} samples 
+#' ## by the values of their \emph{cell} metadata attribute, 
+#' ## thus one output \emph{res} sample is generated for each cell type. 
+#' ## Output regions are produced by dividing results from COVER in contiguous subregions 
+#' ## according to the varying accumulation values (from 2 to 4 in this case): 
+#' ## one region for each accumulation value;
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' exp = read(test_path)
-#' res = histogram(exp, 2,4,groupBy = c("cell")) exp 
+#' exp = readDataset(test_path)
+#' res = histogram(exp, 2,4,groupBy = c("cell"))
 #' 
 #' @export
 #'
@@ -206,16 +206,16 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = N
 #'
 #' @examples
 #'
-#' ### This GMQL statement computes the result grouping the input \emph{exp} samples by the values 
-#' of their \emph{cell} metadata attribute, thus one output \emph{res} sample is generated 
-#' for each cell type.
-#' Output regions are produced by extracting the highest accumulation overlapping 
-#' (sub)regions according to the methodologies described above;
+#' ## This GMQL statement computes the result grouping the input \emph{exp} samples by the values 
+#' ## of their \emph{cell} metadata attribute, thus one output \emph{res} sample is generated 
+#' ## for each cell type.
+#' ## Output regions are produced by extracting the highest accumulation overlapping 
+#' ## (sub)regions according to the methodologies described above;
 #'
 #'
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' exp = read(test_path)
+#' exp = readDataset(test_path)
 #' res = summit(input_data = exp,2,4, c("cell"))
 #' 
 #' @export
@@ -274,15 +274,15 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL
 #'
 #' @examples
 #' 
-#' ### This GMQL statement computes the result grouping the input \emph{exp} samples by 
-#' the values of their \emph{cell} metadata attribute, thus one output \emph{res} sample 
-#' is generated for each cell type. 
-#' Output regions are produced by concatenating all regions which would have been used 
-#' to construct a COVER(2,4) statement on the same dataset; 
+#' ## This GMQL statement computes the result grouping the input \emph{exp} samples by 
+#' ## the values of their \emph{cell} metadata attribute, thus one output \emph{res} sample 
+#' ## is generated for each cell type. 
+#' ## Output regions are produced by concatenating all regions which would have been used 
+#' ## to construct a COVER(2,4) statement on the same dataset; 
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-#' exp = read(test_path)
+#' exp = readDataset(test_path)
 #' res = flat(input_data = exp,2,4, c("cell"))
 #'
 #' @export

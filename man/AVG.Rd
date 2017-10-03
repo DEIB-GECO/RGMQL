@@ -25,10 +25,10 @@ initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = readDataset(test_path)
 
-### The following cover operation produces output regions where at least 2 and at most 3 regions of
-exp overlap, having as resulting region attributes the avg signal of the overlapping regions;
-the result has one sample for each input cell.
-res = cover(input_data = exp,2,3, c("cell"), list(avg_signal = AVG(signal)))
+## The following cover operation produces output regions where at least 2 and at most 3 regions of
+## exp overlap, having as resulting region attributes the avg signal of the overlapping regions;
+## the result has one sample for each input cell.
+res = cover(input_data = exp,2,3, c("cell"), list(avg_signal = AVG("signal")))
 
 }
 \seealso{

@@ -83,9 +83,9 @@ take_value.META_OPERATOR <- function(obj){
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: sum_score is the sum of score of the sample regions.
-#' res = extend(input_data = exp, list(sum_score = SUM(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: sum_score is the sum of score of the sample regions.
+#' res = extend(input_data = exp, list(sum_score = SUM("score")))
 #' 
 #' @export
 #'
@@ -123,9 +123,9 @@ SUM <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: MinP is the minimum pvalue of the sample regions.
-#' res = extend(input_data = exp, list(minP = MIN(pvalue))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: MinP is the minimum pvalue of the sample regions.
+#' res = extend(input_data = exp, list(minP = MIN("pvalue")))
 #' 
 #' @export
 #'
@@ -163,9 +163,9 @@ MIN <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: max_score is the maximum score of the sample regions.
-#' res = extend(input_data = exp, list(max_score = MAX(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: max_score is the maximum score of the sample regions.
+#' res = extend(input_data = exp, list(max_score = MAX("score")))
 #' 
 #' 
 #' @export
@@ -204,10 +204,10 @@ MAX <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### The following cover operation produces output regions where at least 2 and at most 3 regions of
-#' exp overlap, having as resulting region attributes the avg signal of the overlapping regions;
-#' the result has one sample for each input cell.
-#' res = cover(input_data = exp,2,3, c("cell"), list(avg_signal = AVG(signal)))
+#' ## The following cover operation produces output regions where at least 2 and at most 3 regions of
+#' ## exp overlap, having as resulting region attributes the avg signal of the overlapping regions;
+#' ## the result has one sample for each input cell.
+#' res = cover(input_data = exp,2,3, c("cell"), list(avg_signal = AVG("signal")))
 #'
 #' @export
 #'
@@ -246,10 +246,10 @@ AVG <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' data = readDataset(test_path)
 #' 
-#' ### copies all samples of DATA into OUT dataset, and then for each of them adds another 
-#' metadata attribute,  allScores, which is the aggregation comma-separated list of all the 
-#' distinct values that the attribute  score takes in the sample.
-#' out = extend(input_data = data, list(allScore = BAG("score"))
+#' ## copies all samples of DATA into OUT dataset, and then for each of them adds another 
+#' ## metadata attribute,  allScores, which is the aggregation comma-separated list of all the 
+#' ## distinct values that the attribute  score takes in the sample.
+#' out = extend(input_data = data, list(allScore = BAG("score")))
 #'
 #' @export
 #'
@@ -280,14 +280,14 @@ BAG <- function(value)
 #' 
 #' @examples
 #' 
-#' ### local with CustomParser
+#' ## local with CustomParser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### counts the regions in each sample and stores their number as value of the new metadata 
-#' RegionCount attribute of the sample.
-#' out = extend(input_data = exp, list(RegionCount = COUNT())
+#' ## counts the regions in each sample and stores their number as value of the new metadata 
+#' ## RegionCount attribute of the sample.
+#' out = extend(input_data = exp, list(RegionCount = COUNT()))
 #'
 #' @export
 #'
@@ -326,9 +326,9 @@ check.COUNT <- function(obj){}
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: std_score is the standard deviation score of the sample regions.
-#' res = extend(input_data = exp, list(std_score = STD(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: std_score is the standard deviation score of the sample regions.
+#' res = extend(input_data = exp, list(std_score = STD("score")))
 #'
 #' @export
 #'
@@ -366,9 +366,9 @@ STD <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: m_score is the median score of the sample regions.
-#' res = extend(input_data = exp, list(m_score = MEDIAN(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: m_score is the median score of the sample regions.
+#' res = extend(input_data = exp, list(m_score = MEDIAN("score")))
 #'
 #' @export
 #'
@@ -406,9 +406,9 @@ MEDIAN <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: q1_score is the first quartile of score of the sample regions.
-#' res = extend(input_data = exp, list(q1_score = Q1(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: q1_score is the first quartile of score of the sample regions.
+#' res = extend(input_data = exp, list(q1_score = Q1("score")))
 #'
 #'
 #' @export
@@ -447,9 +447,9 @@ Q1 <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: q2_score is the second quartile of score of the sample regions.
-#' res = extend(input_data = exp, list(q2_score = Q2(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: q2_score is the second quartile of score of the sample regions.
+#' res = extend(input_data = exp, list(q2_score = Q2("score")))
 #'
 #' @export
 #'
@@ -487,9 +487,9 @@ Q2 <- function(value)
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' exp = readDataset(test_path)
 #' 
-#' ### This statement copies all samples of exp into res dataset, and then calculates new 
-#' metadata attributes for each of them: q3_score is the third quartile of score of the sample regions.
-#' res = extend(input_data = exp, list(q3_score = Q3(score))
+#' ## This statement copies all samples of exp into res dataset, and then calculates new 
+#' ## metadata attributes for each of them: q3_score is the third quartile of score of the sample regions.
+#' res = extend(input_data = exp, list(q3_score = Q3("score")))
 #' 
 #' @export
 #'

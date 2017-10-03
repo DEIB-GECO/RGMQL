@@ -26,9 +26,9 @@ as folder (like if execution was invoked)
 
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
-r = read(test_path)
+r = readDataset(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-take(input_data = m, rows = 45)
+g <- take(input_data = m, rows = 45)
 
 }

@@ -47,19 +47,19 @@
 #'
 #' @examples
 #'
-#' ### it counts the number of regions in each sample from exp that overlap with a ref region, 
-#' and for each ref region it computes the minimum score of all the regions in each exp sample 
-#' that overlap with it. 
-#' The MAP joinby option ensures that only the exp samples referring to the same 'cell_tissue' 
-#' of a ref sample are mapped on such ref sample; 
-#' exp samples with no cell_tissue metadata attribute, or with such metadata 
-#' but with a different value from the one(s) of ref sample(s), are disregarded.
+#' ## it counts the number of regions in each sample from exp that overlap with a ref region, 
+#' ## and for each ref region it computes the minimum score of all the regions in each exp sample 
+#' ## that overlap with it. 
+#' ## The MAP joinby option ensures that only the exp samples referring to the same 'cell_tissue' 
+#' ## of a ref sample are mapped on such ref sample; 
+#' ## exp samples with no cell_tissue metadata attribute, or with such metadata 
+#' ## but with a different value from the one(s) of ref sample(s), are disregarded.
 #' 
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
-#' exp = read(test_path)
-#' ref = read(test_path2)
+#' exp = readDataset(test_path)
+#' ref = readDataset(test_path2)
 #' out = map(ref,exp, list(minScore = MIN("score")), joinBy = c("cell_tissue") )
 #' 
 #' 
@@ -68,7 +68,7 @@
 map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 {
   if(!is.null(aggregates))
-    metadata_matrix <- .aggregates(metadata,"OPERATOR")
+    metadata_matrix <- .aggregates(aggregates,"OPERATOR")
   else
     metadata_matrix = scalaNull("Array[Array[String]]")
 
@@ -77,7 +77,7 @@ map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = N
   else
     join_condition_matrix <- scalaNull("Array[Array[String]]")
 
-  out<-WrappeR$map(join_condition_matrix,aggregates,left_input_data$value,right_input_data$value)
+  out<-WrappeR$map(join_condition_matrix,metadata_matrix,left_input_data$value,right_input_data$value)
 
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)

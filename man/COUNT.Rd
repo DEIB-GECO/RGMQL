@@ -17,14 +17,14 @@ performing all the type conversion needed
 }
 \examples{
 
-### local with CustomParser
+## local with CustomParser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 exp = readDataset(test_path)
 
-### counts the regions in each sample and stores their number as value of the new metadata 
-RegionCount attribute of the sample.
-out = extend(input_data = exp, list(RegionCount = COUNT())
+## counts the regions in each sample and stores their number as value of the new metadata 
+## RegionCount attribute of the sample.
+out = extend(input_data = exp, list(RegionCount = COUNT()))
 
 }
 \seealso{
