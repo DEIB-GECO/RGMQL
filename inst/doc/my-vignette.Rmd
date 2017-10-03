@@ -51,7 +51,7 @@ package.
 
 # Basic Requirements
 	
-- javaEE version 8 
+- javaSE version 8 
 - java environment correctly set (i.e JAVA_HOME)
 - scala version 2.11.8
 - scala environment correctly set (i.e SCALA_HOME)
@@ -70,55 +70,116 @@ biocLite("GMQL")
 This package allow to create, manipulate and extract genomic data from 
 different datasets using different processing modes.
 
-## Local Environment
+## Local Processing
 
 Query processing consumes computational power directly from local CPUs/system while
 managing datasets (both GMQL or generic text plain dataset).
+
+### Initialisation 
+
+Before starting using any GMQL operation we need to initialise the GMQL context 
+with the following code:
+```{r, initialization, eval=FALSE}
+initGMQL()
+```
+No parameter means that we are initialising the context with GTF as output format for
+our regions sample files and metadata files.
+Of Course, other parameter are available. 
+
+### Datasource
+
+After initialisation we need to read the dataset.
+We present different source we can get the data from: \newline
+we can read local GMQL dataset:
+```{r,read GMQL dataset, eval=FALSE}
+gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+data_out = readDataset("gmql_dataset_path")
+```
 In case of remote datasets, user have to download it locally using 
 specifying function:
-	
-```{r, eval=FALSE}
-test_url = "http://130.186.13.219/gmql-rest"
+```{r, download dataset, eval=FALSE}
+test_url <- "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 downloadDataset(test_url,"dataset_test",path = getwd())
 ```
+where *test_url* is a R variable that define URL of remote server where 
+web services are located.\newline
 Once local, these datatset behave like local dataset as written above.
-In every case local processing saves results on local disk in the folder.
+\newline
+Also, for better integration in R environment and with other packages, we provide a function
+to read a GrangesList:
+```{r, read GRangesList, eval=FALSE}
+gr1 <- GRanges(seqnames = "chr2",
+ranges = IRanges(103, 106),
+strand = "+",
+score = 5L, GC = 0.45)
+
+gr2 <- GRanges(seqnames = c("chr1", "chr1"),
+ranges = IRanges(c(107, 113), width = 3),
+strand = c("+", "-"),
+score = 3:4, GC = c(0.3, 0.5))
+
+grl <- GRangesList("txA" = gr1, "txB" = gr2)
+data_out <- read(grl)
+```
+Every read function return a value, this value is used as first step 
+for execution the subsequent GMQL operation.
+
+### Queries
+
+Thwe core concept of GMQL package is build a query as the  name *GMQL* suggest.
+Unfortunatley is not the same as any query language.
+the building of query is more like a batch workflow
+
+### Execution
 
 ## Remote Environment
 
 Query processing consumes computational power from remote clusters/system while
 managing datasets that are only GMQL dataset.\newline
+
+Remote processing exits in two flavour:\newline
+
+- BATCH execution: \newline
+  Similar to local execution; user read data and the system automatically upload it on remote 
+  system: once loaded you can isue R function to manage remote data.\newline
+
+- REST web services: \newline
+  user can write GMQL queries to be executed remotely on remote data (or local data previous upload)
+
+### REST web services
+
+We talk about only for REST web service porocessing, because batch remote processing is
+quite similar to local processing.
+
+#### Initialization
+
 Rest servicies required login so the first step is to perform logon
 using user and password or as guest.
 Upon succesfull logon you get a request token must use in every subsequent REST call.
 Login can be performed using function:
-```{r, eval=FALSE}
+```{r, eval=TRUE}
+library("GMQL")
+
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 ```
 that saves token in R environment.\newline
-Remote processing exits in two flavour:\newline
 
-- BATCH execution: \newline
-  Once user read data the system automatically upload it on remote system:
-	once loaded you can isue R function to manage remote data.\newline
-	
-- REST web services: \newline
-  user can write GMQL queries to be executed remotely on remote data (or local data previous upload)
+### Datasource
 
+### Queries
+
+### Execution
 
 Saved data will be stored in repository and eventually can be downloaded locally.
 
-# Local Environment 
 
-## Datasource
+# Biological Example
 
-## Queries
+This section collects several examples where GMQL is used to answer practical questions/tasks of biological and clinical interest.
+For each example, after an initial textual statement describing the question/task to be answered, 
+the GMQL query is reported with a detailed commented description of the query and its results.
 
-## Execution
-
-
-# More Example
 
 

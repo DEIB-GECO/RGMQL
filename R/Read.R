@@ -25,7 +25,7 @@
 #' 
 #' @export
 #'
-initGMQL <- function(output_format, remote_processing = FALSE)
+initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 {
   out_format <- toupper(output_format)
 
