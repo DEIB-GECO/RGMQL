@@ -2,22 +2,26 @@
 title: "GMQL: GenoMetrics Query Language"
 author: "Simone Pallotta"
 date: "`r Sys.Date()`"
+bibliography: bibliography.bib
 output: BiocStyle::pdf_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+link-citations: true
 ---
 
 # Introduction
 
-Improvement of sequencing technologies and data processing pipelines is rapidly providing sequencing data, with associated high-level features, of many individual genomes in multiple biological and clinical conditions.\newline
+Improvement of sequencing technologies and data processing pipelines is rapidly providing sequencing data, with associated high-level features, of many individual genomes in multiple biological and clinical conditions.
 For this purpose GMQL has been proposed a high-level, declarative GenoMetric Query Language (GMQL) and a toolkit for its use.
 
 ## Purpose
 
-This package provides a set of functions to create, manipulate and extract genomic data from different datasources from local and remote datasets.\newline
-Also, these functios allow performing complex queries without the knowledge of GMQL syntax.
+GMQL operations focus on genomic domain-specific operations written as simple queries with implicit iterations over thousands of heterogeneous samples, computed in few minutes over servers [@IEEEACM7484654].
+This package provides a set of functions to create, manipulate and extract genomic data from different datasources both from local and remote datasets.
+Also, these functios allow performing complex queries without knowledge of GMQL syntax.
+
 
 # Dataset
 
@@ -25,19 +29,16 @@ We usually distinguish two kinds of dataset layout:\newline
 These contains large number of information describing regions of genome.\newline
 Data are encoded in human readable format using plain text file.
 
-- GMQL standard layout :\newline\newline
-  Dataset is composed basically of three type of file:
-  
-	1) region files usually terminating in .gtf or .gdm
-	2) metadata files terminating in .meta
-	3) schema XML file containing regions attributes
-\newline\newline
-	Each region sample file owns its metadata file.
-	All these files must reside in unique folder called files.
+* GMQL standard layout:\newline\newline
+  GMQL dataset is a collection of samples with the same region schema, is composed basically of three type of file:
+    1. region files usually terminating in .gtf or .gdm
+	  2. metadata files terminating in .meta
+	  3. schema XML file containing regions attributes
+	Each region sample file owns its metadata file. All these files must reside in unique folder called files.
 	
 ![GMQL dataset folder](dataset_gmql.png)
 	
-- Generic text based dataset:\newline\newline
+* Generic text based dataset:\newline\newline
   Dataset composed by heterogeneous sample organised in simple text files probably 
 	stem from different medical, biological sytem
 	Sample files are simply contained on a folder whose name must be 
@@ -45,17 +46,22 @@ Data are encoded in human readable format using plain text file.
 	\newline
 
 In our package dataset files are considered read-only.
-Once read genomic information is represented in abstract structure inside 
+Once read, genomic information is represented in abstract structure inside 
 package.
 
+# Genomic Data Model
+
+The proposed Genomic Data Model (GDM) is based on the notions of datasets and samples; datasets are collections of samples, and each sample consists of two parts, the region data, which describe portions of the DNA, and the metadata, which describe sample general properties.[@IEEEACM7484654].
 
 # Basic Requirements
+
+The GMQL package requires:
 	
-- javaSE version 8 
-- java environment correctly set (i.e JAVA_HOME)
-- scala version 2.11.8
-- scala environment correctly set (i.e SCALA_HOME)
-- network connectivity to web services (if required)
+* javaSE version 8 
+* java environment correctly set (i.e JAVA_HOME)
+* scala version 2.11.8
+* scala environment correctly set (i.e SCALA_HOME)
+* network connectivity to web services (if required)
 	
 # How to Install
 	
@@ -67,36 +73,42 @@ biocLite("GMQL")
   
 # Processing Environments
 
-This package allow to create, manipulate and extract genomic data from 
-different datasets using different processing modes.
+This package allows to create, manipulate and extract genomic data from 
+different datasets using different processing modes both local and remote.
 
 ## Local Processing
 
 Query processing consumes computational power directly from local CPUs/system while
 managing datasets (both GMQL or generic text plain dataset).
 
-### Initialisation 
+### Initialization
 
+Load and attach the GMQL package in an R session using library function:
+```{r, initialization, eval=FALSE}
+library('GMQL')
+```
 Before starting using any GMQL operation we need to initialise the GMQL context 
 with the following code:
-```{r, initialization, eval=FALSE}
+```{r, init, eval=FALSE}
 initGMQL()
 ```
-No parameter means that we are initialising the context with GTF as output format for
-our regions sample files and metadata files.
-Of Course, other parameter are available. 
+Calling initGMQL() with no parameters means we are initialising the context with GTF as output format for sample and metadata files.
+Details on this and all other functions are provided in the R documentation for this packag (e.g., help(GMQL)).
 
 ### Datasource
 
-After initialisation we need to read the dataset.
-We present different source we can get the data from: \newline
-we can read local GMQL dataset:
+After initialization we need to read the dataset.
+In the following section we show how getting data from different sources.\newline
+We have four different cases:
+
+1. Local GMQL dataset:\newline
+As data are already in user computer, we simply execute:
 ```{r,read GMQL dataset, eval=FALSE}
 gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 data_out = readDataset("gmql_dataset_path")
 ```
-In case of remote datasets, user have to download it locally using 
-specifying function:
+2. Remote dataset / explicit download:\newline
+User can download it locally using:
 ```{r, download dataset, eval=FALSE}
 test_url <- "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
@@ -105,9 +117,16 @@ downloadDataset(test_url,"dataset_test",path = getwd())
 where *test_url* is a R variable that define URL of remote server where 
 web services are located.\newline
 Once local, these datatset behave like local dataset as written above.
-\newline
+
+3. Remote dataset (/ implicit download):
+```{r,read remote dataset, eval=FALSE}
+data_out = readDataset("dataset_name_on_repo")
+```
+There is no need to explicitally download data since execution will trigger download automatically.
+
+4. GrangesList:\newline
 Also, for better integration in R environment and with other packages, we provide a function
-to read a GrangesList:
+to read from GrangesList, for example:
 ```{r, read GRangesList, eval=FALSE}
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
@@ -122,22 +141,52 @@ score = 3:4, GC = c(0.3, 0.5))
 grl <- GRangesList("txA" = gr1, "txB" = gr2)
 data_out <- read(grl)
 ```
-Every read function return a value, this value is used as first step 
-for execution the subsequent GMQL operation.
+Every read function return a result object a value containing internal details used for executing the subsequent GMQL operation.
 
 ### Queries
 
-The core concept of GMQL package is build a query as the  name *GMQL* suggest.
-Unfortunatley is not the same as any query language (e.g SQL) where the query is composed by only
-select statement with parameter 
-Thq query in GMQL is a set of operation che finiscoono con almeno una materialzie.
-Vediamone un esempio:
+GMQL is not DDL/DML traditional query language:
+With "query" we intend a group of operation that together produce result; in that sense GMQL query are more similar to SQL script.
+GMQL programming consist of a series of select, union, project, difference (and so on...) command.
 
+If you want to persist result, you can materialize as last step.
+Let's see a short example:
+```{r,query, eval=FALSE}
+initGMQL("gtf")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+input = readDataset(test_path)
 
+## it selects from input data samples of patients younger than 70 years old, 
+## based on filtering on sample metadata attribute Patient_age
+s=select(input,"Patient_age < 70")
+
+## it counts the regions in each sample and stores their number as value of the new metadata 
+## RegionCount attribute of the sample.
+e = extend(input_data = s, list(RegionCount = COUNT()))
+
+## materialize the result dataset on disk
+m = materialize(e)
+```
 
 ### Execution
 
-## Remote Environment
+GMQL processing does not store results:
+They remain in the environment until you invoke *execute* function.
+```{r,execute, eval=FALSE}
+execute()
+```
+*execute* can be issued only if at least one *materialize* is present in GMQL query, otherwise an error is generated.
+Data are saved in the path specified in every *materialize*.
+Besside *execute* we can use 
+```{r,take, eval=FALSE}
+g <- take(input_data = m, rows = 45)
+```
+to extract data as GRangesList format and execute all *materialize* commands.
+NOTE: GRangesList are contained in R environment and are not saved on disk.
+
+*rows* parameter specified how many rows will be exported
+
+## Remote Processing
 
 Query processing consumes computational power from remote clusters/system while
 managing datasets that are only GMQL dataset.\newline
@@ -153,8 +202,8 @@ Remote processing exits in two flavour:\newline
 
 ### REST web services
 
-We talk about only for REST web service porocessing, because batch remote processing is
-quite similar to local processing.
+This package allows to invoke rest services implementing the commands specified at [link](http://130.186.13.219/gmql-rest/swagger).
+
 
 #### Initialization
 
@@ -171,20 +220,25 @@ login.GMQL(test_url)
 that saves token in Global R environment with variable named *authToken*.\newline
 wit this token you can call all the funciton in web services suite.
 
-#### Queries
-
-
-
 #### Execution
 
-Saved data will be stored in repository and eventually can be downloaded locally.
+User can write the query as in the following example, as the second parameter of *runQuery*.
+```{r, eval=FALSE}
+test_url = "http://130.186.13.219/gmql-rest"
+login.GMQL(test_url)
+runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 
+         MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
+```
 
+Once run, query continues on the server while *runQuery* returns immediately.
+User can extract from result the job_id and status.
+jod_id can be used to invoke log and trace calls both in this R package.
 
-# Biological Example
+### Batch execution
 
-This section collects several examples where GMQL is used to answer practical questions/tasks of biological and clinical interest.
-For each example, after an initial textual statement describing the question/task to be answered, 
-the GMQL query is reported with a detailed commented description of the query and its results.
+This function is similar to local processing (syntax, function and so on ...) except:
+1. if data is local is uploaded on repository implicitly
+2. materialized data only on repository
 
-
+# References
 

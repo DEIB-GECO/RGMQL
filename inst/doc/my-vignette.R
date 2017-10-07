@@ -3,6 +3,9 @@
 #  biocLite("GMQL")
 
 ## ---- initialization, eval=FALSE-----------------------------------------
+#  library('GMQL')
+
+## ---- init, eval=FALSE---------------------------------------------------
 #  initGMQL()
 
 ## ----read GMQL dataset, eval=FALSE---------------------------------------
@@ -13,6 +16,9 @@
 #  test_url <- "http://130.186.13.219/gmql-rest"
 #  login.GMQL(test_url)
 #  downloadDataset(test_url,"dataset_test",path = getwd())
+
+## ----read remote dataset, eval=FALSE-------------------------------------
+#  data_out = readDataset("dataset_name_on_repo")
 
 ## ---- read GRangesList, eval=FALSE---------------------------------------
 #  gr1 <- GRanges(seqnames = "chr2",
@@ -28,9 +34,37 @@
 #  grl <- GRangesList("txA" = gr1, "txB" = gr2)
 #  data_out <- read(grl)
 
+## ----query, eval=FALSE---------------------------------------------------
+#  initGMQL("gtf")
+#  test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#  input = readDataset(test_path)
+#  
+#  ## it selects from input data samples of patients younger than 70 years old,
+#  ## based on filtering on sample metadata attribute Patient_age
+#  s=select(input,"Patient_age < 70")
+#  
+#  ## it counts the regions in each sample and stores their number as value of the new metadata
+#  ## RegionCount attribute of the sample.
+#  e = extend(input_data = s, list(RegionCount = COUNT()))
+#  
+#  ## materialize the result dataset on disk
+#  m = materialize(e)
+
+## ----execute, eval=FALSE-------------------------------------------------
+#  execute()
+
+## ----take, eval=FALSE----------------------------------------------------
+#  g <- take(input_data = m, rows = 45)
+
 ## ---- eval=TRUE----------------------------------------------------------
 library("GMQL")
 
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
+
+## ---- eval=FALSE---------------------------------------------------------
+#  test_url = "http://130.186.13.219/gmql-rest"
+#  login.GMQL(test_url)
+#  runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
+#           MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
 

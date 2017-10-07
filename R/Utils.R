@@ -112,7 +112,23 @@
   envirs[xin] 
 }
 
+.check_input <- function(value)
+{
+  if(!is.character(value))
+    stop("no valid data")
+  
+  if(length(value)>1)
+    stop("no multiple string")
+}
 
+.check_logical <- function(value)
+{
+  if(!is.logical(value))
+    stop("no valid data")
+  
+  if(length(value)>1)
+    stop("no multiple string")
+}
 
 #  if(!is.null(groupBy))
 #{

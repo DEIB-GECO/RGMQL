@@ -26,6 +26,16 @@
 #'
 execute <- function()
 {
+  remote_proc <- WrappeR$is_remote_processing()
+  array_dataset <- WrappeR$list_dataset_upload_download()
+  if(remote_proc)
+  {
+    
+  }
+  else
+  {
+    
+  }
   out <- WrappeR$execute()
   if(grepl("OK",out,ignore.case = TRUE))
     print("Executed")
@@ -66,7 +76,9 @@ materialize <- function(input_data, dir_out = getwd())
   if(grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
+  {
     invisible(NULL)
+  }
 }
 
 #' GMQL Operation: TAKE

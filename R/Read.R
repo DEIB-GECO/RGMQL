@@ -59,13 +59,9 @@ initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 #' }
 #' Default is CustomParser.
 #' @param is_local single logical value indicating local or remote dataset
-#' if the remote processing is off you cannot set is_local=FALSE (an error occures)
+#' @param is_GMQL single logical value indicating if dataset is GMQL dataset or not 
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
-#' useful only in remote processing
-#' @param override single logical value used in order to determine the overriding of reading
-#' dataset into repository, if an other dataset with the same name already exist into repostiory 
-#' and override value is FALSE an error occures.
 #' useful only in remote processing
 #' 
 #' @importFrom methods is
@@ -87,6 +83,7 @@ initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 #' r = readDataset(test_path)
 #' 
 #' \dontrun{
+#' 
 #' ### local with other Parser
 #' initGMQL("gtf")
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
@@ -95,52 +92,25 @@ initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 #' 
 #' @export
 #'
-readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL, override= FALSE)
+readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,
+                        is_GMQL=TRUE, url=NULL)
 {
-  remote_proc <- WrappeR$is_remote_processing()
-  if(!remote_proc && !is_local)
-    stop("you cannot use local processing with remote repository")
-  
-  if(!is.character(dataset) || length(dataset) >1)
-    stop("dataset: invalid input or length > 1")
-  
-  if(!is.logical(override) || length(override) >1)
-    stop("override: invalid input or length > 1")
-  
-  if(!is.logical(is_local) || length(is_local) >1)
-    stop("is_local: invalid input or length > 1")
+  .check_input(dataset)
+  .check_logical(is_local)
+  .check_logical(is_GMQL)
 
   if(is_local)
   {
     if(!dir.exists(dataset))
       stop("folder does not exist")
-
-    remote_proc <- WrappeR$is_remote_processing()
-    if(remote_proc)
-    {
-      if(override)
-      {
-        list <- showDatasets(url)
-        name_dataset <- basename(dataset)
-        if(name_dataset %in% unlist(list$datasets))
-          deleteDataset(url,name_dataset)
-      }
-      else
-      {
-        list <- showDatasets(url)
-        name_dataset <- basename(dataset)
-        if(name_dataset %in% unlist(list$datasets))
-          stop("dataset already exist in repository")
-      }
-      uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
-    }
     
     schema_matrix <- scalaNull("Array[Array[String]]")
     schema_type <- scalaNull("String")
   }
   else
   {
-    list <- showSchemaFromDataset(url,name_dataset)
+    #name_dataset <- basename(dataset)
+    list <- showSchemaFromDataset(url,dataset)
     schema_names <- sapply(list$fields, function(x){x$name})
     schema_type <- sapply(list$fields, function(x){x$fieldType})
     schema_matrix <- cbind(schema_type,schema_names)
@@ -149,7 +119,7 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,url=NULL,
 
   parser_name <- .check_parser(parser)
 
-  out <- WrappeR$readDataset(dataset,parser_name,is_local,schema_matrix)
+  out <- WrappeR$readDataset(dataset,parser_name,is_local,is_GMQL,schema_matrix)
   if(grepl("File",out,ignore.case = TRUE) || grepl("No",out,ignore.case = TRUE))
     stop(out)
   else
@@ -262,4 +232,23 @@ remote_processing<-function(is_remote)
 }
 
 
+# remote_proc <- WrappeR$is_remote_processing()
+# if(remote_proc)
+# {
+#   if(override)
+#   {
+#     list <- showDatasets(url)
+#     name_dataset <- basename(dataset)
+#     if(name_dataset %in% unlist(list$datasets))
+#       deleteDataset(url,name_dataset)
+#   }
+#   else
+#   {
+#     list <- showDatasets(url)
+#     name_dataset <- basename(dataset)
+#     if(name_dataset %in% unlist(list$datasets))
+#       stop("dataset already exist in repository")
+#   }
+#   uploadSamples(url,name_dataset,dataset,isGMQL = TRUE)
+# }
 

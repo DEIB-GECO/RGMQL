@@ -4,8 +4,8 @@
 \alias{readDataset}
 \title{GMQL Function: READ}
 \usage{
-readDataset(dataset, parser = "CustomParser", is_local = TRUE, url = NULL,
-  override = FALSE)
+readDataset(dataset, parser = "CustomParser", is_local = TRUE,
+  is_GMQL = TRUE, url = NULL)
 }
 \arguments{
 \item{dataset}{single string folder path for GMQL dataset or datasetname on repository}
@@ -23,16 +23,12 @@ The Parser's available are:
 }
 Default is CustomParser.}
 
-\item{is_local}{single logical value indicating local or remote dataset
-if the remote processing is off you cannot set is_local=FALSE (an error occures)}
+\item{is_local}{single logical value indicating local or remote dataset}
+
+\item{is_GMQL}{single logical value indicating if dataset is GMQL dataset or not}
 
 \item{url}{single string url of server: it must contain the server address and base url;
 service name will be added automatically
-useful only in remote processing}
-
-\item{override}{single logical value used in order to determine the overriding of reading
-dataset into repository, if an other dataset with the same name already exist into repostiory 
-and override value is FALSE an error occures.
 useful only in remote processing}
 }
 \value{
@@ -58,6 +54,7 @@ test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
 
 \dontrun{
+
 ### local with other Parser
 initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
