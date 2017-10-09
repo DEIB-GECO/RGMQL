@@ -322,3 +322,24 @@ compileQuery.fromfile <- function(url ,filePath)
   query <- readLines(filePath)
   compileQuery(url,query)
 }
+
+
+
+serializeQuery <- function(output_gtf,base64)
+{
+  if(output_gtf)
+    out <- "GTF"
+  else
+    out <- "TAB"
+  
+  URL <- paste0(url,"/queries/dag/",out)
+  h <- c('Accept' = "Application/json",
+         'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
+  
+  req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
+  content <- httr::content(req,"parsed")
+  if(req$status_code !=200)
+    print(content$error)
+  else
+    return(content)
+}

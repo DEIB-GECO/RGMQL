@@ -27,30 +27,15 @@
 execute <- function()
 {
   remote_proc <- WrappeR$is_remote_processing()
-  remote_array <- WrappeR$datasetQueueRemote()
-  if(remote_proc)
-  {
-    local_array <- WrappeR$datasetQueueLocal()
-    sapply(local_array,function(x)
-      {
-      #name_dataset <- basename(x)
-      #uploadSamples(url,name_dataset,x,isGMQL = TRUE)
-    })
-  }
-  else
-  {
-    remote_array <- WrappeR$datasetQueueLocal()
-    sapply(remote_array,function(x)
-    {
-      #name_dataset <- basename(x)
-      #downloadDataset(url,name_dataset,path = getwd())
-    })
-  }
   out <- WrappeR$execute()
-  if(grepl("OK",out,ignore.case = TRUE))
-    print("Executed")
-  else
+  if(grepl("No",out,ignore.case = TRUE))
     stop(out)
+  else
+  {
+    if(remote_proc)
+      serializeQuery(FALSE,out)
+    "Executed"
+  }
 }
 
 #' GMQL Operation: MATERIALIZE
