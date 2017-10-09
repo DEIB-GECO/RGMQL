@@ -110,7 +110,7 @@ logout.GMQL <- function(url)
   {
     print(content)
     #delete token from environment
-    WrappeR$delete_token(authToken)
+    WrappeR$delete_token()
     rm(authToken, envir = .GlobalEnv)
   }
 }

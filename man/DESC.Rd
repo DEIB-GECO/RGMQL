@@ -22,7 +22,7 @@ It define a descending order for input value
 ## it orders the samples according to the Region_count metadata attribute and takes the two samples 
 ## that have the highest count. 
 
-initGMQL("gtf")
+initGMQL()
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
 o = order(r,list(DESC("Region_Count")), mtop = 2)

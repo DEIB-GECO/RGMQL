@@ -43,7 +43,7 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
   if(!is.logical(remote_processing) || length(remote_processing) >1)
     stop("remote_processing: invalid input or length > 1")
   
-  if(is.null(url) && !exists("authToken",envir = .GlobalEnv))
+  if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
     login.GMQL(url,username,password)
   
   WrappeR$initGMQL(out_format,remote_processing)

@@ -336,7 +336,7 @@ serializeQuery <- function(output_gtf,base64)
   h <- c('Accept' = "Application/json",
          'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
   
-  req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
+  req <- httr::POST(URL,body = base64 ,httr::add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
     print(content$error)
