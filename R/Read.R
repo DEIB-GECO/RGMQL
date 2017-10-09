@@ -1,7 +1,8 @@
 #' Init GMQL Server
 #'
 #' Initialize and run GMQL server for executing GMQL query
-#'
+#' It is Also perform a login to GMQL REST services suite
+#' 
 #' @import rscala
 #'
 #' @param output_format single string identifies the output format of sample files.
@@ -14,7 +15,12 @@
 #' }
 #' @param remote_processing logical value specifying the processing mode.
 #' True for processing on cluster (remote), false for local processing (local machine)
-#'
+#' @param url single string url of server: it must contain the server address and base url;
+#' service name is added automatically.
+#' If null no login is performed, you can always perform it calling the function 
+#' \code{\link{login.GMQL}} explicitly
+#' @param username single string name used during signup
+#' @param password single string password used during signup
 #' @return None
 #'
 #' @examples
@@ -25,7 +31,8 @@
 #' 
 #' @export
 #'
-initGMQL <- function(output_format="gtf", remote_processing = FALSE)
+initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NULL, 
+                     username = NULL, password = NULL)
 {
   out_format <- toupper(output_format)
 
@@ -35,6 +42,9 @@ initGMQL <- function(output_format="gtf", remote_processing = FALSE)
 
   if(!is.logical(remote_processing) || length(remote_processing) >1)
     stop("remote_processing: invalid input or length > 1")
+  
+  if(is.null(url) && !exists("authToken",envir = .GlobalEnv))
+    login.GMQL(url,username,password)
   
   WrappeR$initGMQL(out_format,remote_processing)
 }
@@ -106,10 +116,10 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,
     
     schema_matrix <- scalaNull("Array[Array[String]]")
     schema_type <- scalaNull("String")
+    url <- scalaNull("String")
   }
   else
   {
-    #name_dataset <- basename(dataset)
     list <- showSchemaFromDataset(url,dataset)
     schema_names <- sapply(list$fields, function(x){x$name})
     schema_type <- sapply(list$fields, function(x){x$fieldType})

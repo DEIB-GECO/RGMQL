@@ -4,7 +4,8 @@
 \alias{initGMQL}
 \title{Init GMQL Server}
 \usage{
-initGMQL(output_format = "gtf", remote_processing = FALSE)
+initGMQL(output_format = "gtf", remote_processing = FALSE, url = NULL,
+  username = NULL, password = NULL)
 }
 \arguments{
 \item{output_format}{single string identifies the output format of sample files.
@@ -18,12 +19,22 @@ It is a tab-delimited text format based on the general feature format}
 
 \item{remote_processing}{logical value specifying the processing mode.
 True for processing on cluster (remote), false for local processing (local machine)}
+
+\item{url}{single string url of server: it must contain the server address and base url;
+service name is added automatically.
+If null no login is performed, you can always perform it calling the function 
+\code{\link{login.GMQL}} explicitly}
+
+\item{username}{single string name used during signup}
+
+\item{password}{single string password used during signup}
 }
 \value{
 None
 }
 \description{
 Initialize and run GMQL server for executing GMQL query
+It is Also perform a login to GMQL REST services suite
 }
 \examples{
 

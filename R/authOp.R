@@ -64,6 +64,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
   else
   {
     assign("authToken",content$authToken,.GlobalEnv)
+    WrappeR$save_tokenAndUrl(authToken,url)
     print(paste("your Token is",authToken))
   }
 }
@@ -109,6 +110,7 @@ logout.GMQL <- function(url)
   {
     print(content)
     #delete token from environment
+    WrappeR$delete_token(authToken)
     rm(authToken, envir = .GlobalEnv)
   }
 }
