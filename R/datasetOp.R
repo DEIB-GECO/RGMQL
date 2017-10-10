@@ -304,6 +304,7 @@ deleteDataset <- function(url,datasetName)
 #' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
+#' @importFrom utils unzip
 #'
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name will be added automatically
