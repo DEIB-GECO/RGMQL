@@ -117,10 +117,12 @@ project <-function(input_data, metadata = NULL,metadata_update=NULL,all_but_meta
   all_but_reg <- all_but_reg[1]
   all_but_meta <- all_but_meta[1]
   
-  out <- WrappeR$project(metadata,metadata_update,all_but_meta,
-                         regions,regions_update,all_but_reg,input_data$value)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$project(metadata,metadata_update,all_but_meta,
+                              regions,regions_update,all_but_reg,input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }

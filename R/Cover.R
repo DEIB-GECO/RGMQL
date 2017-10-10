@@ -308,16 +308,19 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
     metadata_matrix <- scalaNull("Array[Array[String]]")
 
 
-  out <- switch(flag,
+  response <- switch(flag,
                 "COVER" = WrappeR$cover(min,max,join_condition_matrix,metadata_matrix,input_data$value),
                 "FLAT" = WrappeR$flat(min,max,join_condition_matrix,metadata_matrix,input_data$value),
                 "SUMMIT" = WrappeR$summit(min,max,join_condition_matrix,metadata_matrix,input_data$value),
                 "HISTOGRAM" = WrappeR$histogram(min,max,join_condition_matrix,metadata_matrix,input_data$value))
 
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  error <- strtoi(response[1])
+  data <- response[2]
+  
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 
 .check_cover_param <- function(param,is_min)

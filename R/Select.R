@@ -97,24 +97,20 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL, semi_j
   {
     semi_join_dataset <- semi_join_dataset$value
     
-    if(!is.character(semi_join_dataset))
-      stop("semi_join_dataset: no valid input")
-
-    if(length(semi_join_dataset)>1)
-      stop("semi_join_dataset: no multiple values")
-     
-    if(!is.logical(semi_join_negation))
-      stop("semi_join_negation: no valid input")
+    .check_input(semi_join_dataset)
+    .check_logical(semi_join_negation)
     
     join_condition_matrix <- .join_condition(semi_join)
   }
   
-  out <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,
+  response <- WrappeR$select(predicate,region_predicate,join_condition_matrix,semi_join_dataset,
                         semi_join_negation,input_data$value)
-  if(grepl("No",out,ignore.case = TRUE) || grepl("expected",out,ignore.case = TRUE))
-    stop(out)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 
 

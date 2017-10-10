@@ -135,11 +135,13 @@ readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 
   parser_name <- .check_parser(parser)
 
-  out <- WrappeR$readDataset(dataset,parser_name,is_local,is_GMQL,schema_matrix)
-  if(grepl("File",out,ignore.case = TRUE) || grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$readDataset(dataset,parser_name,is_local,is_GMQL,schema_matrix)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 
 #' GMQL Function: READ
@@ -197,11 +199,8 @@ read <- function(samples)
   }
   rownames(schema_matrix) <- NULL
   colnames(schema_matrix) <- NULL
-  out <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
-  else
-    DAGgraph(out)
+  response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
+  DAGgraph(response)
 }
 
 
@@ -241,8 +240,8 @@ read <- function(samples)
 remote_processing<-function(is_remote)
 {
   .check_logical(is_remote)
-  out <- WrappeR$remote_processing(is_remote)
-  print(out)
+  response <- WrappeR$remote_processing(is_remote)
+  print(response)
 }
 
 

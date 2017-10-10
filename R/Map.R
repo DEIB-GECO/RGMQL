@@ -77,10 +77,11 @@ map <- function(left_input_data, right_input_data, aggregates = NULL, joinBy = N
   else
     join_condition_matrix <- scalaNull("Array[Array[String]]")
 
-  out<-WrappeR$map(join_condition_matrix,metadata_matrix,left_input_data$value,right_input_data$value)
-
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response<-WrappeR$map(join_condition_matrix,metadata_matrix,left_input_data$value,right_input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }

@@ -45,10 +45,12 @@ merge <- function(input_data, groupBy = NULL)
   else
     join_condition_matrix <- scalaNull("Array[Array[String]]")
   
-  out <- WrappeR$merge(join_condition_matrix,input_data$value)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$merge(join_condition_matrix,input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 

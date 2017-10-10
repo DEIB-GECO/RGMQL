@@ -125,11 +125,13 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,mtop
   else
     region_matrix <- scalaNull("Array[Array[String]]")
 
-  out <- WrappeR$order(meta_matrix,mtopg,mtop,mtopp,region_matrix,rtopg,rtop,rtopp,input_data$value)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$order(meta_matrix,mtopg,mtop,mtopp,region_matrix,rtopg,rtop,rtopp,input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 
 

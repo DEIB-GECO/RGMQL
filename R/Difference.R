@@ -68,11 +68,12 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,is_exact
   else
     join_condition_matrix <- scalaNull("Array[Array[String]]")
   
-  out <- WrappeR$difference(join_condition_matrix,right_input_data$value,left_input_data$value,is_exact)
-  
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$difference(join_condition_matrix,right_input_data$value,left_input_data$value,is_exact)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }
 

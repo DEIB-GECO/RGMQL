@@ -107,9 +107,11 @@ join <- function(right_input_data, left_input_data, genometric_predicate = NULL,
      && !identical(ouput,"INT"))
     stop("region_output must be contig,left,right or int (intersection)")
   
-  out <- WrappeR$join(genomatrix,join_condition_matrix, ouput,right_input_data$value, left_input_data$value)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$join(genomatrix,join_condition_matrix, ouput,right_input_data$value, left_input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }

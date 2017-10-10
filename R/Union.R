@@ -39,9 +39,11 @@
 #'
 union <- function(left_input_data,right_input_data)
 {
-  out <- WrappeR$union(right_input_data$value,left_input_data$value)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$union(right_input_data$value,left_input_data$value)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-    DAGgraph(out)
+    DAGgraph(data)
 }

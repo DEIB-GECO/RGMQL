@@ -30,18 +30,19 @@ execute <- function()
   if(!remote_proc)
     .download_or_upload()
   
-  out <- WrappeR$execute()
-  if(grepl("No!",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$execute()
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
   {
     if(remote_proc)
     {
       url <- WrappeR$get_url()
       .download_or_upload()
-      serializeQuery(url,FALSE,out)
+      serializeQuery(url,FALSE,data)
     }
-    "Executed"
   }
 }
 
@@ -94,13 +95,13 @@ execute <- function()
 #'
 materialize <- function(input_data, dir_out = getwd())
 {
-  out <- WrappeR$materialize(input_data$value,dir_out)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$materialize(input_data$value,dir_out)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
   else
-  {
     invisible(NULL)
-  }
 }
 
 
@@ -138,13 +139,21 @@ take <- function(input_data, rows=0L)
   if(rows<0)
     stop("rows cannot be negative")
 
-  out <- WrappeR$take(input_data$value,rows)
-  if(grepl("No",out,ignore.case = TRUE))
-    stop(out)
+  response <- WrappeR$take(input_data$value,rows)
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error!=0)
+    stop(data)
 
   reg <- WrappeR$get_reg()
+  if(is.null(reg))
+    stop("no regions defined")
   meta <- WrappeR$get_meta()
+  if(is.null(meta))
+    stop("no metadata defined")
   schema <- WrappeR$get_schema()
+  if(is.null(schema))
+    stop("no schema defined")
 
   reg_data_frame <- as.data.frame(reg)
   list <- split(reg_data_frame, reg_data_frame[1])
