@@ -194,7 +194,7 @@ exportGMQL.gtf <- function(samples, dir_out)
     #node_list <- node_list[base::order(match(node_list,correct_list_GDM))]
   }
 
-  schema <- paste0(directory,"/test.schema")
+  schema <- paste0(directory,"/granges.schema")
   root <- xml2::xml_new_root("gmqlSchemaCollection")
   xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
   xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"

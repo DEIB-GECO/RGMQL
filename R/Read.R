@@ -1,7 +1,7 @@
 #' Init GMQL Server
 #'
 #' Initialize and run GMQL server for executing GMQL query
-#' It is Also perform a login to GMQL REST services suite
+#' It is also perform a login to GMQL REST services suite if needed
 #' 
 #' @import rscala
 #'
@@ -36,12 +36,11 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 {
   out_format <- toupper(output_format)
 
-  if(!identical(out_format,"TAB")  && !identical(out_format,"GTF")
+  if(!identical(out_format,"TAB") && !identical(out_format,"GTF") 
      && !identical(out_format,"COLLECT"))
     stop("output_format must be TAB, GTF or COLLECT")
 
-  if(!is.logical(remote_processing) || length(remote_processing) >1)
-    stop("remote_processing: invalid input or length > 1")
+  .check_logical(remote_processing)
   
   if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
     login.GMQL(url,username,password)
@@ -70,9 +69,6 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 #' Default is CustomParser.
 #' @param is_local single logical value indicating local or remote dataset
 #' @param is_GMQL single logical value indicating if dataset is GMQL dataset or not 
-#' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
-#' useful only in remote processing
 #' 
 #' @importFrom methods is
 #' 
@@ -102,8 +98,8 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 #' 
 #' @export
 #'
-readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,
-                        is_GMQL=TRUE, url=NULL)
+readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE, 
+                        is_GMQL=TRUE)
 {
   .check_input(dataset)
   .check_logical(is_local)
@@ -120,11 +116,21 @@ readDataset <- function(dataset, parser = "CustomParser",is_local=TRUE,
   }
   else
   {
+    url <- WrappeR$get_url()
+    if(is.null(url))
+      stop("You have to log on using login function")
+    
+    if(!exists("authToken",envir = .GlobalEnv))
+      stop("You have to log on using login function")
+   
     list <- showSchemaFromDataset(url,dataset)
     schema_names <- sapply(list$fields, function(x){x$name})
-    schema_type <- sapply(list$fields, function(x){x$fieldType})
+    schema_type <- sapply(list$fields, function(x){x$type})
     schema_matrix <- cbind(schema_type,schema_names)
-    schema_type <- list$schemaType
+    schema_type <- list$type
+    
+    if(is.null(schema_matrix) || length(schema_matrix)==0)
+      schema_matrix <- scalaNull("Array[Array[String]]")
   }
 
   parser_name <- .check_parser(parser)
@@ -177,7 +183,7 @@ read <- function(samples)
   col_types <- sapply(df,class)
   col_names <- names(col_types)
   #re order the schema?
-  if("phase" %in% col_names) # if GTF
+  if("phase" %in% col_names) # if GTF, change
   {
     col_names <- plyr::revalue(col_names,c(type = "feature",phase = "frame",seqnames = "seqname"))
     schema_matrix <- cbind(toupper(col_types),col_names)
@@ -234,9 +240,7 @@ read <- function(samples)
 #'
 remote_processing<-function(is_remote)
 {
-  if(!is.logical(is_remote) || length(is_remote)>1)
-    stop("is_remote: invalid input or length > 1")
-
+  .check_logical(is_remote)
   out <- WrappeR$remote_processing(is_remote)
   print(out)
 }

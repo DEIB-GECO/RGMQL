@@ -134,8 +134,8 @@ showSchemaFromDataset <- function(url,datasetName)
   #req <- GET(url, add_headers(h),verbose(data_in = TRUE,info = TRUE))
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req,"parsed")
-  if(req$status_code !=200)
-    print(content$error)
+  if(req$status_code != 200)
+    stop(content$error)
   else
     return(content)
 }
@@ -205,6 +205,8 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
   URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
 
+  schema_name <- tolower(schemaName)
+  
   if(is.null(schemaName))
   {
     schema_name <- list.files(folderPath, pattern = "*.schema$",full.names = TRUE)
@@ -213,15 +215,32 @@ uploadSamples <- function(url,datasetName,folderPath,schemaName=NULL,isGMQL=TRUE
 
     list_files <- list(list("schema" = httr::upload_file(schema_name)),list_files)
     list_files <- unlist(list_files,recursive = FALSE)
+    
+    URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
   }
   else
   {
     schema_name <- tolower(schemaName)
-    if(!identical(schema_name,"narrowpeak") && !identical(schema_name,"vcf") && !identical(schema_name,"broadpeak")
-       && !identical(schema_name,"bed")  && !identical(schema_name,"bedgraph"))
-      stop("schema not admissable")
+    if(identical(schema_name,"customparser"))
+    {
+      schema_name <- list.files(folderPath, pattern = "*.schema$",full.names = TRUE)
+      if(length(schema_name)==0)
+        stop("schema must be present")
+      
+      list_files <- list(list("schema" = httr::upload_file(schema_name)),list_files)
+      list_files <- unlist(list_files,recursive = FALSE)
+      
+      URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
+      
+    }
+    else
+    {
+      if(!identical(schema_name,"narrowpeak") && !identical(schema_name,"vcf") && !identical(schema_name,"broadpeak") 
+         && !identical(schema_name,"bed")  && !identical(schema_name,"bedgraph"))
+        stop("schema not admissable")
 
-    URL <- paste0(url,"/datasets/",datasetName,"/uploadSample?schemaName=",schema_name)
+      URL <- paste0(url,"/datasets/",datasetName,"/uploadSample?schemaName=",schema_name)
+    }
   }
 
   req <- httr::POST(URL, body = list_files ,httr::add_headers(h))
@@ -291,7 +310,6 @@ deleteDataset <- function(url,datasetName)
 #' @param datasetName single string name of dataset we want to get
 #' @param path single string local path folder where store dataset,
 #' by defualt is R working directory
-#'
 #' @return None
 #'
 #' @details
@@ -322,8 +340,10 @@ downloadDataset <- function(url,datasetName,path = getwd())
     print(content)
   else
   {
-    zip_path = paste0(path,"/",datasetName,".zip")
+    zip_path <- paste0(path,"/",datasetName,".zip")
+    dir_out <-paste0(path,"/")
     writeBin(content,zip_path)
+    unzip(zip_path,exdir=dir_out)
     print("Download Complete")
   }
 }

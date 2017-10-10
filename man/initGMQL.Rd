@@ -34,7 +34,7 @@ None
 }
 \description{
 Initialize and run GMQL server for executing GMQL query
-It is Also perform a login to GMQL REST services suite
+It is also perform a login to GMQL REST services suite if needed
 }
 \examples{
 

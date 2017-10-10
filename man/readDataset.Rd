@@ -5,7 +5,7 @@
 \title{GMQL Function: READ}
 \usage{
 readDataset(dataset, parser = "CustomParser", is_local = TRUE,
-  is_GMQL = TRUE, url = NULL)
+  is_GMQL = TRUE)
 }
 \arguments{
 \item{dataset}{single string folder path for GMQL dataset or datasetname on repository}
@@ -26,10 +26,6 @@ Default is CustomParser.}
 \item{is_local}{single logical value indicating local or remote dataset}
 
 \item{is_GMQL}{single logical value indicating if dataset is GMQL dataset or not}
-
-\item{url}{single string url of server: it must contain the server address and base url;
-service name will be added automatically
-useful only in remote processing}
 }
 \value{
 DAGgraph class object. It contains the value associated to the graph used 

@@ -12,7 +12,7 @@
 #'
 #' @examples
 #'
-#' initGMQL("gtf")
+#' initGMQL()
 #' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 #' r = readDataset(test_path)
 #' s = select(input_data = r)
@@ -27,14 +27,41 @@
 execute <- function()
 {
   remote_proc <- WrappeR$is_remote_processing()
+  if(!remote_proc)
+    .download_or_upload()
+  
   out <- WrappeR$execute()
-  if(grepl("No",out,ignore.case = TRUE))
+  if(grepl("No!",out,ignore.case = TRUE))
     stop(out)
   else
   {
     if(remote_proc)
-      serializeQuery(FALSE,out)
+    {
+      url <- WrappeR$get_url()
+      .download_or_upload()
+      serializeQuery(url,FALSE,out)
+    }
     "Executed"
+  }
+}
+
+.download_or_upload <- function()
+{
+  data <- WrappeR$get_dataset_list()
+  data_list <- apply(data, 1, as.list)
+  url <- WrappeR$get_url()
+  remote <- WrappeR$is_remote_processing()
+  if(remote)
+  {
+    sapply(data_list,function(x){
+      uploadSamples(url,x[[2]],x[[1]],x[[3]],FALSE)
+    })
+  }
+  else
+  {
+    sapply(data_list,function(x){
+      downloadDataset(url,x[[2]],x[[1]])
+    })
   }
 }
 
@@ -75,6 +102,7 @@ materialize <- function(input_data, dir_out = getwd())
     invisible(NULL)
   }
 }
+
 
 #' GMQL Operation: TAKE
 #'

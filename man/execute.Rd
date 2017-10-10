@@ -19,7 +19,7 @@ from scala enviroment, although the associated R variable will remain stored in 
 }
 \examples{
 
-initGMQL("gtf")
+initGMQL()
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
 r = readDataset(test_path)
 s = select(input_data = r)

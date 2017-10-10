@@ -325,12 +325,12 @@ compileQuery.fromfile <- function(url ,filePath)
 
 
 
-serializeQuery <- function(output_gtf,base64)
+serializeQuery <- function(url,output_gtf,base64)
 {
   if(output_gtf)
-    out <- "GTF"
+    out <- "gtf"
   else
-    out <- "TAB"
+    out <- "tab"
   
   URL <- paste0(url,"/queries/dag/",out)
   h <- c('Accept' = "Application/json",
@@ -339,7 +339,7 @@ serializeQuery <- function(output_gtf,base64)
   req <- httr::POST(URL,body = base64 ,httr::add_headers(h),encode = "json")
   content <- httr::content(req,"parsed")
   if(req$status_code !=200)
-    print(content$error)
+    stop(content$error)
   else
     return(content)
 }
