@@ -3,8 +3,8 @@
 #' Initialize and run GMQL server for executing GMQL query
 #' It is also perform a login to GMQL REST services suite if needed
 #' 
-#' @import rJava
-#'
+#' @importFrom rJava J
+#' 
 #' @param output_format single string identifies the output format of sample files.
 #' Can be TAB, GTF or COLLECT
 #' \itemize{
@@ -55,6 +55,10 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 #' from disk, saving in Scala memory that can be referenced in R
 #' Also used to read a repository dataset in case of remote processing.
 #' 
+#' @importFrom rJava .jnull
+#' @importFrom methods is
+#' @importFrom rJava J
+#' 
 #' @param dataset single string folder path for GMQL dataset or datasetname on repository
 #' @param parser single string used to parsing dataset files
 #' The Parser's available are:
@@ -71,7 +75,6 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 #' @param is_local single logical value indicating local or remote dataset
 #' @param is_GMQL single logical value indicating if dataset is GMQL dataset or not 
 #' 
-#' @importFrom methods is
 #' 
 #' @return DAGgraph class object. It contains the value associated to the graph used 
 #' as input for the subsequent GMQL function
@@ -225,6 +228,8 @@ read <- function(samples)
 #' The invocation of this function allow to change mode of processing.
 #' The switch is possible at the beginning, when you didn't run any query at all, or after an execution 
 #' (or take) function
+#' 
+#' @importFrom rJava J
 #' 
 #' @param is_remote single logical value used in order to set the processing mode.
 #' TRUE you will set a remote query processing mode otherwise will be local

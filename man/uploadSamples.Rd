@@ -43,7 +43,7 @@ If no error occures print "Upload Complete", otherwise a specific error is print
 \dontrun{
 
 ### upload of GMQL dataset with no schema selection
-test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+test_path <- system.file("example","DATA_SET_VAR_GDM",package = "RGMQL")
 PolimiUrl = "http://130.186.13.219/gmql-rest"
 login.GMQL(url = PolimiUrl)
 uploadSamples(PolimiUrl,"dataset1",folderPath = test_path)

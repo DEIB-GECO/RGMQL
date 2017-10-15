@@ -40,7 +40,8 @@ r = readDataset(test_path)
 
 ## it counts the regions in each sample and stores their number as value of the new metadata 
 ## RegionCount attribute of the sample.
-e = extend(input_data = r, list(RegionCount = COUNT()))
+## e = extend(input_data = r, list(RegionCount = COUNT()))
+e = extend(input_data = r)
 \dontrun{
 
 initGMQL("gtf")

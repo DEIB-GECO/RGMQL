@@ -18,7 +18,7 @@ It reads only sample files in GDM format
 }
 \examples{
 
-test_path <- system.file("example","DATA_SET_VAR_GDM",package = "GMQL")
+test_path <- system.file("example","DATA_SET_VAR_GDM",package = "RGMQL")
 grl = importGMQL.gdm(test_path)
 
 }

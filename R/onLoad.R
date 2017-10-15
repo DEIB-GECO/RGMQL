@@ -1,7 +1,6 @@
 #' @importFrom rJava .jpackage
 #' @importFrom rJava .jinit
-#' @importFrom rJava .jnew
-#' 
+
 .onLoad <- function(libname, pkgname) {
   .jpackage(pkgname, lib.loc = libname)
  # tools::vignetteEngine("knitr", pattern = "[.]Rmd$", 

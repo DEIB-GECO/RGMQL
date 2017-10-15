@@ -117,7 +117,7 @@ saveQuery <- function(url,queryName,queryTxt)
 #'
 #' @examples
 #'
-#' test_path <- system.file("example",package = "GMQL")
+#' test_path <- system.file("example",package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
 #'
 #' PolimiUrl = "http://130.186.13.219/gmql-rest"

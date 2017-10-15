@@ -10,6 +10,7 @@ if(getRversion() >= "3.1.0")
 #' or as guest using the proper GMQL web service available on a remote server
 #' 
 #' @import httr
+#' @importFrom rJava J
 #' 
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name is added automatically
@@ -64,6 +65,7 @@ login.GMQL <- function(url,username = NULL, password = NULL)
   else
   {
     assign("authToken",content$authToken,.GlobalEnv)
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
     WrappeR$save_tokenAndUrl(authToken,url)
     print(paste("your Token is",authToken))
   }
@@ -76,7 +78,8 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' using the proper GMQL web service available on a remote server
 #'
 #' @import httr
-#'
+#' @importFrom rJava J
+#' 
 #' @param url single string url of server: it must contain the server address and base url;
 #' service name is added automatically
 #'
@@ -110,6 +113,7 @@ logout.GMQL <- function(url)
   {
     print(content)
     #delete token from environment
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
     WrappeR$delete_token()
     rm(authToken, envir = .GlobalEnv)
   }

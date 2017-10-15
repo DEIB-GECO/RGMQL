@@ -4,6 +4,9 @@
 #' and adds them to the existing metadata attributes of the sample.
 #' Aggregate functions are applied sample by sample.
 #'
+#' @importFrom rJava .jnull
+#' @importFrom rJava J
+#'
 #' @param input_data returned object from any GMQL function
 #' @param metadata list of element in the form \emph{key} = \emph{function_aggregate}.
 #' The \emph{function_aggregate} is an object of class OPERATOR
@@ -32,7 +35,8 @@
 #'
 #' ## it counts the regions in each sample and stores their number as value of the new metadata 
 #' ## RegionCount attribute of the sample.
-#' e = extend(input_data = r, list(RegionCount = COUNT()))
+#' ## e = extend(input_data = r, list(RegionCount = COUNT()))
+#' e = extend(input_data = r)
 #' \dontrun{
 #' 
 #' initGMQL("gtf")
