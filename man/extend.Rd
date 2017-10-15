@@ -35,7 +35,7 @@ Aggregate functions are applied sample by sample.
 \examples{
 
 initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 r = readDataset(test_path)
 
 ## it counts the regions in each sample and stores their number as value of the new metadata 
@@ -44,7 +44,7 @@ e = extend(input_data = r, list(RegionCount = COUNT()))
 \dontrun{
 
 initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 exp = readDataset(test_path)
 
 ## it copies all samples of exp dataset into res dataset, and then calculates 

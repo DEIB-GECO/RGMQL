@@ -1,11 +1,21 @@
+#' @importFrom rJava .jpackage
+#' @importFrom rJava .jinit
+#' @importFrom rJava .jnew
+#' 
 .onLoad <- function(libname, pkgname) {
-  .rscalaPackage(pkgname, heap.maximum = "4g",serialize.output=TRUE, major.release=c("2.11"))
-  ## Assign 'WrappeR' to package environment before it is sealed, but don't fulfill promise until needed.
-  assign("WrappeR",s$.it.polimi.genomics.r.Wrapper,envir=parent.env(environment()))
+  .jpackage(pkgname, lib.loc = libname)
+ # tools::vignetteEngine("knitr", pattern = "[.]Rmd$", 
+  #                      package = "knitr")
+  .jinit(force.init = TRUE)
+  
+  #assign("WrappeR",.jnew("it/polimi/genomics/r/Hello"),envir=parent.env(environment()))
+  
+}
 
+.onAttach <- function(libname, pkgname) {
+  #packageStartupMessage("GMQL successfully loaded")
 }
 
 .onUnload <- function(libpath) {
-  .rscalaPackageUnload()
+  #.rscalaPackageUnload()
 }
-

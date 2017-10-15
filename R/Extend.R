@@ -27,7 +27,7 @@
 #' @examples
 #'
 #' initGMQL("gtf")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' r = readDataset(test_path)
 #'
 #' ## it counts the regions in each sample and stores their number as value of the new metadata 
@@ -36,7 +36,7 @@
 #' \dontrun{
 #' 
 #' initGMQL("gtf")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' exp = readDataset(test_path)
 #'
 #' ## it copies all samples of exp dataset into res dataset, and then calculates 
@@ -56,8 +56,9 @@ extend <-function(input_data, metadata = NULL)
   if(!is.null(metadata))
     metadata_matrix <- .aggregates(metadata,"META_OPERATOR")
   else
-    metadata_matrix <- scalaNull("Array[Array[String]]")
-
+    metadata_matrix <- .jnull("java/lang/String")
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
   response <- WrappeR$extend(metadata_matrix,input_data$value)
   error <- strtoi(response[1])
   data <- response[2]

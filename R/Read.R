@@ -3,7 +3,7 @@
 #' Initialize and run GMQL server for executing GMQL query
 #' It is also perform a login to GMQL REST services suite if needed
 #' 
-#' @import rscala
+#' @import rJava
 #'
 #' @param output_format single string identifies the output format of sample files.
 #' Can be TAB, GTF or COLLECT
@@ -26,7 +26,7 @@
 #' @examples
 #'
 #' # initialize GMQL with local processing
-#' library(rscala)
+#' library(rJava)
 #' initGMQL("tab",FALSE)
 #' 
 #' @export
@@ -45,6 +45,7 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
   if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
     login.GMQL(url,username,password)
   
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
   WrappeR$initGMQL(out_format,remote_processing)
 }
 
@@ -85,14 +86,14 @@ initGMQL <- function(output_format = "gtf", remote_processing = FALSE, url = NUL
 #' 
 #' ### local with CustomParser
 #' initGMQL("gtf")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' r = readDataset(test_path)
 #' 
 #' \dontrun{
 #' 
 #' ### local with other Parser
 #' initGMQL("gtf")
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' r = readDataset(test_path,"ANNParser")
 #' }
 #' 
@@ -104,19 +105,19 @@ readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
   .check_input(dataset)
   .check_logical(is_local)
   .check_logical(is_GMQL)
-
   if(is_local)
   {
     if(!dir.exists(dataset))
       stop("folder does not exist")
     
-    schema_matrix <- scalaNull("Array[Array[String]]")
-    schema_type <- scalaNull("String")
-    url <- scalaNull("String")
+    dataset <- sub("/*[/]$","",dataset)
+    
+    schema_matrix <- .jnull("java/lang/String")
+    url <- .jnull("java/lang/String")
   }
   else
   {
-    url <- WrappeR$get_url()
+    url <- Wrapper$get_url()
     if(is.null(url))
       stop("You have to log on using login function")
     
@@ -127,14 +128,14 @@ readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
     schema_names <- sapply(list$fields, function(x){x$name})
     schema_type <- sapply(list$fields, function(x){x$type})
     schema_matrix <- cbind(schema_type,schema_names)
-    schema_type <- list$type
+    #schema_type <- list$type
     
     if(is.null(schema_matrix) || length(schema_matrix)==0)
-      schema_matrix <- scalaNull("Array[Array[String]]")
+      schema_matrix <- .jnull("java/lang/String")
   }
 
   parser_name <- .check_parser(parser)
-
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
   response <- WrappeR$readDataset(dataset,parser_name,is_local,is_GMQL,schema_matrix)
   error <- strtoi(response[1])
   data <- response[2]
@@ -199,6 +200,7 @@ read <- function(samples)
   }
   rownames(schema_matrix) <- NULL
   colnames(schema_matrix) <- NULL
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
   response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   DAGgraph(response)
 }
@@ -239,6 +241,7 @@ read <- function(samples)
 #'
 remote_processing<-function(is_remote)
 {
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
   .check_logical(is_remote)
   response <- WrappeR$remote_processing(is_remote)
   print(response)

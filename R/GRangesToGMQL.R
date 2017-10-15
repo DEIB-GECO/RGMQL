@@ -39,7 +39,7 @@
 #' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
 #' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
 #' grl = GRangesList(gr1,gr2)
-#' test_out_path <- system.file("example",package = "GMQL")
+#' test_out_path <- system.file("example",package = "RGMQL")
 #' exportGMQL.gdm(grl,test_out_path)
 #'
 #'
@@ -92,7 +92,7 @@ exportGMQL.gdm <- function(samples, dir_out)
 #' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
 #' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
 #' grl = GRangesList(gr1,gr2)
-#' test_out_path <- system.file("example",package = "GMQL")
+#' test_out_path <- system.file("example",package = "RGMQL")
 #' exportGMQL.gtf(grl,test_out_path)
 #'
 #' @export

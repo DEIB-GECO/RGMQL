@@ -39,7 +39,7 @@ It is also perform a login to GMQL REST services suite if needed
 \examples{
 
 # initialize GMQL with local processing
-library(rscala)
+library(rJava)
 initGMQL("tab",FALSE)
 
 }

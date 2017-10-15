@@ -24,7 +24,7 @@
 #'
 #' @examples
 #'
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' TFARMatrix(test_path,regions = c("pvalue","peak"))
 #'
 #' @export
@@ -98,7 +98,7 @@ TFARMatrix <- function(GMQL_dataset_path, metadata = NULL,metadata_prefix = NULL
 #' @examples
 #'
 #'
-#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#' test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #' grl <- importGMQL.gtf(test_path)
 #' TFARMemAtrix(grl,regions = c("pvalue","peak"))
 #'

@@ -68,7 +68,7 @@ The GMQL package requires:
 The GMQL package can be installed by executing the following R expression.
 ```{r, eval=FALSE}
 source("https://bioconductor.org/biocLite.R")
-biocLite("GMQL")
+biocLite("RGMQL")
 ```
   
 # Processing Environments
@@ -85,7 +85,7 @@ managing datasets (both GMQL or generic text plain dataset).
 
 Load and attach the GMQL package in an R session using library function:
 ```{r, initialization, eval=FALSE}
-library('GMQL')
+library('RGMQL')
 ```
 Before starting using any GMQL operation we need to initialise the GMQL context 
 with the following code:
@@ -104,7 +104,7 @@ We have four different cases:
 1. Local GMQL dataset:\newline
 As data are already in user computer, we simply execute:
 ```{r,read GMQL dataset, eval=FALSE}
-gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 data_out = readDataset("gmql_dataset_path")
 ```
 2. Remote dataset / explicit download:\newline
@@ -153,7 +153,7 @@ If you want to persist result, you can materialize as last step.
 Let's see a short example:
 ```{r,query, eval=FALSE}
 initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 input = readDataset(test_path)
 
 ## it selects from input data samples of patients younger than 70 years old, 
@@ -212,7 +212,7 @@ using user and password or as guest.
 Upon succesfull logon you get a request token must use in every subsequent REST call.
 Login can be performed using function:
 ```{r, eval=TRUE}
-library("GMQL")
+library("RGMQL")
 
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
