@@ -54,7 +54,7 @@ exp = readDataset(test_path)
 ##  2. MinP is the minimum pvalue of the sample regions.
 ## res sample regions are the same as the ones in exp.
 
-res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN(pvalue)))
+res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN("pvalue")))
 
 }
 

@@ -1,15 +1,15 @@
 ## ---- eval=FALSE---------------------------------------------------------
 #  source("https://bioconductor.org/biocLite.R")
-#  biocLite("GMQL")
+#  biocLite("RGMQL")
 
 ## ---- initialization, eval=FALSE-----------------------------------------
-#  library('GMQL')
+#  library('RGMQL')
 
 ## ---- init, eval=FALSE---------------------------------------------------
 #  initGMQL()
 
 ## ----read GMQL dataset, eval=FALSE---------------------------------------
-#  gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#  gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #  data_out = readDataset("gmql_dataset_path")
 
 ## ---- download dataset, eval=FALSE---------------------------------------
@@ -36,19 +36,19 @@
 
 ## ----query, eval=FALSE---------------------------------------------------
 #  initGMQL("gtf")
-#  test_path <- system.file("example","DATA_SET_VAR_GTF",package = "GMQL")
+#  test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 #  input = readDataset(test_path)
 #  
 #  ## it selects from input data samples of patients younger than 70 years old,
 #  ## based on filtering on sample metadata attribute Patient_age
-#  s=select(input,"Patient_age < 70")
+#  #s=select(input,"Patient_age < 70")
 #  
 #  ## it counts the regions in each sample and stores their number as value of the new metadata
 #  ## RegionCount attribute of the sample.
 #  e = extend(input_data = s, list(RegionCount = COUNT()))
 #  
 #  ## materialize the result dataset on disk
-#  m = materialize(e)
+#  #m = materialize(e)
 
 ## ----execute, eval=FALSE-------------------------------------------------
 #  execute()
@@ -57,7 +57,7 @@
 #  g <- take(input_data = m, rows = 45)
 
 ## ---- eval=TRUE----------------------------------------------------------
-library("GMQL")
+library("RGMQL")
 
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)

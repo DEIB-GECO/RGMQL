@@ -6,6 +6,7 @@
 #'
 #' @importFrom rJava .jnull
 #' @importFrom rJava J
+#' @importFrom rJava .jarray
 #'
 #' @param input_data returned object from any GMQL function
 #' @param metadata list of element in the form \emph{key} = \emph{function_aggregate}.
@@ -49,7 +50,7 @@
 #' ##  2. MinP is the minimum pvalue of the sample regions.
 #' ## res sample regions are the same as the ones in exp.
 #' 
-#' res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN(pvalue)))
+#' res = extend(input_data = exp, list(RegionCount = COUNT(),MinP = MIN("pvalue")))
 #' 
 #' }
 #' 
@@ -58,7 +59,7 @@
 extend <-function(input_data, metadata = NULL)
 {
   if(!is.null(metadata))
-    metadata_matrix <- .aggregates(metadata,"META_OPERATOR")
+    metadata_matrix <- .jarray(.aggregates(metadata,"META_OPERATOR"),dispatch = TRUE)
   else
     metadata_matrix <- .jnull("java/lang/String")
   

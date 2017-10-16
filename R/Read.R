@@ -120,7 +120,7 @@ readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
   }
   else
   {
-    url <- Wrapper$get_url()
+    url <- WrappeR$get_url()
     if(is.null(url))
       stop("You have to log on using login function")
     
