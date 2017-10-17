@@ -22,6 +22,8 @@ library('RGMQL')
 
 ## ---- read GRangesList, eval=FALSE---------------------------------------
 #  library("GenomicRanges")
+#  library("RGMQL")
+#  initGMQL()
 #  gr1 <- GRanges(seqnames = "chr2",
 #  ranges = IRanges(103, 106),
 #  strand = "+",

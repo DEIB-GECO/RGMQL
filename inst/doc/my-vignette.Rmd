@@ -129,6 +129,8 @@ Also, for better integration in R environment and with other packages, we provid
 to read from GrangesList, for example:
 ```{r, read GRangesList, eval=FALSE}
 library("GenomicRanges")
+library("RGMQL")
+initGMQL()
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
 strand = "+",
