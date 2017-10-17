@@ -2,8 +2,8 @@
 #  source("https://bioconductor.org/biocLite.R")
 #  biocLite("RGMQL")
 
-## ---- initialization, eval=FALSE-----------------------------------------
-#  library('RGMQL')
+## ---- initialization, eval=TRUE------------------------------------------
+library('RGMQL')
 
 ## ---- init, eval=FALSE---------------------------------------------------
 #  initGMQL()
@@ -21,6 +21,7 @@
 #  data_out = readDataset("dataset_name_on_repo")
 
 ## ---- read GRangesList, eval=FALSE---------------------------------------
+#  library("GenomicRanges")
 #  gr1 <- GRanges(seqnames = "chr2",
 #  ranges = IRanges(103, 106),
 #  strand = "+",
@@ -62,9 +63,9 @@ library("RGMQL")
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 
-## ---- eval=FALSE---------------------------------------------------------
-#  test_url = "http://130.186.13.219/gmql-rest"
-#  login.GMQL(test_url)
-#  runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq;
-#           MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
+## ---- eval=TRUE----------------------------------------------------------
+test_url = "http://130.186.13.219/gmql-rest"
+login.GMQL(test_url)
+runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 
+         MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
 

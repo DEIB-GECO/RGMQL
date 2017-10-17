@@ -26,8 +26,10 @@
 #'
 importGMQL.gtf <- function(datasetName)
 {
-  datasetName <- paste0(datasetName,"/files")
-
+  datasetName <- sub("/*[/]$","",datasetName)
+  if(basename(datasetName) !="files")
+    datasetName <- paste0(datasetName,"/files")
+  
   if(!dir.exists(datasetName))
     stop("Directory does not exists")
 
@@ -86,7 +88,9 @@ importGMQL.gtf <- function(datasetName)
 #'
 importGMQL.gdm <- function(datasetName)
 {
-  datasetName <- paste0(datasetName,"/files")
+  datasetName <- sub("/*[/]$","",datasetName)
+  if(basename(datasetName) !="files")
+    datasetName <- paste0(datasetName,"/files")
 
   if(!dir.exists(datasetName))
     stop("Directory does not exists")

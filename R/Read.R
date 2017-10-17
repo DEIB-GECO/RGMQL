@@ -154,6 +154,9 @@ readDataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 #'
 #'
 #' @importFrom S4Vectors metadata
+#' @importFrom rJava J
+#' @importFrom rJava .jarray
+#' 
 #' @param samples GrangesList
 #' 
 #'
@@ -171,9 +174,14 @@ read <- function(samples)
     stop("only GrangesList")
 
   meta <- S4Vectors::metadata(samples)
-  if(is.null(meta)) {
+  if(is.null(meta) || length(meta)==0) {
+    #repeat meta for each sample in samples list
+    len <- length(samples)
     warning("GrangesList has no metadata. we provide two metadata for you")
-    meta_matrix <- matrix(c("Provider","Polimi", "Application", "R-GMQL"),ncol = 2,byrow = TRUE)
+    index_meta <- rep(1:len,each = len)
+    rep_meta <- rep(c("Provider","Polimi", "Application", "R-GMQL"),times=len)
+    meta_matrix <- matrix(rep_meta,ncol = 2,byrow = TRUE)
+    meta_matrix <- cbind(index_meta,meta_matrix)
   }
   else {
     unlist_meta <- unlist(meta)
@@ -185,7 +193,8 @@ read <- function(samples)
   df <- data.frame(samples)
   df <- df[-2] #delete group_name
   region_matrix <- as.matrix(sapply(df, as.character))
-  region_matrix<- region_matrix[,setdiff(colnames(region_matrix),"width")]
+  region_matrix[is.na(region_matrix)] <- "NA"
+  region_matrix <- region_matrix[,setdiff(colnames(region_matrix),"width")]
   col_types <- sapply(df,class)
   col_names <- names(col_types)
   #re order the schema?
@@ -203,6 +212,12 @@ read <- function(samples)
   }
   rownames(schema_matrix) <- NULL
   colnames(schema_matrix) <- NULL
+  
+  schema_matrix <- .jarray(schema_matrix,dispatch = TRUE)
+  meta_matrix <- .jarray(meta_matrix,dispatch = TRUE)
+  region_matrix <- .jarray(region_matrix,dispatch = TRUE)
+  
+
   WrappeR <- J("it/polimi/genomics/r/Wrapper")
   response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
   DAGgraph(response)
@@ -233,7 +248,9 @@ read <- function(samples)
 #' 
 #' @param is_remote single logical value used in order to set the processing mode.
 #' TRUE you will set a remote query processing mode otherwise will be local
-#'
+#' 
+#' @return None
+#' 
 #' @examples
 #' 
 #' # initialize with remote processing off

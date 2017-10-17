@@ -84,7 +84,7 @@ managing datasets (both GMQL or generic text plain dataset).
 ### Initialization
 
 Load and attach the GMQL package in an R session using library function:
-```{r, initialization, eval=FALSE}
+```{r, initialization, eval=TRUE}
 library('RGMQL')
 ```
 Before starting using any GMQL operation we need to initialise the GMQL context 
@@ -128,6 +128,7 @@ There is no need to explicitally download data since execution will trigger down
 Also, for better integration in R environment and with other packages, we provide a function
 to read from GrangesList, for example:
 ```{r, read GRangesList, eval=FALSE}
+library("GenomicRanges")
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
 strand = "+",
@@ -223,7 +224,7 @@ wit this token you can call all the funciton in web services suite.
 #### Execution
 
 User can write the query as in the following example, as the second parameter of *runQuery*.
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 

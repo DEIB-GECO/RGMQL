@@ -10,6 +10,9 @@ remote_processing(is_remote)
 \item{is_remote}{single logical value used in order to set the processing mode.
 TRUE you will set a remote query processing mode otherwise will be local}
 }
+\value{
+None
+}
 \description{
 It allows to enable or disable remote processing
 }

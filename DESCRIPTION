@@ -1,7 +1,7 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 0.99.4
+Version: 0.99.5
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
 Description: This package brings GMQL functionalities into R environemnt.
@@ -22,7 +22,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Imports: httr, rJava,GenomicRanges, rtracklayer, data.table, utils, plyr, xml2, methods, S4Vectors, dplyr, stats
-Depends: R(>= 3.3.3)
+Depends: R(>= 3.4.0)
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
 biocViews: Software,Infrastructure,DataImport
