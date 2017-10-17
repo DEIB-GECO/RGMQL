@@ -66,10 +66,10 @@ The GMQL package requires:
 # How to Install
 	
 The GMQL package can be installed by executing the following R expression.
-```{r, eval=FALSE}
-source("https://bioconductor.org/biocLite.R")
+
+source("https://bioconductor.org/biocLite.R")\newline
 biocLite("RGMQL")
-```
+
   
 # Processing Environments
 
@@ -84,7 +84,7 @@ managing datasets (both GMQL or generic text plain dataset).
 ### Initialization
 
 Load and attach the GMQL package in an R session using library function:
-```{r, initialization, eval=TRUE}
+```{r, initialization, eval=FALSE}
 library('RGMQL')
 ```
 Before starting using any GMQL operation we need to initialise the GMQL context 
@@ -105,7 +105,7 @@ We have four different cases:
 As data are already in user computer, we simply execute:
 ```{r,read GMQL dataset, eval=FALSE}
 gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-data_out = readDataset("gmql_dataset_path")
+data_out = readDataset(gmql_dataset_path)
 ```
 2. Remote dataset / explicit download:\newline
 User can download it locally using:
@@ -129,8 +129,6 @@ Also, for better integration in R environment and with other packages, we provid
 to read from GrangesList, for example:
 ```{r, read GRangesList, eval=FALSE}
 library("GenomicRanges")
-library("RGMQL")
-initGMQL()
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
 strand = "+",
@@ -155,20 +153,19 @@ GMQL programming consist of a series of select, union, project, difference (and 
 If you want to persist result, you can materialize as last step.
 Let's see a short example:
 ```{r,query, eval=FALSE}
-initGMQL("gtf")
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 input = readDataset(test_path)
 
 ## it selects from input data samples of patients younger than 70 years old, 
 ## based on filtering on sample metadata attribute Patient_age
-#s=select(input,"Patient_age < 70")
+##s=select(input,"Patient_age < 70")
 
 ## it counts the regions in each sample and stores their number as value of the new metadata 
 ## RegionCount attribute of the sample.
-e = extend(input_data = s, list(RegionCount = COUNT()))
+e = extend(input_data = input, list(RegionCount = COUNT()))
 
 ## materialize the result dataset on disk
-#m = materialize(e)
+m = materialize(e)
 ```
 
 ### Execution
@@ -214,9 +211,7 @@ Rest servicies required login so the first step is to perform logon
 using user and password or as guest.
 Upon succesfull logon you get a request token must use in every subsequent REST call.
 Login can be performed using function:
-```{r, eval=TRUE}
-library("RGMQL")
-
+```{r, eval=FALSE}
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 ```
@@ -226,7 +221,7 @@ wit this token you can call all the funciton in web services suite.
 #### Execution
 
 User can write the query as in the following example, as the second parameter of *runQuery*.
-```{r, eval=TRUE}
+```{r, eval=FALSE}
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 
