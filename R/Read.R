@@ -206,7 +206,7 @@ read <- function(samples)
   }
   else
   {
-    col_names <- plyr::revalue(col_names,c(start = "left", end = "right", seqnarmes = "chr"))
+    col_names <- plyr::revalue(col_names,c(start = "left", end = "right", seqnames = "chr"))
     schema_matrix <- cbind(toupper(col_types),col_names)
     schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),c("group","width")),]
   }

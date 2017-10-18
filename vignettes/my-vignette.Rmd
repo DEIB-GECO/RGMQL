@@ -63,14 +63,7 @@ The GMQL package requires:
 * scala environment correctly set (i.e SCALA_HOME)
 * network connectivity to web services (if required)
 	
-# How to Install
-	
-The GMQL package can be installed by executing the following R expression.
 
-source("https://bioconductor.org/biocLite.R")\newline
-biocLite("RGMQL")
-
-  
 # Processing Environments
 
 This package allows to create, manipulate and extract genomic data from 
@@ -84,12 +77,12 @@ managing datasets (both GMQL or generic text plain dataset).
 ### Initialization
 
 Load and attach the GMQL package in an R session using library function:
-```{r, initialization, eval=FALSE}
+```{r, initialization, eval=TRUE}
 library('RGMQL')
 ```
 Before starting using any GMQL operation we need to initialise the GMQL context 
 with the following code:
-```{r, init, eval=FALSE}
+```{r, init, eval=TRUE}
 initGMQL()
 ```
 Calling initGMQL() with no parameters means we are initialising the context with GTF as output format for sample and metadata files.
@@ -103,13 +96,13 @@ We have four different cases:
 
 1. Local GMQL dataset:\newline
 As data are already in user computer, we simply execute:
-```{r,read GMQL dataset, eval=FALSE}
+```{r,read GMQL dataset, eval=TRUE}
 gmql_dataset_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
 data_out = readDataset(gmql_dataset_path)
 ```
 2. Remote dataset / explicit download:\newline
 User can download it locally using:
-```{r, download dataset, eval=FALSE}
+```{r, download dataset, eval=TRUE}
 test_url <- "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 downloadDataset(test_url,"dataset_test",path = getwd())
@@ -120,14 +113,14 @@ Once local, these datatset behave like local dataset as written above.
 
 3. Remote dataset (/ implicit download):
 ```{r,read remote dataset, eval=FALSE}
-data_out = readDataset("dataset_name_on_repo")
+data_out <- readDataset("dataset_name_on_repo")
 ```
 There is no need to explicitally download data since execution will trigger download automatically.
 
 4. GrangesList:\newline
 Also, for better integration in R environment and with other packages, we provide a function
 to read from GrangesList, for example:
-```{r, read GRangesList, eval=FALSE}
+```{r, read GRangesList, eval=TRUE}
 library("GenomicRanges")
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
@@ -152,9 +145,9 @@ GMQL programming consist of a series of select, union, project, difference (and 
 
 If you want to persist result, you can materialize as last step.
 Let's see a short example:
-```{r,query, eval=FALSE}
+```{r,query, eval=TRUE}
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-input = readDataset(test_path)
+input <- readDataset(test_path)
 
 ## it selects from input data samples of patients younger than 70 years old, 
 ## based on filtering on sample metadata attribute Patient_age
@@ -162,10 +155,10 @@ input = readDataset(test_path)
 
 ## it counts the regions in each sample and stores their number as value of the new metadata 
 ## RegionCount attribute of the sample.
-e = extend(input_data = input, list(RegionCount = COUNT()))
+e <- extend(input_data = input, list(RegionCount = COUNT()))
 
 ## materialize the result dataset on disk
-m = materialize(e)
+m <- materialize(e)
 ```
 
 ### Execution
@@ -178,8 +171,8 @@ execute()
 *execute* can be issued only if at least one *materialize* is present in GMQL query, otherwise an error is generated.
 Data are saved in the path specified in every *materialize*.
 Besside *execute* we can use 
-```{r,take, eval=FALSE}
-g <- take(input_data = m, rows = 45)
+```{r,take, eval=TRUE}
+g <- take(input_data = e, rows = 45)
 ```
 to extract data as GRangesList format and execute all *materialize* commands.
 NOTE: GRangesList are contained in R environment and are not saved on disk.
@@ -211,7 +204,7 @@ Rest servicies required login so the first step is to perform logon
 using user and password or as guest.
 Upon succesfull logon you get a request token must use in every subsequent REST call.
 Login can be performed using function:
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 test_url = "http://130.186.13.219/gmql-rest"
 login.GMQL(test_url)
 ```
@@ -221,10 +214,10 @@ wit this token you can call all the funciton in web services suite.
 #### Execution
 
 User can write the query as in the following example, as the second parameter of *runQuery*.
-```{r, eval=FALSE}
+```{r, eval=TRUE}
 test_url = "http://130.186.13.219/gmql-rest"
-login.GMQL(test_url)
-runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 
+## login.GMQL(test_url)
+job <- runQuery(test_url, "query_1", "DATA_SET_VAR = SELECT() HG19_TCGA_dnaseq; 
          MATERIALIZE DATA_SET_VAR INTO RESULT_DS;", output_gtf = FALSE)
 ```
 
