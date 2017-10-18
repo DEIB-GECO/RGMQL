@@ -121,7 +121,7 @@ There is no need to explicitally download data since execution will trigger down
 Also, for better integration in R environment and with other packages, we provide a function
 to read from GrangesList, for example:
 ```{r, read GRangesList, eval=TRUE}
-##library("GenomicRanges")
+library("GenomicRanges")
 gr1 <- GRanges(seqnames = "chr2",
 ranges = IRanges(103, 106),
 strand = "+",
