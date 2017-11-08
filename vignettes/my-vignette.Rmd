@@ -453,7 +453,7 @@ data
 the second parameter *is_gtf* must be specified if the file format are .GTF or .GDM.
 
 We can export a GRangesList as GMQL dataset as follows:
-```{r, export, eval = TRUE}
+```{r, export, eval = FALSE}
 
 dir_out <- system.file("example", "dir_out", package = "RGMQL")
 ## The third parameter TRUE indicates that the GRangesList data is exported in GTF format
