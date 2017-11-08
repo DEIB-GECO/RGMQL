@@ -1,7 +1,7 @@
 #' Create GMQL dataset from GrangesList
 #'
 #' It create GMQL dataset from GRangesList.
-#' All samples are in GDM (tab-separated values) file format
+#' All samples are in GDM (tab-separated values) or GTF file format
 #'
 #' @import xml2
 #' @importFrom plyr revalue
@@ -12,13 +12,13 @@
 #' @import GenomicRanges
 #'
 #' @param samples GrangesList
-#' @param dir_out folder path where create a folder and write all the sample files
+#' @param dir_out folder path where create a folder and write the sample files
+#' @param is_gtf logical value indicating if samples have to be exported
+#' with GTF or GDM format
 #'
 #' @return None
 #'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gtf}}
-#'
-#'
+#' @seealso \code{\link{import_gmql}} 
 #'
 #' @details
 #' The GMQL dataset is made up by two differet file type
@@ -26,198 +26,162 @@
 #' \itemize{
 #' \item{metadata files: contain metadata associated to corrisponding sample}
 #' \item{region files: contain many genomic regions }
-#' \item{region schema file: XML file contains region attributes (e.g. chr, start, end, pvalue)}
+#' \item{region schema file: XML file contains region attributes 
+#' (e.g. chr, start, end, pvalue)}
 #' }
 #' region sample files and metadata files are associated through file name:
-#' for example S_0001.gdm for region file and S_0001.gdm.meta for its metadata file
+#' for example S_0001.gdm for region file and S_0001.gdm.meta for 
+#' its metadata file
 #'
 #'
 #' @examples
 #'
 #' library(GenomicRanges)
-#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", score = 5L, GC = 0.45)
+#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
+#' score = 5L, GC = 0.45)
 #' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
-#' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
-#' grl = GRangesList(gr1,gr2)
-#' test_out_path <- system.file("example",package = "RGMQL")
-#' exportGMQL.gdm(grl,test_out_path)
+#' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
+#' score = 3:4, GC = c(0.3, 0.5))
+#' grl = GRangesList(gr1, gr2)
+#' test_out_path <- system.file("example", package = "RGMQL")
+#' export_gmql(grl, test_out_path,TRUE)
 #'
 #'
 #' @export
 #'
-exportGMQL.gdm <- function(samples, dir_out)
+export_gmql <- function(samples, dir_out, is_gtf)
 {
-  .exportGMQL(samples,dir_out,to_GTF = FALSE)
-  print("Export to GDM complete")
+    if(is_gtf)
+        .exportGMQL.gtf(samples,dir_out,is_gtf)
+    else
+        .exportGMQL.gdm(samples,dir_out,is_gtf)
 }
 
-#' Create GMQL dataset from GrangesList
-#'
-#' It create GMQL dataset from GRangesList.
-#' All samples are in GTF file format
-#'
-#' @import xml2
-#' @importFrom plyr revalue
-#' @importFrom rtracklayer export
-#' @importFrom methods is
-#' @importFrom utils write.table
-#' @importFrom S4Vectors metadata
-#' @import GenomicRanges
-#'
-#' @param samples GrangesList
-#' @param dir_out folder path where create a folder and write all the sample files
-#'
-#' @return None
-#'
-#'
-#' @seealso \code{\link{exportGMQL.gdm}} \code{\link{exportGMQL.gtf}} \code{\link{importGMQL.gdm} }
-#'
-#' @details
-#' The GMQL dataset is made up by two differet file type
-#' \itemize{
-#' \item{metadata files: contain metadata associated to corrisponding sample}
-#' \item{region files: contains many genomic regions }
-#' \item{region schema file: XML file contains region attributes (e.g. chr, left, right, qvalue)}
-#' }
-#' region sample files and metadata files are associated through file name:
-#' for example S_0001.gtf for region file and S_0001.gtf.meta for its metadata file
-#'
-#' @details
-#'
-#'
-#' @examples
-#'
-#' library(GenomicRanges)
-#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", score = 5L, GC = 0.45)
-#' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
-#' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
-#' grl = GRangesList(gr1,gr2)
-#' test_out_path <- system.file("example",package = "RGMQL")
-#' exportGMQL.gtf(grl,test_out_path)
-#'
-#' @export
-#'
-#'
-exportGMQL.gtf <- function(samples, dir_out)
+.exportGMQL.gdm <- function(samples, dir_out, to_GTF)
 {
-  .exportGMQL(samples,dir_out,to_GTF = TRUE)
-  print("Export to GTF complete")
+    .exportGMQL(samples,dir_out,to_GTF)
+    print("Export to GDM complete")
+}
+
+.exportGMQL.gtf <- function(samples, dir_out,to_GTF)
+{
+    .exportGMQL(samples, dir_out, to_GTF)
+    print("Export to GTF complete")
 }
 
 
 .exportGMQL <- function(samples, dir_out,to_GTF)
 {
-  if(!is(samples,"GRangesList"))
-    stop("samples must be a GrangesList")
+    if(!is(samples,"GRangesList"))
+        stop("samples must be a GrangesList")
 
-  dir.create(dir_out)
-  files_sub_dir <- paste0(dir_out,"/files")
-  dir.create(files_sub_dir)
-  c = .counter()
-  #col_names <- .get_schema_names(samples)
-  if(to_GTF)
-  {
-   #write region
-    lapply(samples,function(x,dir){
-      sample_name = paste0(dir,"/S_",c(),".gtf")
-      g <- rtracklayer::export(x,sample_name,format = "gtf")
-    },files_sub_dir)
+    dir.create(dir_out)
+    files_sub_dir <- paste0(dir_out,"/files")
+    dir.create(files_sub_dir)
+    c = .counter()
+    #col_names <- .get_schema_names(samples)
+    if(to_GTF)
+    {
+        #write region
+        lapply(samples,function(x,dir){
+            sample_name = paste0(dir,"/S_",c(),".gtf")
+            g <- rtracklayer::export(x,sample_name,format = "gtf")
+        },files_sub_dir)
+        c = .counter(0)
+        meta <- metadata(samples)
 
+        #write metadata
+        lapply(meta,function(x,dir){
+            sample_name = paste0(dir,"/S_",c(),".gtf")
+            .write_metadata(x,sample_name)
+        },files_sub_dir)
+    }
+    else
+    {
+        #write region
+        lapply(samples,function(x,dir){
+            sample_name = paste0(dir,"/S_",c(),".gdm")
+            region_frame <- data.frame(x)
+            write.table(region_frame,sample_name,col.names = FALSE,
+                            row.names = FALSE, sep = '\t',quote = FALSE)
+        },files_sub_dir)
+
+        c = .counter(0)
+        meta <- metadata(samples)
+
+        #write metadata
+        lapply(meta,function(x,dir){
+            sample_name = paste0(dir,"/S_",c(),".gdm")
+            .write_metadata(x,sample_name)
+        },files_sub_dir)
+    }
+    # first regions to get column names
+    col_names <- sapply(elementMetadata(samples[[1]]),class) 
+    # write schema XML
+    .write_schema(col_names,files_sub_dir,to_GTF)
     c = .counter(0)
-    meta <- metadata(samples)
-
-    #write metadata
-    lapply(meta,function(x,dir){
-      sample_name = paste0(dir,"/S_",c(),".gtf")
-      .write_metadata(x,sample_name)
-    },files_sub_dir)
-  }
-  else
-  {
-    #write region
-    lapply(samples,function(x,dir){
-      sample_name = paste0(dir,"/S_",c(),".gdm")
-      region_frame <- data.frame(x)
-      write.table(region_frame,sample_name,col.names = FALSE,row.names = FALSE, sep = '\t',quote = FALSE)
-    },files_sub_dir)
-
-    c = .counter(0)
-    meta <- metadata(samples)
-
-    #write metadata
-    lapply(meta,function(x,dir){
-      sample_name = paste0(dir,"/S_",c(),".gdm")
-      .write_metadata(x,sample_name)
-    },files_sub_dir)
-  }
-
-  col_names <- sapply(elementMetadata(samples[[1]]),class) # first regions to get column names
-
-  #write schema XML
-  .write_schema(col_names,files_sub_dir,to_GTF)
-  c = .counter(0)
 }
 
 
 
 .write_metadata <- function(meta_list,sample_name)
 {
-  #create my own list if metadata empty
-  if(length(meta_list)==0){
-    meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
-  }
-  names_list <- names(meta_list)
-  value_list <- unlist(meta_list)
-  file_meta_name = paste0(sample_name,".meta")
-  data <- data.frame(names_list,value_list)
-  names(data) <- NULL
-  write.table(data,file_meta_name,row.names = FALSE,col.names = FALSE, quote = FALSE,sep = '\t')
+    #create my own list if metadata empty
+    if(length(meta_list)==0){
+        meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
+    }
+    names_list <- names(meta_list)
+    value_list <- unlist(meta_list)
+    file_meta_name = paste0(sample_name,".meta")
+    data <- data.frame(names_list,value_list)
+    names(data) <- NULL
+    write.table(data,file_meta_name,row.names = FALSE,
+                    col.names = FALSE, quote = FALSE,sep = '\t')
 }
 
 .write_schema <- function(columns,directory,to_GTF)
 {
-  if(to_GTF)
-  {
-    names(columns) <- plyr::revalue(names(columns),c(type = "feature",phase = "frame"))
-    fixed_element = c(seqname = "character", source = "character", feature = "character",
-                      start = "long", end = "long", score = "numeric", strand = "character",
-                      frame = "character")
-    node_list <- c(fixed_element, columns)
-    node_list <- node_list[!duplicated(names(node_list))]
-    #node_list <- node_list[base::order(match(node_list,correct_list_GTF))]
-  }
-  else
-  {
-    fixed_element = c(chr = "factor", left = "long", right = "long", strand = "character")
-    node_list <- c(fixed_element, columns)
-    #node_list <- plyr::revalue(node_list,c(seqnames = "chr",start = "left",end = "right"))
-    #node_list <- node_list[base::order(match(node_list,correct_list_GDM))]
-  }
-
-  schema <- paste0(directory,"/granges.schema")
-  root <- xml2::xml_new_root("gmqlSchemaCollection")
-  xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
-  xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
-  xml2::xml_add_child(root,"gmqlSchema")
-  gmqlSchema <- xml2::xml_child(root,1)
-
-  names_node <- names(node_list)
-
-  mapply(function(type,text){
-    field <- xml2::xml_add_child(gmqlSchema,"field")
-    if(identical(type,"factor") || identical(type,"character"))
-      xml2::xml_attr(field,"type") <- "STRING"
-    else if(identical(type,"numeric") || identical(type,"integer"))
-      xml2::xml_attr(field,"type") <- "DOUBLE"
-    else if(identical(type,"long"))
-      xml2::xml_attr(field,"type") <- "LONG"
+    if(to_GTF)
+    {
+        names(columns) <- plyr::revalue(names(columns),c(type = "feature",
+                                            phase = "frame"))
+        fixed_element = c(seqname = "character", source = "character", 
+                            feature = "character",start = "long", end = "long", 
+                            score = "numeric", strand = "character",
+                            frame = "character")
+        node_list <- c(fixed_element, columns)
+        node_list <- node_list[!duplicated(names(node_list))]
+    }
     else
-      xml2::xml_attr(field,"type") <- "NULL"
+    {
+        fixed_element = c(chr = "factor", left = "long", right = "long", 
+                            strand = "character")
+        node_list <- c(fixed_element, columns)
+    }
 
-    xml2::xml_text(field) <- text
+    schema <- paste0(directory,"/granges.schema")
+    root <- xml2::xml_new_root("gmqlSchemaCollection")
+    xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
+    xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
+    xml2::xml_add_child(root,"gmqlSchema")
+    gmqlSchema <- xml2::xml_child(root,1)
 
-  },node_list,names_node)
-  xml2::write_xml(root,schema)
+    names_node <- names(node_list)
+
+    mapply(function(type,text){
+        field <- xml2::xml_add_child(gmqlSchema,"field")
+        if(identical(type,"factor") || identical(type,"character"))
+            xml2::xml_attr(field,"type") <- "STRING"
+        else if(identical(type,"numeric") || identical(type,"integer"))
+            xml2::xml_attr(field,"type") <- "DOUBLE"
+        else if(identical(type,"long"))
+            xml2::xml_attr(field,"type") <- "LONG"
+        else
+            xml2::xml_attr(field,"type") <- "NULL"
+        xml2::xml_text(field) <- text
+
+    },node_list,names_node)
+    xml2::write_xml(root,schema)
 }
 
 

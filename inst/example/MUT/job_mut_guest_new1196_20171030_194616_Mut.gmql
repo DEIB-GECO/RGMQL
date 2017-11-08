@@ -1,0 +1,3 @@
+DATA_SET_VAR = SELECT(manually_curated__dataType == "dnaseq" AND 
+clinical_patient__tumor_tissue_site == "breast") HG19_TCGA_dnaseq;
+MATERIALIZE DATA_SET_VAR INTO Mut;

@@ -1,0 +1,878 @@
+TEAD_HM_TF.HM_TF.cell
+	ECC-1
+TEAD_HM_TF.TEAD.lab
+	HudsonAlpha
+TEAD_HM_TF.HM_TF.grant
+	Myers
+TEAD_HM_TF.HM_TF.treatment_tag
+	NONE
+	DM002P1H
+TEAD_HM_TF.HM_TF.lab_labInst
+	Hudson
+TEAD_HM_TF.TEAD.controlId
+	SL13506
+TEAD_HM_TF.HM_TF.protocol_description
+	2x10^7
+	Faster
+TEAD_HM_TF.TEAD.protocol_description
+	Faster
+TEAD_HM_TF.TEAD.cell_termUrl
+	http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=BTO&termId=BTO%3A0000194
+TEAD_HM_TF.HM_TF.cell_orderUrl
+	http://www.atcc.org/ATCCAdvancedCatalogSearch/ProductDetails/tabid/452/Default.aspx?ATCCNum=CRL-2923&Template=cellBiology
+TEAD_HM_TF.TEAD.treatment_label
+	No
+TEAD_HM_TF.HM_TF.lab_tag
+	HAIB
+TEAD_HM_TF.HM_TF.type
+	broadPeak
+TEAD_HM_TF.HM_TF.treatment_label
+	No
+TEAD_HM_TF.TEAD.type
+	broadPeak
+TEAD_HM_TF.HM_TF.antibody_lab
+	Farnham,
+	Myers
+	Myers,
+	Snyder
+	Farnham,Myers
+	Snyder,Myers
+TEAD_HM_TF.TEAD.lab_labPi
+	Myers
+TEAD_HM_TF.HM_TF.md5sum
+	c3a9a790e5b847bc0b60fa1a5111da08
+	a5256a393dae2b047a453eaa1ca781b7
+	91ec7256f27fc72b966f0b5498c871a3
+	edfde51f2052fa81146bdc86b6ee328d
+	4a0bbb1e6bc5b3a16bce2f811211e9ad
+	6789df2390fee063ae219e48724d1485
+	0c83ebb85ac162ac7b071fed8f424be0
+	55eb54ef7e973d49c799a81414934f8b
+	ad063dd19645ff78e44e411e9b997f15
+	f64eb082d2b8a1997287091d67425ac7
+	e3d1e30f2323f5a8d24b3fbee74be33e
+	eea726bd93a54e61010c14b6fe8650eb
+	748e36fc97e0cb87191282bd930506e0
+	08aea58e44961c31bd00458176f7807e
+	4da87f06aab0042e790c6520528bb17a
+	c905116c6b540f2400fa2a8e7b024103
+	82e352735064efb7b4f0f0b1535e3ee5
+	45e3c23a7b78c6afbcab24238c6dd5d2
+	125fcfbbe06fcdd3b5dbad3c9c4a974a
+	7d8b87ec52d8d82ff88107cf1c0d65f8
+	33a10b55c1f735afde5372a4680bc1fb
+	2d0d2c1ce99834f32507a5dea5ff9482
+	0b6ecf602b7179df0595ec1ace3ed070
+	af519353c3883887e096f250b125e2d5
+	d08ab28b0b38893df44deea3646f92de
+	36dbaf115390f84852308cc3402f9826
+	2a3e94b2ce699686d6010139a0c1dbf3
+	c29bd4f1f81482b2b189a84e00c7c5d4
+	19c8962b992c146e1d5d7c32eeacb70b
+	59e12dc76ee9a1672c19e1e77756a1cf
+	681fab358b6e86bbec26ace0da32e170
+	a934756296089493f6b23bc2344a31df
+	13fbbeabad424653cb8e1c7fe1fbb3ec
+	304f36296aa50f8ca1c6250f66fbb204
+	be52ace947669d67c0f4d2a8971b208f
+	c91a26c233acf4f13c8c9e53176541d9
+	18403d83f28cc2d380d2837dce0fc0b8
+	9eb7a5695c71f1a9672c3f7674ab1097
+TEAD_HM_TF.HM_TF.lab_organism
+	human
+TEAD_HM_TF.HM_TF.geoSampleAccession
+	GSM1010802
+	GSM1010801
+	GSM1010752
+	GSM1010807
+	GSM1010762
+	GSM1010753
+	GSM1010774
+	GSM803444
+	GSM1010759
+	GSM1010733
+	GSM803536
+	GSM1010888
+	GSM1010841
+	GSM1010855
+	GSM1010842
+	GSM1010857
+	GSM1010856
+	GSM1010886
+	GSM1010885
+TEAD_HM_TF.HM_TF.url
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Creb1sc240V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Rad21V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Foxa1sc6553V0416102Dm002p1hPkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Foxa1sc6553V0416102Dm002p1hPkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Creb1sc240V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Foxm1sc502V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Cebpbsc150V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1P300V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Egr1V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Pol2V0416102Dm002p1hPkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Taf1V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1CtcfcV0416102Dm002p1hPkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Yy1sc281V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1SrfV0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1MaxV0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1CtcfcV0416102Dm002p1hPkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Usf1V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Taf1V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1NrsfV0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Yy1sc281V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1P300V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1MaxV0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Cebpbsc150V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tcf12V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1SrfV0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Nficsc81335V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tcf12V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Foxm1sc502V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Nficsc81335V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Zbtb7aV0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1NrsfV0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Pol2V0416102Dm002p1hPkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Rad21V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Egr1V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Usf1V0422111PkRep2.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Zbtb7aV0422111PkRep2.broadPeak.gz
+TEAD_HM_TF.HM_TF.replicate
+	2
+	1
+TEAD_HM_TF.HM_TF.lab_labPiFull
+	Richard
+TEAD_HM_TF.HM_TF.antibody_antibodyDescription
+	Goat
+	Rabbit
+	Mouse
+TEAD_HM_TF.TEAD.grant_description
+	Myers
+TEAD_HM_TF.HM_TF.grant_projectName
+	HAIB
+TEAD_HM_TF.HM_TF.cell_karyotype
+	cancer
+TEAD_HM_TF.TEAD.treatment_tag
+	NONE
+TEAD_HM_TF.HM_TF.antibody
+	ZBTB7A_(SC-34508)
+	p300
+	TAF1
+	Pol2
+	NRSF
+	FOXA1_(SC-6553)
+	Egr-1
+	SRF
+	TEAD4_(SC-101184)
+	CEBPB_(SC-150)
+	CREB1_(SC-240)
+	NFIC_(SC-81335)
+	FOXM1_(SC-502)
+	USF-1
+	YY1_(SC-281)
+	Max
+	Rad21
+	CTCF_(SC-5916)
+	TCF12
+TEAD_HM_TF.TEAD.view_description
+	Regions
+TEAD_HM_TF.TEAD.cell_type
+	Cell
+TEAD_HM_TF.TEAD.tableName
+	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2
+TEAD_HM_TF.TEAD.md5sum
+	7d8b87ec52d8d82ff88107cf1c0d65f8
+	a934756296089493f6b23bc2344a31df
+TEAD_HM_TF.HM_TF.dateUnrestricted
+	2013-04-29
+	2012-06-05
+	2013-04-28
+	2011-06-27
+	2013-04-27
+	2013-04-26
+	2013-04-20
+	2011-08-15
+	2013-04-19
+	2013-04-30
+	2013-04-17
+TEAD_HM_TF.TEAD.lab_labInst
+	Hudson
+TEAD_HM_TF.TEAD.antibody_label
+	TEAD4
+TEAD_HM_TF.HM_TF.lab
+	HudsonAlpha
+TEAD_HM_TF.HM_TF.cell_tag
+	ECC1
+TEAD_HM_TF.TEAD.dateSubmitted
+	2012-07-19
+PROM.assembly
+	hg19
+TEAD_HM_TF.HM_TF.protocol_type
+	protocol
+TEAD_HM_TF.HM_TF.cell_tier
+	3
+TEAD_HM_TF.TEAD.antibody_type
+	Antibody
+TEAD_HM_TF.TEAD.replicate
+	2
+	1
+TEAD_HM_TF.HM_TF.protocol_tag
+	V0416102
+	V0422111
+TEAD_HM_TF.TEAD.antibody_tag
+	TEAD4SC101184
+TEAD_HM_TF.TEAD.geoSampleAccession
+	GSM1010885
+TEAD_HM_TF.HM_TF.setType
+	exp
+TEAD_HM_TF.TEAD.antibody
+	TEAD4_(SC-101184)
+TEAD_HM_TF.HM_TF.cell_termUrl
+	http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=BTO&termId=BTO%3A0000194
+TEAD_HM_TF.TEAD.protocol_tag
+	V0422111
+TEAD_HM_TF.TEAD.protocol_label
+	ChIP
+TEAD_HM_TF.HM_TF.antibody_target
+	EGR1
+	ZBTB7A
+	TAF1
+	CEBPB
+	CREB1
+	FOXM1
+	YY1
+	FOXA1
+	CTCF
+	REST
+	USF1
+	SRF
+	POLR2A
+	MAX
+	EP300
+	RAD21
+	TEAD4
+	NFIC
+	TCF12
+TEAD_HM_TF.TEAD.dataVersion
+	ENCODE
+TEAD_HM_TF.TEAD.composite
+	wgEncodeHaibTfbs
+TEAD_HM_TF.HM_TF.view_description
+	Regions
+TEAD_HM_TF.TEAD.lab_organism
+	human
+TEAD_HM_TF.HM_TF.antibody_vendorId
+	sc-357
+	sc-585
+	sc-502
+	sc-229
+	sc-34508
+	sc-81335
+	sc-281
+	NRSF
+	sc-6553
+	ab992
+	sc-150
+	sc-5916
+	sc-197
+	sc-240
+	sc-735
+	sc-110
+	sc-101184
+	sc-335
+	MMS-126R
+TEAD_HM_TF.TEAD.cell_vendorName
+	ATCC
+TEAD_HM_TF.TEAD.dataType_description
+	Chromatin
+TEAD_HM_TF.TEAD.dataType_label
+	ChIP-seq
+TEAD_HM_TF.HM_TF.dataType_dataGroup
+	TFBS
+TEAD_HM_TF.TEAD.cell
+	ECC-1
+TEAD_HM_TF.HM_TF.view_type
+	view
+TEAD_HM_TF.HM_TF.controlId
+	SL13506
+	SL16754
+	SL1882
+PROM.original_provider
+	Campaner
+TEAD_HM_TF.TEAD.dataType_dataGroup
+	TFBS
+PROM.name
+	CampanerPromoters
+TEAD_HM_TF.HM_TF.view
+	Peaks
+TEAD_HM_TF.TEAD.cell_organism
+	human
+TEAD_HM_TF.TEAD.cell_tissue
+	luminal
+TEAD_HM_TF.TEAD.treatment_type
+	control
+TEAD_HM_TF.HM_TF.dataType_type
+	dataType
+TEAD_HM_TF.TEAD.view_tag
+	PKS
+TEAD_HM_TF.HM_TF.lab_label
+	Myers
+TEAD_HM_TF.HM_TF.antibody_targetUrl
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=CREB1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=NFIC
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=RAD21
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=FOXM1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=REST
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=CTCF
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=FOXA1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=EGR1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=EP300
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=POLR2A
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=CEBPB
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=TCF12
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=MAX
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=TAF1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=USF1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=ZBTB7A
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=SRF
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=YY1
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=TEAD4
+TEAD_HM_TF.HM_TF.protocol_label
+	sonicator,
+	ChIP
+TEAD_HM_TF.HM_TF.lab_description
+	Myers
+TEAD_HM_TF.HM_TF.cell_lineage
+	endoderm
+TEAD_HM_TF.TEAD.grant_type
+	grant
+PROM.annotation_type
+	promoter
+TEAD_HM_TF.HM_TF.cell_tissue
+	luminal
+TEAD_HM_TF.TEAD.setType
+	exp
+TEAD_HM_TF.HM_TF.treatment
+	DMSO_0.02pct
+	None
+TEAD_HM_TF.HM_TF.cell_vendorId
+	CRL-2923
+TEAD_HM_TF.TEAD.subId
+	7279
+TEAD_HM_TF.TEAD.dataType_tag
+	CHIPSEQ
+TEAD_HM_TF.TEAD.cell_tier
+	3
+TEAD_HM_TF.TEAD.grant_grantInst
+	Hudson
+TEAD_HM_TF.TEAD.cell_tag
+	ECC1
+TEAD_HM_TF.HM_TF.antibody_targetDescription
+	Synthetic
+	TAF1
+	The
+	Member
+	RNA
+	Epitope
+	Serum
+	YY1
+	Neuron-restrictive
+	Recognizes
+	Plays
+	EP300(c-20)
+	This
+	Egr-1,
+TEAD_HM_TF.HM_TF.cell_type
+	Cell
+TEAD_HM_TF.TEAD.lab_description
+	Myers
+TEAD_HM_TF.HM_TF.grant_description
+	Myers
+TEAD_HM_TF.HM_TF.dccAccession
+	wgEncodeEH003256
+	wgEncodeEH001586
+	wgEncodeEH003245
+	wgEncodeEH003232
+	wgEncodeEH003268
+	wgEncodeEH003274
+	wgEncodeEH003238
+	wgEncodeEH003263
+	wgEncodeEH003239
+	wgEncodeEH003262
+	wgEncodeEH001572
+	wgEncodeEH003290
+	wgEncodeEH003241
+	wgEncodeEH003240
+	wgEncodeEH003291
+	wgEncodeEH003287
+	wgEncodeEH003288
+	wgEncodeEH003289
+	wgEncodeEH002300
+TEAD_HM_TF.TEAD.lab_grantPi
+	Myers
+TEAD_HM_TF.HM_TF.softwareVersion
+	MACS
+TEAD_HM_TF.TEAD.cell_lineage
+	endoderm
+TEAD_HM_TF.HM_TF.grant_grantInst
+	Hudson
+TEAD_HM_TF.TEAD.protocol_type
+	protocol
+TEAD_HM_TF.HM_TF.antibody_orderUrl
+	http://www.scbt.com/datasheet-34508-lrf-c-18-antibody.html
+	http://www.scbt.com/product.php?datasheet=335
+	http://www.scbt.com/datasheet-197-max-c-17-antibody.html
+	http://store.crpinc.com/datasheet.aspx?UpProd=&catalogno=MMS-126R
+	http://www.scbt.com/product.php?datasheet=281
+	http://www.scbt.com/datasheet-150-c-ebp-beta-c-19-antibody.html
+	http://www.scbt.com/datasheet-101184-tef-3-n-g2-antibody.html
+	http://www.abcam.com/index.html?datasheet=992
+	http://www.scbt.com/datasheet-357-heb-a-20-antibody.html
+	http://datasheets.scbt.com/sc-502.pdf
+	http://www.scbt.com/product.php?datasheet=585
+	http://www.scbt.com/product.php?datasheet=229
+	http://www.scbt.com/product.php?datasheet=110
+	http://www.scbt.com/product.php?datasheet=735
+	http://www.scbt.com/datasheet-240-creb-1-x-12-antibody.html
+	http://www.cns.caltech.edu/people/faculty/anderson.html
+	http://www.scbt.com/datasheet-6553-hnf-3alpha-beta-c-20-antibody.html
+	http://www.scbt.com/datasheet-81335-nf-1-nfi5i299-antibody.html
+	http://www.scbt.com/datasheet-5916-ctcf-n-17-antibody.html
+PROM.provider
+	POLIMI
+TEAD_HM_TF.TEAD.dataType
+	ChipSeq
+TEAD_HM_TF.HM_TF.protocol
+	v042211.1
+	v041610.2
+TEAD_HM_TF.HM_TF.cell_organism
+	human
+TEAD_HM_TF.TEAD.antibody_lots
+	A1811
+TEAD_HM_TF.TEAD.view_type
+	view
+TEAD_HM_TF.TEAD.cell_protocol
+	Myers:ECC1_Myers_protocol.pdf
+TEAD_HM_TF.HM_TF.antibody_targetId
+	GeneCard:POLR2A
+	GeneCard:CEBPB
+	GeneCard:TAF1
+	GeneCard:REST
+	GeneCard:RAD21
+	GeneCard:YY1
+	GeneCard:CTCF
+	GeneCard:USF1
+	GeneCard:TEAD4
+	GeneCard:EP300
+	GeneCard:NFIC
+	GeneCard:FOXA1
+	GeneCard:TCF12
+	GeneCard:FOXM1
+	GeneCard:SRF
+	GeneCard:ZBTB7A
+	GeneCard:MAX
+	GeneCard:CREB1
+	GeneCard:EGR1
+TEAD_HM_TF.TEAD.cell_karyotype
+	cancer
+TEAD_HM_TF.TEAD.grant
+	Myers
+TEAD_HM_TF.TEAD.antibody_vendorName
+	Santa
+TEAD_HM_TF.HM_TF.lab_grantPi
+	Myers
+TEAD_HM_TF.HM_TF.cell_vendorName
+	ATCC
+TEAD_HM_TF.HM_TF.view_tag
+	PKS
+TEAD_HM_TF.HM_TF.lab_labPi
+	Myers
+TEAD_HM_TF.TEAD.view_label
+	Peaks
+TEAD_HM_TF.HM_TF.antibody_vendorName
+	Covance
+	abcam
+	Santa
+	Dr.
+TEAD_HM_TF.TEAD.softwareVersion
+	MACS
+TEAD_HM_TF.TEAD.url
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1.broadPeak.gz
+	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2.broadPeak.gz
+TEAD_HM_TF.TEAD.labExpId
+	SL14591
+	SL13281
+TEAD_HM_TF.HM_TF.labExpId
+	SL14721
+	SL14723
+	SL13280
+	SL14725
+	SL16025
+	SL14063
+	SL1176
+	SL1880
+	SL16021
+	SL16022
+	SL16023
+	SL14590
+	SL14591
+	SL13281
+	SL14048
+	SL3447
+	SL16302
+	SL2080
+	SL14051
+	SL14054
+	SL2630
+	SL14056
+	SL16305
+	SL13751
+	SL14057
+	SL13276
+	SL13275
+	SL13274
+	SL14583
+	SL13273
+	SL13272
+	SL14584
+	SL14585
+	SL14586
+	SL13270
+	SL2085
+	SL14589
+	SL13279
+TEAD_HM_TF.HM_TF.cell_sex
+	F
+TEAD_HM_TF.TEAD.cell_orderUrl
+	http://www.atcc.org/ATCCAdvancedCatalogSearch/ProductDetails/tabid/452/Default.aspx?ATCCNum=CRL-2923&Template=cellBiology
+TEAD_HM_TF.TEAD.lab_labPiFull
+	Richard
+TEAD_HM_TF.HM_TF.dataType_label
+	ChIP-seq
+TEAD_HM_TF.HM_TF.size
+	327K
+	138K
+	81K
+	99K
+	216K
+	114K
+	557K
+	63K
+	475K
+	181K
+	276K
+	69K
+	49K
+	321K
+	380K
+	211K
+	90K
+	107K
+	163K
+	988K
+	336K
+	165K
+	193K
+	213K
+	203K
+	402K
+	127K
+	710K
+	109K
+	232K
+	303K
+	194K
+	488K
+	673K
+	334K
+	201K
+TEAD_HM_TF.TEAD.antibody_target
+	TEAD4
+TEAD_HM_TF.HM_TF.antibody_targetClass
+	TFNS
+	DNARep
+	HISase
+	TFSS
+	Pol2
+TEAD_HM_TF.HM_TF.cell_description
+	epithelial
+TEAD_HM_TF.HM_TF.subId
+	7654
+	7652
+	7653
+	7280
+	7281
+	4776
+	7651
+	7282
+	7286
+	2428
+	2429
+	7279
+	7278
+	7604
+	7657
+	7656
+	7649
+	7697
+	7648
+TEAD_HM_TF.TEAD.antibody_orderUrl
+	http://www.scbt.com/datasheet-101184-tef-3-n-g2-antibody.html
+TEAD_HM_TF.TEAD.cell_termId
+	BTO:0000194
+TEAD_HM_TF.TEAD.antibody_validation
+	Human_-_TEAD4_(sc-101184)(Western_blot,IP-MassSpec):human_TEAD4_SC-101184_validation_Myers.pdf
+TEAD_HM_TF.TEAD.lab_type
+	lab
+TEAD_HM_TF.TEAD.dccAccession
+	wgEncodeEH003238
+TEAD_HM_TF.HM_TF.dataType_tag
+	CHIPSEQ
+TEAD_HM_TF.HM_TF.dateSubmitted
+	2012-07-20
+	2012-07-30
+	2010-09-27
+	2011-09-05
+	2012-07-19
+	2012-07-28
+	2012-07-29
+	2010-11-15
+	2012-07-26
+	2012-07-27
+	2012-07-17
+TEAD_HM_TF.TEAD.size
+	303K
+	336K
+TEAD_HM_TF.HM_TF.dataVersion
+	ENCODE
+TEAD_HM_TF.HM_TF.antibody_lots
+	B1010
+	L0808
+	H1209
+	20070905JV
+	14861301
+	I1010
+	F2305
+	C2306
+	D0411
+	K0902
+	A1811
+	F3006
+	H2406
+	J0809
+	940739
+	A2109
+	C1909
+	K0905
+TEAD_HM_TF.TEAD.view
+	Peaks
+TEAD_HM_TF.TEAD.antibody_targetUrl
+	http://www.genecards.org/cgi-bin/carddisp.pl?gene=TEAD4
+TEAD_HM_TF.HM_TF.treatment_description
+	1
+	No
+TEAD_HM_TF.TEAD.cell_vendorId
+	CRL-2923
+TEAD_HM_TF.TEAD.antibody_antibodyDescription
+	Mouse
+TEAD_HM_TF.HM_TF.dataType_description
+	Chromatin
+TEAD_HM_TF.HM_TF.grant_type
+	grant
+TEAD_HM_TF.TEAD.antibody_targetDescription
+	Member
+TEAD_HM_TF.TEAD.grant_projectName
+	HAIB
+TEAD_HM_TF.HM_TF.cell_protocol
+	Myers:ECC1_Myers_protocol.pdf
+TEAD_HM_TF.HM_TF.antibody_label
+	EGR1
+	ZBTB7A
+	TAF1
+	CEBPB
+	CREB1
+	FOXM1
+	YY1
+	FOXA1
+	NRSF
+	CTCF
+	USF1
+	SRF
+	MAX
+	RAD21
+	TEAD4
+	P300&#47;EP300
+	POL2
+	NFIC
+	TCF12
+TEAD_HM_TF.HM_TF.view_label
+	Peaks
+TEAD_HM_TF.TEAD.antibody_lab
+	Myers
+TEAD_HM_TF.HM_TF.dataType
+	ChipSeq
+TEAD_HM_TF.HM_TF.lab_type
+	lab
+TEAD_HM_TF.HM_TF.tableName
+	wgEncodeHaibTfbsEcc1NrsfV0422111PkRep1
+	wgEncodeHaibTfbsEcc1NrsfV0422111PkRep2
+	wgEncodeHaibTfbsEcc1Foxa1sc6553V0416102Dm002p1hPkRep2
+	wgEncodeHaibTfbsEcc1Foxa1sc6553V0416102Dm002p1hPkRep1
+	wgEncodeHaibTfbsEcc1Rad21V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Cebpbsc150V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Rad21V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Nficsc81335V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2
+	wgEncodeHaibTfbsEcc1P300V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Cebpbsc150V0422111PkRep2
+	wgEncodeHaibTfbsEcc1P300V0422111PkRep1
+	wgEncodeHaibTfbsEcc1MaxV0422111PkRep1
+	wgEncodeHaibTfbsEcc1Nficsc81335V0422111PkRep1
+	wgEncodeHaibTfbsEcc1MaxV0422111PkRep2
+	wgEncodeHaibTfbsEcc1Pol2V0416102Dm002p1hPkRep1
+	wgEncodeHaibTfbsEcc1Pol2V0416102Dm002p1hPkRep2
+	wgEncodeHaibTfbsEcc1Creb1sc240V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Creb1sc240V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Yy1sc281V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Tcf12V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Tcf12V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Foxm1sc502V0422111PkRep2
+	wgEncodeHaibTfbsEcc1SrfV0422111PkRep2
+	wgEncodeHaibTfbsEcc1SrfV0422111PkRep1
+	wgEncodeHaibTfbsEcc1Foxm1sc502V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Yy1sc281V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Usf1V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Usf1V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Egr1V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Taf1V0422111PkRep1
+	wgEncodeHaibTfbsEcc1Egr1V0422111PkRep1
+	wgEncodeHaibTfbsEcc1CtcfcV0416102Dm002p1hPkRep2
+	wgEncodeHaibTfbsEcc1CtcfcV0416102Dm002p1hPkRep1
+	wgEncodeHaibTfbsEcc1Taf1V0422111PkRep2
+	wgEncodeHaibTfbsEcc1Zbtb7aV0422111PkRep1
+	wgEncodeHaibTfbsEcc1Zbtb7aV0422111PkRep2
+TEAD_HM_TF.HM_TF.grant_tag
+	MYERS
+TEAD_HM_TF.HM_TF.treatment_type
+	control
+	treatment
+TEAD_HM_TF.TEAD.lab_tag
+	HAIB
+TEAD_HM_TF.TEAD.antibody_vendorId
+	sc-101184
+TEAD_HM_TF.HM_TF.antibody_validation
+	Human_-_USF1_SC-229(Immunoprecipitation-Western_blot,IP-MassSpec):human_USF1_SC-229_validation_Myers.pdf
+	Human_-_MAX(sc-197)(Immunoprecipitation,Motif_Enrichment):human_Max_sc-197_validation_Snyder.pdf
+	Human_-_NRSF_(Western_blot,Motif_Enrichment):human_NRSF_validation_Myers.pdf
+	Human_-_NFIC_(sc-81335)(Western_blot,IP-MassSpec):human_NFIC_SC-81335_validation_Myers.pdf
+	Human_-_Egr-1(sc-110)(Immunoblot):human_Egr-1_588_validation_Myers.pdf
+	Human_-_FOXM1_(sc-502)(Western_blot,IP-MassSpec):human_FOXM1_sc-502_validation_Myers.pdf
+	Human_-_P300(sc-585)(Western_blot):human_P300_SC-585_validation_Myers.pdf
+	Human_-_TCF12(Immunoprecipitation-Western_blot,IP-MassSpec):human_TCF12_validation_Myers.pdf
+	Human_-_YY1_(sc-281)(Immunoprecipitation-Western_blot,IP-MassSpec):human_YY1_SC-281_validation_Myers.pdf
+	Human_-_CREB1_(sc-240)(Western_blot,IP-MassSpec):human_CREB1_SC-240_validation_Myers.pdf
+	Human_-_CEBPB_(sc-150)(Western_blot,IP-MassSpec):human_CEBPB_SC-150_validation_Myers.pdf
+	Human_-_TEAD4_(sc-101184)(Western_blot,IP-MassSpec):human_TEAD4_SC-101184_validation_Myers.pdf
+	Human_-_FOXA1(Immunoprecipitation-Western_blot,IP-MassSpec):human_FOXA1_SC-6553_validation_Myers.pdf
+	Human_-_:missing
+	Human_-_ZBTB7A_SC-34508(Immunoprecipitation-Western_blot,IP-MassSpec):human_ZBTB7A_SC-34508_validation_Myers.pdf
+	Human_-_Pol2(Immunoprecipitation,IP-MassSpec):human_Pol2_validation_Snyder.pdf
+	Human_-_RAD21(Western_blot,siRNA):human_RAD21_validation_Snyder.pdf
+	Human_-_SRF(Immunoprecipitation-Western_blot,IP-MassSpec):human_SRF_validation_Myers.pdf
+	Human_-_TAF1(ChIP-seq,IP-MassSpec):human_TAF1_validation_Myers.pdf
+TEAD_HM_TF.TEAD.treatment
+	None
+TEAD_HM_TF.TEAD.dataType_type
+	dataType
+TEAD_HM_TF.HM_TF.composite
+	wgEncodeHaibTfbs
+TEAD_HM_TF.HM_TF.antibody_type
+	Antibody
+TEAD_HM_TF.TEAD.project
+	wgEncode
+TEAD_HM_TF.HM_TF.ID
+	513
+	512
+	535
+	534
+	533
+	532
+	539
+	556
+	538
+	557
+	537
+	519
+	554
+	536
+	518
+	555
+	552
+	517
+	553
+	516
+	515
+	550
+	514
+	551
+	540
+	542
+	541
+	544
+	543
+	546
+	545
+	548
+	529
+	547
+	549
+	526
+	528
+	527
+TEAD_HM_TF.TEAD.lab_label
+	Myers
+TEAD_HM_TF.HM_TF.project
+	wgEncode
+TEAD_HM_TF.TEAD.dateUnrestricted
+	2013-04-19
+TEAD_HM_TF.TEAD.protocol
+	v042211.1
+TEAD_HM_TF.TEAD.antibody_targetId
+	GeneCard:TEAD4
+TEAD_HM_TF.TEAD.treatment_description
+	No
+TEAD_HM_TF.TEAD.ID
+	550
+	551
+TEAD_HM_TF.TEAD.cell_description
+	epithelial
+TEAD_HM_TF.HM_TF.antibody_tag
+	EGR1
+	ZBTB7A
+	TAF1
+	TEAD4SC101184
+	P300
+	CREB1SC240
+	NRSF
+	USF1
+	SRF
+	FOXA1b
+	FOXM1SC502
+	MAX
+	YY1SC281
+	CEBPBSC150
+	NFICSC81335
+	RAD21
+	CTCFc
+	POL2
+	TCF12
+TEAD_HM_TF.HM_TF.cell_termId
+	BTO:0000194
+TEAD_HM_TF.TEAD.cell_sex
+	F
+TEAD_HM_TF.TEAD.grant_tag
+	MYERS

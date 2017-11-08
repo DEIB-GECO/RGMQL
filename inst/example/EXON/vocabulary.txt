@@ -1,0 +1,10 @@
+annotation_type
+	exons	1
+assembly
+	hg19	1
+name
+	RefSeqGeneExons	1
+original_provider
+	RefSeq	1
+provider
+	POLIMI	1

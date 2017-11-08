@@ -7,24 +7,24 @@
 DESC(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata and/or region attribute}
+\item{value}{string identifying name of metadata or region attribute}
 }
 \value{
 DESC ordering object
 }
 \description{
-This class constructor is used to create instances of ORDER object
+This class constructor is used to create instances of ORDER object,
 to be used in GMQL functions that require ordering on value.
-It define a descending order for input value
+It defines a descending order for input value
 }
 \examples{
 
-## it orders the samples according to the Region_count metadata attribute and takes the two samples 
-## that have the highest count. 
+## It orders the samples according to the Region_count metadata attribute 
+## and takes the two samples that have the highest count. 
 
-initGMQL()
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-r = readDataset(test_path)
-o = order(r,list(DESC("Region_Count")), mtop = 2)
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+r = read_dataset(test_path)
+o = order(r, list(DESC("Region_Count")), mtop = 2)
 
 }

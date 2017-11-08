@@ -1,0 +1,195 @@
+TEAD_HM_TF.HM_TF.antibody_antibodyDescription	Rabbit polyclonal IgG affinty purified, epitope mapping at the C-terminus of Max of human origin. Antibody Target: MAX
+TEAD_HM_TF.HM_TF.cell_vendorName	ATCC
+TEAD_HM_TF.HM_TF.protocol_label	ChIP AMpure XP
+TEAD_HM_TF.HM_TF.cell_termId	BTO:0000194
+TEAD_HM_TF.HM_TF.tableName	wgEncodeHaibTfbsEcc1MaxV0422111PkRep2
+TEAD_HM_TF.HM_TF.grant_tag	MYERS
+TEAD_HM_TF.HM_TF.cell_type	Cell Line
+TEAD_HM_TF.HM_TF.antibody_targetDescription	The protein encoded by this gene is a member of the basic helix-loop-helix leucine zipper (bHLHZ) family of transcription factors. It is able to form homodimers and heterodimers with other family members, which include Mad, Mxi1 and Myc. Myc is an oncoprotein implicated in cell proliferation, differentiation and apoptosis. The homodimers and heterodimers compete for a common DNA target site (the E box) and rearrangement among these dimer forms provides a complex system of transcriptional regulation. Multiple alternatively spliced transcript variants have been described for this gene but the full-length nature for some of them is unknown (RefSeq).
+TEAD_HM_TF.HM_TF.view_description	Regions of enriched signal in experiment
+TEAD_HM_TF.HM_TF.lab_description	Myers - Hudson Alpha Institute for Biotechnology
+TEAD_HM_TF.HM_TF.antibody_label	MAX (sc-197)
+TEAD_HM_TF.HM_TF.dccAccession	wgEncodeEH003268
+TEAD_HM_TF.HM_TF.cell_lineage	endoderm
+TEAD_HM_TF.HM_TF.lab_labInst	Hudson Alpha Institute for Biotechnology
+TEAD_HM_TF.HM_TF.cell_tissue	luminal epithelium
+TEAD_HM_TF.HM_TF.view_label	Peaks
+TEAD_HM_TF.HM_TF.tableName	wgEncodeHaibTfbsEcc1MaxV0422111PkRep1
+TEAD_HM_TF.HM_TF.lab_tag	HAIB
+TEAD_HM_TF.HM_TF.md5sum	c905116c6b540f2400fa2a8e7b024103
+TEAD_HM_TF.HM_TF.ID	533
+TEAD_HM_TF.HM_TF.ID	532
+TEAD_HM_TF.HM_TF.subId	7652
+TEAD_HM_TF.HM_TF.setType	exp
+TEAD_HM_TF.HM_TF.lab_type	lab
+TEAD_HM_TF.HM_TF.replicate	2
+TEAD_HM_TF.HM_TF.view_type	view
+TEAD_HM_TF.HM_TF.dataVersion	ENCODE Jul 2012 Freeze
+TEAD_HM_TF.HM_TF.lab_organism	human
+TEAD_HM_TF.HM_TF.dateSubmitted	2012-07-28
+TEAD_HM_TF.HM_TF.cell_karyotype	cancer
+TEAD_HM_TF.HM_TF.grant_description	Myers
+TEAD_HM_TF.HM_TF.grant_projectName	HAIB
+TEAD_HM_TF.HM_TF.dataType_description	Chromatin IP Sequencing
+TEAD_HM_TF.HM_TF.protocol_description	Faster ChIP protocol & AMpure XP size selection for ChIP-seq (Myers)
+TEAD_HM_TF.HM_TF.antibody_targetId	GeneCard:MAX
+TEAD_HM_TF.HM_TF.dateUnrestricted	2013-04-28
+TEAD_HM_TF.HM_TF.cell_description	epithelial cell line derived from an endometrium adenocarcinoma, fetal membranes were collected from women who underwent planned cesarean delivery at term, before labor and without rupture of membranes
+TEAD_HM_TF.HM_TF.treatment_label	No treatment or prot
+TEAD_HM_TF.HM_TF.antibody_target	MAX
+TEAD_HM_TF.HM_TF.cell_vendorId	CRL-2923
+TEAD_HM_TF.HM_TF.treatment	None
+TEAD_HM_TF.HM_TF.replicate	1
+TEAD_HM_TF.HM_TF.lab_label	Myers - Hudson Alpha
+TEAD_HM_TF.HM_TF.controlId	SL16754
+TEAD_HM_TF.HM_TF.controlId	SL13506
+TEAD_HM_TF.HM_TF.view_tag	PKS
+TEAD_HM_TF.HM_TF.labExpId	SL14054
+TEAD_HM_TF.HM_TF.antibody	Max
+TEAD_HM_TF.HM_TF.md5sum	4a0bbb1e6bc5b3a16bce2f811211e9ad
+TEAD_HM_TF.HM_TF.size	475K
+TEAD_HM_TF.HM_TF.softwareVersion	MACS
+TEAD_HM_TF.HM_TF.url	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1MaxV0422111PkRep1.broadPeak.gz
+TEAD_HM_TF.HM_TF.project	wgEncode
+TEAD_HM_TF.HM_TF.cell_sex	F
+TEAD_HM_TF.HM_TF.protocol	v042211.1
+TEAD_HM_TF.HM_TF.antibody_tag	MAX
+TEAD_HM_TF.HM_TF.treatment_tag	NONE
+TEAD_HM_TF.HM_TF.dataType_label	ChIP-seq
+TEAD_HM_TF.HM_TF.antibody_vendorName	Santa Cruz Biotechnology
+TEAD_HM_TF.HM_TF.lab	HudsonAlpha
+TEAD_HM_TF.HM_TF.cell	ECC-1
+TEAD_HM_TF.HM_TF.size	380K
+TEAD_HM_TF.HM_TF.type	broadPeak
+TEAD_HM_TF.HM_TF.view	Peaks
+TEAD_HM_TF.HM_TF.cell_tag	ECC1
+TEAD_HM_TF.HM_TF.dataType	ChipSeq
+TEAD_HM_TF.HM_TF.grant_type	grant
+TEAD_HM_TF.HM_TF.lab_grantPi	Myers
+TEAD_HM_TF.HM_TF.antibody_lab	Myers, Snyder
+TEAD_HM_TF.HM_TF.cell_termUrl	http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=BTO&termId=BTO%3A0000194
+TEAD_HM_TF.HM_TF.antibody_type	Antibody
+TEAD_HM_TF.HM_TF.cell_orderUrl	http://www.atcc.org/ATCCAdvancedCatalogSearch/ProductDetails/tabid/452/Default.aspx?ATCCNum=CRL-2923&Template=cellBiology
+TEAD_HM_TF.HM_TF.cell_protocol	Myers:ECC1_Myers_protocol.pdf
+TEAD_HM_TF.HM_TF.dataType_type	dataType
+TEAD_HM_TF.HM_TF.protocol_type	protocol
+TEAD_HM_TF.HM_TF.geoSampleAccession	GSM1010807
+TEAD_HM_TF.HM_TF.grant	Myers
+TEAD_HM_TF.HM_TF.labExpId	SL16021
+TEAD_HM_TF.HM_TF.lab_labPi	Myers
+TEAD_HM_TF.HM_TF.antibody_lots	J0809
+TEAD_HM_TF.HM_TF.cell_organism	human
+TEAD_HM_TF.HM_TF.lab_labPiFull	Richard Myers
+TEAD_HM_TF.HM_TF.grant_grantInst	Hudson Alpha Institute of Biotechnology
+TEAD_HM_TF.HM_TF.antibody_targetClass	TFSS
+TEAD_HM_TF.HM_TF.treatment_description	No special treatment or protocol applies
+TEAD_HM_TF.HM_TF.antibody_validation	Human_-_MAX(sc-197)(Immunoprecipitation,Motif_Enrichment):human_Max_sc-197_validation_Snyder.pdf Mouse_-_MAX(sc-197)(Immunoprecipitation,Motif_Enrichment):mouse_Max_sc-197_validation_Snyder.pdf
+TEAD_HM_TF.HM_TF.dataType_dataGroup	TFBS & Histones
+TEAD_HM_TF.HM_TF.antibody_targetUrl	http://www.genecards.org/cgi-bin/carddisp.pl?gene=MAX
+TEAD_HM_TF.HM_TF.antibody_vendorId	sc-197
+TEAD_HM_TF.HM_TF.antibody_orderUrl	http://www.scbt.com/datasheet-197-max-c-17-antibody.html
+TEAD_HM_TF.HM_TF.treatment_type	control
+TEAD_HM_TF.HM_TF.protocol_tag	V0422111
+TEAD_HM_TF.HM_TF.dataType_tag	CHIPSEQ
+TEAD_HM_TF.HM_TF.composite	wgEncodeHaibTfbs
+TEAD_HM_TF.HM_TF.cell_tier	3
+TEAD_HM_TF.HM_TF.url	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1MaxV0422111PkRep2.broadPeak.gz
+TEAD_HM_TF.TEAD.protocol_tag	V0422111
+TEAD_HM_TF.TEAD.antibody_target	TEAD4
+TEAD_HM_TF.TEAD.antibody_targetId	GeneCard:TEAD4
+TEAD_HM_TF.TEAD.dataType_dataGroup	TFBS & Histones
+TEAD_HM_TF.TEAD.antibody_validation	Human_-_TEAD4_(sc-101184)(Western_blot,IP-MassSpec):human_TEAD4_SC-101184_validation_Myers.pdf
+TEAD_HM_TF.TEAD.antibody_vendorName	Santa Cruz Biotechnology
+TEAD_HM_TF.TEAD.geoSampleAccession	GSM1010885
+TEAD_HM_TF.TEAD.dataType_label	ChIP-seq
+TEAD_HM_TF.TEAD.treatment_tag	NONE
+TEAD_HM_TF.TEAD.dccAccession	wgEncodeEH003238
+TEAD_HM_TF.TEAD.protocol	v042211.1
+TEAD_HM_TF.TEAD.labExpId	SL13281
+TEAD_HM_TF.TEAD.cell_sex	F
+TEAD_HM_TF.TEAD.project	wgEncode
+TEAD_HM_TF.TEAD.url	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2.broadPeak.gz
+TEAD_HM_TF.TEAD.ID	550
+TEAD_HM_TF.TEAD.treatment_type	control
+TEAD_HM_TF.TEAD.protocol_description	Faster ChIP protocol & AMpure XP size selection for ChIP-seq (Myers)
+TEAD_HM_TF.TEAD.dataType_description	Chromatin IP Sequencing
+TEAD_HM_TF.TEAD.grant_projectName	HAIB
+TEAD_HM_TF.TEAD.view_tag	PKS
+TEAD_HM_TF.TEAD.controlId	SL13506
+TEAD_HM_TF.TEAD.lab_label	Myers - Hudson Alpha
+TEAD_HM_TF.TEAD.replicate	1
+TEAD_HM_TF.TEAD.treatment	None
+TEAD_HM_TF.TEAD.antibody_lab	Myers
+TEAD_HM_TF.TEAD.cell_vendorId	CRL-2923
+TEAD_HM_TF.TEAD.antibody_label	TEAD4 (sc-101184)
+TEAD_HM_TF.TEAD.treatment_label	No treatment or prot
+TEAD_HM_TF.TEAD.cell_description	epithelial cell line derived from an endometrium adenocarcinoma, fetal membranes were collected from women who underwent planned cesarean delivery at term, before labor and without rupture of membranes
+TEAD_HM_TF.TEAD.antibody_targetUrl	http://www.genecards.org/cgi-bin/carddisp.pl?gene=TEAD4
+TEAD_HM_TF.TEAD.antibody_targetDescription	Member of the transcriptional enhancer factor (TEF) family of transcription factors, which contain the TEA/ATTS DNA-binding domain. It is preferentially expressed in the skeletal muscle, and binds to the M-CAT regulatory element found in promoters of muscle-specific genes to direct their gene expression.
+TEAD_HM_TF.TEAD.antibody_antibodyDescription	Mouse monoclonal IgG, raised against recombinant protein TEF-3 (TEAD4) of human origin. Antibody Target: TEAD4
+TEAD_HM_TF.TEAD.cell	ECC-1
+TEAD_HM_TF.TEAD.type	broadPeak
+TEAD_HM_TF.TEAD.view	Peaks
+TEAD_HM_TF.TEAD.cell_tag	ECC1
+TEAD_HM_TF.TEAD.dataType	ChipSeq
+TEAD_HM_TF.TEAD.grant_type	grant
+TEAD_HM_TF.TEAD.lab_grantPi	Myers
+TEAD_HM_TF.TEAD.cell_termUrl	http://www.ebi.ac.uk/ontology-lookup/browse.do?ontName=BTO&termId=BTO%3A0000194
+TEAD_HM_TF.TEAD.antibody_type	Antibody
+TEAD_HM_TF.TEAD.cell_orderUrl	http://www.atcc.org/ATCCAdvancedCatalogSearch/ProductDetails/tabid/452/Default.aspx?ATCCNum=CRL-2923&Template=cellBiology
+TEAD_HM_TF.TEAD.cell_protocol	Myers:ECC1_Myers_protocol.pdf
+TEAD_HM_TF.TEAD.dataType_type	dataType
+TEAD_HM_TF.TEAD.protocol_type	protocol
+TEAD_HM_TF.TEAD.antibody_vendorId	sc-101184
+TEAD_HM_TF.TEAD.view_description	Regions of enriched signal in experiment
+TEAD_HM_TF.TEAD.dateUnrestricted	2013-04-19
+TEAD_HM_TF.TEAD.lab_description	Myers - Hudson Alpha Institute for Biotechnology
+TEAD_HM_TF.TEAD.cell_lineage	endoderm
+TEAD_HM_TF.TEAD.lab_labInst	Hudson Alpha Institute for Biotechnology
+TEAD_HM_TF.TEAD.cell_tissue	luminal epithelium
+TEAD_HM_TF.TEAD.view_label	Peaks
+TEAD_HM_TF.TEAD.tableName	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep2
+TEAD_HM_TF.TEAD.lab_tag	HAIB
+TEAD_HM_TF.TEAD.subId	7279
+TEAD_HM_TF.TEAD.ID	551
+TEAD_HM_TF.TEAD.lab	HudsonAlpha
+TEAD_HM_TF.TEAD.url	http://hgdownload.cse.ucsc.edu/goldenPath/hg19/encodeDCC/wgEncodeHaibTfbs/wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1.broadPeak.gz
+TEAD_HM_TF.TEAD.grant	Myers
+TEAD_HM_TF.TEAD.antibody	TEAD4_(SC-101184)
+TEAD_HM_TF.TEAD.labExpId	SL14591
+TEAD_HM_TF.TEAD.lab_labPi	Myers
+TEAD_HM_TF.TEAD.cell_organism	human
+TEAD_HM_TF.TEAD.lab_labPiFull	Richard Myers
+TEAD_HM_TF.TEAD.grant_grantInst	Hudson Alpha Institute of Biotechnology
+TEAD_HM_TF.TEAD.treatment_description	No special treatment or protocol applies
+TEAD_HM_TF.TEAD.cell_type	Cell Line
+TEAD_HM_TF.TEAD.grant_tag	MYERS
+TEAD_HM_TF.TEAD.cell_termId	BTO:0000194
+TEAD_HM_TF.TEAD.antibody_lots	A1811
+TEAD_HM_TF.TEAD.dateSubmitted	2012-07-19
+TEAD_HM_TF.TEAD.protocol_label	ChIP AMpure XP
+TEAD_HM_TF.TEAD.cell_vendorName	ATCC
+TEAD_HM_TF.TEAD.softwareVersion	MACS
+TEAD_HM_TF.TEAD.grant_description	Myers
+TEAD_HM_TF.TEAD.antibody_orderUrl	http://www.scbt.com/datasheet-101184-tef-3-n-g2-antibody.html
+TEAD_HM_TF.TEAD.cell_karyotype	cancer
+TEAD_HM_TF.TEAD.lab_organism	human
+TEAD_HM_TF.TEAD.dataVersion	ENCODE Jul 2012 Freeze
+TEAD_HM_TF.TEAD.view_type	view
+TEAD_HM_TF.TEAD.tableName	wgEncodeHaibTfbsEcc1Tead4sc101184V0422111PkRep1
+TEAD_HM_TF.TEAD.replicate	2
+TEAD_HM_TF.TEAD.lab_type	lab
+TEAD_HM_TF.TEAD.setType	exp
+TEAD_HM_TF.TEAD.size	303K
+TEAD_HM_TF.TEAD.size	336K
+TEAD_HM_TF.TEAD.md5sum	7d8b87ec52d8d82ff88107cf1c0d65f8
+TEAD_HM_TF.TEAD.md5sum	a934756296089493f6b23bc2344a31df
+TEAD_HM_TF.TEAD.cell_tier	3
+TEAD_HM_TF.TEAD.composite	wgEncodeHaibTfbs
+TEAD_HM_TF.TEAD.antibody_tag	TEAD4SC101184
+TEAD_HM_TF.TEAD.dataType_tag	CHIPSEQ
+PROM.provider	POLIMI
+PROM.original_provider	Campaner
+PROM.annotation_type	promoter
+PROM.assembly	hg19
+PROM.name	CampanerPromoters

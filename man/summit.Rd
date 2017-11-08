@@ -9,35 +9,57 @@ summit(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered during execution
-normally is a single integer number, declared also as string.
-minAcc accept ALL and string like (ALL+N)/K as special keyword 
-ALL sets the minimum to the number of samples in the input dataset}
+\item{minAcc}{minimum number of overlapping regions to be considered 
+during execution
+Is a integer number, declared also as string.
+minAcc accept also:
+\itemize{
+\item{PARAMETER class object: \code{\link{ALL}} that represents the number 
+of samples in the input dataset}
+\item{and expression built using PARAMETER object: (ALL() + N) / K or
+ALL() / K }
+}}
 
-\item{maxAcc}{maximum number of overlapping regions to be considered during execution
-normally is a single integer number, declared also as string.
-maxAcc accept ALL, ANY and string like (ALL+N)/K as special keyword 
-ALL sets the maximum to the number of samples in the input dataset
-ANY acts as a wildcard, consider all areas defined to any amount of overlapping}
+\item{maxAcc}{maximum number of overlapping regions to be considered 
+during execution
+Is a integer number, declared also as string.
+maxAcc accept also:
+\itemize{
+\item{PARAMETER class object: \code{\link{ALL}} that represents the number 
+of samples in the input dataset}
+\item{PARAMETER calss object: \code{\link{ANY}}} that acts as a wildcard, 
+considering any amount of overlapping.
+\item{and expression built using PARAMETER object: (ALL() + N) / K or
+ALL() / K }
+}}
 
-\item{groupBy}{list of CONDITION objects, or simple string concatenation 
-(i.e c("cell_type","attribute_tag","size")).
-Every object contains the name of metadata to be used in \emph{groupby}.
-For details of CONDITION objects see:
-\code{\link{DEF}}, \code{\link{FULL}}, \code{\link{EXACT}}
+\item{groupBy}{list of CONDITION objects where every object contains 
+the name of metadata to be used in semijoin, or simple string concatenation 
+of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
+without declaring condition.
+The CONDITION's available are:
+\itemize{
+\item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+if they both end with value and, if they have a further prefixes,
+the two prefix sequence are identical}
+\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+as value will match; no further prefixes are allowed. }
+}
+Every condition accepts only one string value. (e.g. FULL("cell_type") )
+In case of single concatenation with no CONDITION or list with some value 
+without conditon, the metadata are considered having default 
+evaluation: the two attributes match if both end with value.}
 
-Every condition accepts only one string value. (e.g. DEF("cell_type") )
-In case of single concatenation with no CONDITION, all metadata are considering as DEF}
-
-\item{aggregates}{list of element in the form \emph{key} = \emph{function_aggregate}.
-The \emph{function_aggregate} is an object of class OPERATOR
-The aggregate functions available are: \code{\link{MIN}}, \code{\link{MAX}},
-\code{\link{SUM}}, \code{\link{BAG}}, \code{\link{AVG}}, \code{\link{COUNT}},
-\code{\link{STD}}, \code{\link{MEDIAN}}, \code{\link{Q1}}, \code{\link{Q2}}, 
-\code{\link{Q3}}.
-Every operator accepts a string value, execet for COUNT that cannot have a value.
-Argument of 'function_aggregate' must exist in schema
-Two style are allowed:
+\item{aggregates}{list of element in the form \emph{key} = \emph{aggregate}.
+The \emph{aggregate} is an object of class AGGREGATES
+The aggregate functions available are: \code{\link{SUM}}, 
+\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
+\code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
+\code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+Every aggregate accepts a string value, execet for COUNT, which does not 
+have any value.
+Argument of 'aggregate function' must exist in schema, i.e. among region 
+attributes. Two style are allowed:
 \itemize{
 \item list of key-value pairs: e.g. sum = SUM("pvalue")
 \item list of values: e.g. SUM("pvalue")
@@ -45,32 +67,29 @@ Two style are allowed:
 "mixed style" is not allowed}
 }
 \value{
-DAGgraph class object. It contains the value associated to the graph used 
-as input for the subsequent GMQL function
+DataSet class object. It contains the value to use as input 
+for the subsequent GMQL function
 }
 \description{
 returns regions that start from a position
-where the number of intersecting regions is not increasing afterwards and stops
-at a position where either the number of intersecting regions decreases,
-or it violates the max accumulation index).
+where the number of intersecting regions is not increasing afterwards and
+stops at a position where either the number of intersecting regions 
+decreases, or it violates the max accumulation index.
 }
 \examples{
 
-## This GMQL statement computes the result grouping the input \\emph{exp} samples by the values 
-## of their \\emph{cell} metadata attribute, thus one output \\emph{res} sample is generated 
-## for each cell type.
-## Output regions are produced by extracting the highest accumulation overlapping 
-## (sub)regions according to the methodologies described above;
+## This GMQL statement computes the result grouping the input \\emph{exp} 
+## samples by the values of their \\emph{cell} metadata attribute, 
+## thus one output \\emph{res} sample is generated for each cell type.
+## Output regions are produced by extracting the highest accumulation 
+## overlapping (sub)regions according to the methodologies described above;
 
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-exp = readDataset(test_path)
-res = summit(input_data = exp,2,4, c("cell"))
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+exp = read_dataset(test_path)
+res = summit(input_data = exp, 2, 4, c("cell"))
 
-}
-\references{
-\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }
 \seealso{
 \code{\link{flat}} \code{\link{cover}} \code{\link{histogram}}

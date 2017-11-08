@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<gqlSchemaCollection xmlns="http://services.gql.com/entities" name="GLOBAL_SCHEMAS">
+    <gqlSchema name="job_TEAD_test3B_masseroli_20140804_004235_TEAD_HM_TF_ECC1_PROMonly" type="gtf">
+        <field type="STRING">source</field>
+        <field type="STRING">feature</field>
+        <field type="FLOAT">score</field>
+        <field type="INTEGER">frame</field>
+        <field type="INTEGER">jaccard</field>
+        <field type="INTEGER">count</field>
+    </gqlSchema>
+</gqlSchemaCollection>

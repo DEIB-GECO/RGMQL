@@ -1,30 +1,32 @@
 if(getRversion() >= "2.15.1")
-  utils::globalVariables("authToken")
+    utils::globalVariables("authToken")
 
 if(getRversion() >= "3.1.0")
-  utils::suppressForeignCheck("authToken")
+    utils::suppressForeignCheck("authToken")
 
 #' Login to GMQL
 #'
-#' Login to GMQL REST services suite as a registered user, specifying username and password,
-#' or as guest using the proper GMQL web service available on a remote server
+#' Login to GMQL REST services suite as a registered user, specifying username 
+#' and password, or as guest using the proper GMQL web service available 
+#' on a remote server
 #' 
 #' @import httr
 #' @importFrom rJava J
 #' 
-#' @param url single string url of server: it must contain the server address and base url;
-#' service name is added automatically
-#' @param username single string name used during signup
-#' @param password single string password used during signup
+#' @param url string url of server: It must contain the server address 
+#' and base url; service name is added automatically
+#' @param username string name used during signup
+#' @param password string password used during signup
 #'
-#' @seealso  \code{\link{register.GMQL}} \code{\link{logout.GMQL}}
+#' @seealso  \code{\link{register_gmql}} \code{\link{logout_gmql}}
 #'
 #' @details
 #' if both username and password are NULL you will be logged as guest
 #' After login you will receive an authentication token.
-#' As token remains vaild on server (until the next login / registration) a user can safely use a token for
-#' a previous session as a convenience, this token is saved in Global environment to perform
-#' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
+#' As token remains vaild on server (until the next login / registration) 
+#' a user can safely use a token fora previous session as a convenience, 
+#' this token is saved in Global environment to perform subsequent REST call 
+#' even on complete R restart (if is environemnt has been saved, of course ...)
 #' If error occures a specific error is printed
 #'
 #' @return None
@@ -32,45 +34,44 @@ if(getRversion() >= "3.1.0")
 #' @examples
 #' 
 #' ### login as guest
-#' PolimiUrl = "http://130.186.13.219/gmql-rest"
-#' login.GMQL(PolimiUrl)
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' login_gmql(remote_url)
 #'
 #' @export
 #'
-login.GMQL <- function(url,username = NULL, password = NULL)
+login_gmql <- function(url, username = NULL, password = NULL)
 {
-  as_guest <- TRUE
+    as_guest <- TRUE
 
-  if(!is.null(username) || !is.null(password))
-    as_guest <- FALSE
+    if(!is.null(username) || !is.null(password))
+        as_guest <- FALSE
 
-  if(as_guest)
-  {
-    h <- c('Accept' = "Application/json")
-    URL <- paste0(url,"/guest")
-    req <- httr::GET(URL,httr::add_headers(h))
-  }
-  else
-  {
-    h <- c('Accept' = "Application/json",'Content-Type' = 'Application/json')
-    URL <- paste0(url,"/login")
-    body <- list('username'=username,'password'=password)
-    req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
-  }
+    if(as_guest)
+    {
+        h <- c('Accept' = "Application/json")
+        URL <- paste0(url,"/guest")
+        req <- httr::GET(URL,httr::add_headers(h))
+    }
+    else
+    {
+        h <- c('Accept'="Application/json",'Content-Type'='Application/json')
+        URL <- paste0(url,"/login")
+        body <- list('username'=username,'password'=password)
+        req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
+    }
 
-  content <- httr::content(req)
+    content <- httr::content(req)
 
-  if(req$status_code !=200)
-    print(content$errorString)
-  else
-  {
-    assign("authToken",content$authToken,.GlobalEnv)
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    WrappeR$save_tokenAndUrl(authToken,url)
-    print(paste("your Token is",authToken))
-  }
+    if(req$status_code !=200)
+        stop(content$errorString)
+    else
+    {
+        assign("authToken",content$authToken,.GlobalEnv)
+        WrappeR <- J("it/polimi/genomics/r/Wrapper")
+        WrappeR$save_tokenAndUrl(authToken,url)
+        print(paste("your Token is",authToken))
+    }
 }
-
 
 #' Logout from GMQL
 #' 
@@ -80,10 +81,10 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' @import httr
 #' @importFrom rJava J
 #' 
-#' @param url single string url of server: it must contain the server address and base url;
-#' service name is added automatically
+#' @param url string url of server: It must contain the server address 
+#' and base url; service name is added automatically
 #'
-#' @seealso \code{\link{register.GMQL}} \code{\link{login.GMQL}}
+#' @seealso \code{\link{register_gmql}} \code{\link{login_gmql}}
 #'
 #' @details
 #' After logout the authentication token will be invalidated.
@@ -93,30 +94,30 @@ login.GMQL <- function(url,username = NULL, password = NULL)
 #' @examples
 #'
 #' #### login as guest, then logout
-#' PolimiUrl = "http://130.186.13.219/gmql-rest"
-#' login.GMQL(PolimiUrl)
-#' logout.GMQL(PolimiUrl)
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' login_gmql(remote_url)
+#' logout_gmql(remote_url)
 #'
 #' @return None
 #'
 #' @export
 #'
-logout.GMQL <- function(url)
+logout_gmql <- function(url)
 {
-  URL <- paste0(url,"/logout")
-  h <- c('X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req)
-  if(req$status_code !=200)
-    print(content$error)
-  else
-  {
-    print(content)
-    #delete token from environment
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    WrappeR$delete_token()
-    rm(authToken, envir = .GlobalEnv)
-  }
+    URL <- paste0(url,"/logout")
+    h <- c('X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req)
+    if(req$status_code !=200)
+        stop(content$error)
+    else
+    {
+        print(content)
+        #delete token from environment
+        WrappeR <- J("it/polimi/genomics/r/Wrapper")
+        WrappeR$delete_token()
+        rm(authToken, envir = .GlobalEnv)
+    }
 }
 
 #' Sign up to GMQL
@@ -126,22 +127,24 @@ logout.GMQL <- function(url)
 #'
 #' @import httr
 #'
-#' @param url single string url of server: it must contain the server address and base url;
-#' service name will be added automatically
-#' @param name single string name of the user (can contain space)
-#' @param lastname single string last name of the user (can contain space)
-#' @param mail single string email (as spacified in RFC format)
-#' @param username single string name you want to authenticate with
-#' @param password single string password you want to authenticate with
+#' @param url string url of server: It must contain the server address 
+#' and base url; service name will be added automatically
+#' @param name string name of the user (can contain space)
+#' @param lastname string last name of the user (can contain space)
+#' @param mail string email (as spacified in RFC format)
+#' @param username string name you want to authenticate with
+#' @param password string password you want to authenticate with
 #'
-#' @seealso \code{\link{login.GMQL}} \code{\link{logout.GMQL}}
+#' @seealso \code{\link{login_gmql}} \code{\link{logout_gmql}}
 #'
 #' @details
-#' After registration you receive an authentication token, (i.e you are logged in after sing up,
-#' no need to subsequent calling of login function)
-#' As token remains vaild on server (until the next login / registration) a user can safely use a token for
-#' a previous session as a convenience, this token is saved in Global environment to perform
-#' subsequent REST call even on complete R restart (if is environemnt has been saved, of course ...)
+#' After registration you receive an authentication token, 
+#' (i.e you are logged in after sing up, no need to subsequent 
+#' calling of login function)
+#' As token remains vaild on server (until the next login / registration) 
+#' a user can safely use a token for a previous session as a convenience, 
+#' this token is saved in Global environment to perform subsequent REST call 
+#' even on complete R restart (if is environemnt has been saved, of course ...)
 #' If error occures a specific error is printed
 #'
 #' @return None
@@ -150,32 +153,31 @@ logout.GMQL <- function(url)
 #' 
 #' ### this user already exist, it's a test account, don't use it!!!
 #' 
-#' PolimiUrl = "http://130.186.13.219/gmql-rest"
-#' register.GMQL(url = PolimiUrl,"jonh","Doe","jonh@doe.com","JD","JD46")
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' register_gmql(remote_url, "jonh", "Doe", "jonh@doe.com", "JD", "JD46")
 #'
 #' @export
 #'
-register.GMQL <- function(url, name, lastname, mail, username, password)
+register_gmql <- function(url, name, lastname, mail, username, password)
 {
-  info <- list('firstName'=name,
-               'lastName'=lastname,
-               'username'=username,
-               'email'=mail,
-               'password'=password
-               )
-  URL <- paste0(url,"/register")
-  h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
-  req <- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
+    info <- list('firstName'=name,
+                    'lastName'=lastname,
+                    'username'=username,
+                    'email'=mail,
+                    'password'=password)
+    URL <- paste0(url,"/register")
+    h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
+    req <- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
 
-  content <- httr::content(req)
+    content <- httr::content(req)
 
-  if(req$status_code !=200)
-    print(content)
-  else
-  {
-    assign("authToken",content$authToken,.GlobalEnv)
-    print(paste("your Token is",authToken))
-  }
+    if(req$status_code !=200)
+        stop(content)
+    else
+    {
+        assign("authToken",content$authToken,.GlobalEnv)
+        print(paste("your Token is",authToken))
+    }
 }
 
 

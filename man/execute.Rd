@@ -10,18 +10,14 @@ execute()
 None
 }
 \description{
-execute GMQL query.
+Execute GMQL query.
 The function works only after invoking at least one materialize
-}
-\details{
-After invoking execution function, all varialbe associated to DAG will be removed
-from scala enviroment, although the associated R variable will remain stored in R environment
 }
 \examples{
 
-initGMQL()
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-r = readDataset(test_path)
+init_gmql()
+test_path <- system.file("example","DATASET",package = "RGMQL")
+r = read_dataset(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = test_path)

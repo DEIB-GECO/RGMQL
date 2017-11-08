@@ -9,24 +9,26 @@ take(input_data, rows = 0L)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{rows}{number of rows for each sample regions that you want to retrieve and stored in memory
+\item{rows}{number of rows for each sample regions that you want to 
+retrieve and stored in memory.
 by default is 0 that means take all rows for each sample}
 }
 \value{
 GrangesList with associated metadata
 }
 \description{
-It saves the contents of a dataset that contains samples metadata and samples regions.
-It is normally used to store in memoery the contents of any dataset generated during a GMQL query.
-the operation can be very time-consuming.
-If you have invoked any materialization before take function, all those dataset will be materialized 
-as folder (like if execution was invoked)
+It saves the contents of a dataset that contains samples metadata 
+and samples regions.
+It is normally used to store in memoery the contents of any dataset 
+generated during a GMQL query. the operation can be very time-consuming.
+If you have invoked any materialization before take function, 
+all those dataset will be materialized as folder.
 }
 \examples{
 
-initGMQL()
+init_gmql()
 test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-r = readDataset(test_path)
+r = read_dataset(test_path)
 m = merge(groupBy = c("antibody_target","cell_karyotype"),input_data = r)
 g <- take(input_data = m, rows = 45)
 

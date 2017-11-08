@@ -7,7 +7,8 @@
 DG(value)
 }
 \arguments{
-\item{value}{single string identifying distance between genomic regions in base pairs,}
+\item{value}{single string identifying distance between genomic regions 
+in base pairs}
 }
 \value{
 None
@@ -16,26 +17,31 @@ None
 This class constructor is used to create instances of DISTAL object
 to be used in GMQL functions that use genometric predicate parameter
 requiring distal condition on value
-In this case DLE: denotes the great distance clause, which selects all the regions of the experiment such
-that their distance from the anchor region is less than, or equal to, 'value' bases.
+In this case DLE: denotes the great distance clause, which selects all 
+the regions of the experiment such that their distance from the anchor 
+region is less than, or equal to, 'value' bases.
 }
 \examples{
 
-### Given a dataset HM and one called TSS with a sample including Transcription Start Site annotations,
-## it searches for those regions of hm that are at a minimal distance from a transcription start site (TSS) 
-## and takes the first/closest one for each TSS, 
-## provided that such distance is greater than 12 bases and joined TSS and HM samples are obtained 
-## from the same provider (joinby clause).
+### Given a dataset HM and one called TSS with a sample including 
+## Transcription Start Site annotations, it searches for those regions of hm 
+## that are at a minimal distance from a transcription start site 'TSS' 
+## and takes the first/closest one for each TSS, provided that such distance 
+## is greater than 12 bases and joined TSS and HM samples are obtained 
+## from the same provider 'joinby clause'.
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "RGMQL")
-TSS = readDataset(test_path)
-HM = readDataset(test_path2)
-join_data = join(TSS,HM,genometric_predicate=list(list(MD(1),DG(12))),c("provider"),region_output="RIGHT")
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+TSS = read_dataset(test_path)
+HM = read_dataset(test_path2)
+join_data = join(TSS, HM, 
+genometric_predicate = list(list(MD(1), DG(12))), c("provider"), 
+region_output = "RIGHT")
 
 
 }
 \seealso{
-\code{\link{DGE}} \code{\link{DLE}} \code{\link{MD}}  \code{\link{DOWN}} \code{\link{UP}} \code{\link{DL}}
+\code{\link{DGE}} \code{\link{DLE}} \code{\link{DL}} 
+\code{\link{MD}} \code{\link{DOWN}} \code{\link{UP}}
 }

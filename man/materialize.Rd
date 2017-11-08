@@ -16,21 +16,20 @@ by default is current working directory of the R process}
 None
 }
 \description{
-It saves the contents of a dataset that contains samples metadata and samples regions.
-It is normally used to persist the contents of any dataset generated during a GMQL query.
-Any dataset can be materialized, but the operation can be very time-consuming.
+It saves the contents of a dataset that contains samples metadata and 
+samples regions.
+It is normally used to persist the contents of any dataset generated 
+during a GMQL query.
+Any dataset can be materialized, but the operation can be time-consuming.
 For best performance, materialize the relevant data only.
 }
 \examples{
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-r = readDataset(test_path)
+init_gmql()
+test_path <- system.file("example","DATASET",package = "RGMQL")
+r = read_dataset(test_path)
 s = select(input_data = r)
 m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 materialize(input_data = m, dir_out = test_path)
 
-}
-\references{
-\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }

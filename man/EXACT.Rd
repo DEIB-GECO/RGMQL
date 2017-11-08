@@ -7,39 +7,40 @@
 EXACT(value)
 }
 \arguments{
-\item{value}{single string identifying name of metadata and/or region attribute
+\item{value}{string identifying name of metadata attribute 
 to be evaluated}
 }
 \value{
 EXACT condition object
 }
 \description{
-This class constructor is used to create instances of CONDITION object
-to be used in GMQL functions that require evaluation on value
-This constructor define a EXACT evaluation of the input value.
+This class constructor is used to create instances of CONDITION object,
+to be used in GMQL functions that require evaluation on value.
+This constructor defines a EXACT evaluation of the input value.
 EXACT evaluation: only attributes exactly as value will match; 
 no further prefixes are allowed.
 }
 \examples{
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-r = readDataset(test_path)
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+r = read_dataset(test_path)
 
-#### select with condition
-#### the first and the third attribute are DEF the second one is EXACT
-s = select(input_data = r, semi_join = list("cell_type",EXACT("cell"),"attribute_tag"), semi_join_dataset = r)
+## select with condition
+## the first and the third attribute are DEF the second one is EXACT
+s = select(r, semi_join = list("cell_type", EXACT("cell"), "attribute_tag"), 
+semi_join_dataset = r)
 
 \dontrun{
 
-#### select with DEF condition
-#### the EXACT condition is treated as DEF due to coercion
-s = select(input_data = r, semi_join = c("cell_type","cell",EXACT("attribute_tag")),
-semi_join_dataset = c)
+## select with default condition
+## the EXACT condition is treated as default due to coercion
+s = select(r, semi_join = c("cell_type", "cell", EXACT("attribute_tag")),
+semi_join_dataset = r)
 
 }
 
 }
 \seealso{
-\code{\link{DEF}} \code{\link{FULL}}
+\code{\link{FULL}}
 }

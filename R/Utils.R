@@ -1,140 +1,109 @@
 
-#internal
 .counter <- function(zero = 0)
 {
-  i <- zero
-  function() {
-    i <<- i + 1
-    toString <- as.character(i)
-  }
+    i <- zero
+    function() {
+        i <<- i + 1
+        toString <- as.character(i)
+    }
 }
 
-#move to internals
 .add_metadata <- function(files)
 {
-  x <- scan(files, what="", sep="\n")
-  y <- strsplit(x, "\t")
-  names(y) <- sapply(y, `[[`, 1)
-  listMeta <- lapply(y, `[`, -1)
+    x <- scan(files, what="", sep="\n")
+    y <- strsplit(x, "\t")
+    names(y) <- sapply(y, `[[`, 1)
+    listMeta <- lapply(y, `[`, -1)
 }
 
-#move to internals
 .schema_header <- function(datasetName)
 {
-  schema_name <- list.files(datasetName, pattern = "*.schema$",full.names = TRUE)
-  if(length(schema_name)==0)
-    stop("schema not present")
+    schema_name <- list.files(datasetName, pattern = "*.schema$",
+                                full.names = TRUE)
+    if(length(schema_name)==0)
+        stop("schema not present")
 
-  xml_schema <- xml2::read_xml(schema_name)
-  list_field <- xml2::as_list(xml_schema)
-  vector_field <- unlist(list_field)
+    xml_schema <- xml2::read_xml(schema_name)
+    list_field <- xml2::as_list(xml_schema)
+    vector_field <- unlist(list_field)
 }
 
 # aggregates factory
 .aggregates <- function(meta_data,class)
 {
-  if(!is.list(meta_data))
-    stop("meta_data: invalid input")
+    if(!is.list(meta_data))
+        stop("meta_data: invalid input")
 
-  if(!all(sapply(meta_data, function(x) is(x,class))))
-    stop("All elements must be META_OPERATOR object")
+    if(!all(sapply(meta_data, function(x) is(x,class))))
+        stop("All elements must be META_AGGREGATES object")
 
-  names <- names(meta_data)
-  if(is.null(names))
-  {
-    warning("You did not assign a names to a list.\nWe build names for you")
-    names <- sapply(meta_data, take_value.META_OPERATOR)
-  }
-  else
-  {
-    if("" %in% names)
-      stop("No partial names assignment is allowed")
-  }
-  aggregate_matrix <- t(sapply(meta_data, function(x) {
-
-    new_value = as.character(x)
-    matrix <- matrix(new_value)
-
-  }))
-  m_names <- matrix(names)
-  metadata_matrix <- cbind(m_names,aggregate_matrix)
-}
-
-
-#meta join condition
-.join_condition <- function(conditions)
-{
-  if(is.list(conditions))
-  {
-    join_condition_matrix <- t(sapply(conditions, function(x) {
-      new_value = as.character(x)
-      if(length(new_value)==1)
-        new_value = c("DEF",new_value)
-      else if(!identical("DEF",new_value[1]) && !identical("FULL",new_value[1]) && !identical("EXACT",new_value[1]))
-        stop("no valid condition")
-      matrix <- matrix(new_value)
-    }))
-  }
-  else if(is.character(conditions))
-  {
-    conditions = conditions[!conditions %in% ""]
-    conditions = conditions[!duplicated(conditions)]
-    if(length(conditions)<=0)
-      join_condition_matrix <- ""
+    names <- names(meta_data)
+    if(is.null(names))
+    {
+        warning("You did not assign a names to a list.\nWe build names for you")
+        names <- sapply(meta_data, take_value.META_AGGREGATES)
+    }
     else
     {
-      join_condition_matrix <- t(sapply(conditions, function(x) {
-        new_value = c("DEF",x)
-        matrix <- matrix(new_value)
-      }))
+        if("" %in% names)
+        stop("No partial names assignment is allowed")
     }
-  }
-  else
-    stop("only list or character")
+    aggregate_matrix <- t(sapply(meta_data, function(x) {
+        new_value = as.character(x)
+        matrix <- matrix(new_value)
+    }))
+    m_names <- matrix(names)
+    metadata_matrix <- cbind(m_names,aggregate_matrix)
 }
 
-#predicate
-.check_predicate <- function(predicate_string)
+
+# meta join condition
+.join_condition <- function(conditions)
 {
-  if(!is.character(predicate_string))
-    stop("no valid predicate")
-
-  if(length(predicate_string)>1)
-    stop("no multiple string")
-}
-
-.getEnv <- function(x) {
-  xobj <- deparse(substitute(x))
-  gobjects <- ls(envir=.GlobalEnv)
-  envirs <- gobjects[sapply(gobjects, function(x) is.environment(get(x)))]
-  envirs <- c('.GlobalEnv', envirs)
-  xin <- sapply(envirs, function(e) xobj %in% ls(envir=get(e)))
-  envirs[xin] 
+    if(is.list(conditions))
+    {
+        join_condition_matrix <- t(sapply(conditions, function(x) {
+            new_value = as.character(x)
+            if(length(new_value)==1)
+                new_value = c("DEF",new_value)
+            else if(!identical("FULL",new_value[1]) && 
+                    !identical("EXACT",new_value[1]))
+                stop("no valid condition")
+            matrix <- matrix(new_value)
+        }))
+    }
+    else if(is.character(conditions))
+    {
+        conditions = conditions[!conditions %in% ""]
+        conditions = conditions[!duplicated(conditions)]
+        if(length(conditions)<=0)
+            join_condition_matrix <- ""
+        else
+        {
+            join_condition_matrix <- t(sapply(conditions, function(x) {
+                new_value = c("DEF",x)
+                matrix <- matrix(new_value)
+            }))
+        }
+    }
+    else
+        stop("only list or character")
 }
 
 .check_input <- function(value)
 {
-  if(!is.character(value))
-    stop("no valid data")
+    if(!is.character(value))
+        stop("no valid data")
   
-  if(length(value)>1)
-    stop("no multiple string")
+    if(length(value)>1)
+        stop("no multiple string")
 }
 
 .check_logical <- function(value)
 {
-  if(!is.logical(value))
-    stop("no valid data")
+    if(!is.logical(value))
+        stop("no valid data")
   
-  if(length(value)>1)
-    stop("no multiple string")
+    if(length(value)>1)
+        stop("no multiple string")
 }
-
-#  if(!is.null(groupBy))
-#{
-#  if(!is.character(groupBy))
-#    stop("groupBy: only character")
-#  
-#  groupBy = groupBy[!groupBy %in% ""]
-#  groupBy = groupBy[!duplicated(groupBy)]
-  # out <- WrappeR$merge(I(as.character(groupBy)),input_data)

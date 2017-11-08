@@ -5,81 +5,92 @@
 \title{GMQL Operation: SELECT}
 \usage{
 select(input_data, predicate = NULL, region_predicate = NULL,
-  semi_join = NULL, semi_join_negation = NULL, semi_join_dataset = NULL)
+  semi_join = NULL, semi_join_negation = FALSE, semi_join_dataset = NULL)
 }
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{predicate}{single string predicate made up by logical operation: AND,OR,NOT on metadata attribute}
+\item{predicate}{logical predicate made up by R logical operation 
+on metadata attribute. 
+Only !, |, ||, &, && are admitted.}
 
-\item{region_predicate}{single string predicate made up by logical operation: AND,OR,NOT on schema region values}
+\item{region_predicate}{logical predicate made up by R logical operation 
+on chema region values. 
+Only !, |, ||, &, && are admitted.}
 
-\item{semi_join}{list of CONDITION objects where every object contains the name of metadata to be used in semijoin,
-or simple string concatenation of name of metadata, e.g c("cell_type","attribute_tag","size") without declaring condition.
-In the latter form all metadata are considered having DEF condition
+\item{semi_join}{list of CONDITION objects where every object contains 
+the name of metadata to be used in semijoin, or simple string concatenation 
+of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
+without declaring condition.
 The CONDITION's available are:
 \itemize{
-\item{\code{\link{FULL}}: Fullname evaluation, two attributes match if they both end with value and,
-if they have a further prefixes, the two prefix sequence are identical}
-\item{\code{\link{DEF}}: Default evaluation, two attributes match if both end with value}
-\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly as value will match; no further prefixes are allowed. }
+\item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+if they both end with value and, if they have a further prefixes,
+the two prefix sequence are identical}
+\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+as value will match; no further prefixes are allowed. }
 }
-Every condition accepts only one string value. (e.g. FULL("cell_type") )}
+Every condition accepts only one string value. (e.g. FULL("cell_type") )
+In case of single concatenation with no CONDITION or list with some value 
+without conditon, the metadata are considered having default 
+evaluation: the two attributes match if both end with value.}
 
-\item{semi_join_negation}{single logical value: T => semijoin is perfomed considering 
-semi_join NOT IN semi_join_dataset, 
-F => semijoin is performed considering semi_join IN semi_join_dataset}
+\item{semi_join_negation}{logical value: T => semijoin is perfomed 
+considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
+considering semi_join IN semi_join_dataset}
 
 \item{semi_join_dataset}{returned object from any GMQL function}
 }
 \value{
-DAGgraph class object. It contains the value associated to the graph used 
-as input for the subsequent GMQL function
+DataSet class object. It contains the value to use as input 
+for the subsequent GMQL function
 }
 \description{
 It extracts a subset of samples from the input dataset.
 It returns all the samples satisfying the predicate on metadata.
-If regions are specified, returns regions satisfying the predicate on regions.
+If regions are specified, returns regions satisfying the predicate 
+on regions.
 If semijoin clauses are specified they are applied, too.
-When semijoin is defined, it extracts those samples containing all metadata attribute defined in semijoin clause
-with at least one metadata value in common with semi join dataset
-If no metadata in common beetween input dataset and semi join dataset, no sample is extracted
+When semijoin is defined, it extracts those samples containing all metadata 
+attribute defined in semijoin clause with at least one metadata value 
+in common with semi join dataset.
+If no metadata in common beetween input dataset and semi join dataset, 
+no sample is extracted.
 }
 \examples{
 
-## it selects from input data samples of patients younger than 70 years old, 
+## It selects from input data samples of patients younger than 70 years old, 
 ## based on filtering on sample metadata attribute Patient_age
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-input = readDataset(test_path)
-s=select(input,"Patient_age < 70")
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+input <- read_dataset(test_path)
+s <- select(input, Patient_age < 70)
 
 
 \dontrun{
 
-It creates a new dataset called 'jun_tf' by selecting those samples and their 
-regions from the existing 'data' dataset such that:
-\\itemize{
-\\item{each output sample has a metadata attribute called antibody_target with value JUN}
-\\item{each output sample also has not a metadata attribute called cell that has the same value 
-of at least one of the values that a metadata attribute equally called cell has in at least one 
-sample of the 'join_data' dataset}
-\\item{for each sample satisfying previous condition,only its regions that have a region attribute called
-pValue with the associated value less than 0.01 are conserved in output}
+It creates a new dataset called 'jun_tf' by selecting those samples and 
+their regions from the existing 'data' dataset such that:
+Each output sample has a metadata attribute called antibody_target 
+with value JUN.
+Each output sample also has not a metadata attribute called cell 
+that has the same value of at least one of the values that a metadata 
+attribute equally called cell has in at least one sample 
+of the 'join_data' dataset.
+For each sample satisfying previous condition,only its regions that 
+have a region attribute called pValue with the associated value 
+less than 0.01 are conserved in output
+
+
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+data <- read_dataset(test_path)
+join_data <-  read_dataset(test_path2)
+jun_tf <- select(data, antibody_target == 'JUN', pValue < 0.01, c("cell"), 
+TRUE, semi_join_dataset = join_data )
+
 }
 
-initGMQL("gtf")
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
-test_path2 <- system.file("example","DATA_SET_VAR_GDM",package = "RGMQL")
-data = readDataset(test_path)
-join_data = readDataset(test_path2)
-jun_tf=select(data,"antibody_target == 'JUN'", "pValue < 0.01",c("cell"), T , semi_join_dataset=join_data )
-
-
-}
-
-}
-\references{
-\url{http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/doc/GMQLUserTutorial.pdf}
 }
