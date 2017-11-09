@@ -88,13 +88,13 @@ map <- function(left_input_data, right_input_data, aggregates = NULL,
                                     dispatch = TRUE)
     else
         metadata_matrix = .jnull("java/lang/String")
-
+    
     if(!is.null(joinBy))
         join_condition_matrix <- .jarray(.join_condition(joinBy),
                                             dispatch = TRUE)
     else
         join_condition_matrix <- .jnull("java/lang/String")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response<-WrappeR$map(join_condition_matrix, metadata_matrix, 
                             left_input_data$value, right_input_data$value)

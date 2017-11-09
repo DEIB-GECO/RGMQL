@@ -98,7 +98,7 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL,
     }
     else
         predicate <- .jnull("java/lang/String")
-
+    
     reg_pred <- substitute(region_predicate)
     if(!is.null(reg_pred))
     {
@@ -107,7 +107,7 @@ select <- function(input_data, predicate = NULL, region_predicate = NULL,
     }
     else
         region_predicate <- .jnull("java/lang/String")
-
+    
     if(is.null(semi_join) && is.null(semi_join_dataset))
     {
         join_condition_matrix <- .jnull("java/lang/String")

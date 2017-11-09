@@ -201,11 +201,11 @@ run_query <- function(url, fileName, query, output_gtf = TRUE)
         out <- "GTF"
     else
         out <- "TAB"
-
+    
     URL <- paste0(url,"/queries/run/",fileName,"/",out)
     h <- c('Accept' = "Application/json",
             'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
-
+    
     req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
     content <- httr::content(req,"parsed")
     if(req$status_code !=200)
@@ -257,7 +257,7 @@ run_query_fromfile <- function(url, fileName, filePath, output_gtf = TRUE)
 {
     if(!file.exists(filePath))
         stop("file does not exist")
-
+    
     query <- readLines(filePath)
     run_query(url,fileName,query,output_gtf)
 }
@@ -325,7 +325,7 @@ compile_query_fromfile <- function(url ,filePath)
 {
     if(!file.exists(filePath))
         stop("file does not exist")
-
+    
     query <- readLines(filePath)
     compile_query(url,query)
 }
@@ -338,11 +338,11 @@ serialize_query <- function(url,output_gtf,base64)
         out <- "gtf"
     else
         out <- "tab"
-  
+    
     URL <- paste0(url,"/queries/dag/",out)
     h <- c('Accept' = "Application/json",
             'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
-  
+    
     req <- httr::POST(URL,body = base64 ,httr::add_headers(h),encode = "json")
     content <- httr::content(req,"parsed")
     if(req$status_code !=200)

@@ -64,7 +64,7 @@ extend <-function(input_data, metadata = NULL)
                                     dispatch = TRUE)
     else
         metadata_matrix <- .jnull("java/lang/String")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$extend(metadata_matrix,input_data$value)
     error <- strtoi(response[1])

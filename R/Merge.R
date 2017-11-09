@@ -57,7 +57,7 @@ merge <- function(input_data, groupBy = NULL)
                                             dispatch = TRUE)
     else
         join_condition_matrix <- .jnull("java/lang/String")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$merge(join_condition_matrix,input_data$value)
     error <- strtoi(response[1])

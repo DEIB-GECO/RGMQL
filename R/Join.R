@@ -101,7 +101,7 @@ join <- function(right_input_data, left_input_data,
                 warning("only 4 element per list, we cut the rest")
                 length(list_pred)=4
             }
-      
+            
             if(!all(sapply(list_pred, function(x) {is(x,"DISTAL")} )))
                 stop("All elements should be DISTAL object")
             })
@@ -120,18 +120,18 @@ join <- function(right_input_data, left_input_data,
     }
     else
         genomatrix <- .jnull("java/lang/String")
-      
+    
     if(!is.null(joinBy))
-        join_condition_matrix <- .jarray(.join_condition(joinBy),
+        join_condition_matrix <- .jarray(.join_condition(joinBy), 
                                             dispatch = TRUE)
     else
         join_condition_matrix <- .jnull("java/lang/String")
-  
+    
     ouput <- toupper(region_output)
     if(!identical(ouput,"CONTIG") && !identical(ouput,"LEFT") && 
         !identical(ouput,"RIGHT") && !identical(ouput,"INT"))
         stop("region_output must be contig,left,right or int (intersection)")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$join(genomatrix,join_condition_matrix, 
                                 ouput,right_input_data$value,

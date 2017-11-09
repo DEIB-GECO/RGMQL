@@ -28,7 +28,7 @@ execute <- function()
     remote_proc <- WrappeR$is_remote_processing()
     if(!remote_proc)
         .download_or_upload()
-  
+    
     response <- WrappeR$execute()
     error <- strtoi(response[1])
     data <- response[2]
@@ -143,14 +143,14 @@ take <- function(input_data, rows=0L)
     rows <- as.integer(rows[1])
     if(rows<0)
         stop("rows cannot be negative")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$take(input_data$value,rows)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
-
+    
     reg <- .jevalArray(WrappeR$get_reg(),simplify = TRUE)
     if(is.null(reg))
         stop("no regions defined")
@@ -160,11 +160,11 @@ take <- function(input_data, rows=0L)
     schema <- .jevalArray(WrappeR$get_schema(),simplify = TRUE)
     if(is.null(schema))
         stop("no schema defined")
-
+    
     reg_data_frame <- as.data.frame(reg)
     list <- split(reg_data_frame, reg_data_frame[1])
     names <- c("seqname","start","end","strand",schema)
-  
+    
     sampleList <- lapply(list, function(x){
         x <- x[-1]
         names(x) <- names
@@ -175,7 +175,7 @@ take <- function(input_data, rows=0L)
         })
     gRange_list <- GRangesList(sampleList)
     meta_list <- .metadata_from_frame_to_list(meta)
-  
+    
     S4Vectors::metadata(gRange_list) <- meta_list
     return(gRange_list)
 }

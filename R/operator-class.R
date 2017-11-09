@@ -17,7 +17,7 @@ check.OPERATOR <- function(value)
     {
         if(is.character(value) && length(value)>1)
             stop("value: no multiple string")
-    
+        
         if(!is.character(value))
             stop("value: is not a string")
     }

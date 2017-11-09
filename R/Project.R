@@ -95,34 +95,34 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     {
         if(!is.character(metadata))
             stop("metadata: no valid input")
-
+        
         metadata <- metadata[!metadata %in% ""]
         metadata <- metadata[!duplicated(metadata)]
-
+        
         if(length(metadata)==0)
             metadata <- .jnull("java/lang/String")
-    
+        
         metadata <- .jarray(metadata)
     }
     else
         metadata <- .jnull("java/lang/String")
-
+    
     if(!is.null(regions))
     {
         if(!is.character(regions))
             stop("regions: no valid input")
-
+        
         regions = regions[!regions %in% ""]
         regions = regions[!duplicated(regions)]
-
+        
         if(length(regions)==0)
             regions <- .jnull("java/lang/String")
-    
+        
         regions <- .jarray(regions)
     }
     else
         regions <- .jnull("java/lang/String")
-
+    
     reg_update <- substitute(regions_update)
     if(!is.null(reg_update))
     {
@@ -131,7 +131,7 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     }
     else
         regions_update <- .jnull("java/lang/String")
-  
+    
     meta_update <- substitute(metadata_update)
     if(!is.null(meta_update))
     {
@@ -140,15 +140,15 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     }
     else
         metadata_update <- .jnull("java/lang/String")
-  
+    
     if(length(all_but_meta)>1)
         warning("all_but_meta: no multiple values")
-  
+    
     if(length(all_but_reg)>1)
         warning("all_but_reg: no multiple values")
     all_but_reg <- all_but_reg[1]
     all_but_meta <- all_but_meta[1]
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$project(metadata,metadata_update,all_but_meta,
                                 regions,regions_update,

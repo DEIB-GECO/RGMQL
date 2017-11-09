@@ -52,12 +52,12 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
         !identical(out_format,"COLLECT"))
         stop("output_format must be TAB, GTF or COLLECT")
     .check_logical(remote_processing)
-  
+    
     # mettere attesa da input keyboard, controllare se token già esiste 
     # da sessione precedente
     if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
         login_gmql(url,username,password)
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     WrappeR$initGMQL(out_format,remote_processing)
 }
@@ -132,7 +132,7 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
     {
         if(!dir.exists(dataset))
             stop("folder does not exist")
-    
+        
         dataset <- sub("/*[/]$","",dataset)
         if(basename(dataset) !="files")
             dataset <- paste0(dataset,"/files")
@@ -145,16 +145,16 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
         url <- WrappeR$get_url()
         if(is.null(url))
             stop("You have to log on using login function")
-    
+        
         if(!exists("authToken",envir = .GlobalEnv))
             stop("You have to log on using login function")
-   
+        
         list <- show_schema(url,dataset)
         schema_names <- sapply(list$fields, function(x){x$name})
         schema_type <- sapply(list$fields, function(x){x$type})
         schema_matrix <- cbind(schema_type,schema_names)
         #schema_type <- list$type
-    
+        
         if(is.null(schema_matrix) || length(schema_matrix)==0)
             schema_matrix <- .jnull("java/lang/String")
         else
@@ -203,7 +203,7 @@ read <- function(samples)
 {
     if(!is(samples,"GRangesList"))
         stop("only GrangesList")
-
+    
     meta <- S4Vectors::metadata(samples)
     if(is.null(meta) || length(meta)==0) {
         #repeat meta for each sample in samples list
@@ -212,17 +212,19 @@ read <- function(samples)
 We provide two metadata for you")
         index_meta <- rep(1:len,each = len)
         rep_meta <- rep(c("Provider","Polimi", "Application", "R-GMQL"),
-                        times=len)
+                            times=len)
         meta_matrix <- matrix(rep_meta,ncol = 2,byrow = TRUE)
         meta_matrix <- cbind(index_meta,meta_matrix)
     }
-    else {
+    else 
+    {
         unlist_meta <- unlist(meta)
         names_meta <- names(unlist_meta)
         group_names <- gsub(".*_([0-9]*)\\..*","\\1", names_meta)
         names(unlist_meta) <- NULL
         meta_matrix <- cbind(group_names,names_meta,unlist_meta)
     }
+    
     df <- data.frame(samples)
     df <- df[-2] #delete group_name
     region_matrix <- as.matrix(sapply(df, as.character))
@@ -249,11 +251,11 @@ We provide two metadata for you")
     }
     rownames(schema_matrix) <- NULL
     colnames(schema_matrix) <- NULL
-  
+    
     schema_matrix <- .jarray(schema_matrix,dispatch = TRUE)
     meta_matrix <- .jarray(meta_matrix,dispatch = TRUE)
     region_matrix <- .jarray(region_matrix,dispatch = TRUE)
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
     DataSet(response)

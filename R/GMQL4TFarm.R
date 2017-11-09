@@ -47,7 +47,7 @@
 #' @export
 #'
 filter_and_extract <- function(data, metadata = NULL, 
-                               metadata_prefix = NULL, regions = NULL)
+                                metadata_prefix = NULL, regions = NULL)
 {
     if(is(data,"GRangesList"))
         .extract_from_GRangesList(data,metadata,metadata_prefix,regions)

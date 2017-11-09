@@ -22,7 +22,7 @@
                                 full.names = TRUE)
     if(length(schema_name)==0)
         stop("schema not present")
-
+    
     xml_schema <- xml2::read_xml(schema_name)
     list_field <- xml2::as_list(xml_schema)
     vector_field <- unlist(list_field)
@@ -33,10 +33,10 @@
 {
     if(!is.list(meta_data))
         stop("meta_data: invalid input")
-
+    
     if(!all(sapply(meta_data, function(x) is(x,class))))
         stop("All elements must be META_AGGREGATES object")
-
+    
     names <- names(meta_data)
     if(is.null(names))
     {
@@ -46,12 +46,13 @@
     else
     {
         if("" %in% names)
-        stop("No partial names assignment is allowed")
+            stop("No partial names assignment is allowed")
     }
     aggregate_matrix <- t(sapply(meta_data, function(x) {
         new_value = as.character(x)
         matrix <- matrix(new_value)
     }))
+    
     m_names <- matrix(names)
     metadata_matrix <- cbind(m_names,aggregate_matrix)
 }
@@ -94,7 +95,7 @@
 {
     if(!is.character(value))
         stop("no valid data")
-  
+    
     if(length(value)>1)
         stop("no multiple string")
 }
@@ -103,7 +104,7 @@
 {
     if(!is.logical(value))
         stop("no valid data")
-  
+    
     if(length(value)>1)
         stop("no multiple string")
 }

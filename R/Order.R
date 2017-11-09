@@ -70,22 +70,22 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     if(!is.numeric(mtop) || !is.numeric(mtopg) || !is.numeric(rtop) || 
         !is.numeric(rtopg) || !is.numeric(mtopp)|| !is.numeric(rtopp))
         stop("mtop, rtop, rtopg and mtopg must be integer")
-
+    
     if(length(mtop)>1 || length(mtopg)>1 || length(rtop)>1 || length(rtopg)>1
         || length(mtopp)>1 || length(rtopp)>1)
         warning("only first element: rtop, mtop, mtopg, rtopg, rtopp, mtopp")
-
+    
     # we consider only the first element even if input is a vector of Int
     # we cut the other arguments
-
+    
     mtop = as.integer(mtop[1])
     mtopg = as.integer(mtopg[1])
     mtopp = as.integer(mtopp[1])
-
+    
     rtop = as.integer(rtop[1])
     rtopg = as.integer(rtopg[1])
     rtopp = as.integer(rtopp[1])
-
+    
     if(mtop > 0 && mtopg >0)
     {
         warning("cannot be used together.\nWe set mtopg = 0")
@@ -97,43 +97,43 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
         warning("cannot be used together.\nWe set mtopp = 0")
         mtopp = 0L
     }
-
+    
     if(mtopg >0 && mtopp>0)
     {
         warning("cannot be used together.\nWe set mtopp = 0")
         mtopp = 0L
     }
-
+    
     if(rtop > 0 && rtopg >0)
     {
         warning("cannot be used together.\nWe set rtopg = 0")
         rtopg = 0L
     }
-
+    
     if(rtop >0 && rtopp>0)
     {
         warning("cannot be used together.\nWe set rtopp = 0")
         rtopp = 0L
     }
-
+    
     if(rtopg >0 && rtopp>0)
     {
         warning("cannot be used together.\nWe set rtopp = 0")
         rtopp = 0L
     }
-
+    
     if(!is.null(metadata_ordering))
         meta_matrix <- .jarray(.ordering_meta(metadata_ordering),
                                     dispatch = TRUE)
     else
         meta_matrix <- .jnull("java/lang/String")
-
+    
     if(!is.null(regions_ordering))
         region_matrix <- .jarray(.ordering_meta(regions_ordering),
                                     dispatch = TRUE)
     else
         region_matrix <- .jnull("java/lang/String")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$order(meta_matrix, mtopg, mtop, mtopp, region_matrix,
                                 rtopg, rtop, rtopp, input_data$value)
@@ -169,6 +169,7 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
     }
     else
         stop("only list or character")
+    
 }
 
 
