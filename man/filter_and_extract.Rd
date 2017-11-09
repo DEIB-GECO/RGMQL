@@ -47,7 +47,7 @@ information about regions attribute (but of course different value)
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 filter_and_extract(test_path,regions = c("pvalue", "peak"))
 
-grl <- importGMQL.gtf(test_path)
+grl = import_gmql(test_path, TRUE)
 filter_and_extract(grl, regions = c("pvalue", "peak"))
 
 
