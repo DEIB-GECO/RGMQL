@@ -53,9 +53,10 @@ evaluation: the two attributes match if both end with value.}
 \item{aggregates}{list of element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-\code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
-\code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+\code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+\code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+\code{\link{Q2}}, \code{\link{Q3}}.
 Every aggregate accepts a string value, execet for COUNT, which does not 
 have any value.
 Argument of 'aggregate function' must exist in schema, i.e. among region 

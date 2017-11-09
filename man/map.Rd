@@ -14,9 +14,10 @@ map(left_input_data, right_input_data, aggregates = NULL, joinBy = NULL)
 \item{aggregates}{list of element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}},\code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-\code{\link{STD}}, \code{\link{MEDIAN}},\code{\link{BAG}}, 
-\code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+\code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+\code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+\code{\link{Q2}}, \code{\link{Q3}}.
 Every aggregate accepts a string value, execet for COUNT
 Argument of 'aggregate' must exist in schema
 Two style are allowed:
@@ -54,8 +55,8 @@ for each region of each sample in the left dataset;
 The number of generated output samples is the Cartesian product 
 of the samples in the two input datasets;
 each output sample has the same regions as the related input left sample, 
-with their attributes and values, plus the attributes computed as aggregates 
-over right region values.
+with their attributes and values, plus the attributes computed as 
+aggregates over right region values.
 Output sample metadata are the union of the related input sample metadata,
 whose attribute names are prefixed with "left" or "right" respectively.
 }
@@ -69,21 +70,22 @@ present with equal values in both M1 and  M2
 }
 \examples{
 
-## It counts the number of regions in each sample from exp that overlap with 
-## a ref region, and for each ref region it computes the minimum score 
-## of all the regions in each exp sample that overlap with it. 
-## The MAP joinby option ensures that only the exp samples referring to 
-## the same 'cell_tissue' of a ref sample are mapped on such ref sample; 
-## exp samples with no cell_tissue metadata attribute, or with such metadata 
-## but with a different value from the one(s) of ref sample(s), 
-## are disregarded.
+# It counts the number of regions in each sample from exp that overlap with 
+# a ref region, and for each ref region it computes the minimum score 
+# of all the regions in each exp sample that overlap with it. 
+# The MAP joinby option ensures that only the exp samples referring to 
+# the same 'cell_tissue' of a ref sample are mapped on such ref sample; 
+# exp samples with no cell_tissue metadata attribute, or with such metadata 
+# but with a different value from the one(s) of ref sample(s), 
+# are disregarded.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 exp = read_dataset(test_path)
 ref = read_dataset(test_path2)
-out = map(ref,exp, list(minScore = MIN("score")), joinBy = c("cell_tissue"))
+out = map(ref,exp, list(minScore = MIN("score")), 
+joinBy = c("cell_tissue"))
 
 
 }

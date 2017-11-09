@@ -146,7 +146,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
         names(columns) <- plyr::revalue(names(columns),c(type = "feature",
                                             phase = "frame"))
         fixed_element = c(seqname = "character", source = "character", 
-                            feature = "character",start = "long", end = "long", 
+                        feature = "character",start = "long", end = "long", 
                             score = "numeric", strand = "character",
                             frame = "character")
         node_list <- c(fixed_element, columns)

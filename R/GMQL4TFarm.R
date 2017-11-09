@@ -108,7 +108,7 @@ filter_and_extract <- function(data, metadata = NULL,
 }
 
 .extract_from_GRangesList <- function(rangesList, metadata = NULL,
-                                        metadata_prefix = NULL, regions = NULL)
+                                metadata_prefix = NULL, regions = NULL)
 {
     if(!is(rangesList,"GRangesList"))
         stop("only GrangesList admitted")

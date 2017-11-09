@@ -413,8 +413,8 @@ download_as_GRangesList <- function(url,datasetName)
 
 #' Shows metadata list from dataset sample
 #'
-#' It retrieves metadata for a specific sample in dataset using the proper GMQL 
-#' web service available on a remote server
+#' It retrieves metadata for a specific sample in dataset using the proper 
+#' GMQL web service available on a remote server
 #'
 #' @import httr
 #'
@@ -463,7 +463,8 @@ sample_metadata <- function(url, datasetName,sampleName)
 #'
 #' It retrieves regions for a specific sample 
 #' (whose name is specified in the paramter "sampleName")
-#' in a specific dataset (whose name is specified in the paramter "datasetName") 
+#' in a specific dataset 
+#' (whose name is specified in the parameter "datasetName") 
 #' using the proper GMQL web service available on a remote server
 #'
 #' @import httr

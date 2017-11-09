@@ -132,8 +132,9 @@ Function will be invoked with these parameters as NULL")
                                             dispatch = TRUE)
     }
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$select(predicate,region_predicate,join_condition_matrix,
-                    semi_join_dataset, semi_join_negation, input_data$value)
+    response <- WrappeR$select(predicate,region_predicate, 
+                                join_condition_matrix, semi_join_dataset, 
+                                semi_join_negation, input_data$value)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

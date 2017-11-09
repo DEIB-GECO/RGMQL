@@ -54,8 +54,8 @@
 #' \item{contig: outputs the concatenation between the left_input_data and 
 #' right_input_data regions that satisfy the genometric predicate, 
 #' (i.e. the output regionis defined as having left (right) coordinates
-#' equal to the minimum (maximum) of the corresponding coordinate values in the 
-#' left_input_data and right_input_data regions satisfying 
+#' equal to the minimum (maximum) of the corresponding coordinate values 
+#' in the left_input_data and right_input_data regions satisfying 
 #' the genometric predicate)}
 #' }
 #'
@@ -65,12 +65,12 @@
 #'
 #' @examples
 #' 
-#' ## Given a dataset 'hm' and one called 'tss' with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
-#' ## from the same provider (joinby clause).
+#' # Given a dataset 'hm' and one called 'tss' with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' # from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -83,8 +83,9 @@
 #'
 #' @export
 #'
-join <- function(right_input_data, left_input_data, genometric_predicate = NULL,
-                    joinBy = NULL, region_output="contig")
+join <- function(right_input_data, left_input_data, 
+                    genometric_predicate = NULL, joinBy = NULL, 
+                    region_output="contig")
 {
     if(!is.null(genometric_predicate))
     {

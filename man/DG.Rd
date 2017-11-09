@@ -23,12 +23,12 @@ region is less than, or equal to, 'value' bases.
 }
 \examples{
 
-### Given a dataset HM and one called TSS with a sample including 
-## Transcription Start Site annotations, it searches for those regions of hm 
-## that are at a minimal distance from a transcription start site 'TSS' 
-## and takes the first/closest one for each TSS, provided that such distance 
-## is greater than 12 bases and joined TSS and HM samples are obtained 
-## from the same provider 'joinby clause'.
+## Given a dataset HM and one called TSS with a sample including 
+# Transcription Start Site annotations, it searches for those regions of hm 
+# that are at a minimal distance from a transcription start site 'TSS' 
+# and takes the first/closest one for each TSS, provided that such distance 
+# is greater than 12 bases and joined TSS and HM samples are obtained 
+# from the same provider 'joinby clause'.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")

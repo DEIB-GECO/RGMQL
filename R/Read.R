@@ -234,7 +234,7 @@ We provide two metadata for you")
     if("phase" %in% col_names) # if GTF, change
     {
         col_names <- plyr::revalue(col_names,c(type = "feature", 
-                                        phase = "frame", seqnames = "seqname"))
+                                    phase = "frame", seqnames = "seqname"))
         schema_matrix <- cbind(toupper(col_types),col_names)
         schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),
                                         c("group","width")),]
@@ -264,9 +264,11 @@ We provide two metadata for you")
 {
     parser <- toupper(parser)
     if(!identical(parser,"BEDPARSER") && !identical(parser,"ANNPARSER") &&
-        !identical(parser,"BROADPROJPARSER") && !identical(parser,"BASICPARSER") 
-        && !identical(parser,"NARROWPEAKPARSER") && 
-        !identical(parser,"RNASEQPARSER") && !identical(parser,"CUSTOMPARSER"))
+        !identical(parser,"BROADPROJPARSER") && 
+        !identical(parser,"BASICPARSER") && 
+        !identical(parser,"NARROWPEAKPARSER") && 
+        !identical(parser,"RNASEQPARSER") && 
+        !identical(parser,"CUSTOMPARSER"))
         stop("parser not defined")
     
     parser

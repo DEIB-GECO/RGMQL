@@ -24,12 +24,12 @@ directions of the genome.
 \examples{
 
 
-### Given a dataset 'hm' and one called 'tss' with a sample including 
-## Transcription Start Site annotations, it searches for those regions of hm 
-## that are at a minimal distance from a transcription start site (TSS) 
-## and takes the first/closest one for each TSS, provided that such distance 
-## is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
-## from the same provider (joinby clause).
+# Given a dataset 'hm' and one called 'tss' with a sample including 
+# Transcription Start Site annotations, it searches for those regions of hm 
+# that are at a minimal distance from a transcription start site (TSS) 
+# and takes the first/closest one for each TSS, provided that such distance 
+# is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
+# from the same provider (joinby clause).
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -37,8 +37,8 @@ test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 TSS = read_dataset(test_path)
 HM = read_dataset(test_path2)
 join_data = join(TSS, HM, 
-genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), c("provider"), 
-region_output = "RIGHT")
+genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), 
+c("provider"), region_output = "RIGHT")
 
 
 }

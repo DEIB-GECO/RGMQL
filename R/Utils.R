@@ -40,7 +40,7 @@
     names <- names(meta_data)
     if(is.null(names))
     {
-        warning("You did not assign a names to a list.\nWe build names for you")
+        warning("You did not assign a names to a list.\nWe build it for you")
         names <- sapply(meta_data, take_value.META_AGGREGATES)
     }
     else

@@ -28,8 +28,8 @@ r = read_dataset(test_path)
 
 ## select with condition
 ## the first and the third attribute are DEF the second one is EXACT
-s = select(r, semi_join = list("cell_type", EXACT("cell"), "attribute_tag"), 
-semi_join_dataset = r)
+s = select(r, semi_join = list("cell_type", EXACT("cell"), 
+"attribute_tag"), semi_join_dataset = r)
 
 \dontrun{
 

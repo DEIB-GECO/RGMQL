@@ -18,8 +18,8 @@ and base url; service name is added automatically}
 list of metadata in the form 'key = value'
 }
 \description{
-It retrieves metadata for a specific sample in dataset using the proper GMQL 
-web service available on a remote server
+It retrieves metadata for a specific sample in dataset using the proper 
+GMQL web service available on a remote server
 }
 \details{
 If error occures a specific error is printed

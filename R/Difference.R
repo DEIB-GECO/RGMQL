@@ -1,9 +1,9 @@
 #' GMQL Operation: DIFFERENCE
 #'
 #' It produces one sample in the result for each sample of the left operand,
-#' by keeping the same metadata of the left input sample and only those regions
-#' (with their schema and values) of the left input sample which do not 
-#' intersect with any region in the right operand sample.
+#' by keeping the same metadata of the left input sample and only those 
+#' regions (with their schema and values) of the left input sample which 
+#' do not intersect with any region in the right operand sample.
 #' The optional \emph{joinby} clause is used to extract a subset of couples
 #' from the cartesian product of two dataset 
 #' \emph{left_input_data} x \emph{right_input_data} on which to apply 

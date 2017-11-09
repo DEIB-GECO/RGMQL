@@ -24,12 +24,12 @@ that their distance from the anchor region is less than, or equal to,
 }
 \examples{
 
-### Given a dataset HM and one called TSS with a sample including 
-## Transcription Start Site annotations, it searches for those regions of hm 
-## that are at a minimal distance from a transcription start site (TSS) 
-## and takes the first/closest one for each TSS, 
-## provided that such distance is lesser than 1200 bases and joined TSS 
-## and HM samples are obtained from the same provider (joinby clause).
+## Given a dataset HM and one called TSS with a sample including 
+# Transcription Start Site annotations, it searches for those regions of hm 
+# that are at a minimal distance from a transcription start site (TSS) 
+# and takes the first/closest one for each TSS, 
+# provided that such distance is lesser than 1200 bases and joined TSS 
+# and HM samples are obtained from the same provider (joinby clause).
 
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
@@ -39,7 +39,6 @@ HM = read_dataset(test_path2)
 join_data = join(TSS, HM, 
 genometric_predicate = list(list(MD(1), DL(1200))), c("provider"), 
 region_output = "RIGHT")
-
 
 }
 \seealso{

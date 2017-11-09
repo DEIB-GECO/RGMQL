@@ -25,7 +25,7 @@ check.DISTAL <- function(value)
 {
     if(!is.numeric(value))
         stop("value: is not a numeric")
-  
+    
     if(is.numeric(value) && length(value)>1)
         stop("value: no multiple string")
 }
@@ -49,12 +49,12 @@ check.DISTAL <- function(value)
 #' 
 #' @examples
 #' 
-#' ### Given a dataset HM and one called TSS with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, 
-#' ## provided that such distance is lesser than 1200 bases and joined TSS 
-#' ## and HM samples are obtained from the same provider (joinby clause).
+#' ## Given a dataset HM and one called TSS with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, 
+#' # provided that such distance is lesser than 1200 bases and joined TSS 
+#' # and HM samples are obtained from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
@@ -65,13 +65,11 @@ check.DISTAL <- function(value)
 #' genometric_predicate = list(list(MD(1), DL(1200))), c("provider"), 
 #' region_output = "RIGHT")
 #'
-#' 
 #' @export
 #'
 DL <- function(value)
 {
     check.DISTAL(value)
-  
     list <- list(value = as.integer(value))
     ## Set the name for the class
     class(list) <- c("DL","DISTAL")
@@ -96,12 +94,12 @@ DL <- function(value)
 #' 
 #' @examples
 #' 
-#' ### Given a dataset HM and one called TSS with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site 'TSS' 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is greater than 12 bases and joined TSS and HM samples are obtained 
-#' ## from the same provider 'joinby clause'.
+#' ## Given a dataset HM and one called TSS with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site 'TSS' 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is greater than 12 bases and joined TSS and HM samples are obtained 
+#' # from the same provider 'joinby clause'.
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -118,7 +116,6 @@ DL <- function(value)
 DG <- function(value)
 {
     check.DISTAL(value)
-  
     list <- list(value = as.integer(value))
     ## Set the name for the class
     class(list) <- c("DG","DISTAL")
@@ -149,12 +146,12 @@ DG <- function(value)
 #' 
 #' @examples
 #' 
-#' ### Given a dataset HM and one called TSS with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is lesser than 120K bases and joined TSS and HM samples are obtained 
-#' ## from the same provider (joinby clause).
+#' ## Given a dataset HM and one called TSS with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is lesser than 120K bases and joined TSS and HM samples are obtained 
+#' # from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -171,7 +168,6 @@ DG <- function(value)
 DLE <- function(value)
 {
     check.DISTAL(value)
-  
     list <- list(value = as.integer(value))
     ## Set the name for the class
     class(list) <- c("DLE","DISTAL")
@@ -198,12 +194,12 @@ DLE <- function(value)
 #' 
 #' @examples
 #' 
-#' ## Given a dataset 'hm' and one called 'tss' with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
-#' ## from the same provider (joinby clause).
+#' # Given a dataset 'hm' and one called 'tss' with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' # from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -219,7 +215,6 @@ DLE <- function(value)
 DGE <- function(value)
 {
     check.DISTAL(value)
-  
     list <- list(value = as.integer(value))
     ## Set the name for the class
     class(list) <- c("DGE","DISTAL")
@@ -249,12 +244,12 @@ DGE <- function(value)
 #' @examples
 #' 
 #' 
-#' ### Given a dataset 'hm' and one called 'tss' with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, 
-#' ## provided that such distance is greater than 120K bases and joined 'tss' 
-#' ## and 'hm' samples are obtained from the same provider (joinby clause).
+#' # Given a dataset 'hm' and one called 'tss' with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, 
+#' # provided that such distance is greater than 120K bases and joined 'tss' 
+#' # and 'hm' samples are obtained from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -270,7 +265,6 @@ DGE <- function(value)
 MD <- function(value)
 {
     check.DISTAL(value)
-  
     list <- list(value = as.integer(value))
     ## Set the name for the class
     class(list) <- c("MD","DISTAL")
@@ -300,12 +294,12 @@ MD <- function(value)
 #' @examples
 #' 
 #'
-#' ### Given a dataset 'hm' and one called 'tss' with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
-#' ## from the same provider (joinby clause).
+#' # Given a dataset 'hm' and one called 'tss' with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is greater than 120K bases and joined 'tss' and 'hm' samples are obtained 
+#' # from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -352,12 +346,12 @@ as.character.UP <- function(obj) {
 #' @examples
 #' 
 #' 
-#' ### Given a dataset 'hm' and one called 'tss' with a sample including 
-#' ## Transcription Start Site annotations, it searches for those regions of hm 
-#' ## that are at a minimal distance from a transcription start site (TSS) 
-#' ## and takes the first/closest one for each TSS, provided that such distance 
-#' ## is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
-#' ## from the same provider (joinby clause).
+#' # Given a dataset 'hm' and one called 'tss' with a sample including 
+#' # Transcription Start Site annotations, it searches for those regions of hm 
+#' # that are at a minimal distance from a transcription start site (TSS) 
+#' # and takes the first/closest one for each TSS, provided that such distance 
+#' # is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
+#' # from the same provider (joinby clause).
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -365,8 +359,8 @@ as.character.UP <- function(obj) {
 #' TSS = read_dataset(test_path)
 #' HM = read_dataset(test_path2)
 #' join_data = join(TSS, HM, 
-#' genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), c("provider"), 
-#' region_output = "RIGHT")
+#' genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), 
+#' c("provider"), region_output = "RIGHT")
 #' 
 #' 
 #' @export

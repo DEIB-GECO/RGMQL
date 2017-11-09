@@ -1,11 +1,11 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 0.99.23
+Version: 0.99.24
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
-Description: This RGMQL package brings the GenoMetric Query Language (GMQL) functionalities 
-  into the R environment.
+Description: This RGMQL package brings the GenoMetric Query Language (GMQL) 
+  functionalities into the R environment.
   GMQL is a high-level, declarative language to query and compare multiple and heterogeneous genomic 
   datasets for biomedical knowledge discovery. It allows expressing easily queries 
   and processing over genomic regions and their metadata, in a way similar to 
@@ -55,7 +55,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: httr, rJava,GenomicRanges, rtracklayer, data.table, utils, plyr, xml2, 
     methods, S4Vectors, dplyr, stats
-Depends: R(>= 3.4.2)
+Depends: R(<= 3.4.2)
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
 biocViews: Software,Infrastructure,DataImport,Network

@@ -73,7 +73,7 @@ order <- function(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
 
     if(length(mtop)>1 || length(mtopg)>1 || length(rtop)>1 || length(rtopg)>1
         || length(mtopp)>1 || length(rtopp)>1)
-        warning("only first element is taken by rtop, mtop, mtopg, rtopg, rtopp, mtopp")
+        warning("only first element: rtop, mtop, mtopg, rtopg, rtopp, mtopp")
 
     # we consider only the first element even if input is a vector of Int
     # we cut the other arguments

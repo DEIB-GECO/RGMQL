@@ -4,8 +4,8 @@
 #' another dataset (with a single sample, if no \emph{groupby} option is 
 #' specified) by “collapsing” the input dataset samples and their regions 
 #' according to certain rules specified by the input parameters.
-#' The attributes of the output genomic regions are only the region coordinates,
-#' and Jaccard indexes (JaccardIntersect and JaccardResult).
+#' The attributes of the output genomic regions are only the region 
+#' coordinates, and Jaccard indexes (JaccardIntersect and JaccardResult).
 #' Jaccard Indexes are standard measures of similarity of the contributing 
 #' regions, added as default region attributes.
 #' The JaccardIntersect index is calculated as the ratio between the lengths 
@@ -70,9 +70,10 @@
 #' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
-#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-#' \code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
-#' \code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+#' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+#' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+#' \code{\link{Q2}}, \code{\link{Q3}}.
 #' Every aggregate accepts a string value, execet for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 
@@ -181,9 +182,10 @@ cover <- function(input_data, minAcc, maxAcc, groupBy = NULL,
 #' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
-#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-#' \code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
-#' \code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+#' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+#' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+#' \code{\link{Q2}}, \code{\link{Q3}}.
 #' Every aggregate accepts a string value, execet for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 
@@ -282,9 +284,10 @@ histogram <- function(input_data, minAcc, maxAcc, groupBy = NULL,
 #' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
-#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-#' \code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
-#' \code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+#' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+#' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+#' \code{\link{Q2}}, \code{\link{Q3}}.
 #' Every aggregate accepts a string value, execet for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 
@@ -380,9 +383,10 @@ summit <- function(input_data, minAcc, maxAcc, groupBy = NULL,
 #' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
-#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, \code{\link{AVG}}, 
-#' \code{\link{MEDIAN}}, \code{\link{STD}}, \code{\link{BAG}}, 
-#' \code{\link{BAGD}}, \code{\link{Q1}}, \code{\link{Q2}}, \code{\link{Q3}}.
+#' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+#' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+#' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+#' \code{\link{Q2}}, \code{\link{Q3}}.
 #' Every aggregate accepts a string value, execet for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 

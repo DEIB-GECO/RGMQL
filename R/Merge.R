@@ -38,10 +38,10 @@
 #' 
 #' @examples
 #' 
-#' ## It creates a dataset called merged which contains one sample for each 
-#' ## antibody_target value found within the metadata of the exp dataset sample; 
-#' ## each created sample contains all regions from all 'exp' samples 
-#' ## with a specific value for their antibody_target metadata attribute.
+#' # It creates a dataset called merged which contains one sample for each 
+#' # antibody_target value found within the metadata of the exp dataset sample; 
+#' # each created sample contains all regions from all 'exp' samples 
+#' # with a specific value for their antibody_target metadata attribute.
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")

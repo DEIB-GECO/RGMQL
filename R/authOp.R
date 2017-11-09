@@ -42,10 +42,10 @@ if(getRversion() >= "3.1.0")
 login_gmql <- function(url, username = NULL, password = NULL)
 {
     as_guest <- TRUE
-
+    
     if(!is.null(username) || !is.null(password))
         as_guest <- FALSE
-
+    
     if(as_guest)
     {
         h <- c('Accept' = "Application/json")

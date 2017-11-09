@@ -20,7 +20,8 @@ Granges data containing regions of sample
 \description{
 It retrieves regions for a specific sample 
 (whose name is specified in the paramter "sampleName")
-in a specific dataset (whose name is specified in the paramter "datasetName") 
+in a specific dataset 
+(whose name is specified in the parameter "datasetName") 
 using the proper GMQL web service available on a remote server
 }
 \details{
