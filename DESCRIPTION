@@ -1,7 +1,7 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 0.99.17
+Version: 0.99.18
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
 Description: This RGMQL package brings the GenoMetric Query Language (GMQL) functionalities 
