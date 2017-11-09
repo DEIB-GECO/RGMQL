@@ -36,5 +36,5 @@ list <- show_datasets_list(remote_url)
 
 }
 \seealso{
-\code{\link{deleteDataset}}
+\code{\link{delete_dataset}}
 }

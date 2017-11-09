@@ -8,6 +8,9 @@ filter_and_extract(data, metadata = NULL, metadata_prefix = NULL,
   regions = NULL)
 }
 \arguments{
+\item{data}{string GMQL dataset folder path or GrangesList 
+object}
+
 \item{metadata}{vector of character containing names of metadata 
 to be searched for in metadata files.
 data will be extracted if at least one condition is satisfied:
@@ -23,9 +26,6 @@ number of elelment in both vector must match}
 attribute specified; if NULL no regions will be taken and the output 
 will be only GRanges made up by the first attribute
 (seqnames,start,end,strand)}
-
-\item{GMQL_dataset_path}{string GMQL dataset folder path or GrangesList 
-object}
 }
 \value{
 granges with selected regions (if any) in elementMetadata

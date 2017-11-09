@@ -38,6 +38,3 @@ login_gmql(remote_url)
 list <- show_samples_list(remote_url, "public.GRCh38_ENCODE_BROAD_MAY_2017")
 
 }
-\seealso{
-\code{\link{uploadSamples}}
-}

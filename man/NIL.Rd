@@ -20,7 +20,6 @@ performing all the type conversion needed
 }
 \examples{
 
-
 ## It define a new numeric region attribute with "null" value. 
 ## The syntax for creating a new attribute with null value is 
 ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
@@ -28,8 +27,8 @@ performing all the type conversion needed
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-out = PROJECT(exp, regions_update: list(signal = NIL(INTEGER), 
-pvalue = NIL(DOUBLE)))
+out = project(exp, regions_update = list(signal = NIL("INTEGER"), 
+pvalue = NIL("DOUBLE")))
 
 
 }

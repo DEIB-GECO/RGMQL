@@ -14,7 +14,7 @@
 #' \item{name: name of query}
 #' \item{text: text of GMQL query}
 #' }
-#' @seealso \code{\link{saveQuery}}
+#' @seealso \code{\link{save_query}}
 #'
 #' @details
 #' if error occures, a specific error is printed
@@ -98,7 +98,7 @@ save_query <- function(url, queryName, queryTxt)
 #'
 #' @return None
 #'
-#' @seealso \code{\link{saveQuery}}
+#' @seealso \code{\link{save_query}}
 #'
 #' @details
 #' if you save a query with the same name of an other query already stored

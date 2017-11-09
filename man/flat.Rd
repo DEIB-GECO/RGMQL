@@ -9,9 +9,8 @@ flat(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
 \arguments{
 \item{input_data}{returned object from any GMQL function}
 
-\item{minAcc}{minimum number of overlapping regions to be considered 
-during execution
-Is a integer number, declared also as string.
+\item{minAcc}{integer number representing minimum number of overlapping 
+regions to be considered during execution
 minAcc accept also:
 \itemize{
 \item{PARAMETER class object: \code{\link{ALL}} that represents the number 
@@ -20,9 +19,8 @@ of samples in the input dataset}
 ALL() / K }
 }}
 
-\item{maxAcc}{maximum number of overlapping regions to be considered 
-during execution
-Is a integer number, declared also as string.
+\item{maxAcc}{integer number representing maximum number of overlapping 
+regions to be considered during execution
 maxAcc accept also:
 \itemize{
 \item{PARAMETER class object: \code{\link{ALL}} that represents the number 

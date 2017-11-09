@@ -34,5 +34,5 @@ list <- show_queries_list(remote_url)
 
 }
 \seealso{
-\code{\link{saveQuery}}
+\code{\link{save_query}}
 }

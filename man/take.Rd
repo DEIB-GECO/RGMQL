@@ -27,9 +27,9 @@ all those dataset will be materialized as folder.
 \examples{
 
 init_gmql()
-test_path <- system.file("example","DATA_SET_VAR_GTF",package = "RGMQL")
+test_path <- system.file("example", "DATASET", package = "RGMQL")
 r = read_dataset(test_path)
-m = merge(groupBy = c("antibody_target","cell_karyotype"),input_data = r)
+m = merge(groupBy = c("antibody_target", "cell_karyotype"), input_data = r)
 g <- take(input_data = m, rows = 45)
 
 }

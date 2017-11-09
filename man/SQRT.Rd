@@ -31,7 +31,7 @@ performing all the type conversion needed
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-out = PROJECT(exp, metadata_update: list(concSq = SQRT(concentration)))
+out = project(exp, metadata_update = list(concSq = SQRT("concentration")))
 
 }
 \seealso{

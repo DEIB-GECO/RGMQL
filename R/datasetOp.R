@@ -15,7 +15,7 @@
 #' \item{owner: public or name of the user}
 #' }
 #'
-#' @seealso \code{\link{deleteDataset}}
+#' @seealso \code{\link{delete_dataset}}
 #'
 #' @details
 #' If error occures a specific error is printed
@@ -64,7 +64,6 @@ show_datasets_list <- function(url)
 #' \item{name: name of sample}
 #' \item{path: sample repository path}
 #' }
-#' @seealso \code{\link{uploadSamples}}
 #'
 #' @details
 #' If error occures a specific error is printed

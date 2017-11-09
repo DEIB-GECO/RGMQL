@@ -16,7 +16,7 @@
 #' @importFrom rJava .jarray
 #'  
 #' @param input_data returned object from any GMQL function
-#' @param groupBylist list of CONDITION objects where every object contains 
+#' @param groupBy list of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
 #' without declaring condition.

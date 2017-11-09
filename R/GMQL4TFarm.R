@@ -12,7 +12,7 @@
 #' @importFrom data.table fread
 #' @importFrom rtracklayer import
 #'
-#' @param GMQL_dataset_path string GMQL dataset folder path or GrangesList 
+#' @param data string GMQL dataset folder path or GrangesList 
 #' object
 #' @param metadata vector of character containing names of metadata 
 #' to be searched for in metadata files.

@@ -8,6 +8,9 @@ META(value, type = NULL)
 }
 \arguments{
 \item{value}{string identifying name of metadata attribute}
+
+\item{type}{string identifying the type of the attribute value
+must be: integer, double or string}
 }
 \value{
 META operator object
@@ -24,6 +27,7 @@ performing all the type conversion needed
 ## region attribute score has a value which is greater than the metadata 
 ## attribute value "avg_score" in their sample.
 
+
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
@@ -33,7 +37,8 @@ data = select(exp, region_predicate = score > META("avg_score"));
 ## It define a new region attribute with the value of a metadata attribute 
 ## using the syntax region_attribute AS META(metadata_attribute, type)
 
-out = project(exp, regions_update = list(signal = META(avg_signal, DOUBLE)))
+out = project(exp, regions_update = list(signal = META("avg_signal", 
+"DOUBLE")))
 
 
 }

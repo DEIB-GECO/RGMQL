@@ -166,4 +166,6 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     predicate <- gsub("list\\(","",predicate)
     predicate <- gsub("\\)$","",predicate)
     predicate <- gsub("=","AS",predicate)
+    predicate <- gsub("NIL","NULL",predicate)
+    predicate <- gsub("\"","",predicate)
 }

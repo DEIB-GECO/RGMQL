@@ -37,5 +37,5 @@ save_query_fromfile(remote_url, "query1", test_query)
 
 }
 \seealso{
-\code{\link{saveQuery}}
+\code{\link{save_query}}
 }

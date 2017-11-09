@@ -41,6 +41,8 @@ as.character.OPERATOR <- function(obj) {
 #' performing all the type conversion needed
 #' 
 #' @param value string identifying name of metadata attribute
+#' @param type string identifying the type of the attribute value
+#' must be: integer, double or string
 #'
 #' @return META operator object
 #' 
@@ -52,6 +54,7 @@ as.character.OPERATOR <- function(obj) {
 #' ## region attribute score has a value which is greater than the metadata 
 #' ## attribute value "avg_score" in their sample.
 #' 
+#' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
@@ -61,7 +64,8 @@ as.character.OPERATOR <- function(obj) {
 #' ## It define a new region attribute with the value of a metadata attribute 
 #' ## using the syntax region_attribute AS META(metadata_attribute, type)
 #' 
-#' out = project(exp, regions_update = list(signal = META(avg_signal, DOUBLE)))
+#' out = project(exp, regions_update = list(signal = META("avg_signal", 
+#' "DOUBLE")))
 #' 
 #' 
 #' @export
@@ -112,7 +116,6 @@ check.META <- function(type)
 #' 
 #' @examples
 #' 
-#' 
 #' ## It define a new numeric region attribute with "null" value. 
 #' ## The syntax for creating a new attribute with null value is 
 #' ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
@@ -120,8 +123,8 @@ check.META <- function(type)
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' out = PROJECT(exp, regions_update: list(signal = NIL(INTEGER), 
-#' pvalue = NIL(DOUBLE)))
+#' out = project(exp, regions_update = list(signal = NIL("INTEGER"), 
+#' pvalue = NIL("DOUBLE")))
 #' 
 #' 
 #' @export
@@ -173,7 +176,7 @@ check.NIL <- function(value)
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' out = PROJECT(exp, metadata_update: list(concSq = SQRT(concentration)))
+#' out = project(exp, metadata_update = list(concSq = SQRT("concentration")))
 #' 
 #' @export
 #'
