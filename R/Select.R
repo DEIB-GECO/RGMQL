@@ -146,6 +146,5 @@ Function will be invoked with these parameters as NULL")
 {
     predicate <- gsub("&|&&","AND",predicate)
     predicate <- gsub("\\||\\|\\|","OR",predicate)
-    predicate <- gsub("\"","",predicate)
     #predicate <- gsub("![\\(]+","NOT(",predicate)
 }

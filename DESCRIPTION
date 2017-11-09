@@ -55,7 +55,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: httr, rJava,GenomicRanges, rtracklayer, data.table, utils, plyr, xml2, 
     methods, S4Vectors, dplyr, stats
-Depends: R(<= 3.4.2)
+Depends: R(>= 3.4.2)
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
 biocViews: Software,Infrastructure,DataImport,Network
