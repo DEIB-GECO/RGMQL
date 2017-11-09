@@ -83,7 +83,7 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,
                                             dispatch = TRUE)
     else
         join_condition_matrix <- .jnull("java/lang/String")
-  
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$difference(join_condition_matrix,
                                     right_input_data$value,

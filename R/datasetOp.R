@@ -203,7 +203,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
     h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
 
     schema_name <- tolower(schemaName)
-  
+
     if(is.null(schemaName))
     {
         schema_name <- list.files(folderPath, pattern = "*.schema$",
@@ -226,11 +226,11 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
                                         full.names = TRUE)
             if(length(schema_name)==0)
                 stop("schema must be present")
-      
+
             list_files <- list(list("schema" = httr::upload_file(schema_name)),
                                 list_files)
             list_files <- unlist(list_files,recursive = FALSE)
-      
+            
             URL <- paste0(url,"/datasets/",datasetName,"/uploadSample")
         }
         else
@@ -273,7 +273,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #' If no error occur, print "Deleted Dataset", otherwise a specific error 
 #' is printed
 #'
-#' @seealso \code{\link{downloadDataset}}
+#' @seealso \code{\link{download_dataset}}
 #'
 #' @examples
 #'

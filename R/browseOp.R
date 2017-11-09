@@ -75,7 +75,7 @@ save_query <- function(url, queryName, queryTxt)
 {
     URL <- paste0(url,"/query/",queryName,"/save")
     h <- c('Accept' = 'text/plain', 'X-Auth-Token' = authToken,
-           'Content-Type' = 'text/plain')
+            'Content-Type' = 'text/plain')
     req <- httr::POST(URL, httr::add_headers(h),body = queryTxt)
     content <- httr::content(req)
 

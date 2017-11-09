@@ -98,7 +98,7 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = cover(input_data = exp, 2, "ANY")
+#' res = cover(input_data = exp, 2, ANY())
 #'
 #' \dontrun{
 #' ## This GMQL statement computes the result grouping the input exp samples 
@@ -431,7 +431,7 @@ flat <- function(input_data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL)
                                             dispatch = TRUE)
     else
         join_condition_matrix <- .jnull("java/lang/String")
-  
+
     if(!is.null(aggregates))
         metadata_matrix <- .jarray(.aggregates(aggregates,"AGGREGATES"),
                                     dispatch = TRUE)

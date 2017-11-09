@@ -83,11 +83,11 @@ GMQL datasets are materialized in a standard layout composed of three types of f
 1. genomic region tab-delimited text files with extension .gdm, or .gtf if in standard GTF format
 2. metadata attribute-value tab-delimited text files with the same fullname (name and extension) of the correspondent region file and extension .meta
 3. schema XML file containing region attribute names and types
-	
+
 All these files reside in unique folder called files.
-	
+
 <!-- ![GMQL dataset folder](dataset_gmql.png) -->
-	
+
 In RGMQL package dataset files are considered read-only.
 Once read, genomic information is represented in abstract structure inside the package, mapped to a R GRanges data structure at occurency.
 

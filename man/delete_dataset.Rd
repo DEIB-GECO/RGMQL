@@ -37,5 +37,5 @@ delete_dataset(remote_url, "job_test1_test101_20170604_180908_RESULT_DS")
 
 }
 \seealso{
-\code{\link{downloadDataset}}
+\code{\link{download_dataset}}
 }
