@@ -114,8 +114,8 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' r = read_dataset(test_path,"ANNParser")
 #' 
 #' ## read remote public dataset stored into GMQL system repository 
-#' init_gmql()
-#' r = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
+#' 
+#' r2 = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 #' 
 #' }
 #' 

@@ -72,7 +72,7 @@ show_datasets_list <- function(url)
 #'
 #' remote_url <- "http://130.186.13.219/gmql-rest"
 #' login_gmql(remote_url)
-#' list <- show_samples_list(remote_url, "public.GRCh38_ENCODE_BROAD_MAY_2017")
+#' list <- show_samples_list(remote_url, "public.HG19_BED_ANNOTATION")
 #'
 #' @export
 #'
@@ -118,7 +118,7 @@ show_samples_list <- function(url,datasetName)
 #' ### show schema of public dataset
 #' remote_url <- "http://130.186.13.219/gmql-rest"
 #' login_gmql(remote_url)
-#' list <- show_schema(remote_url, "public.GRCh38_ENCODE_BROAD_MAY_2017")
+#' list <- show_schema(remote_url, "public.HG19_BED_ANNOTATION")
 #'
 #' @export
 #'

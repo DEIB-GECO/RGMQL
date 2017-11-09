@@ -39,5 +39,5 @@ login_gmql(remote_url)
 
 }
 \seealso{
-\code{\link{register_gmql}} \code{\link{logout_gmql}}
+\code{\link{logout_gmql}}
 }

@@ -18,7 +18,7 @@ if(getRversion() >= "3.1.0")
 #' @param username string name used during signup
 #' @param password string password used during signup
 #'
-#' @seealso  \code{\link{register_gmql}} \code{\link{logout_gmql}}
+#' @seealso \code{\link{logout_gmql}}
 #'
 #' @details
 #' if both username and password are NULL you will be logged as guest
@@ -84,7 +84,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #'
-#' @seealso \code{\link{register_gmql}} \code{\link{login_gmql}}
+#' @seealso \code{\link{login_gmql}}
 #'
 #' @details
 #' After logout the authentication token will be invalidated.
@@ -117,66 +117,6 @@ logout_gmql <- function(url)
         WrappeR <- J("it/polimi/genomics/r/Wrapper")
         WrappeR$delete_token()
         rm(authToken, envir = .GlobalEnv)
-    }
-}
-
-#' Sign up to GMQL
-#'
-#' Sign up to GMQL REST services suite
-#' using the proper GMQL web service available on a remote server
-#'
-#' @import httr
-#'
-#' @param url string url of server: It must contain the server address 
-#' and base url; service name will be added automatically
-#' @param name string name of the user (can contain space)
-#' @param lastname string last name of the user (can contain space)
-#' @param mail string email (as spacified in RFC format)
-#' @param username string name you want to authenticate with
-#' @param password string password you want to authenticate with
-#'
-#' @seealso \code{\link{login_gmql}} \code{\link{logout_gmql}}
-#'
-#' @details
-#' After registration you receive an authentication token, 
-#' (i.e you are logged in after sing up, no need to subsequent 
-#' calling of login function)
-#' As token remains vaild on server (until the next login / registration) 
-#' a user can safely use a token for a previous session as a convenience, 
-#' this token is saved in Global environment to perform subsequent REST call 
-#' even on complete R restart (if is environemnt has been saved, of course ...)
-#' If error occures a specific error is printed
-#'
-#' @return None
-#'
-#' @examples
-#' 
-#' ### this user already exist, it's a test account, don't use it!!!
-#' 
-#' remote_url = "http://130.186.13.219/gmql-rest"
-#' register_gmql(remote_url, "jonh", "Doe", "jonh@doe.com", "JD", "JD46")
-#'
-#' @export
-#'
-register_gmql <- function(url, name, lastname, mail, username, password)
-{
-    info <- list('firstName'=name,
-                    'lastName'=lastname,
-                    'username'=username,
-                    'email'=mail,
-                    'password'=password)
-    URL <- paste0(url,"/register")
-    h <- c('Accept' = 'Application/json','Content-Type' = 'Application/json')
-    req <- httr::POST(URL,body = info ,httr::add_headers(h),encode = "json")
-
-    content <- httr::content(req)
-
-    if(req$status_code !=200)
-        stop(content)
-    else
-    {
-        assign("authToken",content$authToken,.GlobalEnv)
-        print(paste("your Token is",authToken))
     }
 }
 
