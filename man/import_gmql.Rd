@@ -22,7 +22,7 @@ It reads sample files in GTF or GDM/tabulated format
 \examples{
 
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-grl = import_gmql(dataset_path, TRUE)
+grl = import_gmql(test_path, TRUE)
 
 
 }
