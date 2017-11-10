@@ -7,9 +7,9 @@ date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 output: BiocStyle::pdf_document
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+    %\VignetteIndexEntry{Vignette Title}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
 link-citations: true
 ---
 
@@ -257,13 +257,10 @@ using GRangesList as input.
 ```{r, read GRangesList, eval = TRUE}
 library("GenomicRanges")
 gr1 <- GRanges(seqnames = "chr2",
-ranges = IRanges(103, 106),
-strand = "+",
-score = 5L, GC = 0.45)
+ranges = IRanges(103, 106), strand = "+",score = 5L, GC = 0.45)
 
 gr2 <- GRanges(seqnames = c("chr1", "chr1"),
-ranges = IRanges(c(107, 113), width = 3),
-strand = c("+", "-"),
+ranges = IRanges(c(107, 113), width = 3),strand = c("+", "-"),
 score = 3:4, GC = c(0.3, 0.5))
 
 grl <- GRangesList("txA" = gr1, "txB" = gr2)
@@ -369,14 +366,14 @@ remote cluster/system while managing GMQL datasets.\newline
 Remote processing exits in two flavour:\newline
 
 - REST web services: \newline
-  User can write GMQL queries (using original GMQL syntax) to be executed 
-  remotely on remote data (or local data previously uploaded).
+    User can write GMQL queries (using original GMQL syntax) to be executed 
+    remotely on remote data (or local data previously uploaded).
 
 - BATCH execution: \newline
-  Similar to local execution; user reads data and the system automatically 
-  uploads them on the
-  remote system: once loaded, RGMQL functions can be issued to manage 
-  remote data.\newline
+    Similar to local execution; user reads data and the system automatically 
+    uploads them on the
+    remote system: once loaded, RGMQL functions can be issued to manage 
+    remote data.\newline
 
 ### REST web services
 

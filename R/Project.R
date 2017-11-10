@@ -146,6 +146,7 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     
     if(length(all_but_reg)>1)
         warning("all_but_reg: no multiple values")
+    
     all_but_reg <- all_but_reg[1]
     all_but_meta <- all_but_meta[1]
     

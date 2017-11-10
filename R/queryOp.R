@@ -287,7 +287,7 @@ run_query_fromfile <- function(url, fileName, filePath, output_gtf = TRUE)
 compile_query <- function(url, query)
 {
     h <- c('Accept' = "Application/json",
-            'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
+                'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
     URL <- paste0(url,"/queries/compile")
     req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
     content <- httr::content(req,"parsed")

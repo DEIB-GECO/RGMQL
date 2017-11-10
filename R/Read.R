@@ -163,7 +163,7 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 
     parser_name <- .check_parser(parser)
     response <- WrappeR$readDataset(dataset,parser_name, is_local, is_GMQL, 
-                                    schema_matrix)
+                                        schema_matrix)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -205,7 +205,8 @@ read <- function(samples)
         stop("only GrangesList")
     
     meta <- S4Vectors::metadata(samples)
-    if(is.null(meta) || length(meta)==0) {
+    if(is.null(meta) || length(meta)==0) 
+    {
         #repeat meta for each sample in samples list
         len <- length(samples)
         warning("GrangesList has no metadata.
