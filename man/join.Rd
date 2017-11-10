@@ -5,7 +5,7 @@
 \title{GMQL Operation: JOIN}
 \usage{
 join(right_input_data, left_input_data, genometric_predicate = NULL,
-  joinBy = NULL, region_output = "contig")
+    joinBy = NULL, region_output = "contig")
 }
 \arguments{
 \item{right_input_data}{returned object from any GMQL function}

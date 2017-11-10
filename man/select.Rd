@@ -5,7 +5,7 @@
 \title{GMQL Operation: SELECT}
 \usage{
 select(input_data, predicate = NULL, region_predicate = NULL,
-  semi_join = NULL, semi_join_negation = FALSE, semi_join_dataset = NULL)
+    semi_join = NULL, semi_join_negation = FALSE, semi_join_dataset = NULL)
 }
 \arguments{
 \item{input_data}{returned object from any GMQL function}

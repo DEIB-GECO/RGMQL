@@ -5,7 +5,7 @@
 \title{GMQL Function: READ}
 \usage{
 read_dataset(dataset, parser = "CustomParser", is_local = TRUE,
-  is_GMQL = TRUE)
+    is_GMQL = TRUE)
 }
 \arguments{
 \item{dataset}{folder path for GMQL dataset or datasetname on repository}

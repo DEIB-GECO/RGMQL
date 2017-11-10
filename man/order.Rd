@@ -5,7 +5,7 @@
 \title{GMQL operation: ORDER}
 \usage{
 order(input_data, metadata_ordering = NULL, mtop = 0, mtopg = 0,
-  mtopp = 0, regions_ordering = NULL, rtop = 0, rtopg = 0, rtopp = 0)
+    mtopp = 0, regions_ordering = NULL, rtop = 0, rtopg = 0, rtopp = 0)
 }
 \arguments{
 \item{input_data}{returned object from any GMQL function}

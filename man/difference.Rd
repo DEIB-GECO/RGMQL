@@ -5,7 +5,7 @@
 \title{GMQL Operation: DIFFERENCE}
 \usage{
 difference(left_input_data, right_input_data, joinBy = NULL,
-  is_exact = FALSE)
+    is_exact = FALSE)
 }
 \arguments{
 \item{left_input_data}{returned object from any GMQL function}

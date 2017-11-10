@@ -5,8 +5,8 @@
 \title{GMQL Operation: PROJECT}
 \usage{
 project(input_data, metadata = NULL, metadata_update = NULL,
-  all_but_meta = FALSE, regions = NULL, regions_update = NULL,
-  all_but_reg = FALSE)
+    all_but_meta = FALSE, regions = NULL, regions_update = NULL,
+    all_but_reg = FALSE)
 }
 \arguments{
 \item{input_data}{returned object from any GMQL function}

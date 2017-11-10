@@ -76,7 +76,7 @@
 #' @export
 #'
 difference <- function(left_input_data, right_input_data, joinBy = NULL, 
-                        is_exact = FALSE)
+                            is_exact = FALSE)
 {
     if(!is.null(joinBy))
         join_condition_matrix <- .jarray(.join_condition(joinBy),
