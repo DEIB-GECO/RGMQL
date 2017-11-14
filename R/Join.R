@@ -1,8 +1,3 @@
-#' @name join
-#' @rdname join-methods
-#' @aliases join
-#' @export
-setGeneric("join", function(x, y, by = NULL, ...) standardGeneric("join"))
 
 
 #' GMQL Operation: JOIN
@@ -87,10 +82,11 @@ setGeneric("join", function(x, y, by = NULL, ...) standardGeneric("join"))
 #' join_data = join(TSS, HM, 
 #' genometric_predicate = list(list(MD(1), DLE(120000))), by = c("provider"), 
 #' region_output="RIGHT")
-#'
+#' 
+
 #' @name join
 #' @rdname join-methods
-#' @aliases join, GMQLDataset-methods
+#' @aliases join, join-methods
 #' @export
 setMethod("join", "GMQLDataset",
                 function(x, y, by = NULL, genometric_predicate = NULL, 
@@ -98,7 +94,7 @@ setMethod("join", "GMQLDataset",
                 {
                     r_data <- x@value
                     l_data <- y@value
-                    gmql_join(r_data, l_data, genometric_predicate, joinBy, 
+                    gmql_join(x, y, genometric_predicate, by, 
                             region_output="contig")
                 })
 
@@ -153,8 +149,7 @@ gmql_join <- function(right_data, left_data, genometric_predicate, joinBy,
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$join(genomatrix,join_condition_matrix, 
-                                ouput,right_input_data$value,
-                                left_input_data$value)
+                                ouput,right_data, left_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

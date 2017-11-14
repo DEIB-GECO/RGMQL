@@ -100,7 +100,7 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 #' 
 #' @name materialize
 #' @rdname materialize-methods
-#' @aliases materialize, GMQLDataset-methods
+#' @aliases materialize, materialize-methods
 #' @export
 setMethod("materialize", "GMQLDataset",
             function(data, dir_out = getwd())

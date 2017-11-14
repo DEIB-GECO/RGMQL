@@ -4,7 +4,7 @@
 \name{setdiff,GMQLDataset,GMQLDataset-method}
 \alias{setdiff,GMQLDataset,GMQLDataset-method}
 \alias{setdiff,}
-\alias{GMQLDataset-methods}
+\alias{setdiff-methods}
 \title{GMQL Operation: DIFFERENCE}
 \usage{
 \S4method{setdiff}{GMQLDataset,GMQLDataset}(x, y, joinBy = NULL,

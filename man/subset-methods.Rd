@@ -4,7 +4,7 @@
 \name{subset}
 \alias{subset}
 \alias{subset,}
-\alias{GMQLDataset-methods}
+\alias{subset-methods}
 \title{GMQL Operation: PROJECT}
 \usage{
 \S4method{subset}{GMQLDataset}(x, metadata = NULL, metadata_update = NULL,

@@ -88,7 +88,7 @@
 #'
 #' @name subset
 #' @rdname subset-methods
-#' @aliases subset, GMQLDataset-methods
+#' @aliases subset, subset-methods
 #' @export
 setMethod("subset", "GMQLDataset",
             function(x, metadata = NULL, metadata_update=NULL, 

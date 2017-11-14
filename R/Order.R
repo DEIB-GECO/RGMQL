@@ -83,7 +83,7 @@
 #' }
 #' @name sort
 #' @rdname sort-methods
-#' @aliases sort, GMQLDataset-methods
+#' @aliases sort, sort-methods
 #' @export
 setMethod("sort", "GMQLDataset",
             function(x, decreasing = FALSE, metadata_ordering = NULL, 

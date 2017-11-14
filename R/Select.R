@@ -13,12 +13,13 @@
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
+#' @importFrom methods isClass
 #'
 #' @param x GMQLDataset class object
-#' @param predicate logical predicate made up by R logical operation 
+#' @param m_predicate logical predicate made up by R logical operation 
 #' on metadata attribute. 
 #' Only !, |, ||, &, && are admitted.
-#' @param region_predicate logical predicate made up by R logical operation 
+#' @param r_predicate logical predicate made up by R logical operation 
 #' on chema region values. 
 #' Only !, |, ||, &, && are admitted.
 #' @param semi_join list of CONDITION objects where every object contains 
@@ -82,9 +83,19 @@
 #' TRUE, semi_join_dataset = join_data )
 #' 
 #' }
+#' 
+#' @name filter
+#' @rdname GMQLDataset-class
+#' @aliases filter, filter-methods
+#' 
+setGeneric("filter", function(data, m_predicate = NULL, r_predicate = NULL, 
+                    semi_join = NULL, semi_join_negation = FALSE, 
+                    semi_join_dataset = NULL) 
+    standardGeneric("filter"))
+
 #' @name filter
 #' @rdname filter-methods
-#' @aliases filter, GMQLDataset-methods
+#' @aliases filter, filter-methods
 #' @export
 setMethod("filter", "GMQLDataset",
             function(data, m_predicate = NULL, r_predicate = NULL, 

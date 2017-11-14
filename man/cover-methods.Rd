@@ -3,9 +3,11 @@
 \docType{methods}
 \name{cover}
 \alias{cover}
+\alias{cover,}
+\alias{cover-methods}
 \alias{cover}
 \alias{cover,}
-\alias{GMQLDataset-methods}
+\alias{cover-methods}
 \title{GMQL Operation: COVER}
 \usage{
 cover(data, minAcc, maxAcc, ...)
@@ -142,4 +144,6 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
 res = cover(exp, 2, 3, c("cell"), list(min_pValue = MIN("pvalue")))
 }
+
+
 }

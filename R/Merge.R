@@ -50,13 +50,13 @@
 #' 
 #' @name aggregate
 #' @rdname aggregate-methods
-#' @aliases aggregate, GMQLDataset-methods
+#' @aliases aggregate, aggregate-methods
 #' @export
 #' 
 setMethod("aggregate", "GMQLDataset",
             function(data, groupBy = NULL)
             {
-                val = .data@value
+                val = data@value
                 gmql_merge(val, metadata)
             })
 

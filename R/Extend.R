@@ -57,7 +57,7 @@
 #' 
 #' @name mutate
 #' @rdname mutate-methods
-#' @aliases mutate, GMQLDataset-methods
+#' @aliases mutate, mutate-methods
 #' @export
 setMethod("mutate", "GMQLDataset",
             function(.data, metadata = NULL)

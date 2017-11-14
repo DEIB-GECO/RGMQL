@@ -74,7 +74,7 @@
 #' }
 #'
 #' @rdname setdiff-methods
-#' @aliases setdiff, GMQLDataset-methods
+#' @aliases setdiff, setdiff-methods
 #' @export
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
             function(x, y, joinBy = NULL, is_exact = FALSE)

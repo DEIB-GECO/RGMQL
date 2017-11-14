@@ -1,8 +1,9 @@
-#'
+#' Class GMQLDataset
+#' 
 #' Abstract class representing GMQL dataset
-#' 
+#'
 #' @importClassesFrom S4Vectors DataTable
-#' 
+#' @slot value value associated to GMQL dataset
 #' @name GMQLDataset-class
 #' @rdname GMQLDataset-class
 #' 
@@ -10,13 +11,17 @@ setClass("GMQLDataset",
             contains = c("DataTable"),
             representation(value = "character"))
 
-# Constructor GMQLDataset
+#' @name GMQLDataset
+#' @importFrom methods new
+#' 
+#' @param value value associated to GMQL dataset
+#' @rdname GMQLDataset-class
+#' 
 GMQLDataset <- function(value) {
     dataset <- new("GMQLDataset",value = value)
     return(dataset)
 }
-    
-    
+
 setMethod("show", "GMQLDataset",
             function(object)
             {
@@ -24,13 +29,14 @@ setMethod("show", "GMQLDataset",
                 cat(" value :",paste(object@value))
             })
 
-## insted of GMQL select
-setGeneric("filter", function(data, m_predicate = NULL, r_predicate = NULL, 
-                                semi_join = NULL, semi_join_negation = FALSE, 
-                                semi_join_dataset = NULL) 
-                            standardGeneric("filter"))
 
-## insted of GMQL extend
+#' Method mutate
+#' 
+#' Wrapper to GMQL extend function
+#' 
+#' @name mutate
+#' @rdname mutate-methods
+#' 
 setGeneric("mutate", function(.data, metadata = NULL) 
                                 standardGeneric("mutate"))
 
@@ -40,8 +46,25 @@ setGeneric("mutate", function(.data, metadata = NULL)
 # num_fetch = 0, reg_fetch_opt = NULL, 
 # reg_num_fetch = 0) standardGeneric("sort"))
 
-## insted of GMQL merge
+#' Method mutate
+#' 
+#' Wrapper to GMQL merge function
+#' 
+#' @name aggregate
+#' @rdname aggregate-methods
+#' 
 setGeneric("aggregate", function(data, groupBy = NULL) 
                                     standardGeneric("aggregate"))
+
+
+#' Method join
+#' 
+#' Wrapper to GMQL join function
+#' 
+#' @name join
+#' @rdname join-methods
+#' @aliases join
+#' 
+setGeneric("join", function(x, y, by = NULL, ...) standardGeneric("join"))
 
 

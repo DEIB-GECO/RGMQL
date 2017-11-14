@@ -5,7 +5,7 @@
 \alias{materialize}
 \alias{materialize}
 \alias{materialize,}
-\alias{GMQLDataset-methods}
+\alias{materialize-methods}
 \title{GMQL Operation: MATERIALIZE}
 \usage{
 materialize(data, ...)

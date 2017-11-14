@@ -1,9 +1,6 @@
-#' @name cover
-#' @rdname cover-methods
-#' @aliases cover
-#' @export
-setGeneric("cover", function(data, minAcc, maxAcc, ...) 
-                                standardGeneric("cover"))
+
+
+
 
 #' GMQL Operation: COVER
 #'
@@ -135,21 +132,15 @@ setGeneric("cover", function(data, minAcc, maxAcc, ...)
 #' exp = read_dataset(test_path)
 #' res = cover(exp, 2, 3, c("cell"), list(min_pValue = MIN("pvalue")))
 #' }
+#' 
+#' 
 #' @name cover
 #' @rdname cover-methods
-#' @aliases cover, GMQLDataset-methods
-#' @export
-setMethod("cover", "GMQLDataset",
-            function(data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL, 
-                        variation = "cover")
-            {
-                gmql_cover(data@value, minAcc, maxAcc, groupBy, aggregates, 
-                            variation)
-            })
-
-
-gmql_cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, 
-                            aggregates = NULL, variation)
+#' @aliases cover, cover-methods
+#' 
+#' @exportMethod cover
+#' 
+setGeneric("cover", function(data, minAcc, maxAcc, ...)
 {
     minAcc <- .trasform_cover(deparse(substitute(minAcc)))
     maxAcc <- .trasform_cover(deparse(substitute(maxAcc)))
@@ -157,12 +148,30 @@ gmql_cover <- function(input_data, minAcc, maxAcc, groupBy = NULL,
     min <- .check_cover_param(minAcc,TRUE)
     max <- .check_cover_param(maxAcc,FALSE)
     
-    vary = toupper(variation)
-    
-    .doVariant(vary, minAcc, maxAcc, groupBy, aggregates, input_data)
-}
+    gmql_cover(data,minAcc,maxAcc)
+})
 
-.doVariant <- function(flag,minAcc,maxAcc,groupBy,aggregates,input_data)
+#' @name cover
+#' @rdname cover-methods
+#' @aliases cover, cover-methods
+#' @export
+setMethod("cover", "GMQLDataset",
+            function(data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL, 
+                        variation = "cover")
+            {
+                minAcc <- .trasform_cover(deparse(substitute(minAcc)))
+                maxAcc <- .trasform_cover(deparse(substitute(maxAcc)))
+                
+                min <- .check_cover_param(minAcc,TRUE)
+                max <- .check_cover_param(maxAcc,FALSE)
+                flag = toupper(variation)
+                
+                gmql_cover(data@value, minAcc, maxAcc, groupBy, aggregates, 
+                                flag)
+            })
+
+gmql_cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, 
+                        aggregates = NULL, flag = "cover")
 {
     if(!is.null(groupBy))
         join_condition_matrix <- .jarray(.join_condition(groupBy),

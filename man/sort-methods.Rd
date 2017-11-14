@@ -4,7 +4,7 @@
 \name{sort}
 \alias{sort}
 \alias{sort,}
-\alias{GMQLDataset-methods}
+\alias{sort-methods}
 \title{GMQL operation: ORDER}
 \usage{
 \S4method{sort}{GMQLDataset}(x, decreasing = FALSE,
