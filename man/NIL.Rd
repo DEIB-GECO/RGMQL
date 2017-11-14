@@ -27,7 +27,7 @@ performing all the type conversion needed
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-out = project(exp, regions_update = list(signal = NIL("INTEGER"), 
+out = subset(exp, regions_update = list(signal = NIL("INTEGER"), 
 pvalue = NIL("DOUBLE")))
 
 

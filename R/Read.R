@@ -169,7 +169,7 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }
 
 #' GMQL Function: READ
@@ -259,7 +259,7 @@ We provide two metadata for you")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
-    DataSet(response)
+    GMQLDataset(response)
 }
 
 
@@ -301,7 +301,7 @@ We provide two metadata for you")
 #' remote_processing(TRUE)
 #'
 #' @export
-#'
+#' 
 remote_processing<-function(is_remote)
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")

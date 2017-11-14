@@ -1,6 +1,5 @@
 #' GMQL Operation: SELECT
 #'
-#' It extracts a subset of samples from the input dataset.
 #' It returns all the samples satisfying the predicate on metadata.
 #' If regions are specified, returns regions satisfying the predicate 
 #' on regions.
@@ -8,14 +7,14 @@
 #' When semijoin is defined, it extracts those samples containing all metadata 
 #' attribute defined in semijoin clause with at least one metadata value 
 #' in common with semi join dataset.
-#' If no metadata in common beetween input dataset and semi join dataset, 
+#' If no metadata in common between input dataset and semi join dataset, 
 #' no sample is extracted.
 #'
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #'
-#' @param input_data returned object from any GMQL function
+#' @param x GMQLDataset class object
 #' @param predicate logical predicate made up by R logical operation 
 #' on metadata attribute. 
 #' Only !, |, ||, &, && are admitted.
@@ -43,9 +42,9 @@
 #' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
 #' considering semi_join IN semi_join_dataset
 #' 
-#' @param semi_join_dataset returned object from any GMQL function
+#' @param semi_join_dataset GMQLDataset class object
 #'
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
 #' @examples
@@ -56,7 +55,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' input <- read_dataset(test_path)
-#' s <- select(input, Patient_age < 70)
+#' s <- subset(input, Patient_age < 70)
 #' 
 #' 
 #' \dontrun{
@@ -79,35 +78,46 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' data <- read_dataset(test_path)
 #' join_data <-  read_dataset(test_path2)
-#' jun_tf <- select(data, antibody_target == 'JUN', pValue < 0.01, c("cell"), 
+#' jun_tf <- filter(data, antibody_target == 'JUN', pValue < 0.01, c("cell"), 
 #' TRUE, semi_join_dataset = join_data )
 #' 
 #' }
-#'
+#' @name filter
+#' @rdname filter-methods
+#' @aliases filter, GMQLDataset-methods
 #' @export
-#'
-select <- function(input_data, predicate = NULL, region_predicate = NULL, 
+setMethod("filter", "GMQLDataset",
+            function(data, m_predicate = NULL, r_predicate = NULL, 
+                    semi_join = NULL, semi_join_negation = FALSE, 
+                    semi_join_dataset = NULL)
+            {
+                val <- data@value
+                meta_pred <- substitute(m_predicate)
+                if(!is.null(meta_pred))
+                {
+                    predicate <- .trasform(deparse(meta_pred))
+                    predicate <- paste(predicate,collapse = "")
+                }
+                else
+                    predicate <- .jnull("java/lang/String")
+                
+                reg_pred <- substitute(r_predicate)
+                if(!is.null(reg_pred))
+                {
+                    region_predicate <- .trasform(deparse(reg_pred))
+                    region_predicate <- paste(region_predicate,collapse = "")
+                }
+                else
+                    region_predicate <- .jnull("java/lang/String")
+            
+                gmql_select(val, predicate, region_predicate, 
+                        semi_join, semi_join_negation, semi_join_dataset)
+            })
+
+gmql_select <- function(input_data, predicate = NULL, region_predicate = NULL, 
                     semi_join = NULL, semi_join_negation = FALSE, 
                     semi_join_dataset = NULL)
 {
-    meta_pred <- substitute(predicate)
-    if(!is.null(meta_pred))
-    {
-        predicate <- .trasform(deparse(meta_pred))
-        predicate <- paste(predicate,collapse = "")
-    }
-    else
-        predicate <- .jnull("java/lang/String")
-    
-    reg_pred <- substitute(region_predicate)
-    if(!is.null(reg_pred))
-    {
-        region_predicate <- .trasform(deparse(reg_pred))
-        region_predicate <- paste(region_predicate,collapse = "")
-    }
-    else
-        region_predicate <- .jnull("java/lang/String")
-    
     if(is.null(semi_join) && is.null(semi_join_dataset))
     {
         join_condition_matrix <- .jnull("java/lang/String")
@@ -125,7 +135,10 @@ Function will be invoked with these parameters as NULL")
     }
     else
     {
-        semi_join_dataset <- semi_join_dataset$value
+        if(!isClass("GMQLDataset", semi_join_dataset))
+            stop("semi_join_dataset: Must be a GMQLDataset object")
+        
+        semi_join_dataset <- semi_join_dataset@value
         .check_input(semi_join_dataset)
         .check_logical(semi_join_negation)
         join_condition_matrix <- .jarray(.join_condition(semi_join),
@@ -134,13 +147,14 @@ Function will be invoked with these parameters as NULL")
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$select(predicate,region_predicate, 
                                 join_condition_matrix, semi_join_dataset, 
-                                semi_join_negation, input_data$value)
+                                semi_join_negation, input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
+        
 }
 
 .trasform <- function(predicate=NULL)

@@ -56,7 +56,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
     {
         h <- c('Accept'="Application/json",'Content-Type'='Application/json')
         URL <- paste0(url,"/login")
-        body <- list('username'=username,'password'=password)
+        body <- list('username' = username,'password' = password)
         req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
     }
 

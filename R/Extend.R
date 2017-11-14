@@ -9,7 +9,7 @@
 #' @importFrom rJava J
 #' @importFrom rJava .jarray
 #'
-#' @param input_data returned object from any GMQL function
+#' @param .data GMQLDataset class object 
 #' @param metadata list of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
@@ -37,7 +37,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r <- read_dataset(test_path)
-#' e <- extend(input_data = r, list(RegionCount = COUNT()))
+#' e <- mutate(input_data = r, list(RegionCount = COUNT()))
 #' 
 #' \dontrun{
 #' 
@@ -50,14 +50,24 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = extend(input_data = exp, list(RegionCount = COUNT(),
+#' res = mutate(input_data = exp, list(RegionCount = COUNT(),
 #' MinP = MIN("pvalue")))
 #' 
 #' }
 #' 
+#' @name mutate
+#' @rdname mutate-methods
+#' @aliases mutate, GMQLDataset-methods
 #' @export
-#'
-extend <-function(input_data, metadata = NULL)
+setMethod("mutate", "GMQLDataset",
+            function(.data, metadata = NULL)
+            {
+                val_x = .data@value
+                gmql_extend(val_x, metadata)
+            })
+
+
+gmql_extend <-function(input_data, metadata = NULL)
 {
     if(!is.null(metadata))
         metadata_matrix <- .jarray(.aggregates(metadata,"META_AGGREGATES"),
@@ -66,12 +76,11 @@ extend <-function(input_data, metadata = NULL)
         metadata_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$extend(metadata_matrix,input_data$value)
+    response <- WrappeR$extend(metadata_matrix,input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }
-

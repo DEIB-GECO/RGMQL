@@ -3,7 +3,6 @@
 #' Execute GMQL query.
 #' The function works only after invoking at least one materialize
 #' 
-#'
 #' @importFrom rJava J
 #' 
 #' @return None
@@ -13,8 +12,8 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
-#' s = select(input_data = r)
-#' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
+#' s = filter(input_data = r)
+#' m = aggregate(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
 #' materialize(input_data = m, dir_out = test_path)
 #' 
 #' \dontrun{
@@ -66,6 +65,13 @@ execute <- function()
     }
 }
 
+#' @name materialize
+#' @rdname materialize-methods
+#' @aliases materialize
+#' @export
+setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
+
+
 #' GMQL Operation: MATERIALIZE
 #'
 #' It saves the contents of a dataset that contains samples metadata and 
@@ -77,7 +83,7 @@ execute <- function()
 #'
 #' @importFrom rJava J
 #' 
-#' @param input_data returned object from any GMQL function
+#' @param data GMQLDataset class object
 #' @param dir_out destination folder path.
 #' by default is current working directory of the R process
 #'
@@ -88,16 +94,25 @@ execute <- function()
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
-#' s = select(input_data = r)
-#' m = merge(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
+#' s = filter(input_data = r)
+#' m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
 #' materialize(input_data = m, dir_out = test_path)
 #' 
+#' @name materialize
+#' @rdname materialize-methods
+#' @aliases materialize, GMQLDataset-methods
 #' @export
-#'
-materialize <- function(input_data, dir_out = getwd())
+setMethod("materialize", "GMQLDataset",
+            function(data, dir_out = getwd())
+            {
+                gmql_materialize(data, dir_out)
+            })
+
+
+gmql_materialize <- function(data, dir_out)
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$materialize(input_data$value,dir_out)
+    response <- WrappeR$materialize(data@value,dir_out)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -133,7 +148,7 @@ materialize <- function(input_data, dir_out = getwd())
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r = read_dataset(test_path)
-#' m = merge(groupBy = c("antibody_target", "cell_karyotype"), input_data = r)
+#' m = aggregate(r, groupBy = c("antibody_target", "cell_karyotype"))
 #' g <- take(input_data = m, rows = 45)
 #' 
 #' @export
@@ -145,7 +160,7 @@ take <- function(input_data, rows=0L)
         stop("rows cannot be negative")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$take(input_data$value,rows)
+    response <- WrappeR$take(input_data@value,rows)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

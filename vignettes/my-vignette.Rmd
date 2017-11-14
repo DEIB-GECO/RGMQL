@@ -135,7 +135,7 @@ with data encoded in human readable format using plain text files.
 
 GMQL datasets are materialized in a standard layout composed of three 
 types of files:
-  
+
 1. genomic region tab-delimited text files with extension .gdm, or .gtf 
 if in standard GTF format
 2. metadata attribute-value tab-delimited text files with the same fullname 
@@ -297,10 +297,10 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 exon_ds  <- read_dataset(exon_path)
 mut_ds  <- read_dataset(mut_path)
 
-mut = select(mut_ds, manually_curated__dataType == 'dnaseq' & 
+mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-exon =  select(exon_ds, annotation_type == 'exons' & 
+exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
 
@@ -311,17 +311,17 @@ exon1 <- map(exon, mut)
 
 ## Remove exons in each sample that do not contain mutations
 
-exon2 <- select(exon1, count_Exon_Mut >= 1)
+exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
 ## Using the extend() function, count how many exons remain in each sample and
 ## store the result in the sample metadata as a new attribute???value pair, 
 ## with exon_count as attribute name 
 
-exon3 <- extend(exon2, list(exon_count = COUNT()))
+exon3 <- mutate(exon2, list(exon_count = COUNT()))
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = RGMQL::order(exon3, list(DESC("exon_count")))
+exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
 ```
 
 If you want to store persistently the result, you can materialize it into 
@@ -464,10 +464,10 @@ After init, we can start building our queries:
 exon_ds  <- read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 mut_ds  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
 
-mut = select(mut_ds, manually_curated__dataType == 'dnaseq' & 
+mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-exon =  select(exon_ds, annotation_type == 'exons' & 
+exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
 ## For each mutation sample, count mutations within each exon while 
@@ -477,17 +477,17 @@ exon1 <- map(exon, mut)
 
 ## Remove exons in each sample that do not contain mutations
 
-exon2 <- select(exon1, count_Exon_Mut >= 1)
+exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
 ## Using the extend() function, count how many exons remain in each sample and
 ## store the result in the sample metadata as a new attribute???value pair, 
 ## with exon_count as attribute name 
 
-exon3 <- extend(exon2, list(exon_count = COUNT()))
+exon3 <- mutate(exon2, list(exon_count = COUNT()))
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = order(exon3, list(DESC("exon_count")))
+exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
 ```
 
 ```{r, remote materialize, eval = FALSE}
@@ -519,10 +519,10 @@ exon_path <- system.file("example", "EXON", package = "RGMQL")
 exon_ds  <- read_dataset(exon_path,is_local = TRUE)
 mut_ds  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
 
-mut = select(mut_ds, manually_curated__dataType == 'dnaseq' & 
+mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-exon =  select(exon_ds, annotation_type == 'exons' & 
+exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
 ## For each mutation sample, count mutations within each exon while 
@@ -532,17 +532,17 @@ exon1 <- map(exon, mut)
 
 ## Remove exons in each sample that do not contain mutations
 
-exon2 <- select(exon1, count_Exon_Mut >= 1)
+exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
 ## Using the extend() function, count how many exons remain in each sample and
 ## store the result in the sample metadata as a new attribute???value pair, 
 ## with exon_count as attribute name 
 
-exon3 <- extend(exon2, list(exon_count = COUNT()))
+exon3 <- mutate(exon2, list(exon_count = COUNT()))
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = order(exon3, list(DESC("exon_count")))
+exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
 
 ```
 

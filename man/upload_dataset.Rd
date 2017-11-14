@@ -5,7 +5,7 @@
 \title{Upload dataset}
 \usage{
 upload_dataset(url, datasetName, folderPath, schemaName = NULL,
-    isGMQL = TRUE)
+  isGMQL = TRUE)
 }
 \arguments{
 \item{url}{string url of server: It must contain the server address 

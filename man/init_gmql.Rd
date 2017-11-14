@@ -5,7 +5,7 @@
 \title{Init GMQL Server}
 \usage{
 init_gmql(output_format = "gtf", remote_processing = FALSE, url = NULL,
-    username = NULL, password = NULL)
+  username = NULL, password = NULL)
 }
 \arguments{
 \item{output_format}{string identifies the output format of sample files.

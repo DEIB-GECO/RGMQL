@@ -21,10 +21,10 @@
 #' 
 #' @importFrom rJava J
 #' 
-#' @param left_input_data returned object from any GMQL function
-#' @param right_input_data returned object from any GMQL function
+#' @param x GMQLDataset class object
+#' @param y GMQLDataset class object 
 #'
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #'
 #' @examples
@@ -42,16 +42,26 @@
 #' 
 #' res <- union(data1, data2)
 #' 
+#' @name union
+#' @rdname union-methods
+#' @aliases union, GMQLDataset-methods
 #' @export
-#'
-union <- function(left_input_data, right_input_data)
+setMethod("union", c("GMQLDataset","GMQLDataset"),
+            function(x, y)
+            {
+                val_x = x@value
+                val_y = y@value
+                gmql_union(val_x, val_y)
+            })
+
+gmql_union <- function(left_data, right_data)
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$union(right_input_data$value,left_input_data$value)
+    response <- WrappeR$union(left_data,right_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }

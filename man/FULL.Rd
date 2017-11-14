@@ -28,14 +28,14 @@ r = read_dataset(test_path)
 
 ## select with condition
 ## the first and the third attribute are default the second one is FULL
-s = select(r, semi_join = list("cell_type", FULL("cell"), "attribute_tag"),
+s = filter(r, semi_join = list("cell_type", FULL("cell"), "attribute_tag"),
 semi_join_dataset = r)
 
 \dontrun{
 
 ## select with default condition
 ## Tthe FULL condition is treated as default due to coercion
-s = select(r, semi_join = c("cell_type", "cell", FULL("attribute_tag")),
+s = filter(r, semi_join = c("cell_type", "cell", FULL("attribute_tag")),
 semi_join_dataset = r)
 
 }

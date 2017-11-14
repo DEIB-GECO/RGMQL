@@ -5,7 +5,7 @@
 \title{FILTER AND EXTRACT}
 \usage{
 filter_and_extract(data, metadata = NULL, metadata_prefix = NULL,
-    regions = NULL)
+  regions = NULL)
 }
 \arguments{
 \item{data}{string GMQL dataset folder path or GrangesList 

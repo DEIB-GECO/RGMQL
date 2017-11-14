@@ -27,7 +27,8 @@ It defines a descending order for input value
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 r = read_dataset(test_path)
-o = order(r, list(ASC("Region_Count")), mtop = 5, 
-regions_ordering = list(DESC("score")), rtop = 7)
+o = sort(r,TRUE, list(ASC("Region_Count")),list(DESC("score")),
+fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
+reg_num_fetch = 7)
 
 }

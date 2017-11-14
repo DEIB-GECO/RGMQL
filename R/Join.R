@@ -1,12 +1,19 @@
+#' @name join
+#' @rdname join-methods
+#' @aliases join
+#' @export
+setGeneric("join", function(x, y, by = NULL, ...) standardGeneric("join"))
+
+
 #' GMQL Operation: JOIN
 #'
 #' It takes in input two datasets, respectively known as nchor (left) 
 #' and experiment (right) and returns a dataset of samples consisting of 
 #' regions extracted from the operands according to the specified condition
-#' (a.k.a genometric_predicate).
+#' (a.k.a \emph{genometric_predicate}).
 #' The number of generated output samples is the Cartesian product 
 #' of the number of samples in the anchor and in the experiment dataset 
-#' (if joinBy is not specified).
+#' (if \emph{by} is not specified).
 #' The output metadata are the union of the input metadata, 
 #' with their attribute names prefixed with left or right respectively.
 #'
@@ -14,14 +21,14 @@
 #' @importFrom rJava J
 #' @importFrom rJava .jarray
 #' 
-#' @param left_input_data returned object from any GMQL function
-#' @param right_input_data returned object from any GMQL function
+#' @param x GMQLDataset class object
+#' @param y GMQLDataset class object
 #' @param genometric_predicate is a list of lists of DISTAL object
 #' For details of DISTAL objects see:
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 #' \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}
 #' 
-#' @param joinBy list of CONDITION objects where every object contains 
+#' @param by list of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
 #' without declaring condition.
@@ -59,7 +66,7 @@
 #' the genometric predicate)}
 #' }
 #'
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #'
 #'
@@ -78,14 +85,26 @@
 #' TSS = read_dataset(test_path)
 #' HM = read_dataset(test_path2)
 #' join_data = join(TSS, HM, 
-#' genometric_predicate = list(list(MD(1), DLE(120000))), c("provider"), 
+#' genometric_predicate = list(list(MD(1), DLE(120000))), by = c("provider"), 
 #' region_output="RIGHT")
 #'
+#' @name join
+#' @rdname join-methods
+#' @aliases join, GMQLDataset-methods
 #' @export
-#'
-join <- function(right_input_data, left_input_data, 
-                    genometric_predicate = NULL, joinBy = NULL, 
+setMethod("join", "GMQLDataset",
+                function(x, y, by = NULL, genometric_predicate = NULL, 
                     region_output="contig")
+                {
+                    r_data <- x@value
+                    l_data <- y@value
+                    gmql_join(r_data, l_data, genometric_predicate, joinBy, 
+                            region_output="contig")
+                })
+
+
+gmql_join <- function(right_data, left_data, genometric_predicate, joinBy, 
+                            region_output="contig")
 {
     if(!is.null(genometric_predicate))
     {
@@ -141,5 +160,5 @@ join <- function(right_input_data, left_input_data,
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }

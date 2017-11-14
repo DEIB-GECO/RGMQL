@@ -25,7 +25,7 @@ exp = read_dataset(test_path)
 ## counts the regions in each sample and stores their number as value 
 ## of the new metadata RegionCount attribute of the sample.
 
-out = extend(input_data = exp, list(RegionCount = COUNT()))
+out = mutate(input_data = exp, list(RegionCount = COUNT()))
 
 }
 \seealso{

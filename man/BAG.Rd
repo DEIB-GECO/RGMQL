@@ -31,7 +31,7 @@ data = read_dataset(test_path)
 ## which is the aggregation comma-separated list of all the values 
 ## that the region attribute score takes in the sample.
 
-out = extend(input_data = data, list(allScore = BAG("score")))
+out = mutate(input_data = data, list(allScore = BAG("score")))
 
 }
 \seealso{

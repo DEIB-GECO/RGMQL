@@ -15,8 +15,8 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
-#' @param right_input_data returned object from any GMQL function
-#' @param left_input_data returned object from any GMQL function
+#' @param x returned object from any GMQL function
+#' @param y returned object from any GMQL function
 #' @param joinBy list of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
@@ -55,7 +55,7 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' r_left = read_dataset(test_path)
 #' r_right = read_dataset(test_path2)
-#' out = difference(r_left, r_right)
+#' out = setdiff(r_left, r_right)
 #' 
 #' \dontrun{
 #' ## This GMQL statement extracts for every pair of samples s1 in EXP1 
@@ -69,14 +69,23 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' exp1 = read_dataset(test_path)
 #' exp2 = read_dataset(test_path2)
-#' out = difference(exp1, exp2, c("antibody_target"))
+#' out = setdiff(exp1, exp2, c("antibody_target"))
 #'
 #' }
 #'
+#' @rdname setdiff-methods
+#' @aliases setdiff, GMQLDataset-methods
 #' @export
-#'
-difference <- function(left_input_data, right_input_data, joinBy = NULL, 
-                            is_exact = FALSE)
+setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
+            function(x, y, joinBy = NULL, is_exact = FALSE)
+            {
+                val_x = x@value
+                val_y = y@value
+                gmql_difference(val_x, val_y, joinBy, is_exact)
+            })
+
+gmql_difference <- function(left_data, right_data, joinBy = NULL, 
+                                is_exact = FALSE)
 {
     if(!is.null(joinBy))
         join_condition_matrix <- .jarray(.join_condition(joinBy),
@@ -85,14 +94,13 @@ difference <- function(left_input_data, right_input_data, joinBy = NULL,
         join_condition_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$difference(join_condition_matrix,
-                                    right_input_data$value,
-                                    left_input_data$value,is_exact)
+    response <- WrappeR$difference(join_condition_matrix, right_data, 
+                                        left_data, is_exact)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }
 

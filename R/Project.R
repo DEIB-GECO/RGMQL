@@ -15,7 +15,7 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
-#' @param input_data returned object from any GMQL function
+#' @param x GMQLDataset class object
 #' @param metadata vector of string made up by metadata attribute
 #' @param regions vector of string made up by schema field attribute
 #' @param all_but_reg logical value indicating which schema field attribute 
@@ -44,7 +44,7 @@
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
 #' \item{SQRT, META, NULLABLE constructor object defined by OPERATOR object}
 #' }
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #'
 #' @examples
@@ -60,7 +60,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' input = read_dataset(test_path)
-#' CTCF_NORM_SCORE = project(input, metadata_update = list(normalized = 1), 
+#' CTCF_NORM_SCORE = subset(input, metadata_update = list(normalized = 1), 
 #' regions_update = list(new_score = (score / 1000.0) + 100), 
 #' regions = c("score"), all_but_reg = TRUE)
 #' 
@@ -78,7 +78,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' DS_in = read_dataset(test_path)
-#' DS_out = project(DS_in, regions = c("variant_classification", 
+#' DS_out = subset(DS_in, regions = c("variant_classification", 
 #' "variant_type"), metadata = c("manually_curated_tissue_status", 
 #' "manually_curated_tumor_tag"))
 #' 
@@ -86,8 +86,22 @@
 #' 
 #' @export
 #'
-#'
-project <-function(input_data, metadata = NULL, metadata_update=NULL, 
+#' @name subset
+#' @rdname subset-methods
+#' @aliases subset, GMQLDataset-methods
+#' @export
+setMethod("subset", "GMQLDataset",
+            function(x, metadata = NULL, metadata_update=NULL, 
+                        all_but_meta = FALSE, regions = NULL, 
+                        regions_update = NULL, all_but_reg=FALSE)
+            {
+                data = x@value
+                gmql_project(data, metadata, metadata_update,
+                                all_but_meta, regions, 
+                                regions_update, all_but_reg)
+            })
+
+gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL, 
                     all_but_meta = FALSE, regions = NULL, 
                     regions_update = NULL, all_but_reg=FALSE)
 {
@@ -159,7 +173,7 @@ project <-function(input_data, metadata = NULL, metadata_update=NULL,
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }
 
 .trasform_update <- function(predicate=NULL)

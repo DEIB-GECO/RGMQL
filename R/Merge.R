@@ -1,7 +1,7 @@
 #' GMQL Operation: MERGE
 #'
 #' It builds a dataset consisting of a single sample having as many regions
-#' as the numebr of regions of the input data and as many metadata 
+#' as the number of regions of the input data and as many metadata 
 #' as the union of the 'attribute-value' tuples of the input samples.
 #' A groupby clause can be specified on metadata: the samples are then 
 #' partitioned in groups, each with a distinct value of the grouping
@@ -15,7 +15,7 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #'  
-#' @param input_data returned object from any GMQL function
+#' @param data GMQLDataset class object 
 #' @param groupBy list of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
@@ -46,11 +46,21 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' merged = merge(input_data = exp, groupBy = c("antibody_target"))
+#' merged = aggregate(input_data = exp, groupBy = c("antibody_target"))
 #' 
+#' @name aggregate
+#' @rdname aggregate-methods
+#' @aliases aggregate, GMQLDataset-methods
 #' @export
-#'
-merge <- function(input_data, groupBy = NULL)
+#' 
+setMethod("aggregate", "GMQLDataset",
+            function(data, groupBy = NULL)
+            {
+                val = .data@value
+                gmql_merge(val, metadata)
+            })
+
+gmql_merge <- function(data, groupBy = NULL)
 {
     if(!is.null(groupBy))
         join_condition_matrix <- .jarray(.join_condition(groupBy), 
@@ -59,12 +69,12 @@ merge <- function(input_data, groupBy = NULL)
         join_condition_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$merge(join_condition_matrix,input_data$value)
+    response <- WrappeR$merge(join_condition_matrix,data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
         stop(data)
     else
-        DataSet(data)
+        GMQLDataset(data)
 }
 
