@@ -1,7 +1,3 @@
-
-
-
-
 #' GMQL Operation: COVER
 #'
 #' It takes as input a dataset containing one or more samples and returns 
@@ -134,11 +130,10 @@
 #' }
 #' 
 #' 
-#' @name cover
-#' @rdname cover-methods
-#' @aliases cover, cover-methods
+#' @rdname GMQLDataset-class
+#' @aliases cover, GMQLDataset--method
 #' 
-#' @exportMethod cover
+#' @export
 #' 
 setGeneric("cover", function(data, minAcc, maxAcc, ...)
 {
@@ -148,12 +143,11 @@ setGeneric("cover", function(data, minAcc, maxAcc, ...)
     min <- .check_cover_param(minAcc,TRUE)
     max <- .check_cover_param(maxAcc,FALSE)
     
-    gmql_cover(data,minAcc,maxAcc)
+    gmql_cover(data,min,max,NULL,NULL,"COVER")
 })
 
-#' @name cover
-#' @rdname cover-methods
-#' @aliases cover, cover-methods
+#' @rdname GMQLDataset-class
+#' @aliases cover, GMQLDataset--method
 #' @export
 setMethod("cover", "GMQLDataset",
             function(data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL, 
@@ -166,12 +160,12 @@ setMethod("cover", "GMQLDataset",
                 max <- .check_cover_param(maxAcc,FALSE)
                 flag = toupper(variation)
                 
-                gmql_cover(data@value, minAcc, maxAcc, groupBy, aggregates, 
-                                flag)
+                gmql_cover(data@value, min, max, groupBy, aggregates, 
+                           flag)
             })
 
-gmql_cover <- function(input_data, minAcc, maxAcc, groupBy = NULL, 
-                        aggregates = NULL, flag = "cover")
+gmql_cover <- function(data, minAcc, maxAcc, groupBy = NULL, 
+                        aggregates = NULL, flag)
 {
     if(!is.null(groupBy))
         join_condition_matrix <- .jarray(.join_condition(groupBy),
@@ -188,14 +182,13 @@ gmql_cover <- function(input_data, minAcc, maxAcc, groupBy = NULL,
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- switch(flag,
                 "COVER" = WrappeR$cover(minAcc, maxAcc, join_condition_matrix,
-                                    metadata_matrix, input_data),
+                                    metadata_matrix, data),
                 "FLAT" = WrappeR$flat(minAcc, maxAcc, join_condition_matrix,
-                                    metadata_matrix,input_data),
+                                    metadata_matrix, data),
                 "SUMMIT" = WrappeR$summit(minAcc,maxAcc, join_condition_matrix,
-                                    metadata_matrix, input_data),
+                                    metadata_matrix, data),
                 "HISTOGRAM" = WrappeR$histogram(minAcc, maxAcc, 
-                                join_condition_matrix, metadata_matrix,
-                                input_data))
+                                join_condition_matrix, metadata_matrix, data))
     if(is.null(response))
         stop("no admissible variation: cover, flat, summit, histogram")
     
