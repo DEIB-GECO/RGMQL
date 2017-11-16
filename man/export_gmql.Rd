@@ -46,7 +46,6 @@ grl = GRangesList(gr1, gr2)
 test_out_path <- system.file("example", package = "RGMQL")
 export_gmql(grl, test_out_path,TRUE)
 
-
 }
 \seealso{
 \code{\link{import_gmql}}

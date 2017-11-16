@@ -46,7 +46,6 @@
 #' test_out_path <- system.file("example", package = "RGMQL")
 #' export_gmql(grl, test_out_path,TRUE)
 #'
-#'
 #' @export
 #'
 export_gmql <- function(samples, dir_out, is_gtf)
@@ -75,7 +74,9 @@ export_gmql <- function(samples, dir_out, is_gtf)
     if(!is(samples,"GRangesList"))
         stop("samples must be a GrangesList")
 
-    dir.create(dir_out)
+    if(!dir.exists(dir_out))
+        dir.create(dir_out)
+    
     files_sub_dir <- paste0(dir_out,"/files")
     dir.create(files_sub_dir)
     c = .counter()

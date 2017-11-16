@@ -14,7 +14,6 @@
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
-#' @importFrom BiocGenerics subset
 #' 
 #' @param x GMQLDataset class object
 #' @param metadata vector of string made up by metadata attribute
