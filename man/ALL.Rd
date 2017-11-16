@@ -25,7 +25,7 @@ in the input dataset;
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-res = cover(input_data = exp, 2, ALL())
+res = cover(exp, 2, "ALL")
 
 }
 \seealso{

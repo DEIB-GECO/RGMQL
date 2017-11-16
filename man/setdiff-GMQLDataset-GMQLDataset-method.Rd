@@ -4,19 +4,26 @@
 \name{setdiff,GMQLDataset,GMQLDataset-method}
 \alias{setdiff,GMQLDataset,GMQLDataset-method}
 \alias{setdiff,}
-\alias{setdiff-methods}
+\alias{setdiff-method}
 \title{GMQL Operation: DIFFERENCE}
 \usage{
-\S4method{setdiff}{GMQLDataset,GMQLDataset}(x, y, joinBy = NULL,
-  is_exact = FALSE)
+\S4method{setdiff}{GMQLDataset,GMQLDataset}(x, y, is_exact = FALSE,
+  joinBy = NULL)
 }
 \arguments{
-\item{x}{returned object from any GMQL function}
+\item{x}{GMQLDataset class object}
 
-\item{y}{returned object from any GMQL function}
+\item{y}{GMQLDataset class object}
 
-\item{joinBy}{list of CONDITION objects where every object contains 
-the name of metadata to be used in semijoin, or simple string concatenation 
+\item{is_exact}{single logical value: TRUE means that the region difference 
+is executed only on regions in left_input_data with exactly the same 
+coordinates of at least one region present in right_input_data; 
+if is_exact = FALSE, the difference is executed on all regions in 
+left_input_data that overlap with at least one region in right_input_data 
+(even just one base).}
+
+\item{joinBy}{vector of CONDITION objects where every object contains 
+the name of metadata to be used in semijoin, or string concatenation 
 of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
 without declaring condition.
 The CONDITION's available are:
@@ -28,19 +35,12 @@ the two prefix sequence are identical}
 as value will match; no further prefixes are allowed. }
 }
 Every condition accepts only one string value. (e.g. FULL("cell_type") )
-In case of single concatenation with no CONDITION or list with some value 
-without conditon, the metadata are considered having default 
-evaluation: the two attributes match if both end with value.}
-
-\item{is_exact}{single logical value: TRUE means that the region difference 
-is executed only on regions in left_input_data with exactly the same 
-coordinates of at least one region present in right_input_data; 
-if is_exact = FALSE, the difference is executed on all regions in 
-left_input_data that overlap with at least one region in right_input_data 
-(even just one base).}
+In case of single concatenation with no CONDITION the metadata are 
+considered having default evaluation: 
+the two attributes match if both end with value.}
 }
 \value{
-DataSet class object. It contains the value to use as input 
+GMQLDataset class object. It contains the value to use as input 
 for the subsequent GMQL function
 }
 \description{
@@ -79,7 +79,7 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 exp1 = read_dataset(test_path)
 exp2 = read_dataset(test_path2)
-out = setdiff(exp1, exp2, c("antibody_target"))
+out = setdiff(exp1, exp2, joinBy = c("antibody_target"))
 
 }
 

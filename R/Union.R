@@ -42,9 +42,9 @@
 #' 
 #' res <- union(data1, data2)
 #' 
-#' @rdname union-method
-#' @aliases union, union-method
-#' @export
+#' @rdname union-GMQLDataset-method
+#' @aliases union, union-method, 
+#' @export 
 #' 
 setMethod("union", c("GMQLDataset","GMQLDataset"),
             function(x, y)

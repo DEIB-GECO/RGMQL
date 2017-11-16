@@ -30,7 +30,7 @@ exp = read_dataset(test_path)
 ## attributes the average signal of the overlapping regions; 
 ## the result has one sample for each input cell.
 
-res = cover(input_data = exp,2,3, c("cell"), 
+res = cover(exp, 2, 3, c("cell"), 
 list(avg_signal = AVG("signal")))
 
 }

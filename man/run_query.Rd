@@ -32,10 +32,10 @@ It runs a GMQL query as single string
 If error occures a specific error is printed
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 run_query(remote_url, "query_1", "DATASET = SELECT() HG19_TCGA_dnaseq;
 MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
-
+}
 }

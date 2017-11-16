@@ -27,11 +27,13 @@ If error occures a specific error is printed
 }
 \examples{
 
-#### download dataset in r working directory
-#### in this case we try to download public dataset
+## download dataset in r working directory
+## in this case we try to download public dataset
+
+\dontrun{
 
 remote_url = "http://130.186.13.219/gmql-rest"
 login_gmql(remote_url)
 download_dataset(remote_url, "public.HG19_BED_ANNOTATION", path = getwd())
-
+}
 }

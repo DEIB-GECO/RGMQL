@@ -32,11 +32,11 @@ even on complete R restart (if is environemnt has been saved, of course ...)
 If error occures a specific error is printed
 }
 \examples{
-
-### login as guest
+## login as guest
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
-
+}
 }
 \seealso{
 \code{\link{logout_gmql}}

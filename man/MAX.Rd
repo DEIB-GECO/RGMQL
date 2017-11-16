@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## and then calculates new metadata attributes for each of them: 
 ## max_score is the maximum score of the sample regions.
 
-res = mutate(input_data = exp, list(max_score = MAX("score")))
+res = extend(exp, max_score = MAX("score"))
 
 
 }

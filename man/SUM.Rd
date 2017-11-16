@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## then calculates new metadata attributes for each of them: 
 ## sum_score is the sum of score of the sample regions.
 
-res = mutate(input_data = exp, list(sum_score = SUM("score")))
+res = extend(exp, sum_score = SUM("score"))
 
 }
 \seealso{

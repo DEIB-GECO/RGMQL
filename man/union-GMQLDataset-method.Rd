@@ -4,7 +4,7 @@
 \name{union,GMQLDataset,GMQLDataset-method}
 \alias{union,GMQLDataset,GMQLDataset-method}
 \alias{union,}
-\alias{union-method}
+\alias{union-method,}
 \title{GMQL Operation: UNION}
 \usage{
 \S4method{union}{GMQLDataset,GMQLDataset}(x, y)

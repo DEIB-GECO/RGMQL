@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## and then calculates new metadata attributes for each of them: 
 ## q2_score is the second quartile of score of the sample regions.
 
-res = mutate(input_data = exp, list(q2_score = Q2("score")))
+res = extend(exp, q2_score = Q2("score"))
 
 }
 \seealso{

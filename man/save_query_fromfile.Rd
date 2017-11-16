@@ -27,14 +27,14 @@ in repository you will overwrite it,
 if no error occures print "Saved" otherwise print the content error
 }
 \examples{
-
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
+
 login_gmql(remote_url)
 save_query_fromfile(remote_url, "query1", test_query)
-
+}
 }
 \seealso{
 \code{\link{save_query}}

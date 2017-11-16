@@ -22,13 +22,16 @@ print.CONDITION <- function(obj){
 }
 
 c.CONDITION <- function(...){
-    a <- list(...)
+    cond <- list(...)
 }
 
 check.CONDITION <- function(value)
 {
-    if(!is.character(value) || length(value)>1)
-        stop("value: no valid input or length > 1")
+    if(is.character(value) && length(value)>1)
+        stop("value: no multiple string")
+    
+    if(!is.character(value))
+        stop("value: is not a string")
 }
 
 

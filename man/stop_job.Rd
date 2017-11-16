@@ -22,10 +22,8 @@ It stops a specific current job
 If error occures a specific error is printed
 }
 \examples{
-
-\dontrun{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 list_jobs <- show_jobs_list(remote_url)
 jobs_1 <- list_jobs$jobs[[1]]

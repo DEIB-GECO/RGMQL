@@ -23,11 +23,11 @@ available on a remote server
 If error occures a specific error is printed
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")
 compile_query_fromfile(remote_url, test_query)
-
+}
 }

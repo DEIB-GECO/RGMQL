@@ -7,6 +7,8 @@
 #' @name GMQLDataset-class
 #' @rdname GMQLDataset-class
 #' 
+#' @return instance of GMQL dataset
+
 setClass("GMQLDataset",
             contains = c("DataTable"),
             representation(value = "character"))
@@ -30,15 +32,6 @@ setMethod("show", "GMQLDataset",
             })
 
 
-#' Method mutate
-#' 
-#' Wrapper to GMQL extend function
-#' 
-#' @name mutate
-#' @rdname mutate-methods
-#' 
-setGeneric("mutate", function(.data, metadata = NULL) 
-                                standardGeneric("mutate"))
 
 # insted of GMQL order
 # setGeneric("sort", function(data, metadata_ordering = NULL, 
@@ -51,8 +44,9 @@ setGeneric("mutate", function(.data, metadata = NULL)
 #' Wrapper to GMQL merge function
 #' 
 #' @name aggregate
-#' @rdname aggregate-methods
-#' 
+#' @rdname aggregate-GMQLDataset-method
+#' @aliases aggregate
+#'  
 setGeneric("aggregate", function(data, groupBy = NULL) 
                                     standardGeneric("aggregate"))
 
@@ -62,9 +56,42 @@ setGeneric("aggregate", function(data, groupBy = NULL)
 #' Wrapper to GMQL join function
 #' 
 #' @name join
-#' @rdname join-methods
+#' @rdname join-GMQLDataset-method
 #' @aliases join
 #' 
-setGeneric("join", function(x, y, by = NULL, ...) standardGeneric("join"))
+setGeneric("join", function(x, y, by = NULL,...) standardGeneric("join"))
+
+
+#' Method filter
+#' 
+#' Wrapper to GMQL select function
+#' 
+#' @name filter
+#' @rdname filter-GMQLDataset-method
+#' @aliases filter
+#' 
+setGeneric("filter", function(.data,...) standardGeneric("filter"))
+
+#' Method cover
+#' 
+#' Wrapper to GMQL cover function
+#' 
+#' @name cover
+#' @rdname cover-GMQLDataset-method
+#' @aliases cover
+#' 
+setGeneric("cover", function(data, ...) standardGeneric("cover"))
+
+#' Method map
+#' 
+#' Wrapper to GMQL map function
+#' 
+#' @name map
+#' @rdname map-GMQLDataset-method
+#' @aliases map
+#' 
+setGeneric("map", function(x, y, ...) standardGeneric("map"))
+
+
 
 

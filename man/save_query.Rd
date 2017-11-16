@@ -27,12 +27,13 @@ in repository you will overwrite it,
 if no error occures print "Saved" otherwise print the content error
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
+
 login_gmql(remote_url)
 save_query(remote_url, "dna_query", "DATASET = SELECT() HG19_TCGA_dnaseq; 
 MATERIALIZE DATASET INTO RESULT_DS;")
-
+}
 }
 \seealso{
 \code{\link{show_queries_list}} \code{\link{save_query_fromfile}}

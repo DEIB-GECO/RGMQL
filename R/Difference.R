@@ -15,10 +15,10 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
-#' @param x returned object from any GMQL function
-#' @param y returned object from any GMQL function
-#' @param joinBy list of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
+#' @param x GMQLDataset class object
+#' @param y GMQLDataset class object
+#' @param joinBy vector of CONDITION objects where every object contains 
+#' the name of metadata to be used in semijoin, or string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
 #' without declaring condition.
 #' The CONDITION's available are:
@@ -30,9 +30,9 @@
 #' as value will match; no further prefixes are allowed. }
 #' }
 #' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
+#' In case of single concatenation with no CONDITION the metadata are 
+#' considered having default evaluation: 
+#' the two attributes match if both end with value.
 #' 
 #' @param is_exact single logical value: TRUE means that the region difference 
 #' is executed only on regions in left_input_data with exactly the same 
@@ -41,7 +41,7 @@
 #' left_input_data that overlap with at least one region in right_input_data 
 #' (even just one base).
 #'
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
 #'
@@ -69,23 +69,21 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' exp1 = read_dataset(test_path)
 #' exp2 = read_dataset(test_path2)
-#' out = setdiff(exp1, exp2, c("antibody_target"))
+#' out = setdiff(exp1, exp2, joinBy = c("antibody_target"))
 #'
 #' }
-#'
-#' @rdname setdiff-methods
-#' @aliases setdiff, setdiff-methods
+#' 
+#' @aliases setdiff, setdiff-method
 #' @export
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
-            function(x, y, joinBy = NULL, is_exact = FALSE)
+            function(x, y, is_exact = FALSE, joinBy = NULL)
             {
                 val_x = x@value
                 val_y = y@value
-                gmql_difference(val_x, val_y, joinBy, is_exact)
+                gmql_difference(val_x, val_y, is_exact, joinBy)
             })
 
-gmql_difference <- function(left_data, right_data, joinBy = NULL, 
-                                is_exact = FALSE)
+gmql_difference <- function(left_data, right_data, is_exact, joinBy)
 {
     if(!is.null(joinBy))
         join_condition_matrix <- .jarray(.join_condition(joinBy),
@@ -103,4 +101,5 @@ gmql_difference <- function(left_data, right_data, joinBy = NULL,
     else
         GMQLDataset(data)
 }
+
 

@@ -23,8 +23,8 @@ It defines any amount of overlapping regions to be considered.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_dataset(test_path)
-res = cover(input_data = exp, 2, ANY())
+dataset = read_dataset(test_path)
+res = cover(dataset, 2, "ANY")
 
 
 }

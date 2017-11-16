@@ -59,11 +59,11 @@
 
 
 # meta join condition
-.join_condition <- function(conditions)
+.join_condition <- function(cond)
 {
-    if(is.list(conditions))
+    if(is.list(cond))
     {
-        join_condition_matrix <- t(sapply(conditions, function(x) {
+        join_condition_matrix <- t(sapply(cond, function(x) {
             new_value = as.character(x)
             if(length(new_value)==1)
                 new_value = c("DEF",new_value)
@@ -73,15 +73,15 @@
             matrix <- matrix(new_value)
         }))
     }
-    else if(is.character(conditions))
+    else if(is.character(cond))
     {
-        conditions = conditions[!conditions %in% ""]
-        conditions = conditions[!duplicated(conditions)]
-        if(length(conditions)<=0)
+        cond = cond[!cond %in% ""]
+        cond = cond[!duplicated(cond)]
+        if(length(cond)<=0)
             join_condition_matrix <- ""
         else
         {
-            join_condition_matrix <- t(sapply(conditions, function(x) {
+            join_condition_matrix <- t(sapply(cond, function(x) {
                 new_value = c("DEF",x)
                 matrix <- matrix(new_value)
             }))

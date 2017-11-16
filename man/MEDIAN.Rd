@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## and then calculates new metadata attributes for each of them: 
 ## m_score is the median score of the sample regions.
 
-res = mutate(input_data = exp, list(m_score = MEDIAN("score")))
+res = extend(exp, m_score = MEDIAN("score"))
 
 }
 \seealso{

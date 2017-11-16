@@ -86,7 +86,7 @@ take_value.META_AGGREGATES <- function(obj){
 #' ## then calculates new metadata attributes for each of them: 
 #' ## sum_score is the sum of score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(sum_score = SUM("score")))
+#' res = extend(exp, sum_score = SUM("score"))
 #' 
 #' @export
 #'
@@ -128,7 +128,7 @@ SUM <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## MinP is the minimum pvalue of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(minP = MIN("pvalue")))
+#' res = extend(exp, minP = MIN("pvalue"))
 #' 
 #' @export
 #'
@@ -171,7 +171,7 @@ MIN <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## max_score is the maximum score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(max_score = MAX("score")))
+#' res = extend(exp, max_score = MAX("score"))
 #' 
 #' 
 #' @export
@@ -215,7 +215,7 @@ MAX <- function(value)
 #' ## attributes the average signal of the overlapping regions; 
 #' ## the result has one sample for each input cell.
 #' 
-#' res = cover(input_data = exp,2,3, c("cell"), 
+#' res = cover(exp, 2, 3, c("cell"), 
 #' list(avg_signal = AVG("signal")))
 #'
 #' @export
@@ -259,7 +259,7 @@ AVG <- function(value)
 #' ## which is the aggregation comma-separated list of all the values 
 #' ## that the region attribute score takes in the sample.
 #' 
-#' out = mutate(input_data = data, list(allScore = BAG("score")))
+#' out = extend(data, allScore = BAG("score"))
 #'
 #' @export
 #'
@@ -297,7 +297,7 @@ BAG <- function(value)
 #' ## counts the regions in each sample and stores their number as value 
 #' ## of the new metadata RegionCount attribute of the sample.
 #' 
-#' out = mutate(input_data = exp, list(RegionCount = COUNT()))
+#' out = extend(exp, RegionCount = COUNT())
 #'
 #' @export
 #'
@@ -342,7 +342,7 @@ check.COUNT <- function(obj){}
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## std_score is the standard deviation score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(std_score = STD("score")))
+#' res = extend(exp, std_score = STD("score"))
 #'
 #' @export
 #'
@@ -383,7 +383,7 @@ STD <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## m_score is the median score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(m_score = MEDIAN("score")))
+#' res = extend(exp, m_score = MEDIAN("score"))
 #'
 #' @export
 #'
@@ -424,7 +424,7 @@ MEDIAN <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## q1_score is the first quartile of score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(q1_score = Q1("score")))
+#' res = extend(exp, q1_score = Q1("score"))
 #'
 #'
 #' @export
@@ -466,7 +466,7 @@ Q1 <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## q2_score is the second quartile of score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(q2_score = Q2("score")))
+#' res = extend(exp, q2_score = Q2("score"))
 #'
 #' @export
 #'
@@ -506,7 +506,7 @@ Q2 <- function(value)
 #' ## and then calculates new metadata attributes for each of them: 
 #' ## q3_score is the third quartile of score of the sample regions.
 #' 
-#' res = mutate(input_data = exp, list(q3_score = Q3("score")))
+#' res = extend(exp, q3_score = Q3("score"))
 #' 
 #' @export
 #'
@@ -549,7 +549,7 @@ Q3 <- function(value)
 #' ## aggregation comma-separated list of all the distinct values that 
 #' ## the region attribute score takes in the sample.
 #' 
-#' out = mutate(input_data = data, list(allScore = BAGD("score")))
+#' out = extend(data, allScore = BAGD("score"))
 #'
 #' @export
 #'

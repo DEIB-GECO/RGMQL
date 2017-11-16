@@ -19,9 +19,12 @@
 #' present with equal values in both M1 and  M2
 #'
 #'
-#' @param left_input_data returned object from any GMQL function
-#' @param right_input_data returned object from any GMQL function
-#' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
+#' @param x GMQLDataset class object
+#' @param y GMQLDataset class object 
+#' 
+#' @param ... Additional arguments for use in specific methods.
+#' 
+#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
@@ -54,7 +57,7 @@
 #' without conditon, the metadata are considered having default 
 #' evaluation: the two attributes match if both end with value.
 #' 
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
 #'
@@ -74,16 +77,23 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' exp = read_dataset(test_path)
 #' ref = read_dataset(test_path2)
-#' out = map(ref,exp, list(minScore = MIN("score")), 
-#' joinBy = c("cell_tissue"))
+#' out = map(ref,exp, minScore = MIN("score"), joinBy = c("cell_tissue"))
 #' 
-#' 
+#' @aliases map-method
 #' @export
-#'
-map <- function(left_input_data, right_input_data, aggregates = NULL, 
-                    joinBy = NULL)
+setMethod("map", "GMQLDataset",
+            function(x, y, ..., joinBy = NULL)
+            {
+                r_data <- x@value
+                l_data <- y@value
+                aggregates = list(...)
+                gmql_map(r_data, l_data, aggregates, joinBy)
+            })
+
+
+gmql_map <- function(l_data, r_data, aggregates, joinBy)
 {
-    if(!is.null(aggregates))
+    if(!is.null(aggregates) && !length(aggregates) == 0)
         metadata_matrix <- .jarray(.aggregates(aggregates,"AGGREGATES"),
                                     dispatch = TRUE)
     else
@@ -96,8 +106,8 @@ map <- function(left_input_data, right_input_data, aggregates = NULL,
         join_condition_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response<-WrappeR$map(join_condition_matrix, metadata_matrix, 
-                            left_input_data@value, right_input_data@value)
+    response<-WrappeR$map(join_condition_matrix, metadata_matrix, l_data, 
+                            r_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

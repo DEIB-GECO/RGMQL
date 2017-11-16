@@ -20,10 +20,10 @@ It compiles a GMQL query as single string using the proper GMQL web service
 available on a remote server
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 compile_query(remote_url, "DATASET = SELECT() HG19_TCGA_dnaseq;
 MATERIALIZE DATASET INTO RESULT_DS;")
-
+}
 }

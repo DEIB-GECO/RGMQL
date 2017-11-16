@@ -21,14 +21,15 @@
 #' yielding to one sample in the result for each group.
 #' Input samples that do not satisfy the \emph{groupby} condition 
 #' are disregarded.
-#'
+#' 
+#' @include GMQLDataset-class.R
 #' @importFrom methods is
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
 #' @param data GMQLDataset class object
-#' @param minAcc minimum number of overlapping regions to be considered 
+#' @param min_acc minimum number of overlapping regions to be considered 
 #' during execution
 #' Is a integer number, declared also as string.
 #' minAcc accept also:
@@ -38,7 +39,7 @@
 #' \item{and expression built using PARAMETER object: (ALL() + N) / K or
 #' ALL() / K }
 #' }
-#' @param maxAcc maximum number of overlapping regions to be considered 
+#' @param max_acc maximum number of overlapping regions to be considered 
 #' during execution
 #' Is a integer number, declared also as string.
 #' maxAcc accept also:
@@ -99,7 +100,8 @@
 #' the AccIndex region attribute.}
 #' \item{cover: default value.}
 #' }
-#'
+#' @param ... Additional arguments for use in specific methods.
+#' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
@@ -113,7 +115,7 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = cover(exp, 2, ANY())
+#' res = cover(exp, 2, "ANY")
 #'
 #' \dontrun{
 #' ## This GMQL statement computes the result grouping the input exp samples 
@@ -129,44 +131,25 @@
 #' res = cover(exp, 2, 3, c("cell"), list(min_pValue = MIN("pvalue")))
 #' }
 #' 
-#' 
-#' @rdname GMQLDataset-class
-#' @aliases cover, GMQLDataset--method
-#' 
-#' @export
-#' 
-setGeneric("cover", function(data, minAcc, maxAcc, ...)
-{
-    minAcc <- .trasform_cover(deparse(substitute(minAcc)))
-    maxAcc <- .trasform_cover(deparse(substitute(maxAcc)))
-    
-    min <- .check_cover_param(minAcc,TRUE)
-    max <- .check_cover_param(maxAcc,FALSE)
-    
-    gmql_cover(data,min,max,NULL,NULL,"COVER")
-})
-
-#' @rdname GMQLDataset-class
-#' @aliases cover, GMQLDataset--method
+#' @aliases cover, cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
-            function(data, minAcc, maxAcc, groupBy = NULL, aggregates = NULL, 
+            function(data, min_acc, max_acc, groupBy = NULL, aggregates = NULL, 
                         variation = "cover")
             {
-                minAcc <- .trasform_cover(deparse(substitute(minAcc)))
-                maxAcc <- .trasform_cover(deparse(substitute(maxAcc)))
-                
-                min <- .check_cover_param(minAcc,TRUE)
-                max <- .check_cover_param(maxAcc,FALSE)
+                val <- data@value
+                q_max <- .check_cover_param(max_acc,FALSE)
+                q_min <- .check_cover_param(min_acc,FALSE)
                 flag = toupper(variation)
-                
-                gmql_cover(data@value, min, max, groupBy, aggregates, 
-                           flag)
+                gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
             })
 
-gmql_cover <- function(data, minAcc, maxAcc, groupBy = NULL, 
+
+
+gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL, 
                         aggregates = NULL, flag)
 {
+    
     if(!is.null(groupBy))
         join_condition_matrix <- .jarray(.join_condition(groupBy),
                                             dispatch = TRUE)
@@ -181,14 +164,14 @@ gmql_cover <- function(data, minAcc, maxAcc, groupBy = NULL,
 
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- switch(flag,
-                "COVER" = WrappeR$cover(minAcc, maxAcc, join_condition_matrix,
+        "COVER" = WrappeR$cover(min_acc, max_acc, join_condition_matrix,
                                     metadata_matrix, data),
-                "FLAT" = WrappeR$flat(minAcc, maxAcc, join_condition_matrix,
+        "FLAT" = WrappeR$flat(min_acc, max_acc, join_condition_matrix,
                                     metadata_matrix, data),
-                "SUMMIT" = WrappeR$summit(minAcc,maxAcc, join_condition_matrix,
+        "SUMMIT" = WrappeR$summit(min_acc,max_acc, join_condition_matrix,
                                     metadata_matrix, data),
-                "HISTOGRAM" = WrappeR$histogram(minAcc, maxAcc, 
-                                join_condition_matrix, metadata_matrix, data))
+        "HISTOGRAM" = WrappeR$histogram(min_acc, max_acc, 
+                        join_condition_matrix, metadata_matrix, data))
     if(is.null(response))
         stop("no admissible variation: cover, flat, summit, histogram")
     
@@ -200,7 +183,7 @@ gmql_cover <- function(data, minAcc, maxAcc, groupBy = NULL,
         GMQLDataset(data)
 }
 
-.check_cover_param <- function(param,is_min)
+.check_cover_param <- function(param, is_min)
 {
     if(length(param)>1)
         stop("length > 1")
@@ -214,12 +197,19 @@ gmql_cover <- function(data, minAcc, maxAcc, groupBy = NULL,
     }
     else if(is.character(param))
     {
-        if(is_min && identical(param,"ANY"))
-            stop("min cannot assume ANY as value")
+        if(is.na(as.numeric(param)))
+        {
+            if(is_min && identical(param,"ANY"))
+                stop("min cannot assume ANY as value")
+            
+            if(!identical(param,"ANY") && !identical(param,"ALL"))
+                stop("invalid input data")
+        }
         return(param)
     }
     else
         stop("invalid input data")
+    
 }
 
 .trasform_cover <- function(predicate=NULL)

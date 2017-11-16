@@ -12,9 +12,9 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
-#' s = filter(input_data = r)
-#' m = aggregate(groupBy = c("antibody_targer","cell_karyotype"),input_data = s)
-#' materialize(input_data = m, dir_out = test_path)
+#' s = filter(r)
+#' m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
+#' materialize(m, dir_out = test_path)
 #' 
 #' \dontrun{
 #' execute()
@@ -65,9 +65,7 @@ execute <- function()
     }
 }
 
-#' @name materialize
-#' @rdname materialize-methods
-#' @aliases materialize
+#' @rdname materialize-GMQLDataset-method
 #' @export
 setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 
@@ -86,7 +84,7 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 #' @param data GMQLDataset class object
 #' @param dir_out destination folder path.
 #' by default is current working directory of the R process
-#'
+#' @param ... Additional arguments for use in specific methods.
 #' @return None
 #'
 #' @examples
@@ -94,13 +92,11 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
-#' s = filter(input_data = r)
+#' s = filter(r)
 #' m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
-#' materialize(input_data = m, dir_out = test_path)
+#' materialize(m, dir_out = test_path)
 #' 
-#' @name materialize
-#' @rdname materialize-methods
-#' @aliases materialize, materialize-methods
+#' @aliases materialize-method
 #' @export
 setMethod("materialize", "GMQLDataset",
             function(data, dir_out = getwd())
@@ -149,7 +145,7 @@ gmql_materialize <- function(data, dir_out)
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r = read_dataset(test_path)
 #' m = aggregate(r, groupBy = c("antibody_target", "cell_karyotype"))
-#' g <- take(input_data = m, rows = 45)
+#' g <- take(m, rows = 45)
 #' 
 #' @export
 #'

@@ -22,11 +22,8 @@ It show a job log for specific job
 If error occures a specific error is printed
 }
 \examples{
-
-\dontrun{
-
-## login with guest user
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 
 ## list all jobs

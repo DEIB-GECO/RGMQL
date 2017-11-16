@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## and then calculates new metadata attributes for each of them: 
 ## MinP is the minimum pvalue of the sample regions.
 
-res = mutate(input_data = exp, list(minP = MIN("pvalue")))
+res = extend(exp, minP = MIN("pvalue"))
 
 }
 \seealso{

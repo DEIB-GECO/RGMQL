@@ -24,11 +24,11 @@ It show all Jobs (run, succeded or failed) invoked by user
 If error occures a specific error is printed
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 list_jobs <- show_jobs_list(remote_url)
-
+}
 }
 \seealso{
 \code{\link{show_job_log}} @seealso \code{\link{stop_job}}

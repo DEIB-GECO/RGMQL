@@ -15,14 +15,14 @@
 #' @importFrom rJava .jarray
 #' @importFrom methods isClass
 #'
-#' @param x GMQLDataset class object
+#' @param .data GMQLDataset class object
 #' @param m_predicate logical predicate made up by R logical operation 
 #' on metadata attribute. 
 #' Only !, |, ||, &, && are admitted.
 #' @param r_predicate logical predicate made up by R logical operation 
 #' on chema region values. 
 #' Only !, |, ||, &, && are admitted.
-#' @param semi_join list of CONDITION objects where every object contains 
+#' @param semi_join vector of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
 #' without declaring condition.
@@ -35,16 +35,17 @@
 #' as value will match; no further prefixes are allowed. }
 #' }
 #' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
+#' In case of single concatenation with no CONDITION the metadata are 
+#' considered having default evaluation: 
+#' the two attributes match if both end with value.
 #' 
-#' @param semi_join_negation logical value: T => semijoin is perfomed 
+#' @param not_in logical value: T => semijoin is perfomed 
 #' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
 #' considering semi_join IN semi_join_dataset
 #' 
 #' @param semi_join_dataset GMQLDataset class object
-#'
+#' @param ... Additional arguments for use in specific methods.
+#' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
@@ -56,7 +57,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' input <- read_dataset(test_path)
-#' s <- subset(input, Patient_age < 70)
+#' s <- filter(input, Patient_age < 70)
 #' 
 #' 
 #' \dontrun{
@@ -84,25 +85,14 @@
 #' 
 #' }
 #' 
-#' @name filter
-#' @rdname GMQLDataset-class
-#' @aliases filter, filter-methods
-#' 
-setGeneric("filter", function(data, m_predicate = NULL, r_predicate = NULL, 
-                    semi_join = NULL, semi_join_negation = FALSE, 
-                    semi_join_dataset = NULL) 
-    standardGeneric("filter"))
-
-#' @name filter
-#' @rdname filter-methods
-#' @aliases filter, filter-methods
+#' @aliases filter, filter-method
 #' @export
 setMethod("filter", "GMQLDataset",
-            function(data, m_predicate = NULL, r_predicate = NULL, 
-                    semi_join = NULL, semi_join_negation = FALSE, 
+            function(.data, m_predicate = NULL, r_predicate = NULL, 
+                    semi_join = NULL, not_in = FALSE, 
                     semi_join_dataset = NULL)
             {
-                val <- data@value
+                val <- .data@value
                 meta_pred <- substitute(m_predicate)
                 if(!is.null(meta_pred))
                 {
@@ -122,12 +112,11 @@ setMethod("filter", "GMQLDataset",
                     region_predicate <- .jnull("java/lang/String")
             
                 gmql_select(val, predicate, region_predicate, 
-                        semi_join, semi_join_negation, semi_join_dataset)
+                        semi_join, not_in, semi_join_dataset)
             })
 
-gmql_select <- function(input_data, predicate = NULL, region_predicate = NULL, 
-                    semi_join = NULL, semi_join_negation = FALSE, 
-                    semi_join_dataset = NULL)
+gmql_select <- function(input_data, predicate, region_predicate, semi_join, 
+                            semi_join_negation, semi_join_dataset)
 {
     if(is.null(semi_join) && is.null(semi_join_dataset))
     {

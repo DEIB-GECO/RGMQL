@@ -28,12 +28,11 @@ If error occures a specific error is printed
 }
 \examples{
 
-## show dataset when logged as guest
-
-remote_url <- "http://130.186.13.219/gmql-rest"
+remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 list <- show_datasets_list(remote_url)
-
+}
 }
 \seealso{
 \code{\link{delete_dataset}}

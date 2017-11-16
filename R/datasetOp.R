@@ -2,7 +2,8 @@
 #'
 #' It show all GMQL dataset stored in repository using the proper GMQL 
 #' web service available on a remote server
-#'
+#' 
+#' 
 #' @import httr
 #' @param url single string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -21,13 +22,13 @@
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' ## show dataset when logged as guest
 #' 
-#' remote_url <- "http://130.186.13.219/gmql-rest"
+#' @examples
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list <- show_datasets_list(remote_url)
-#'
+#' }
 #' @export
 #'
 show_datasets_list <- function(url)
@@ -47,7 +48,7 @@ show_datasets_list <- function(url)
 #'
 #' It show all sample from a specific GMQL dataset using the proper 
 #' GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
@@ -69,11 +70,11 @@ show_datasets_list <- function(url)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' remote_url <- "http://130.186.13.219/gmql-rest"
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list <- show_samples_list(remote_url, "public.HG19_BED_ANNOTATION")
-#'
+#' }
 #' @export
 #'
 show_samples_list <- function(url,datasetName)
@@ -93,7 +94,7 @@ show_samples_list <- function(url,datasetName)
 #'
 #' It shows the region attribute schema of a specific GMQL dataset using 
 #' the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -114,12 +115,11 @@ show_samples_list <- function(url,datasetName)
 #'
 #'
 #' @examples
-#'
-#' ### show schema of public dataset
-#' remote_url <- "http://130.186.13.219/gmql-rest"
+#' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list <- show_schema(remote_url, "public.HG19_BED_ANNOTATION")
-#'
+#'}
 #' @export
 #'
 show_schema <- function(url,datasetName)
@@ -142,8 +142,7 @@ show_schema <- function(url,datasetName)
 #' It uploads a folder (GMQL or not) containing sample files using 
 #' the proper GMQL web service available on a remote server: 
 #' a new dataset is created on repository
-#'
-#'
+#' 
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param datasetName name of dataset to get
@@ -259,7 +258,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #'
 #' It deletes single private dataset specified by name from repository 
 #' using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
@@ -279,7 +278,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #'
 #' \dontrun{
 #' 
-#' ### This dataset does not exist
+#' ## This dataset does not exist
 #' 
 #' remote_url <- "http://130.186.13.219/gmql-rest"
 #' login_gmql(remote_url)
@@ -306,7 +305,7 @@ delete_dataset <- function(url,datasetName)
 #'
 #' It donwloads private dataset as zip file from repository to local path 
 #' specified using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #' @importFrom utils unzip
 #'
@@ -323,13 +322,15 @@ delete_dataset <- function(url,datasetName)
 #'
 #' @examples
 #'
-#' #### download dataset in r working directory
-#' #### in this case we try to download public dataset
+#' ## download dataset in r working directory
+#' ## in this case we try to download public dataset
+#' 
+#' \dontrun{
 #' 
 #' remote_url = "http://130.186.13.219/gmql-rest"
 #' login_gmql(remote_url)
 #' download_dataset(remote_url, "public.HG19_BED_ANNOTATION", path = getwd())
-#'
+#' }
 #' @export
 #'
 download_dataset <- function(url,datasetName,path = getwd())
@@ -355,7 +356,7 @@ download_dataset <- function(url,datasetName,path = getwd())
 #'
 #' It donwloads private dataset from repository saving into R environemnt 
 #' as GrangesList 
-#'
+#' 
 #' @import httr
 #' @importClassesFrom GenomicRanges GRangesList
 #' @importFrom S4Vectors metadata
@@ -415,7 +416,7 @@ download_as_GRangesList <- function(url,datasetName)
 #'
 #' It retrieves metadata for a specific sample in dataset using the proper 
 #' GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
@@ -429,12 +430,11 @@ download_as_GRangesList <- function(url,datasetName)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' ## download metadata with real test login
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' sample_metadata(remote_url, "public.HG19_BED_ANNOTATION", "genes")
-#'
+#'}
 #' @export
 #'
 sample_metadata <- function(url, datasetName,sampleName)
@@ -459,14 +459,13 @@ sample_metadata <- function(url, datasetName,sampleName)
 
 
 #' Shows regions from a dataset sample
-#'
-#'
+#' 
 #' It retrieves regions for a specific sample 
 #' (whose name is specified in the paramter "sampleName")
 #' in a specific dataset 
 #' (whose name is specified in the parameter "datasetName") 
 #' using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #' @importFrom rtracklayer import
 #' @importFrom data.table fread
@@ -484,12 +483,11 @@ sample_metadata <- function(url, datasetName,sampleName)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' 
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' sample_region(remote_url, "public.HG19_BED_ANNOTATION", "genes")
-#' 
+#' }
 #' 
 #' @export
 #'

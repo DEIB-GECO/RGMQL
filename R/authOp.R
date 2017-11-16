@@ -32,15 +32,21 @@ if(getRversion() >= "3.1.0")
 #' @return None
 #'
 #' @examples
-#' 
-#' ### login as guest
+#' ## login as guest
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
-#'
+#' }
 #' @export
-#'
+
+#' 
 login_gmql <- function(url, username = NULL, password = NULL)
 {
+    if(exists("authToken",envir = .GlobalEnv))
+    {
+        print("You are already logged")
+        return(invisible(NULL))
+    }
     as_guest <- TRUE
     
     if(!is.null(username) || !is.null(password))
@@ -77,7 +83,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' 
 #' Logout from GMQL REST services suite
 #' using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #' @importFrom rJava J
 #' 
@@ -92,12 +98,12 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' If error occures a specific error is printed
 #' 
 #' @examples
-#'
-#' #### login as guest, then logout
+#' #' ## login as guest, then logout
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' logout_gmql(remote_url)
-#'
+#' }
 #' @return None
 #'
 #' @export

@@ -2,7 +2,7 @@
 #'
 #' It shows all the GMQL query saved on repository 
 #' using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
@@ -19,13 +19,13 @@
 #' @details
 #' if error occures, a specific error is printed
 #'
-#' @examples
-#'
+#' @examples 
 #' remote_url = "http://130.186.13.219/gmql-rest"
 #' 
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list <- show_queries_list(remote_url)
-#'
+#' }
 #' @export
 #'
 show_queries_list <- function(url)
@@ -44,7 +44,7 @@ show_queries_list <- function(url)
 #'
 #' It saves the GMQL query into repository
 #' using the proper GMQL web service available on a remote server
-#'
+#' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
@@ -63,12 +63,13 @@ show_queries_list <- function(url)
 #' if no error occures print "Saved" otherwise print the content error
 #'
 #' @examples
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
+#' 
 #' login_gmql(remote_url)
 #' save_query(remote_url, "dna_query", "DATASET = SELECT() HG19_TCGA_dnaseq; 
 #' MATERIALIZE DATASET INTO RESULT_DS;")
-#'
+#' }
 #' @export
 #'
 save_query <- function(url, queryName, queryTxt)
@@ -90,7 +91,8 @@ save_query <- function(url, queryName, queryTxt)
 #' It saves the GMQL query into repository taken from file
 #' using the proper GMQL web service available on a remote server
 #'
-#'
+#' 
+#' 
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param queryName string name of the GMQL query
@@ -106,14 +108,14 @@ save_query <- function(url, queryName, queryTxt)
 #' if no error occures print "Saved" otherwise print the content error
 #'
 #' @examples
-#'
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
+#' 
 #' login_gmql(remote_url)
 #' save_query_fromfile(remote_url, "query1", test_query)
-#'
+#' }
 #' @export
 #'
 save_query_fromfile <- function(url, queryName, filePath)

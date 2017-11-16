@@ -40,7 +40,7 @@ print.PARAMETER <- function(obj){
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = cover(input_data = exp, 2, ALL())
+#' res = cover(exp, 2, "ALL")
 #' 
 #' @export
 #'
@@ -72,8 +72,8 @@ ALL <- function()
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
-#' res = cover(input_data = exp, 2, ANY())
+#' dataset = read_dataset(test_path)
+#' res = cover(dataset, 2, "ANY")
 #'
 #'
 #' @export

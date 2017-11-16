@@ -3,9 +3,8 @@
 \docType{methods}
 \name{materialize}
 \alias{materialize}
-\alias{materialize}
-\alias{materialize,}
-\alias{materialize-methods}
+\alias{materialize,GMQLDataset-method}
+\alias{materialize-method}
 \title{GMQL Operation: MATERIALIZE}
 \usage{
 materialize(data, ...)
@@ -14,6 +13,8 @@ materialize(data, ...)
 }
 \arguments{
 \item{data}{GMQLDataset class object}
+
+\item{...}{Additional arguments for use in specific methods.}
 
 \item{dir_out}{destination folder path.
 by default is current working directory of the R process}
@@ -34,8 +35,8 @@ For best performance, materialize the relevant data only.
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
 r = read_dataset(test_path)
-s = filter(input_data = r)
+s = filter(r)
 m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
-materialize(input_data = m, dir_out = test_path)
+materialize(m, dir_out = test_path)
 
 }

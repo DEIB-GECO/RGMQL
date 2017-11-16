@@ -23,12 +23,12 @@ The authentication token is removed from Global environment
 If error occures a specific error is printed
 }
 \examples{
-
-#### login as guest, then logout
+#' ## login as guest, then logout
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 logout_gmql(remote_url)
-
+}
 }
 \seealso{
 \code{\link{login_gmql}}

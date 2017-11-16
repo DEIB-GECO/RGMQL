@@ -14,6 +14,7 @@
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
+#' @importFrom BiocGenerics subset
 #' 
 #' @param x GMQLDataset class object
 #' @param metadata vector of string made up by metadata attribute
@@ -84,11 +85,8 @@
 #' 
 #' }
 #' 
-#' @export
 #'
-#' @name subset
-#' @rdname subset-methods
-#' @aliases subset, subset-methods
+#' @aliases subset
 #' @export
 setMethod("subset", "GMQLDataset",
             function(x, metadata = NULL, metadata_update=NULL, 
@@ -96,9 +94,27 @@ setMethod("subset", "GMQLDataset",
                         regions_update = NULL, all_but_reg=FALSE)
             {
                 data = x@value
-                gmql_project(data, metadata, metadata_update,
+                r_update <- substitute(regions_update)
+                if(!is.null(r_update))
+                {
+                    reg_update <- .trasform_update(deparse(r_update))
+                    reg_update <- paste(reg_update,collapse = "")
+                }
+                else
+                    reg_update <- .jnull("java/lang/String")
+                
+                m_update <- substitute(metadata_update)
+                if(!is.null(m_update))
+                {
+                    meta_update <- .trasform_update(deparse(m_update))
+                    meta_update <- paste(meta_update,collapse = "")
+                }
+                else
+                    meta_update <- .jnull("java/lang/String")
+                
+                gmql_project(data, metadata, meta_update,
                                 all_but_meta, regions, 
-                                regions_update, all_but_reg)
+                                reg_update, all_but_reg)
             })
 
 gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL, 
@@ -137,24 +153,7 @@ gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL,
     else
         regions <- .jnull("java/lang/String")
     
-    reg_update <- substitute(regions_update)
-    if(!is.null(reg_update))
-    {
-        regions_update <- .trasform_update(deparse(reg_update))
-        regions_update <- paste(regions_update,collapse = "")
-    }
-    else
-        regions_update <- .jnull("java/lang/String")
-    
-    meta_update <- substitute(metadata_update)
-    if(!is.null(meta_update))
-    {
-        metadata_update <- .trasform_update(deparse(meta_update))
-        metadata_update <- paste(metadata_update,collapse = "")
-    }
-    else
-        metadata_update <- .jnull("java/lang/String")
-    
+
     if(length(all_but_meta)>1)
         warning("all_but_meta: no multiple values")
     
@@ -167,7 +166,7 @@ gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL,
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$project(metadata,metadata_update,all_but_meta,
                                 regions,regions_update,
-                                all_but_reg,input_data$value)
+                                all_but_reg,input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

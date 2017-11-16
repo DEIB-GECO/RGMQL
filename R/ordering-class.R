@@ -21,12 +21,12 @@ check.ORDER <- function(value)
 }
 
 print.ORDER <- function(obj) {
-    as.character(obj)
+    as.character(as.character.ORDER(obj))
 }
 
-c.ORDER <- function(...) {
-    a <- list(...)
-}
+#c.ORDER <- function(...) {
+#    a <- list(...)
+#}
 
 as.character.ORDER <- function(obj) {
     class <- class(obj)[1]

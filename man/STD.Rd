@@ -29,7 +29,7 @@ exp = read_dataset(test_path)
 ## and then calculates new metadata attributes for each of them: 
 ## std_score is the standard deviation score of the sample regions.
 
-res = mutate(input_data = exp, list(std_score = STD("score")))
+res = extend(exp, std_score = STD("score"))
 
 }
 \seealso{

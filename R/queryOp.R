@@ -1,7 +1,6 @@
 #' Show all jobs
 #'
 #' It show all Jobs (run, succeded or failed) invoked by user
-#'
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -19,11 +18,11 @@
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list_jobs <- show_jobs_list(remote_url)
-#'
+#' }
 #' @export
 #'
 show_jobs_list <- function(url)
@@ -42,7 +41,6 @@ show_jobs_list <- function(url)
 #'
 #' It show a job log for specific job
 #'
-#'
 #' @import httr
 #' @param url string url of server: It must contain the server address
 #' and base url; service name is added automatically
@@ -54,11 +52,8 @@ show_jobs_list <- function(url)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' \dontrun{
-#' 
-#' ## login with guest user
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' 
 #' ## list all jobs
@@ -87,7 +82,7 @@ show_job_log <- function(url, job_id)
 #' Stop a job
 #'
 #' It stops a specific current job
-#'
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -99,10 +94,8 @@ show_job_log <- function(url, job_id)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' \dontrun{
-#' 
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list_jobs <- show_jobs_list(remote_url)
 #' jobs_1 <- list_jobs$jobs[[1]]
@@ -126,7 +119,7 @@ stop_job <- function(url, job_id)
 #' Trace a job
 #'
 #' It traces a specific current job
-#'
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name will be added automatically
@@ -138,9 +131,8 @@ stop_job <- function(url, job_id)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#' \dontrun{
-#' 
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' list_jobs <- show_jobs_list(remote_url)
 #' jobs_1 <- list_jobs$jobs[[1]]
@@ -167,7 +159,7 @@ trace_job <- function(url, job_id)
 #' Run GMQL query
 #'
 #' It runs a GMQL query as single string
-#'
+#' 
 #' @import httr
 #' @param url url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -187,12 +179,12 @@ trace_job <- function(url, job_id)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' run_query(remote_url, "query_1", "DATASET = SELECT() HG19_TCGA_dnaseq;
 #' MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
-#'
+#' }
 #' @export
 #'
 run_query <- function(url, fileName, query, output_gtf = TRUE)
@@ -217,7 +209,7 @@ run_query <- function(url, fileName, query, output_gtf = TRUE)
 #' Run GMQL query
 #'
 #' It runs a GMQL query from file
-#'
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -237,15 +229,13 @@ run_query <- function(url, fileName, query, output_gtf = TRUE)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
-#' ## run query: output GTF
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
 #' run_query(remote_url, "query_1", test_query, output_gtf = FALSE)
-#'
+#' }
 #' @return None
 #'
 #' @details
@@ -266,22 +256,21 @@ run_query_fromfile <- function(url, fileName, filePath, output_gtf = TRUE)
 #'
 #' It compiles a GMQL query as single string using the proper GMQL web service 
 #' available on a remote server
-#'
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param query string text of the query
 #'
-#'
 #' @return None
 #'
 #' @examples
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' compile_query(remote_url, "DATASET = SELECT() HG19_TCGA_dnaseq;
 #' MATERIALIZE DATASET INTO RESULT_DS;")
-#'
+#' }
 #' @export
 #'
 compile_query <- function(url, query)
@@ -301,7 +290,7 @@ compile_query <- function(url, query)
 #'
 #' It compiles a GMQL query from file using the proper GMQL web service 
 #' available on a remote server
-#'
+#' 
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param filePath string path of txt files containing a GMQL query
@@ -312,13 +301,13 @@ compile_query <- function(url, query)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#'
 #' remote_url = "http://130.186.13.219/gmql-rest"
+#' \dontrun{
 #' login_gmql(remote_url)
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
 #' compile_query_fromfile(remote_url, test_query)
-#'
+#' }
 #' @export
 #'
 compile_query_fromfile <- function(url ,filePath)

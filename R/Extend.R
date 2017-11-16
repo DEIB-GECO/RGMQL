@@ -1,3 +1,11 @@
+#' @name extend
+#' @rdname extend-GMQLDataset-method
+#' @aliases extend, GMQLDataset-method
+#' @exportMethod extend
+setGeneric("extend", function(.data, ...) 
+    standardGeneric("extend"))
+
+
 #' GMQL Operation: EXTEND
 #'
 #' It generates new metadata attributes as result of aggregate functions 
@@ -10,7 +18,9 @@
 #' @importFrom rJava .jarray
 #'
 #' @param .data GMQLDataset class object 
-#' @param metadata list of element in the form \emph{key} = \emph{aggregate}.
+#' @param ... Additional arguments for use in specific methods.
+#' 
+#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
@@ -27,7 +37,7 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @return DataSet class object. It contains the value to use as input 
+#' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
 #' @examples
@@ -37,7 +47,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r <- read_dataset(test_path)
-#' e <- mutate(input_data = r, list(RegionCount = COUNT()))
+#' e <- extend(r, RegionCount = COUNT())
 #' 
 #' \dontrun{
 #' 
@@ -50,27 +60,25 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = mutate(input_data = exp, list(RegionCount = COUNT(),
-#' MinP = MIN("pvalue")))
+#' res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue")))
 #' 
 #' }
-#' 
-#' @name mutate
-#' @rdname mutate-methods
-#' @aliases mutate, mutate-methods
+
+#' @aliases extend-method
 #' @export
-setMethod("mutate", "GMQLDataset",
-            function(.data, metadata = NULL)
+setMethod("extend", "GMQLDataset",
+            function(.data, ...)
             {
                 val_x = .data@value
-                gmql_extend(val_x, metadata)
+                meta <- list(...)
+                gmql_extend(val_x, meta)
             })
 
 
-gmql_extend <-function(input_data, metadata = NULL)
+gmql_extend <-function(input_data, meta)
 {
-    if(!is.null(metadata))
-        metadata_matrix <- .jarray(.aggregates(metadata,"META_AGGREGATES"),
+    if(!is.null(meta) && !length(meta)==0)
+        metadata_matrix <- .jarray(.aggregates(meta,"META_AGGREGATES"),
                                     dispatch = TRUE)
     else
         metadata_matrix <- .jnull("java/lang/String")

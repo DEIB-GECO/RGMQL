@@ -30,6 +30,6 @@ init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 r = read_dataset(test_path)
 m = aggregate(r, groupBy = c("antibody_target", "cell_karyotype"))
-g <- take(input_data = m, rows = 45)
+g <- take(m, rows = 45)
 
 }

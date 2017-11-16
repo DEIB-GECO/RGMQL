@@ -27,7 +27,7 @@ is printed
 
 \dontrun{
 
-### This dataset does not exist
+## This dataset does not exist
 
 remote_url <- "http://130.186.13.219/gmql-rest"
 login_gmql(remote_url)

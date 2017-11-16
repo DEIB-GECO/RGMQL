@@ -25,10 +25,9 @@ GMQL web service available on a remote server
 If error occures a specific error is printed
 }
 \examples{
-
-## download metadata with real test login
 remote_url = "http://130.186.13.219/gmql-rest"
+\dontrun{
 login_gmql(remote_url)
 sample_metadata(remote_url, "public.HG19_BED_ANNOTATION", "genes")
-
+}
 }

@@ -22,7 +22,7 @@
 #' For details of DISTAL objects see:
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 #' \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}
-#' 
+#' @param ... Additional arguments for use in specific methods.
 #' @param by list of CONDITION objects where every object contains 
 #' the name of metadata to be used in semijoin, or simple string concatenation 
 #' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
@@ -84,9 +84,7 @@
 #' region_output="RIGHT")
 #' 
 
-#' @name join
-#' @rdname join-methods
-#' @aliases join, join-methods
+#' @aliases join-method
 #' @export
 setMethod("join", "GMQLDataset",
                 function(x, y, by = NULL, genometric_predicate = NULL, 
@@ -94,7 +92,7 @@ setMethod("join", "GMQLDataset",
                 {
                     r_data <- x@value
                     l_data <- y@value
-                    gmql_join(x, y, genometric_predicate, by, 
+                    gmql_join(r_data, l_data, genometric_predicate, by, 
                             region_output="contig")
                 })
 

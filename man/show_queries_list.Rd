@@ -26,12 +26,12 @@ using the proper GMQL web service available on a remote server
 if error occures, a specific error is printed
 }
 \examples{
-
 remote_url = "http://130.186.13.219/gmql-rest"
 
+\dontrun{
 login_gmql(remote_url)
 list <- show_queries_list(remote_url)
-
+}
 }
 \seealso{
 \code{\link{save_query}}

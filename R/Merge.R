@@ -46,18 +46,16 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' merged = aggregate(input_data = exp, groupBy = c("antibody_target"))
+#' merged = aggregate(exp, groupBy = c("antibody_target"))
 #' 
-#' @name aggregate
-#' @rdname aggregate-methods
-#' @aliases aggregate, aggregate-methods
+#' @aliases aggregate-method
 #' @export
 #' 
 setMethod("aggregate", "GMQLDataset",
             function(data, groupBy = NULL)
             {
                 val = data@value
-                gmql_merge(val, metadata)
+                gmql_merge(val, groupBy)
             })
 
 gmql_merge <- function(data, groupBy = NULL)

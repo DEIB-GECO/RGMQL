@@ -81,9 +81,8 @@
 #' num_fetch = 2)
 #' 
 #' }
-#' @name sort
-#' @rdname sort-methods
-#' @aliases sort, sort-methods
+#' 
+#' @aliases sort-method
 #' @export
 setMethod("sort", "GMQLDataset",
             function(x, decreasing = FALSE, metadata_ordering = NULL, 

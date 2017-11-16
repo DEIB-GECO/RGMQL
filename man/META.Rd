@@ -31,14 +31,7 @@ performing all the type conversion needed
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-data = filter(exp, region_predicate = score > META("avg_score"));
-
-
-## It define a new region attribute with the value of a metadata attribute 
-## using the syntax region_attribute AS META(metadata_attribute, type)
-
-out = subset(exp, regions_update = list(signal = META("avg_signal", 
-"DOUBLE")))
+data = filter(exp, r_predicate = score > META("avg_score"))
 
 
 }
