@@ -39,7 +39,7 @@ setMethod("show", "GMQLDataset",
 # num_fetch = 0, reg_fetch_opt = NULL, 
 # reg_num_fetch = 0) standardGeneric("sort"))
 
-#' Method mutate
+#' Method aggregate
 #' 
 #' Wrapper to GMQL merge function
 #' 
@@ -47,7 +47,7 @@ setMethod("show", "GMQLDataset",
 #' @rdname aggregate-GMQLDataset-method
 #' @aliases aggregate
 #'  
-setGeneric("aggregate", function(data, groupBy = NULL) 
+setGeneric("aggregate", function(data, ...) 
                                     standardGeneric("aggregate"))
 
 
@@ -59,7 +59,7 @@ setGeneric("aggregate", function(data, groupBy = NULL)
 #' @rdname join-GMQLDataset-method
 #' @aliases join
 #' 
-setGeneric("join", function(x, y, by = NULL,...) standardGeneric("join"))
+setGeneric("join", function(x, y, ...) standardGeneric("join"))
 
 
 #' Method filter
@@ -70,7 +70,7 @@ setGeneric("join", function(x, y, by = NULL,...) standardGeneric("join"))
 #' @rdname filter-GMQLDataset-method
 #' @aliases filter
 #' 
-setGeneric("filter", function(.data,...) standardGeneric("filter"))
+setGeneric("filter", function(.data, ...) standardGeneric("filter"))
 
 #' Method cover
 #' 
@@ -80,7 +80,8 @@ setGeneric("filter", function(.data,...) standardGeneric("filter"))
 #' @rdname cover-GMQLDataset-method
 #' @aliases cover
 #' 
-setGeneric("cover", function(data, ...) standardGeneric("cover"))
+setGeneric("cover", function(data, min_acc, max_acc, ...)
+                        standardGeneric("cover"))
 
 #' Method map
 #' 
@@ -92,6 +93,36 @@ setGeneric("cover", function(data, ...) standardGeneric("cover"))
 #' 
 setGeneric("map", function(x, y, ...) standardGeneric("map"))
 
+
+#' Method materialize
+#' 
+#' Wrapper to GMQL materialize function
+#' 
+#' @name materialize
+#' @rdname materialize-GMQLDataset-method
+#' @export
+setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
+
+
+#' Method take
+#' 
+#' GMQL Operation: TAKE
+#' 
+#' @name take
+#' @rdname take-GMQLDataset-method
+#' @export
+setGeneric("take", function(data, ...) standardGeneric("take"))
+
+
+#' Method extend
+#' 
+#' Wrapper to GMQL extend function
+#' 
+#' @name extend
+#' @rdname extend-GMQLDataset-method
+#' @aliases extend, GMQLDataset-method
+#' @exportMethod extend
+setGeneric("extend", function(.data, ...) standardGeneric("extend"))
 
 
 

@@ -8,15 +8,13 @@
 \alias{cover-method}
 \title{Method cover}
 \usage{
-cover(data, ...)
+cover(data, min_acc, max_acc, ...)
 
 \S4method{cover}{GMQLDataset}(data, min_acc, max_acc, groupBy = NULL,
-  aggregates = NULL, variation = "cover")
+  variation = "cover", ...)
 }
 \arguments{
 \item{data}{GMQLDataset class object}
-
-\item{...}{Additional arguments for use in specific methods.}
 
 \item{min_acc}{minimum number of overlapping regions to be considered 
 during execution
@@ -42,24 +40,9 @@ considering any amount of overlapping.
 ALL() / K }
 }}
 
-\item{groupBy}{list of CONDITION objects where every object contains 
-the name of metadata to be used in semijoin, or simple string concatenation 
-of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-without declaring condition.
-The CONDITION's available are:
-\itemize{
-\item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
-if they both end with value and, if they have a further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
-as value will match; no further prefixes are allowed. }
-}
-Every condition accepts only one string value. (e.g. FULL("cell_type") )
-In case of single concatenation with no CONDITION or list with some value 
-without conditon, the metadata are considered having default 
-evaluation: the two attributes match if both end with value.}
+\item{...}{Additional arguments for use in specific methods.
 
-\item{aggregates}{list of element in the form \emph{key} = \emph{aggregate}.
+In this case a series of element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
 \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
@@ -75,6 +58,18 @@ attributes. Two style are allowed:
 \item list of values: e.g. SUM("pvalue")
 }
 "mixed style" is not allowed}
+
+\item{groupBy}{list of evalation function to define condition 
+evaluation on metadata:
+\itemize{
+\item{\code{\link{FN}}: Fullname evaluation, two attributes match 
+if they both end with value and, if they have a further prefixes,
+the two prefix sequence are identical}
+\item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
+as value will match; no further prefixes are allowed. }
+\item{\code{\link{DF}}: Default evaluation, the two attributes match 
+if both end with value.}
+}}
 
 \item{variation}{string identifying the cover GMQL function variation.
 The admissible string are:
@@ -144,7 +139,8 @@ res = cover(exp, 2, "ANY")
 
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 exp = read_dataset(test_path)
-res = cover(exp, 2, 3, c("cell"), list(min_pValue = MIN("pvalue")))
+res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
+min_pValue = MIN("pvalue"))
 }
 
 }

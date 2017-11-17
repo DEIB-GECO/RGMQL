@@ -51,24 +51,20 @@
 #' \item{and expression built using PARAMETER object: (ALL() + N) / K or
 #' ALL() / K }
 #' }
-#' @param groupBy list of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
+#' @param groupBy list of evalation function to define condition 
+#' evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
 #' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
 #' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
+#' @param ... Additional arguments for use in specific methods.
 #' 
-#' @param aggregates list of element in the form \emph{key} = \emph{aggregate}.
+#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
@@ -100,7 +96,6 @@
 #' the AccIndex region attribute.}
 #' \item{cover: default value.}
 #' }
-#' @param ... Additional arguments for use in specific methods.
 #' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
@@ -128,26 +123,28 @@
 #' 
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = cover(exp, 2, 3, c("cell"), list(min_pValue = MIN("pvalue")))
+#' res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
+#' min_pValue = MIN("pvalue"))
 #' }
 #' 
 #' @aliases cover, cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
-            function(data, min_acc, max_acc, groupBy = NULL, aggregates = NULL, 
-                        variation = "cover")
+            function(data, min_acc, max_acc, groupBy = NULL, 
+                    variation = "cover", ...)
             {
                 val <- data@value
                 q_max <- .check_cover_param(max_acc,FALSE)
                 q_min <- .check_cover_param(min_acc,FALSE)
                 flag = toupper(variation)
+                aggregates = list(...)
                 gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
             })
 
 
 
 gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL, 
-                        aggregates = NULL, flag)
+                            aggregates = NULL, flag)
 {
     
     if(!is.null(groupBy))
@@ -156,7 +153,7 @@ gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL,
     else
         join_condition_matrix <- .jnull("java/lang/String")
 
-    if(!is.null(aggregates))
+    if(!is.null(aggregates) && !length(aggregates) == 0)
         metadata_matrix <- .jarray(.aggregates(aggregates,"AGGREGATES"),
                                     dispatch = TRUE)
     else

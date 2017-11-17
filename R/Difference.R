@@ -1,5 +1,7 @@
-#' GMQL Operation: DIFFERENCE
-#'
+#' Method setdiff
+#' 
+#' Wrapper to GMQL difference function
+#' 
 #' It produces one sample in the result for each sample of the left operand,
 #' by keeping the same metadata of the left input sample and only those 
 #' regions (with their schema and values) of the left input sample which 
@@ -17,22 +19,18 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
-#' @param joinBy vector of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
+#' @param ... Additional arguments for use in specific methods.
+#' 
+#' This method accept a function to define condition evaluation on metadata.
 #' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
 #' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
 #' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION the metadata are 
-#' considered having default evaluation: 
-#' the two attributes match if both end with value.
 #' 
 #' @param is_exact single logical value: TRUE means that the region difference 
 #' is executed only on regions in left_input_data with exactly the same 
@@ -40,7 +38,7 @@
 #' if is_exact = FALSE, the difference is executed on all regions in 
 #' left_input_data that overlap with at least one region in right_input_data 
 #' (even just one base).
-#'
+#' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
@@ -69,25 +67,29 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' exp1 = read_dataset(test_path)
 #' exp2 = read_dataset(test_path2)
-#' out = setdiff(exp1, exp2, joinBy = c("antibody_target"))
+#' out = setdiff(exp1, exp2, DF("antibody_target"))
 #'
 #' }
-#' 
-#' @aliases setdiff, setdiff-method
+#' @name setdiff
+#' @aliases setdiff,GMQLDataset,GMQLDataset-method
+#' @aliases setdiff-method
 #' @export
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
-            function(x, y, is_exact = FALSE, joinBy = NULL)
+            function(x, y, ..., is_exact = FALSE)
             {
-                val_x = x@value
-                val_y = y@value
-                gmql_difference(val_x, val_y, is_exact, joinBy)
+                ptr_data_x = x@value
+                ptr_data_y = y@value
+                joinBy = list(...)
+                gmql_difference(ptr_data_x, ptr_data_y, is_exact, joinBy)
             })
 
 gmql_difference <- function(left_data, right_data, is_exact, joinBy)
 {
-    if(!is.null(joinBy))
-        join_condition_matrix <- .jarray(.join_condition(joinBy),
-                                            dispatch = TRUE)
+    if(!is.null(joinBy) && !length(joinBy) == 0)
+    {
+        cond <- .join_condition(joinBy)
+        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    }
     else
         join_condition_matrix <- .jnull("java/lang/String")
     

@@ -346,7 +346,7 @@ in the query.
 
 Beside *execute()* we can use: 
 ```{r, take, eval = TRUE}
-g <- take(input_data = exon_res, rows = 45)
+g <- take(exon_res, rows = 45)
 ```
 to execute all *materialize()* commands in the GMQL query and extract data 
 as GRangesList format, a GRanges for each materialize.
@@ -401,8 +401,7 @@ in the GMQL REST web services suite.
 User can write a GMQL query as in the following example, and run it as 
 second parameter of the *run_query()* function.
 ```{r, run, eval = FALSE}
-test_url = "http://130.186.13.219/gmql-rest"
-login_gmql(test_url)
+
 job <- run_query(test_url, "query_1", "DNA = SELECT() HG19_TCGA_dnaseq; 
 MATERIALIZE DNA INTO RESULT_DS;", output_gtf = FALSE)
 
@@ -512,6 +511,7 @@ accept both local dataset and repository dataset,
 even in the same query as in the following example:
 ```{r, mixed query, eval = FALSE}
 
+
 ## Read EXON dataset containing a single sample with exon regions 
 ## and MUT dataset containing multiple samples with mutation regions
 exon_path <- system.file("example", "EXON", package = "RGMQL")
@@ -575,7 +575,7 @@ if present, as data structure suitable to further processing in other packages.
 ## Import/Export
 
 We can import a GMQL dataset into R environment as follows:
-```{r, import, eval = FALSE}
+```{r, import, eval = TRUE}
 dataset_path <- system.file("example", "EXON", package = "RGMQL")
 data <- import_gmql(dataset_path, is_gtf = FALSE)
 data
@@ -583,9 +583,9 @@ data
 the second parameter *is_gtf* must specifies the file format: .GTF or .GDM.
 
 We can export a GRangesList as GMQL dataset as follows:
-```{r, export, eval = FALSE}
+```{r, export, eval = TRUE}
 
-dir_out <- system.file("example", "dir_out", package = "RGMQL")
+dir_out <- system.file("example", package = "RGMQL")
 export_gmql(data, dir_out, is_gtf = TRUE)
 
 ```
@@ -595,7 +595,7 @@ the second parameter *is_gtf* specifies the file format: .GTF or .GDM.
 
 We can also import only a part of a GMQL dataset into R environment, 
 by filtering its content as follows:
-```{r, filter_extract, eval = FALSE}
+```{r, filter_extract, eval = TRUE}
 
 data_in <- system.file("example", "TEAD", package = "RGMQL")
 matrix <- filter_and_extract(data_in, metadata = NULL,regions = c("count"))

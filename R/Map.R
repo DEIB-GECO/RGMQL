@@ -40,27 +40,21 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @param joinBy list of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
+#' @param joinBy list of evalation function to define condition 
+#' evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
 #' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
 #' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION, or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
 #' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #' 
-#'
 #' @examples
 #'
 #' # It counts the number of regions in each sample from exp that overlap with 
@@ -77,7 +71,8 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' exp = read_dataset(test_path)
 #' ref = read_dataset(test_path2)
-#' out = map(ref,exp, minScore = MIN("score"), joinBy = c("cell_tissue"))
+#' out = map(ref,exp, minScore = MIN("score"), 
+#' joinBy = list(DF("cell_tissue")))
 #' 
 #' @aliases map-method
 #' @export

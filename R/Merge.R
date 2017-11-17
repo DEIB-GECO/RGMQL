@@ -16,22 +16,19 @@
 #' @importFrom rJava .jarray
 #'  
 #' @param data GMQLDataset class object 
-#' @param groupBy list of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
+#' @param ... Additional arguments for use in specific methods.
+#' 
+#' 
+#' This method accept a function to define condition evaluation on metadata.
 #' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
 #' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
 #' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION, or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
 #' 
 #' @return DataSet class object. It contains the value to use as input 
 #' for the subsequent GMQL function
@@ -41,33 +38,37 @@
 #' # It creates a dataset called merged which contains one sample for each 
 #' # antibody_target value found within the metadata of the exp dataset sample; 
 #' # each created sample contains all regions from all 'exp' samples 
-#' # with a specific value for their antibody_target metadata attribute.
+#' # with a specific value for their antibody_target and cell metadata 
+#' # attributes.
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' merged = aggregate(exp, groupBy = c("antibody_target"))
+#' merged = aggregate(exp, DF("antibody_target","cell"))
 #' 
 #' @aliases aggregate-method
 #' @export
 #' 
 setMethod("aggregate", "GMQLDataset",
-            function(data, groupBy = NULL)
+            function(data, ...)
             {
-                val = data@value
-                gmql_merge(val, groupBy)
+                ptr_data = data@value
+                groupBy = list(...)
+                gmql_merge(ptr_data, groupBy)
             })
 
-gmql_merge <- function(data, groupBy = NULL)
+gmql_merge <- function(input_data, groupBy)
 {
-    if(!is.null(groupBy))
-        join_condition_matrix <- .jarray(.join_condition(groupBy), 
-                                            dispatch = TRUE)
+    if(!is.null(groupBy) && !length(groupBy) == 0)
+    {
+        cond <- .join_condition(groupBy)
+        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    }
     else
         join_condition_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$merge(join_condition_matrix,data)
+    response <- WrappeR$merge(join_condition_matrix, input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

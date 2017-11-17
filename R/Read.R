@@ -118,7 +118,8 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' r2 = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 #' 
 #' }
-#' 
+#' @name read
+#' @rdname read-function
 #' @export
 #'
 read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE, 
@@ -136,6 +137,11 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
         dataset <- sub("/*[/]$","",dataset)
         if(basename(dataset) !="files")
             dataset <- paste0(dataset,"/files")
+        
+        schema_XML <- list.files(dataset, pattern = "*.schema$",
+                                    full.names = TRUE)
+        if(length(schema_XML) == 0)
+            stop("schema must be present")
         
         schema_matrix <- .jnull("java/lang/String")
         url <- .jnull("java/lang/String")
@@ -159,11 +165,12 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
             schema_matrix <- .jnull("java/lang/String")
         else
             schema_matrix <- .jarray(schema_matrix, dispatch = TRUE)
+        schema_XML <- .jnull("java/lang/String")
     }
 
     parser_name <- .check_parser(parser)
     response <- WrappeR$readDataset(dataset,parser_name, is_local, is_GMQL, 
-                                        schema_matrix)
+                                        schema_matrix,schema_XML)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -182,21 +189,9 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 #' 
 #' @param samples GrangesList
 #' 
-#' @return DataSet class object. It contains the value to use as input 
-#' for the subsequent GMQL function
 #' 
-#' @examples
-#' 
-#' library("GenomicRanges")
-#' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(103, 106),
-#' strand = "+", score = 5L, GC = 0.45)
-#' gr2 <- GRanges(seqnames = c("chr1", "chr1"), ranges = IRanges(c(107, 113), 
-#' width = 3), strand = c("+", "-"), score = 3:4, GC = c(0.3, 0.5))
-#' 
-#' grl <- GRangesList("txA" = gr1, "txB" = gr2)
-#' 
-#' data_out <- read(grl)
-#'
+#' @name read
+#' @rdname read-function
 #' @export
 #'
 read <- function(samples)

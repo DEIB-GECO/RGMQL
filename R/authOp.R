@@ -98,7 +98,8 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' If error occures a specific error is printed
 #' 
 #' @examples
-#' #' ## login as guest, then logout
+#' 
+#' ## login as guest, then logout
 #' remote_url = "http://130.186.13.219/gmql-rest"
 #' \dontrun{
 #' login_gmql(remote_url)
@@ -114,6 +115,7 @@ logout_gmql <- function(url)
     h <- c('X-Auth-Token' = authToken)
     req <- httr::GET(URL, httr::add_headers(h))
     content <- httr::content(req)
+    
     if(req$status_code !=200)
         stop(content$error)
     else
@@ -122,7 +124,8 @@ logout_gmql <- function(url)
         #delete token from environment
         WrappeR <- J("it/polimi/genomics/r/Wrapper")
         WrappeR$delete_token()
-        rm(authToken, envir = .GlobalEnv)
+        if(exists("authToken",envir = .GlobalEnv))
+            rm(authToken, envir = .GlobalEnv)
     }
 }
 

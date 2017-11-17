@@ -37,30 +37,57 @@ as.character.OPERATOR <- function(obj) {
 #' 
 #' This class constructor is used to create instances of OPERATOR object,
 #' to be used in GMQL functions that require operator on value.
-#' It prepared input parameter to be passed to library function meta,
-#' performing all the type conversion needed
 #' 
-#' @param value string identifying name of metadata attribute
+#' \itemize{
+#' \item{META: It prepared input parameter to be passed to library function 
+#' meta, performing all the type conversion needed}
+#' \item{SQRT: It prepared input parameter to be passed to library function 
+#' sqrt, performing all the type conversion needed}
+#' \item{NIL: It prepared input parameter to be passed to library function 
+#' null, performing all the type conversion needed}
+#' }
+#' 
+#' @param value string identifying name of metadata attribute or region 
+#' attribute
 #' @param type string identifying the type of the attribute value
 #' must be: integer, double or string
 #'
-#' @return META operator object
+#' @return operator object
 #' 
-#' @seealso \code{\link{NIL}} \code{\link{SQRT}}
 #' 
 #' @examples
+#' 
+#' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' exp = read_dataset(test_path)
 #' 
 #' ## allows to select, in all input sample, all those regions for which the 
 #' ## region attribute score has a value which is greater than the metadata 
 #' ## attribute value "avg_score" in their sample.
 #' 
+#' data = filter(exp, r_predicate = score > META("avg_score"))
+#' 
+#' ## It define a new numeric region attribute with "null" value. 
+#' ## The syntax for creating a new attribute with null value is 
+#' ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
+#' 
+#' out = subset(exp, regions_update = list(signal = NIL("INTEGER"), 
+#' pvalue = NIL("DOUBLE")))
+#' 
+#' ## This statement allows to build an output dataset out such that all 
+#' ## the samples from the input dataset exp are conserved, 
+#' ## as well as their region attributes (and their values) 
+#' ## and their metadata attributes (and their values). 
+#' ## The new metadata attribute concSq is added to all output samples 
+#' ## with value correspondent to the mathematical squared root 
+#' ## of the pre-existing metadata attribute concentration.
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' data = filter(exp, r_predicate = score > META("avg_score"))
-#' 
-#' 
+#' out = subset(exp, metadata_update = list(concSq = SQRT("concentration")))
+#' @name OPERATORS
+#' @rdname operator-class
 #' @export
 #'
 META <- function(value,type=NULL)
@@ -94,32 +121,8 @@ check.META <- function(type)
 }
 
 
-#' OPERATOR object class constructor
-#' 
-#' This class constructor is used to create instances of OPERATOR object,
-#' to be used in GMQL functions that require operator on value.
-#' It prepared input parameter to be passed to library function nil,
-#' performing all the type conversion needed
-#' 
-#' @param value string identifying name of region attribute
-#'
-#' @return NIL operator object
-#' 
-#' @seealso \code{\link{META}} \code{\link{SQRT}}
-#' 
-#' @examples
-#' 
-#' ## It define a new numeric region attribute with "null" value. 
-#' ## The syntax for creating a new attribute with null value is 
-#' ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
-#' out = subset(exp, regions_update = list(signal = NIL("INTEGER"), 
-#' pvalue = NIL("DOUBLE")))
-#' 
-#' 
+#' @name OPERATORS
+#' @rdname operator-class
 #' @export
 #'
 NIL <- function(value)
@@ -140,37 +143,9 @@ check.NIL <- function(value)
         stop("only DOUBLE or INTEGER")
     
 }
-    
 
-
-#' OPERATOR object class constructor
-#' 
-#' This class constructor is used to create instances of OPERATOR object,
-#' to be used in GMQL functions that require operator on value.
-#' It prepared input parameter to be passed to library function sqrt,
-#' performing all the type conversion needed
-#' 
-#' @param value string identifying name of region attribute
-#'
-#' @return SQRT operator object
-#' 
-#' @seealso \code{\link{NIL}} \code{\link{SQRT}}
-#' 
-#' @examples
-#' 
-#' ## This statement allows to build an output dataset out such that all 
-#' ## the samples from the input dataset exp are conserved, 
-#' ## as well as their region attributes (and their values) 
-#' ## and their metadata attributes (and their values). 
-#' ## The new metadata attribute concSq is added to all output samples 
-#' ## with value correspondent to the mathematical squared root 
-#' ## of the pre-existing metadata attribute concentration.
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
-#' out = subset(exp, metadata_update = list(concSq = SQRT("concentration")))
-#' 
+#' @name OPERATORS
+#' @rdname operator-class
 #' @export
 #'
 SQRT <- function(value)

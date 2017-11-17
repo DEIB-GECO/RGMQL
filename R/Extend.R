@@ -1,11 +1,3 @@
-#' @name extend
-#' @rdname extend-GMQLDataset-method
-#' @aliases extend, GMQLDataset-method
-#' @exportMethod extend
-setGeneric("extend", function(.data, ...) 
-    standardGeneric("extend"))
-
-
 #' GMQL Operation: EXTEND
 #'
 #' It generates new metadata attributes as result of aggregate functions 
@@ -20,7 +12,8 @@ setGeneric("extend", function(.data, ...)
 #' @param .data GMQLDataset class object 
 #' @param ... Additional arguments for use in specific methods.
 #' 
-#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
+#' This method accept a series of aggregate function on region attribute.
+#' All the element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
@@ -60,31 +53,32 @@ setGeneric("extend", function(.data, ...)
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue")))
+#' res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue"))
 #' 
 #' }
 
 #' @aliases extend-method
 #' @export
-setMethod("extend", "GMQLDataset",
-            function(.data, ...)
+setMethod("extend", "GMQLDataset", function(.data, ...)
             {
-                val_x = .data@value
+                ptr_data = .data@value
                 meta <- list(...)
-                gmql_extend(val_x, meta)
+                gmql_extend(ptr_data, meta)
             })
 
 
 gmql_extend <-function(input_data, meta)
 {
-    if(!is.null(meta) && !length(meta)==0)
-        metadata_matrix <- .jarray(.aggregates(meta,"META_AGGREGATES"),
-                                    dispatch = TRUE)
+    if(!is.null(meta) && !length(meta) == 0)
+    {
+        aggr <- .aggregates(meta, "META_AGGREGATES")
+        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+    }
     else
         metadata_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$extend(metadata_matrix,input_data)
+    response <- WrappeR$extend(metadata_matrix, input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

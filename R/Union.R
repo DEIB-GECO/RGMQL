@@ -1,5 +1,7 @@
-#' GMQL Operation: UNION
-#'
+#' Method union
+#' 
+#' Wrapper to GMQL union function
+#' 
 #' It is used to integrate homogeneous or heterogeneous samples of two datasets 
 #' within a single dataset; for each sample of either input dataset, 
 #' a result sample is created as follows:
@@ -42,22 +44,23 @@
 #' 
 #' res <- union(data1, data2)
 #' 
-#' @rdname union-GMQLDataset-method
-#' @aliases union, union-method, 
-#' @export 
 #' 
+#' @name union
+#' @aliases union,GMQLDataset,GMQLDataset-method
+#' @aliases union-method
+#' @export
 setMethod("union", c("GMQLDataset","GMQLDataset"),
             function(x, y)
             {
-                val_x = x@value
-                val_y = y@value
-                gmql_union(val_x, val_y)
+                ptr_data_x = x@value
+                ptr_data_y = y@value
+                gmql_union(ptr_data_x, ptr_data_y)
             })
 
 gmql_union <- function(left_data, right_data)
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$union(left_data,right_data)
+    response <- WrappeR$union(left_data, right_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

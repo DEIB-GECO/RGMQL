@@ -22,26 +22,38 @@ print.PARAMETER <- function(obj){
 #' PARAM object class constructor
 #'
 #' This class constructor is used to create instances of PARAM object
-#' to be used in GMQL functions
-#' It defines the minimum (and/or maximum) to the number of samples 
-#' in the input dataset;
+#' to be used in GMQL cover method
 #' 
-#' @return ALL param object
+#' \itemize{
+#' \item{ANY: It defines any amount of overlapping regions to be considered.}
+#' \item{ALL: It defines the minimum (and/or maximum) to the number of samples 
+#' in the input dataset.}
+#' }
+#' 
+#' @return param object
 #'
-#' @seealso \code{\link{ANY}}
-#' 
 #' @examples
+#' 
+#' #' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' exp = read_dataset(test_path)
 #' 
 #' ## This statement produces an output dataset with a single output sample. 
 #' ## The COVER operation considers all areas defined by a minimum 
 #' ## of two overlapping regions in the input samples, 
 #' ## up to maximum amount of overlapping regions.
 #' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
 #' res = cover(exp, 2, "ALL")
 #' 
+#' ## This statement produces an output dataset with a single output sample. 
+#' ## The COVER operation considers all areas defined by a minimum 
+#' ## of two overlapping regions in the input samples, 
+#' ## up to any amount of overlapping regions.
+#' 
+#' res = cover(exp, 2, "ANY")
+#' 
+#' @name COVER-PARAMETER
+#' @rdname cover-param-class
 #' @export
 #'
 ALL <- function()
@@ -52,30 +64,8 @@ ALL <- function()
     return(list)
 }
 
-
-#' PARAM object class constructor
-#'
-#' This class constructor is used to create instances of PARAM object
-#' to be used in GMQL functions
-#' It defines any amount of overlapping regions to be considered.
-#' 
-#' @return ANY param object
-#'
-#' @seealso \code{\link{ALL}}
-#' 
-#' @examples
-#' 
-#' ## This statement produces an output dataset with a single output sample. 
-#' ## The COVER operation considers all areas defined by a minimum 
-#' ## of two overlapping regions in the input samples, 
-#' ## up to any amount of overlapping regions.
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' dataset = read_dataset(test_path)
-#' res = cover(dataset, 2, "ANY")
-#'
-#'
+#' @name COVER-PARAMETER
+#' @rdname cover-param-class
 #' @export
 #'
 ANY <- function()

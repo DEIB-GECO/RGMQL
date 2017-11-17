@@ -22,29 +22,11 @@
 #' @param r_predicate logical predicate made up by R logical operation 
 #' on chema region values. 
 #' Only !, |, ||, &, && are admitted.
-#' @param semi_join vector of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
-#' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION the metadata are 
-#' considered having default evaluation: 
-#' the two attributes match if both end with value.
-#' 
-#' @param not_in logical value: T => semijoin is perfomed 
-#' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
-#' considering semi_join IN semi_join_dataset
-#' 
-#' @param semi_join_dataset GMQLDataset class object
 #' @param ... Additional arguments for use in specific methods.
+#' 
+#' @param semijoin \code{\link{semijoin}} function 
+#' to define filter method with semijoin condition (see examples).
+#' 
 #' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
@@ -58,7 +40,6 @@
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' input <- read_dataset(test_path)
 #' s <- filter(input, Patient_age < 70)
-#' 
 #' 
 #' \dontrun{
 #' 
@@ -80,8 +61,8 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' data <- read_dataset(test_path)
 #' join_data <-  read_dataset(test_path2)
-#' jun_tf <- filter(data, antibody_target == 'JUN', pValue < 0.01, c("cell"), 
-#' TRUE, semi_join_dataset = join_data )
+#' jun_tf <- filter(data, antibody_target == 'JUN', pValue < 0.01, 
+#' semijoin(join_data, TRUE, DF("cell")))
 #' 
 #' }
 #' 
@@ -89,8 +70,7 @@
 #' @export
 setMethod("filter", "GMQLDataset",
             function(.data, m_predicate = NULL, r_predicate = NULL, 
-                    semi_join = NULL, not_in = FALSE, 
-                    semi_join_dataset = NULL)
+                        semijoin = NULL, ...)
             {
                 val <- .data@value
                 meta_pred <- substitute(m_predicate)
@@ -110,44 +90,20 @@ setMethod("filter", "GMQLDataset",
                 }
                 else
                     region_predicate <- .jnull("java/lang/String")
-            
-                gmql_select(val, predicate, region_predicate, 
-                        semi_join, not_in, semi_join_dataset)
+
+                gmql_select(val, predicate, region_predicate, semijoin)
             })
 
-gmql_select <- function(input_data, predicate, region_predicate, semi_join, 
-                            semi_join_negation, semi_join_dataset)
+gmql_select <- function(input_data, predicate, region_predicate, s_join)
 {
-    if(is.null(semi_join) && is.null(semi_join_dataset))
-    {
-        join_condition_matrix <- .jnull("java/lang/String")
-        semi_join_dataset <- .jnull("java/lang/String")
-        semi_join_negation <- FALSE
-    }
-    else if(is.null(semi_join) || is.null(semi_join_dataset) ||
-            is.null(semi_join_negation)) 
-    {
-        warning("All semijoin parameters have to be set.
-Function will be invoked with these parameters as NULL")
-        semi_join_dataset <- .jnull("java/lang/String")
-        semi_join_negation <- FALSE
-        join_condition_matrix <- .jnull("java/lang/String")
-    }
+    if("semijoin" %in% names(s_join))
+        semijoin_data <- s_join$semijoin
     else
-    {
-        if(!isClass("GMQLDataset", semi_join_dataset))
-            stop("semi_join_dataset: Must be a GMQLDataset object")
-        
-        semi_join_dataset <- semi_join_dataset@value
-        .check_input(semi_join_dataset)
-        .check_logical(semi_join_negation)
-        join_condition_matrix <- .jarray(.join_condition(semi_join),
-                                            dispatch = TRUE)
-    }
+        semijoin_data <- .jnull("java/lang/String")
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$select(predicate,region_predicate, 
-                                join_condition_matrix, semi_join_dataset, 
-                                semi_join_negation, input_data)
+    response <- WrappeR$select(predicate,region_predicate, semijoin_data, 
+                                    input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -156,6 +112,52 @@ Function will be invoked with these parameters as NULL")
         GMQLDataset(data)
         
 }
+
+#' Semijoin Condtion
+#' 
+#' 
+#' @param data GMQLDataset class object
+#' 
+#' @param not_in logical value: T => semijoin is perfomed 
+#' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
+#' considering semi_join IN semi_join_dataset
+#' 
+#' @param ... Additional arguments for use in specific methods.
+#' 
+#' This method accept a function to define condition evaluation on metadata.
+#' \itemize{
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
+#' if they both end with value and, if they have a further prefixes,
+#' the two prefix sequence are identical}
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
+#' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
+#' }
+#' 
+#' @return semijoin condition
+#' @export
+#' 
+semijoin <- function(data, not_in = FALSE, ...)
+{
+    semij_cond = list(...)
+    if(is.null(data))
+        stop("data cannot be NULL")
+    
+    if(!isClass("GMQLDataset", data))
+        stop("data: Must be a GMQLDataset object") 
+    
+    .check_logical(not_in)
+    ptr_data <- data@value
+    
+    data_cond <- cbind(ptr_data,not_in)
+    cond <- .join_condition(semij_cond)
+    cond <- rbind(data_cond,cond)
+    join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    
+    semijoin <- list("semijoin" = join_condition_matrix)
+}
+
 
 .trasform <- function(predicate=NULL)
 {

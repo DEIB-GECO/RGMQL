@@ -42,7 +42,7 @@
 #' \itemize{
 #' \item{All aggregation functions already defined by AGGREGATES object}
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
-#' \item{SQRT, META, NULLABLE constructor object defined by OPERATOR object}
+#' \item{SQRT, META, NIL constructor object defined by OPERATOR object}
 #' }
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
@@ -73,7 +73,7 @@
 #' ## the four basic coordinates (chr, left, right, strand) and the specified 
 #' ## region attributes 'variant_classification' and 'variant_type', 
 #' ## and as metadata attributes only the specified ones, 
-#' ## i.e. manually_curated__tissue_status and manually_curated__tumor_tag.
+#' ## i.e. manually_curated_tissue_status and manually_curated_tumor_tag.
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")

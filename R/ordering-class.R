@@ -24,10 +24,6 @@ print.ORDER <- function(obj) {
     as.character(as.character.ORDER(obj))
 }
 
-#c.ORDER <- function(...) {
-#    a <- list(...)
-#}
-
 as.character.ORDER <- function(obj) {
     class <- class(obj)[1]
     val <- obj$value
@@ -39,23 +35,34 @@ as.character.ORDER <- function(obj) {
 #'
 #' This class constructor is used to create instances of ORDER object,
 #' to be used in GMQL functions that require ordering on value.
-#' It defines a descending order for input value
+#' 
+#' \itemize{
+#' \item{ASC: It defines a ascending order for input value}
+#' \item{DESC: It defines a descending order for input value}
+#' }
 #' 
 #' @param value string identifying name of metadata or region attribute
 #'
-#' @return DESC ordering object
+#' @return ordering object
 #' 
 #' @examples
+#' 
+#' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' r = read_dataset(test_path)
 #' 
 #' ## It orders the samples according to the Region_count metadata attribute 
 #' ## and takes the two samples that have the highest count. 
 #'
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
-#' o = sort(r,TRUE, c("Region_Count"), fetch_opt = "mtop", 
+#' desc = sort(r,TRUE, c("Region_Count"), fetch_opt = "mtop", 
 #' num_fetch = 2)
 #'  
+#' asc = sort(r,TRUE, list(ASC("Region_Count")),list(DESC("score")),
+#' fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
+#' reg_num_fetch = 7)
+#' 
+#' @name ORDERING
+#' @rdname ordering-class
 #' @export
 #'
 DESC <- function(value)
@@ -67,30 +74,8 @@ DESC <- function(value)
     return(list)
 }
 
-#' ORDER object class constructor
-#'
-#' This class constructor is used to create instances of ORDER object,
-#' to be used in GMQL functions that require ordering on value.
-#' It defines a descending order for input value
-#' 
-#' @param value string identifying name of metadata or region attribute
-#'
-#' @return ASC ordering object
-#'
-#' @examples
-#' 
-#' ## It gets the first 5 samples on the basis of their region count, 
-#' ## those with the smaller Region_Count and then for each of them, 
-#' ## It gets 7 regions on the basis of their score, those with the 
-#' ## higher score
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
-#' o = sort(r,TRUE, list(ASC("Region_Count")),list(DESC("score")),
-#' fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
-#' reg_num_fetch = 7)
-#' 
+#' @name ORDERING
+#' @rdname ordering-class
 #' @export
 #'
 ASC <- function(value)

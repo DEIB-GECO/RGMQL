@@ -11,10 +11,10 @@
 #'
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' r = read_dataset(test_path)
-#' s = filter(r)
-#' m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
-#' materialize(m, dir_out = test_path)
+#' rd = read_dataset(test_path)
+#' filtered = filter(rd)
+#' aggr = aggregate(filtered, DF("antibody_targer","cell_karyotype"))
+#' materialize(aggr, dir_out = test_path)
 #' 
 #' \dontrun{
 #' execute()
@@ -65,9 +65,6 @@ execute <- function()
     }
 }
 
-#' @rdname materialize-GMQLDataset-method
-#' @export
-setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 
 
 #' GMQL Operation: MATERIALIZE
@@ -84,7 +81,9 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 #' @param data GMQLDataset class object
 #' @param dir_out destination folder path.
 #' by default is current working directory of the R process
-#' @param ... Additional arguments for use in specific methods.
+#' 
+#' @param ... Additional arguments for use in specific methods
+#' 
 #' @return None
 #'
 #' @examples
@@ -93,7 +92,7 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
 #' s = filter(r)
-#' m = aggregate(s, groupBy = c("antibody_targer","cell_karyotype"))
+#' m = aggregate(s, DF("antibody_targer","cell_karyotype"))
 #' materialize(m, dir_out = test_path)
 #' 
 #' @aliases materialize-method
@@ -101,14 +100,14 @@ setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
 setMethod("materialize", "GMQLDataset",
             function(data, dir_out = getwd())
             {
-                gmql_materialize(data, dir_out)
+                ptr_data <- data@value
+                gmql_materialize(ptr_data, dir_out)
             })
 
-
-gmql_materialize <- function(data, dir_out)
+gmql_materialize <- function(input_data, dir_out)
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$materialize(data@value,dir_out)
+    response <- WrappeR$materialize(input_data, dir_out)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -132,31 +131,41 @@ gmql_materialize <- function(data, dir_out)
 #' @importFrom rJava J
 #' @importFrom rJava .jevalArray
 #' 
-#' @param input_data returned object from any GMQL function
+#' @param data returned object from any GMQL function
 #' @param rows number of rows for each sample regions that you want to 
 #' retrieve and stored in memory.
 #' by default is 0 that means take all rows for each sample
-#'
+#' 
+#' @param ... Additional arguments for use in specific methods
+#' 
 #' @return GrangesList with associated metadata
 #'
 #' @examples
 #'
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
-#' m = aggregate(r, groupBy = c("antibody_target", "cell_karyotype"))
-#' g <- take(m, rows = 45)
+#' rd = read_dataset(test_path)
+#' aggr = aggregate(rd, DF("antibody_target", "cell_karyotype"))
+#' taken <- take(aggr, rows = 45)
 #' 
+#' @aliases take-method
 #' @export
-#'
-take <- function(input_data, rows=0L)
+setMethod("take", "GMQLDataset",
+            function(data, rows = 0L)
+            {
+                ptr_data <- data@value
+                gmql_take(ptr_data, rows)
+            })
+
+
+gmql_take <- function(input_data, rows = 0L)
 {
     rows <- as.integer(rows[1])
     if(rows<0)
         stop("rows cannot be negative")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$take(input_data@value,rows)
+    response <- WrappeR$take(input_data, rows)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

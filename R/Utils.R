@@ -61,34 +61,8 @@
 # meta join condition
 .join_condition <- function(cond)
 {
-    if(is.list(cond))
-    {
-        join_condition_matrix <- t(sapply(cond, function(x) {
-            new_value = as.character(x)
-            if(length(new_value)==1)
-                new_value = c("DEF",new_value)
-            else if(!identical("FULL",new_value[1]) && 
-                    !identical("EXACT",new_value[1]))
-                stop("no valid condition")
-            matrix <- matrix(new_value)
-        }))
-    }
-    else if(is.character(cond))
-    {
-        cond = cond[!cond %in% ""]
-        cond = cond[!duplicated(cond)]
-        if(length(cond)<=0)
-            join_condition_matrix <- ""
-        else
-        {
-            join_condition_matrix <- t(sapply(cond, function(x) {
-                new_value = c("DEF",x)
-                matrix <- matrix(new_value)
-            }))
-        }
-    }
-    else
-        stop("only list or character")
+    join_condition_matrix <- do.call(rbind, cond)
+    join_condition_matrix
 }
 
 .check_input <- function(value)

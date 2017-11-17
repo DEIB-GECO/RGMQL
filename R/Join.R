@@ -18,28 +18,24 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
+
 #' @param genometric_predicate is a list of lists of DISTAL object
 #' For details of DISTAL objects see:
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 #' \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}
+#' 
 #' @param ... Additional arguments for use in specific methods.
-#' @param by list of CONDITION objects where every object contains 
-#' the name of metadata to be used in semijoin, or simple string concatenation 
-#' of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-#' without declaring condition.
-#' The CONDITION's available are:
+#' 
+#' This method accept a function to define condition evaluation on metadata.
 #' \itemize{
-#' \item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
+#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
+#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
 #' as value will match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
+#' if both end with value.}
 #' }
-#' Every condition accepts only one string value. (e.g. FULL("cell_type") )
-#' In case of single concatenation with no CONDITION, or list with some value 
-#' without conditon, the metadata are considered having default 
-#' evaluation: the two attributes match if both end with value.
-#' 
 #' 
 #' @param region_output single string that declare which region is given in 
 #' output for each input pair of left dataset right dataset regions 
@@ -63,8 +59,7 @@
 #'
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
-#'
-#'
+#' 
 #' @examples
 #' 
 #' # Given a dataset 'hm' and one called 'tss' with a sample including 
@@ -80,20 +75,21 @@
 #' TSS = read_dataset(test_path)
 #' HM = read_dataset(test_path2)
 #' join_data = join(TSS, HM, 
-#' genometric_predicate = list(list(MD(1), DLE(120000))), by = c("provider"), 
-#' region_output="RIGHT")
+#' genometric_predicate = list(list(MD(1), DLE(120000))), DF("provider"), 
+#' region_output = "RIGHT")
 #' 
 
 #' @aliases join-method
 #' @export
 setMethod("join", "GMQLDataset",
-                function(x, y, by = NULL, genometric_predicate = NULL, 
-                    region_output="contig")
+                function(x, y, genometric_predicate = NULL, 
+                    region_output = "contig", ...)
                 {
-                    r_data <- x@value
-                    l_data <- y@value
-                    gmql_join(r_data, l_data, genometric_predicate, by, 
-                            region_output="contig")
+                    ptr_data_x <- x@value
+                    ptr_data_y <- y@value
+                    joinBy = list(...)
+                    gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
+                                joinBy, region_output="contig")
                 })
 
 

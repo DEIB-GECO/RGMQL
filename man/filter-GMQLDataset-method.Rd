@@ -11,8 +11,7 @@
 filter(.data, ...)
 
 \S4method{filter}{GMQLDataset}(.data, m_predicate = NULL,
-  r_predicate = NULL, semi_join = NULL, not_in = FALSE,
-  semi_join_dataset = NULL)
+  r_predicate = NULL, semijoin = NULL, ...)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
@@ -27,28 +26,8 @@ Only !, |, ||, &, && are admitted.}
 on chema region values. 
 Only !, |, ||, &, && are admitted.}
 
-\item{semi_join}{vector of CONDITION objects where every object contains 
-the name of metadata to be used in semijoin, or simple string concatenation 
-of name of metadata, e.g. c("cell_type", "attribute_tag", "size") 
-without declaring condition.
-The CONDITION's available are:
-\itemize{
-\item{\code{\link{FULL}}: Fullname evaluation, two attributes match 
-if they both end with value and, if they have a further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EXACT}}: Exact evaluation, only attributes exactly 
-as value will match; no further prefixes are allowed. }
-}
-Every condition accepts only one string value. (e.g. FULL("cell_type") )
-In case of single concatenation with no CONDITION the metadata are 
-considered having default evaluation: 
-the two attributes match if both end with value.}
-
-\item{not_in}{logical value: T => semijoin is perfomed 
-considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
-considering semi_join IN semi_join_dataset}
-
-\item{semi_join_dataset}{GMQLDataset class object}
+\item{semijoin}{\code{\link{semijoin}} function 
+to define filter method with semijoin condition (see examples).}
 }
 \value{
 GMQLDataset class object. It contains the value to use as input 
@@ -77,7 +56,6 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 input <- read_dataset(test_path)
 s <- filter(input, Patient_age < 70)
 
-
 \dontrun{
 
 It creates a new dataset called 'jun_tf' by selecting those samples and 
@@ -98,8 +76,8 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 data <- read_dataset(test_path)
 join_data <-  read_dataset(test_path2)
-jun_tf <- filter(data, antibody_target == 'JUN', pValue < 0.01, c("cell"), 
-TRUE, semi_join_dataset = join_data )
+jun_tf <- filter(data, antibody_target == 'JUN', pValue < 0.01, 
+semijoin(join_data, TRUE, DF("cell")))
 
 }
 
