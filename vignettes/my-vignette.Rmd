@@ -321,16 +321,16 @@ exon3 <- extend(exon2, exon_count = COUNT())
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
+exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
 
 If you want to store persistently the result, you can materialize it into 
 specific path defined as input parameter.
 ```{r, materialize, eval = TRUE}
 ## Materialize the result dataset on disk
-materialize(exon_res)
+collect(exon_res)
 ```
-by default *materialize()* has R workig directoy as stored path.  
+by default *collect()* has R workig directoy as stored path.  
 
 ### Execution
 
@@ -339,16 +339,16 @@ you invoke the *execute()* function.
 ```{r, execute, eval = FALSE}
 execute()
 ```
-*execute()* can be issued only if at least one *read()* and one *materialize()* 
+*execute()* can be issued only if at least one *read()* and one *collect()* 
 are present in the GMQL query, otherwise an error is generated.
-Data are saved in the path specified in every *materialize()* present 
+Data are saved in the path specified in every *collect()* present 
 in the query.
 
 Beside *execute()* we can use: 
 ```{r, take, eval = TRUE}
 g <- take(exon_res, rows = 45)
 ```
-to execute all *materialize()* commands in the GMQL query and extract data 
+to execute all *collect()* commands in the GMQL query and extract data 
 as GRangesList format, a GRanges for each materialize.
 NOTE: GRangesList are contained in the R environment and are not saved on disk.
 
@@ -490,7 +490,7 @@ exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
 ```
 
 ```{r, remote materialize, eval = FALSE}
-materialize(exon_res)
+collect(exon_res)
 ```
 
 ```{r, remote execute, eval = FALSE}
@@ -504,7 +504,7 @@ The previous processing flavour can be switched using the function:
 ```{r, switch mode, eval = TRUE}
 remote_processing(TRUE)
 ```
-An user can switch mode until the first *materialize()* has been performed.
+An user can switch mode until the first *collect()* has been performed.
 
 This kind of processing comes from the fact that the *read()* function can 
 accept both local dataset and repository dataset, 
@@ -547,7 +547,7 @@ exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
 ```
 
 ```{r, mixed materialize, eval = FALSE}
-materialize(exon_res)
+collect(exon_res)
 ```
 
 ```{r, mixed execute, eval = FALSE}
@@ -597,7 +597,7 @@ We can also import only a part of a GMQL dataset into R environment,
 by filtering its content as follows:
 ```{r, filter_extract, eval = TRUE}
 
-data_in <- system.file("example", "TEAD", package = "RGMQL")
+data_in <- base::system.file("example", "TEAD", package = "RGMQL")
 matrix <- filter_and_extract(data_in, metadata = NULL,regions = c("count"))
 matrix
 

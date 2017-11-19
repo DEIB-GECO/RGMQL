@@ -18,11 +18,7 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
-#' @param x GMQLDataset class object
-#' @param decreasing logical value indicating the sorting for both metadata
-#' and regions.
-#' if you define \emph{metadata_ordering} or \emph{regions_ordering} 
-#' defyinig order objects, this value is discarded 
+#' @param .data GMQLDataset class object
 #' @param metadata_ordering list of order objects where every object 
 #' contains the name of metadata.
 #' The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
@@ -56,6 +52,7 @@
 #' 
 #' @param reg_num_fetch integer value identifying the number of region to fetch
 #' by default is 0, that's means all regions are fetched
+#' @param ... Additional arguments for use in specific methods.
 #' 
 #' 
 #' @return DataSet class object. It contains the value to use as input 
@@ -70,31 +67,22 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' r = read_dataset(test_path)
-#' o = sort(r,TRUE, c("Region_Count"),fetch_opt= "mtop",num_fetch = 2)
+#' o = arrange(r, list(ASC("Region_Count")),fetch_opt = "mtop",num_fetch = 2)
 #' 
-#' 
-#' \dontrun{
-#' 
-#' ## the same result is obtained with using GMQL-syntax like:
-#' ## in this case decreasing parameter TRUE is not considerd
-#' o = sort(r,TRUE, c(DESC("Region_Count")), fetch_opt = "mtop", 
-#' num_fetch = 2)
-#' 
-#' }
 #' 
 #' @aliases sort-method
 #' @export
-setMethod("sort", "GMQLDataset",
-            function(x, decreasing = FALSE, metadata_ordering = NULL, 
-                    regions_ordering = NULL, fetch_opt = NULL, 
-                    num_fetch = 0, reg_fetch_opt = NULL, reg_num_fetch = 0)
+setMethod("arrange", "GMQLDataset",
+            function(.data, metadata_ordering = NULL, regions_ordering = NULL, 
+                    fetch_opt = NULL, num_fetch = 0, reg_fetch_opt = NULL, 
+                    reg_num_fetch = 0, ...)
             {
-                gmql_order(x@value, decreasing, metadata_ordering, 
-                            regions_ordering, fetch_opt, num_fetch, 
-                            reg_fetch_opt, reg_num_fetch)
+                ptr_data <- .data@value
+                gmql_order(ptr_data, metadata_ordering, regions_ordering, 
+                    fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
             })
 
-gmql_order <- function(data, decreasing, metadata_ordering, regions_ordering,
+gmql_order <- function(data, metadata_ordering, regions_ordering,
                     fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
 {
     if(!is.null(fetch_opt))
@@ -119,7 +107,7 @@ gmql_order <- function(data, decreasing, metadata_ordering, regions_ordering,
     
     if(!is.null(metadata_ordering))
     {
-        meta_matrix <- .ordering_meta(metadata_ordering, decreasing)
+        meta_matrix <- .ordering_meta(metadata_ordering)
         meta_matrix <- .jarray(meta_matrix, dispatch = TRUE)
     }
     else
@@ -127,7 +115,7 @@ gmql_order <- function(data, decreasing, metadata_ordering, regions_ordering,
     
     if(!is.null(regions_ordering))
     {
-        region_matrix <- .ordering_meta(regions_ordering, decreasing)
+        region_matrix <- .ordering_meta(regions_ordering)
         region_matrix <- .jarray(region_matrix, dispatch = TRUE)
     }
     else
@@ -146,34 +134,10 @@ gmql_order <- function(data, decreasing, metadata_ordering, regions_ordering,
 }
 
 
-.ordering_meta <- function(ordering, decreasing)
+.ordering_meta <- function(ordering)
 {
-    if(is.list(ordering))
-    {
-        order_matrix <- t(mapply(function(x,dec){
-            new_value <- as.character(x)
-            if(length(new_value)==1 && dec == FALSE)
-                new_value = c("ASC",new_value)
-            else if(length(new_value)==1 && dec == TRUE)
-                new_value = c("DESC",new_value)
-            else if(!identical("ASC",new_value[1]) && 
-                    !identical("DESC",new_value[1]))
-                stop("no more than one value")
-            matrix <- matrix(new_value)
-        },ordering, decreasing))
-    }
-    else if(is.character(ordering))
-    {
-        order_matrix <- t(mapply(function(x,dec) {
-            if( dec == FALSE)
-                new_value = c("ASC",x)
-            else
-                new_value = c("DESC",x)
-            matrix <- matrix(new_value)
-        }, ordering, decreasing))
-    }
-    else
-        stop("only list or character")
+    order_matrix <- do.call(rbind, ordering)
+    order_matrix
 }
 
 .check_option <- function(opt)

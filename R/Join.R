@@ -1,6 +1,6 @@
-
-
-#' GMQL Operation: JOIN
+#' Method merge
+#' 
+#' Wrapper to GMQL join function
 #'
 #' It takes in input two datasets, respectively known as nchor (left) 
 #' and experiment (right) and returns a dataset of samples consisting of 
@@ -18,7 +18,7 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
-
+#' 
 #' @param genometric_predicate is a list of lists of DISTAL object
 #' For details of DISTAL objects see:
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
@@ -74,14 +74,16 @@
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' TSS = read_dataset(test_path)
 #' HM = read_dataset(test_path2)
-#' join_data = join(TSS, HM, 
+#' join_data = merge(TSS, HM, 
 #' genometric_predicate = list(list(MD(1), DLE(120000))), DF("provider"), 
 #' region_output = "RIGHT")
 #' 
-
-#' @aliases join-method
+#' 
+#' @name merge
+#' @aliases merge,GMQLDataset,GMQLDataset-method
+#' @aliases merge-method
 #' @export
-setMethod("join", "GMQLDataset",
+setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 function(x, y, genometric_predicate = NULL, 
                     region_output = "contig", ...)
                 {

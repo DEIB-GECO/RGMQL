@@ -47,7 +47,7 @@
 #' their regions from the existing 'data' dataset such that:
 #' Each output sample has a metadata attribute called antibody_target 
 #' with value JUN.
-#' Each output sample also has not a metadata attribute called cell 
+#' Each output sample also has not a metadata attribute called "cell" 
 #' that has the same value of at least one of the values that a metadata 
 #' attribute equally called cell has in at least one sample 
 #' of the 'join_data' dataset.
@@ -94,10 +94,16 @@ setMethod("filter", "GMQLDataset",
                 gmql_select(val, predicate, region_predicate, semijoin)
             })
 
+
 gmql_select <- function(input_data, predicate, region_predicate, s_join)
 {
-    if("semijoin" %in% names(s_join))
-        semijoin_data <- s_join$semijoin
+    if(!is.null(s_join))
+    {
+        if("semijoin" %in% names(s_join))
+            semijoin_data <- s_join$semijoin
+        else
+            stop("use function semijoin()")
+    }
     else
         semijoin_data <- .jnull("java/lang/String")
     
@@ -115,6 +121,8 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 
 #' Semijoin Condtion
 #' 
+#' This function is use as support to filter method to define 
+#' semijoin conditions on metadata  
 #' 
 #' @param data GMQLDataset class object
 #' 
@@ -135,7 +143,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' if both end with value.}
 #' }
 #' 
-#' @return semijoin condition
+#' @return semijoin condition as matrix
 #' @export
 #' 
 semijoin <- function(data, not_in = FALSE, ...)

@@ -55,9 +55,6 @@ filter_and_extract <- function(data, metadata = NULL,
         .extract_from_dataset(data,metadata,metadata_prefix,regions)
 }
 
-
-
-
 .extract_from_dataset <- function(datasetName, metadata = NULL, 
                         metadata_prefix = NULL, regions = NULL)
 {

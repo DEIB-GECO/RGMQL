@@ -47,19 +47,9 @@ setMethod("show", "GMQLDataset",
 #' @rdname aggregate-GMQLDataset-method
 #' @aliases aggregate
 #'  
-setGeneric("aggregate", function(data, ...) 
+setGeneric("aggregate", function(x, ...) 
                                     standardGeneric("aggregate"))
 
-
-#' Method join
-#' 
-#' Wrapper to GMQL join function
-#' 
-#' @name join
-#' @rdname join-GMQLDataset-method
-#' @aliases join
-#' 
-setGeneric("join", function(x, y, ...) standardGeneric("join"))
 
 
 #' Method filter
@@ -70,7 +60,8 @@ setGeneric("join", function(x, y, ...) standardGeneric("join"))
 #' @rdname filter-GMQLDataset-method
 #' @aliases filter
 #' 
-setGeneric("filter", function(.data, ...) standardGeneric("filter"))
+setGeneric("filter", function(.data, m_predicate = NULL, r_predicate = NULL, 
+                            semijoin = NULL, ...) standardGeneric("filter"))
 
 #' Method cover
 #' 
@@ -80,8 +71,9 @@ setGeneric("filter", function(.data, ...) standardGeneric("filter"))
 #' @rdname cover-GMQLDataset-method
 #' @aliases cover
 #' 
-setGeneric("cover", function(data, min_acc, max_acc, ...)
-                        standardGeneric("cover"))
+setGeneric("cover", function(data, min_acc, max_acc, groupBy = NULL, 
+                                variation = "cover", ...)
+                                    standardGeneric("cover"))
 
 #' Method map
 #' 
@@ -94,14 +86,15 @@ setGeneric("cover", function(data, min_acc, max_acc, ...)
 setGeneric("map", function(x, y, ...) standardGeneric("map"))
 
 
-#' Method materialize
+#' Method collect
 #' 
 #' Wrapper to GMQL materialize function
 #' 
-#' @name materialize
-#' @rdname materialize-GMQLDataset-method
+#' @name collect
+#' @rdname collect-GMQLDataset-method
 #' @export
-setGeneric("materialize", function(data, ...) standardGeneric("materialize"))
+setGeneric("collect", function(x, dir_out = getwd(), name = "ds1", ...) 
+                standardGeneric("collect"))
 
 
 #' Method take
@@ -120,9 +113,32 @@ setGeneric("take", function(data, ...) standardGeneric("take"))
 #' 
 #' @name extend
 #' @rdname extend-GMQLDataset-method
-#' @aliases extend, GMQLDataset-method
+#' @aliases extend GMQLDataset-method
 #' @exportMethod extend
 setGeneric("extend", function(.data, ...) standardGeneric("extend"))
 
 
+#' Method select
+#' 
+#' Wrapper to GMQL project function
+#' 
+#' @name select
+#' @rdname select-GMQLDataset-method
+#' @aliases select 
+#' @export
+setGeneric("select", function(.data, ...) standardGeneric("select"))
+
+#' Method arrange
+#' 
+#' Wrapper to GMQL order function
+#' 
+#' @name arrange
+#' @rdname arrange-GMQLDataset-method
+#' @aliases arrange 
+#' @export
+#' 
+setGeneric("arrange", function(.data, metadata_ordering = NULL, 
+                    regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0, 
+                    reg_fetch_opt = NULL, reg_num_fetch = 0, ...) 
+                            standardGeneric("arrange"))
 

@@ -20,7 +20,7 @@ test_path <- system.file("example","DATASET",package = "RGMQL")
 rd = read_dataset(test_path)
 filtered = filter(rd)
 aggr = aggregate(filtered, DF("antibody_targer","cell_karyotype"))
-materialize(aggr, dir_out = test_path)
+collect(aggr, dir_out = test_path)
 
 \dontrun{
 execute()

@@ -4,11 +4,11 @@
 \name{cover}
 \alias{cover}
 \alias{cover,GMQLDataset-method}
-\alias{cover,}
+\alias{cover}
 \alias{cover-method}
 \title{Method cover}
 \usage{
-cover(data, min_acc, max_acc, ...)
+cover(data, min_acc, max_acc, groupBy = NULL, variation = "cover", ...)
 
 \S4method{cover}{GMQLDataset}(data, min_acc, max_acc, groupBy = NULL,
   variation = "cover", ...)
@@ -40,25 +40,6 @@ considering any amount of overlapping.
 ALL() / K }
 }}
 
-\item{...}{Additional arguments for use in specific methods.
-
-In this case a series of element in the form \emph{key} = \emph{aggregate}.
-The \emph{aggregate} is an object of class AGGREGATES
-The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
-\code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
-\code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
-\code{\link{Q2}}, \code{\link{Q3}}.
-Every aggregate accepts a string value, execet for COUNT, which does not 
-have any value.
-Argument of 'aggregate function' must exist in schema, i.e. among region 
-attributes. Two style are allowed:
-\itemize{
-\item list of key-value pairs: e.g. sum = SUM("pvalue")
-\item list of values: e.g. SUM("pvalue")
-}
-"mixed style" is not allowed}
-
 \item{groupBy}{list of evalation function to define condition 
 evaluation on metadata:
 \itemize{
@@ -86,6 +67,25 @@ the cover, each with its accumulation index value, which is assigned to
 the AccIndex region attribute.}
 \item{cover: default value.}
 }}
+
+\item{...}{Additional arguments for use in specific methods.
+
+In this case a series of element in the form \emph{key} = \emph{aggregate}.
+The \emph{aggregate} is an object of class AGGREGATES
+The aggregate functions available are: \code{\link{SUM}}, 
+\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+\code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
+\code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
+\code{\link{Q2}}, \code{\link{Q3}}.
+Every aggregate accepts a string value, execet for COUNT, which does not 
+have any value.
+Argument of 'aggregate function' must exist in schema, i.e. among region 
+attributes. Two style are allowed:
+\itemize{
+\item list of key-value pairs: e.g. sum = SUM("pvalue")
+\item list of values: e.g. SUM("pvalue")
+}
+"mixed style" is not allowed}
 }
 \value{
 GMQLDataset class object. It contains the value to use as input 

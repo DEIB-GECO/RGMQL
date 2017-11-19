@@ -15,7 +15,8 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
-#' @param x GMQLDataset class object
+#' @param .data GMQLDataset class object
+#' 
 #' @param metadata vector of string made up by metadata attribute
 #' @param regions vector of string made up by schema field attribute
 #' @param all_but_reg logical value indicating which schema field attribute 
@@ -28,22 +29,25 @@
 #' in the output of the project operation, if TRUE the metadata 
 #' are all except ones include in region parameter.
 #' if metadata is not defined \emph{all_but_meta} is not considerd.
-#' @param regions_update list in the form of key = value generating 
-#' new genomic region attributes.
-#' To specify the new values, the following options are available:
-#' \itemize{
-#' \item{All aggregation functions already defined by AGGREGATES object}
-#' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
-#' \item{SQRT, META, NULLABLE constructor object defined by OPERATOR object}
-#' }
-#' @param metadata_update list in the form of key = value generating 
-#' new metadata.
+#' @param regions_update list of updating rules in the form of 
+#' key = value generating new genomic region attributes.
 #' To specify the new values, the following options are available:
 #' \itemize{
 #' \item{All aggregation functions already defined by AGGREGATES object}
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
 #' \item{SQRT, META, NIL constructor object defined by OPERATOR object}
 #' }
+#' @param metadata_update list of updating rules in the form of 
+#' key = value generating new metadata.
+#' To specify the new values, the following options are available:
+#' \itemize{
+#' \item{All aggregation functions already defined by AGGREGATES object}
+#' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
+#' \item{SQRT, META, NIL constructor object defined by OPERATOR object}
+#' }
+#' 
+#' @param ... Additional arguments for use in specific methods.
+#' 
 #' @return GMQLDataset class object. It contains the value to use as input 
 #' for the subsequent GMQL function
 #'
@@ -60,7 +64,7 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' input = read_dataset(test_path)
-#' CTCF_NORM_SCORE = subset(input, metadata_update = list(normalized = 1), 
+#' CTCF_NORM_SCORE = select(input, metadata_update = list(normalized = 1), 
 #' regions_update = list(new_score = (score / 1000.0) + 100), 
 #' regions = c("score"), all_but_reg = TRUE)
 #' 
@@ -78,21 +82,21 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' DS_in = read_dataset(test_path)
-#' DS_out = subset(DS_in, regions = c("variant_classification", 
+#' DS_out = select(DS_in, regions = c("variant_classification", 
 #' "variant_type"), metadata = c("manually_curated_tissue_status", 
 #' "manually_curated_tumor_tag"))
 #' 
 #' }
 #' 
 #'
-#' @aliases subset
+#' @aliases select, select-method
 #' @export
-setMethod("subset", "GMQLDataset",
-            function(x, metadata = NULL, metadata_update=NULL, 
+setMethod("select", "GMQLDataset",
+            function(.data, metadata = NULL, metadata_update = NULL, 
                         all_but_meta = FALSE, regions = NULL, 
                         regions_update = NULL, all_but_reg=FALSE)
             {
-                data = x@value
+                data = .data@value
                 r_update <- substitute(regions_update)
                 if(!is.null(r_update))
                 {
@@ -116,9 +120,8 @@ setMethod("subset", "GMQLDataset",
                                 reg_update, all_but_reg)
             })
 
-gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL, 
-                    all_but_meta = FALSE, regions = NULL, 
-                    regions_update = NULL, all_but_reg=FALSE)
+gmql_project <-function(input_data, metadata, metadata_update, all_but_meta, 
+                            regions, regions_update, all_but_reg)
 {
     if(!is.null(metadata))
     {
@@ -163,9 +166,8 @@ gmql_project <-function(input_data, metadata = NULL, metadata_update=NULL,
     all_but_meta <- all_but_meta[1]
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$project(metadata,metadata_update,all_but_meta,
-                                regions,regions_update,
-                                all_but_reg,input_data)
+    response <- WrappeR$project(metadata, metadata_update, all_but_meta, 
+                    regions, regions_update, all_but_reg, input_data)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

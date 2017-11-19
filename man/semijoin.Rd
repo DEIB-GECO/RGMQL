@@ -27,8 +27,9 @@ if both end with value.}
 }}
 }
 \value{
-semijoin condition
+semijoin condition as matrix
 }
 \description{
-Semijoin Condtion
+This function is use as support to filter method to define 
+semijoin conditions on metadata
 }

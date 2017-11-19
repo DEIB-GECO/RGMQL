@@ -41,7 +41,7 @@ It is also perform a login to GMQL REST services suite if needed
 
 ## initialize GMQL with local processing with sample files output format 
 ## as Tab delimited
-library(rJava)
+
 init_gmql("tab", FALSE)
 
 \dontrun{

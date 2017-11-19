@@ -3,45 +3,17 @@
 ############################
 
 
-ORDER <- function(value)
-{
-    op_list <- list(value = value)
-    ## Set the name for the class
-    class(op_list) <- "ORDER"
-    return(op_list)
-}
-
-check.ORDER <- function(value)
-{
-    if(is.character(value) && length(value)>1)
-        stop("value: no multiple string")
-    
-    if(!is.character(value))
-        stop("value: is not a string")
-}
-
-print.ORDER <- function(obj) {
-    as.character(as.character.ORDER(obj))
-}
-
-as.character.ORDER <- function(obj) {
-    class <- class(obj)[1]
-    val <- obj$value
-    c(class,val)
-}
-
-
-#' ORDER object class constructor
+#' Ordering functions
 #'
-#' This class constructor is used to create instances of ORDER object,
-#' to be used in GMQL functions that require ordering on value.
+#' These functions is used to create a series of metadata as string
+#' that require ordering on value.
 #' 
 #' \itemize{
 #' \item{ASC: It defines a ascending order for input value}
 #' \item{DESC: It defines a descending order for input value}
 #' }
 #' 
-#' @param value string identifying name of metadata or region attribute
+#' @param ... Additional arguments for use in specific methods.
 #'
 #' @return ordering object
 #' 
@@ -54,10 +26,10 @@ as.character.ORDER <- function(obj) {
 #' ## It orders the samples according to the Region_count metadata attribute 
 #' ## and takes the two samples that have the highest count. 
 #'
-#' desc = sort(r,TRUE, c("Region_Count"), fetch_opt = "mtop", 
+#' desc = arrange(r,list(ASC("Region_Count")), fetch_opt = "mtop", 
 #' num_fetch = 2)
 #'  
-#' asc = sort(r,TRUE, list(ASC("Region_Count")),list(DESC("score")),
+#' asc = arrange(r, list(ASC("Region_Count")),list(DESC("score")),
 #' fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
 #' reg_num_fetch = 7)
 #' 
@@ -65,24 +37,40 @@ as.character.ORDER <- function(obj) {
 #' @rdname ordering-class
 #' @export
 #'
-DESC <- function(value)
+DESC <- function(...)
 {
-    check.ORDER(value)
-    list <- list(value = value)
-    ## Set the name for the class
-    class(list) <- c("DESC","ORDER")
-    return(list)
+    ords <- c(...)
+    ords = ords[!ords %in% ""]
+    ords = ords[!duplicated(ords)]
+    if(length(ords)<=0)
+        order_matrix <- .jnull("java/lang/String")
+    else
+    {
+        order_matrix <- t(sapply(ords, function(x) {
+            new_value = c("DESC",x)
+            matrix <- matrix(new_value)
+        }))
+    }
+    order_matrix
 }
 
 #' @name ORDERING
 #' @rdname ordering-class
 #' @export
 #'
-ASC <- function(value)
+ASC <- function(...)
 {
-    check.ORDER(value)
-    list <- list(value = value)
-    ## Set the name for the class
-    class(list) <- c("ASC","ORDER")
-    return(list)
+    ords <- c(...)
+    ords = ords[!ords %in% ""]
+    ords = ords[!duplicated(ords)]
+    if(length(ords)<=0)
+        order_matrix <- .jnull("java/lang/String")
+    else
+    {
+        order_matrix <- t(sapply(ords, function(x) {
+            new_value = c("ASC",x)
+            matrix <- matrix(new_value)
+        }))
+    }
+    order_matrix
 }

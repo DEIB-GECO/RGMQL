@@ -56,7 +56,7 @@
 #' res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue"))
 #' 
 #' }
-
+#' 
 #' @aliases extend-method
 #' @export
 setMethod("extend", "GMQLDataset", function(.data, ...)

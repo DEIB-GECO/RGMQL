@@ -127,7 +127,7 @@
 #' min_pValue = MIN("pvalue"))
 #' }
 #' 
-#' @aliases cover, cover-method
+#' @aliases cover cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
             function(data, min_acc, max_acc, groupBy = NULL, 
@@ -148,14 +148,18 @@ gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL,
 {
     
     if(!is.null(groupBy))
-        join_condition_matrix <- .jarray(.join_condition(groupBy),
-                                            dispatch = TRUE)
+    {
+        cond <- .join_condition(groupBy)
+        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    }
     else
         join_condition_matrix <- .jnull("java/lang/String")
 
     if(!is.null(aggregates) && !length(aggregates) == 0)
-        metadata_matrix <- .jarray(.aggregates(aggregates,"AGGREGATES"),
-                                    dispatch = TRUE)
+    {
+        aggr <- .aggregates(aggregates,"AGGREGATES")
+        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+    }
     else
         metadata_matrix <- .jnull("java/lang/String")
 

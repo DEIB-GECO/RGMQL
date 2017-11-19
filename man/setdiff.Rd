@@ -46,9 +46,8 @@ by keeping the same metadata of the left input sample and only those
 regions (with their schema and values) of the left input sample which 
 do not intersect with any region in the right operand sample.
 The optional \emph{joinby} clause is used to extract a subset of couples
-from the cartesian product of two dataset 
-\emph{left_input_data} x \emph{right_input_data} on which to apply 
-the DIFFERENCE operator:
+from the cartesian product of two dataset \emph{x} and \emph{y} 
+on which to apply the DIFFERENCE operator:
 only those samples that have the same value for each attribute
 are considered when performing the difference.
 }

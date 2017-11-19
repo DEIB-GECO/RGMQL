@@ -5,21 +5,21 @@
 \alias{DESC}
 \alias{ORDERING}
 \alias{ASC}
-\title{ORDER object class constructor}
+\title{Ordering functions}
 \usage{
-DESC(value)
+DESC(...)
 
-ASC(value)
+ASC(...)
 }
 \arguments{
-\item{value}{string identifying name of metadata or region attribute}
+\item{...}{Additional arguments for use in specific methods.}
 }
 \value{
 ordering object
 }
 \description{
-This class constructor is used to create instances of ORDER object,
-to be used in GMQL functions that require ordering on value.
+These functions is used to create a series of metadata as string
+that require ordering on value.
 }
 \details{
 \itemize{
@@ -36,10 +36,10 @@ r = read_dataset(test_path)
 ## It orders the samples according to the Region_count metadata attribute 
 ## and takes the two samples that have the highest count. 
 
-desc = sort(r,TRUE, c("Region_Count"), fetch_opt = "mtop", 
+desc = arrange(r,list(ASC("Region_Count")), fetch_opt = "mtop", 
 num_fetch = 2)
  
-asc = sort(r,TRUE, list(ASC("Region_Count")),list(DESC("score")),
+asc = arrange(r, list(ASC("Region_Count")),list(DESC("score")),
 fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
 reg_num_fetch = 7)
 

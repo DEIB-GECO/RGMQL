@@ -71,7 +71,7 @@ as.character.OPERATOR <- function(obj) {
 #' ## The syntax for creating a new attribute with null value is 
 #' ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
 #' 
-#' out = subset(exp, regions_update = list(signal = NIL("INTEGER"), 
+#' out = select(exp, regions_update = list(signal = NIL("INTEGER"), 
 #' pvalue = NIL("DOUBLE")))
 #' 
 #' ## This statement allows to build an output dataset out such that all 
@@ -85,7 +85,8 @@ as.character.OPERATOR <- function(obj) {
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' out = subset(exp, metadata_update = list(concSq = SQRT("concentration")))
+#' out = select(exp, metadata_update = list(concSq = SQRT("concentration")))
+#' 
 #' @name OPERATORS
 #' @rdname operator-class
 #' @export

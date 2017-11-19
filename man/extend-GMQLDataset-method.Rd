@@ -3,7 +3,6 @@
 \docType{methods}
 \name{extend}
 \alias{extend}
-\alias{extend,}
 \alias{GMQLDataset-method}
 \alias{extend,GMQLDataset-method}
 \alias{extend-method}
@@ -71,4 +70,5 @@ exp = read_dataset(test_path)
 res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue"))
 
 }
+
 }

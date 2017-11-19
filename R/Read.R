@@ -31,7 +31,7 @@
 #'
 #' ## initialize GMQL with local processing with sample files output format 
 #' ## as Tab delimited
-#' library(rJava)
+#' 
 #' init_gmql("tab", FALSE)
 #' 
 #' \dontrun{
@@ -123,7 +123,7 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' @export
 #'
 read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE, 
-                        is_GMQL=TRUE)
+                            is_GMQL=TRUE)
 {
     .check_input(dataset)
     .check_logical(is_local)

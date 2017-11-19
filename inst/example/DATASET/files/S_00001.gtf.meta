@@ -23,3 +23,4 @@ output_type	peaks
 project	ENCODE
 read_length	36
 size	3566868
+patient_age	34

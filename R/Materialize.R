@@ -14,7 +14,7 @@
 #' rd = read_dataset(test_path)
 #' filtered = filter(rd)
 #' aggr = aggregate(filtered, DF("antibody_targer","cell_karyotype"))
-#' materialize(aggr, dir_out = test_path)
+#' collect(aggr, dir_out = test_path)
 #' 
 #' \dontrun{
 #' execute()
@@ -78,9 +78,10 @@ execute <- function()
 #'
 #' @importFrom rJava J
 #' 
-#' @param data GMQLDataset class object
+#' @param x GMQLDataset class object
 #' @param dir_out destination folder path.
 #' by default is current working directory of the R process
+#' @param name name of the result dataset
 #' 
 #' @param ... Additional arguments for use in specific methods
 #' 
@@ -93,21 +94,27 @@ execute <- function()
 #' r = read_dataset(test_path)
 #' s = filter(r)
 #' m = aggregate(s, DF("antibody_targer","cell_karyotype"))
-#' materialize(m, dir_out = test_path)
+#' collect(m, dir_out = test_path)
 #' 
-#' @aliases materialize-method
+#' @aliases collect-method
 #' @export
-setMethod("materialize", "GMQLDataset",
-            function(data, dir_out = getwd())
+setMethod("collect", "GMQLDataset",
+            function(x, dir_out = getwd(), name = "ds1")
             {
-                ptr_data <- data@value
-                gmql_materialize(ptr_data, dir_out)
+                ptr_data <- x@value
+                gmql_materialize(ptr_data, dir_out, name)
             })
 
-gmql_materialize <- function(input_data, dir_out)
+gmql_materialize <- function(input_data, dir_out, name)
 {
+    dir_out <- sub("/*[/]$","",dir_out)
+    
+    res_dir_out <- paste0(dir_out,"/",name)
+    if(!dir.exists(res_dir_out))
+        dir.create(res_dir_out)
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$materialize(input_data, dir_out)
+    response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)

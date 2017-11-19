@@ -86,7 +86,7 @@ check.DISTAL <- function(value)
 #' # provided that such distance is lesser than 1200 bases and joined TSS 
 #' # and HM samples are obtained from the same provider (joinby clause).
 #' 
-#' join_data = join(TSS, HM, 
+#' join_data = merge(TSS, HM, 
 #' genometric_predicate = list(list(MD(1), DL(1200))), DF("provider"), 
 #' region_output = "RIGHT")
 #'
@@ -97,7 +97,7 @@ check.DISTAL <- function(value)
 #' # is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
 #' # from the same provider (joinby clause).
 #' 
-#' join_data = join(TSS, HM, 
+#' join_data = merge(TSS, HM, 
 #' genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), 
 #' DF("provider"), region_output = "RIGHT")
 #'
