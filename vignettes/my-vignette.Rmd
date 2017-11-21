@@ -197,7 +197,7 @@ $$ variable = operator(variable, parameters)$$
 
 It is very similar to the GMQL syntax for operation expression although 
 expressed with the R idiomatic paradigm and logic, with parameters totaly 
-builded using R native data structures such as lists, matrices, 
+built using R native data structures such as lists, matrices, 
 vectors or R logic conditions.
 
 
@@ -388,8 +388,8 @@ with user and password, or as guest.
 Upon succesfull logon, you get a request token that you must use 
 in every subsequent REST call.
 Login can be performed using the function:
-```{r, eval = FALSE}
-test_url = "http://130.186.13.219/gmql-rest"
+```{r, eval = TRUE}
+test_url = "http://genomic.elet.polimi.it/gmql-rest-r"
 login_gmql(test_url)
 ```
 that saves the token in the Global R environment within the variable 
@@ -445,17 +445,17 @@ using the functions in this RGMQL package.[see import/export](# Utilities)
 
 Before starting with examples, note that we have to log into remote 
 infrastructure with login function:
-```{r, login remote, eval = FALSE}
+```{r, login remote, eval = TRUE}
 login_gmql(test_url)
 ```
 Otherwise, we can initialize the data engine with a remote url:
-```{r, initialize remote, eval = FALSE}
+```{r, initialize remote, eval = TRUE}
 init_gmql(url = test_url)
 ```
 in this way login is automatically performed as specified above
 
 After init, we can start building our queries:
-```{r, remote query, eval = FALSE}
+```{r, remote query, eval = TRUE}
 
 ## Read EXON dataset containing a single sample with exon regions 
 ## and MUT dataset containing multiple samples with mutation regions
@@ -486,7 +486,7 @@ exon3 <- extend(exon2, exon_count = COUNT())
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
+exon_res = arrange(exon3,list(DESC("exon_count")))
 ```
 
 ```{r, remote materialize, eval = FALSE}
@@ -509,7 +509,7 @@ An user can switch mode until the first *collect()* has been performed.
 This kind of processing comes from the fact that the *read()* function can 
 accept both local dataset and repository dataset, 
 even in the same query as in the following example:
-```{r, mixed query, eval = FALSE}
+```{r, mixed query, eval = TRUE}
 
 
 ## Read EXON dataset containing a single sample with exon regions 
@@ -542,7 +542,7 @@ exon3 <- extend(exon2, exon_count = COUNT())
 
 ## Order samples in descending order of the added metadata exon_count 
 
-exon_res = sort(exon3, TRUE, list(DESC("exon_count")))
+exon_res = arrange(exon3,list(DESC("exon_count")))
 
 ```
 

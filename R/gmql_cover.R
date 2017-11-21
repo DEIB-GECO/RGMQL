@@ -22,7 +22,7 @@
 #' Input samples that do not satisfy the \emph{groupby} condition 
 #' are disregarded.
 #' 
-#' @include GMQLDataset-class.R
+#' @include AllClasses.R
 #' @importFrom methods is
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
@@ -110,7 +110,7 @@
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' res = cover(exp, 2, "ANY")
+#' res = cover(exp, 2, ANY())
 #'
 #' \dontrun{
 #' ## This GMQL statement computes the result grouping the input exp samples 
@@ -134,8 +134,14 @@ setMethod("cover", "GMQLDataset",
                     variation = "cover", ...)
             {
                 val <- data@value
-                q_max <- .check_cover_param(max_acc,FALSE)
-                q_min <- .check_cover_param(min_acc,FALSE)
+                s_min <- substitute(min_acc)
+                s_min <- .trasform_cover(deparse(s_min))                
+                s_max <- substitute(max_acc)
+                s_max <- .trasform_cover(deparse(s_max))
+                
+                q_max <- .check_cover_param(s_max,FALSE)
+                q_min <- .check_cover_param(s_min,TRUE)
+                
                 flag = toupper(variation)
                 aggregates = list(...)
                 gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
@@ -198,14 +204,9 @@ gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL,
     }
     else if(is.character(param))
     {
-        if(is.na(as.numeric(param)))
-        {
-            if(is_min && identical(param,"ANY"))
-                stop("min cannot assume ANY as value")
-            
-            if(!identical(param,"ANY") && !identical(param,"ALL"))
-                stop("invalid input data")
-        }
+        if(is_min && identical(param,"ANY"))
+            stop("min cannot assume ANY as value")
+        
         return(param)
     }
     else

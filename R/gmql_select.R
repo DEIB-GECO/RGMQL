@@ -14,7 +14,7 @@
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' @importFrom methods isClass
-#'
+#' 
 #' @param .data GMQLDataset class object
 #' @param m_predicate logical predicate made up by R logical operation 
 #' on metadata attribute. 
@@ -66,7 +66,7 @@
 #' 
 #' }
 #' 
-#' @aliases filter, filter-method
+#' @aliases filter filter-method
 #' @export
 setMethod("filter", "GMQLDataset",
             function(.data, m_predicate = NULL, r_predicate = NULL, 
@@ -143,7 +143,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' if both end with value.}
 #' }
 #' 
-#' @return semijoin condition as matrix
+#' @return semijoin condition as list
 #' @export
 #' 
 semijoin <- function(data, not_in = FALSE, ...)

@@ -18,7 +18,7 @@
 #' DEFAULT evaluation: the two attributes match if both end with value.}
 #' }
 #'
-#' @param ... string identifying name of metadata attribute 
+#' @param ... series of string identifying name of metadata attribute 
 #' to be evaluated
 #' 
 #' @return list of 2-D array containing method of evaluation and metadata
@@ -28,7 +28,6 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r = read_dataset(test_path)
-#' 
 #' 
 #' @name evaluation
 #' @rdname condition_eval_func

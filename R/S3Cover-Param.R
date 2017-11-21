@@ -34,7 +34,7 @@ print.PARAMETER <- function(obj){
 #'
 #' @examples
 #' 
-#' #' init_gmql()
+#' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
 #' 
@@ -43,14 +43,14 @@ print.PARAMETER <- function(obj){
 #' ## of two overlapping regions in the input samples, 
 #' ## up to maximum amount of overlapping regions.
 #' 
-#' res = cover(exp, 2, "ALL")
+#' res = cover(exp, 2, ALL())
 #' 
 #' ## This statement produces an output dataset with a single output sample. 
 #' ## The COVER operation considers all areas defined by a minimum 
 #' ## of two overlapping regions in the input samples, 
 #' ## up to any amount of overlapping regions.
 #' 
-#' res = cover(exp, 2, "ANY")
+#' res = cover(exp, 2, ANY()+2/3)
 #' 
 #' @name COVER-PARAMETER
 #' @rdname cover-param-class

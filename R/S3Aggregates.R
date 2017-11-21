@@ -1,3 +1,8 @@
+#############################
+#       AGGREGATES         #
+############################
+
+
 AGGREGATES <- function(value)
 {
     op_list <- list(value = value)
