@@ -53,13 +53,10 @@ if both end with value.}
 }}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
-Wrapper to GMQL join function
-}
-\details{
 It takes in input two datasets, respectively known as nchor (left) 
 and experiment (right) and returns a dataset of samples consisting of 
 regions extracted from the operands according to the specified condition

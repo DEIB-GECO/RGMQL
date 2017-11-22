@@ -26,12 +26,14 @@ It show a job log or traces a specific job
 If error occures a specific error is printed
 }
 \examples{
-\dontrun{
+
 remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 
 ## list all jobs
 list_jobs <- show_jobs_list(remote_url)
+
+\dontrun{
 jobs_1 <- list_jobs$jobs[[1]]
 
 ## show job log

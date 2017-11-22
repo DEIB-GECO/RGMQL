@@ -6,14 +6,15 @@
 #' Ordering functions
 #'
 #' These functions is used to create a series of metadata as string
-#' that require ordering on value.
+#' that require ordering on value; is used only in arrange method.
+#' (see example)
 #' 
 #' \itemize{
 #' \item{ASC: It defines a ascending order for input value}
 #' \item{DESC: It defines a descending order for input value}
 #' }
 #' 
-#' @param ... Additional arguments for use in specific methods.
+#' @param ... series of metatdata as string
 #'
 #' @return ordering object
 #' 
@@ -33,7 +34,8 @@
 #' fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
 #' reg_num_fetch = 7)
 #' 
-#' @name ORDERING
+#' @name DESC
+#' @aliases DESC
 #' @rdname ordering-class
 #' @export
 #'
@@ -54,7 +56,8 @@ DESC <- function(...)
     order_matrix
 }
 
-#' @name ORDERING
+#' @name ASC
+#' @aliases ASC
 #' @rdname ordering-class
 #' @export
 #'

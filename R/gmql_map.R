@@ -1,4 +1,4 @@
-#' GMQL Operation: MAP
+#' Method map
 #'
 #' It computes, for each sample in the right dataset, aggregates over the 
 #' values of the right regions that intersect with a region in a left sample, 
@@ -52,8 +52,8 @@
 #' if both end with value.}
 #' }
 #' 
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #'

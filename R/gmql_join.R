@@ -1,6 +1,4 @@
 #' Method merge
-#' 
-#' Wrapper to GMQL join function
 #'
 #' It takes in input two datasets, respectively known as nchor (left) 
 #' and experiment (right) and returns a dataset of samples consisting of 
@@ -57,8 +55,8 @@
 #' the genometric predicate)}
 #' }
 #'
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #' 

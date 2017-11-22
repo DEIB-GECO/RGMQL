@@ -29,7 +29,8 @@
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' r = read_dataset(test_path)
 #' 
-#' @name evaluation
+#' @name FN
+#' @aliases FN
 #' @rdname condition_eval_func
 #' @export
 FN <- function(...)
@@ -49,7 +50,8 @@ FN <- function(...)
     join_condition_matrix
 }
 
-#' @name evaluation
+#' @name EX
+#' @aliases EX
 #' @rdname condition_eval_func
 #' @export
 EX <- function(...)
@@ -69,7 +71,8 @@ EX <- function(...)
     join_condition_matrix
 }
 
-#' @name evaluation
+#' @name DF
+#' @aliases DF
 #' @rdname condition_eval_func
 #' @export
 DF <- function(...)

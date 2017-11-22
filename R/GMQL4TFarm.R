@@ -5,7 +5,7 @@
 #' defined as input.
 #' The metadata and metadata_prefix are used to filter the data and choose 
 #' only the samples that match at least one metdatata with its prefix.
-#' The regions are shown for each sample obtained from filtering.
+#' The input regions are shown for each sample obtained from filtering.
 #'
 #' @import xml2
 #' @importFrom dplyr bind_cols

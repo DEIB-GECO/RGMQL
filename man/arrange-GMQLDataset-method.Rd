@@ -18,15 +18,13 @@ arrange(.data, metadata_ordering = NULL, regions_ordering = NULL,
 \arguments{
 \item{.data}{GMQLDataset class object}
 
-\item{metadata_ordering}{list of order objects where every object 
-contains the name of metadata.
-The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
-Every condition accepts only one string value. (e.g. ASC("cell_type") )}
+\item{metadata_ordering}{list of ordering function contains name of 
+metadata.
+The function available are: \code{\link{ASC}}, \code{\link{DESC}}}
 
-\item{regions_ordering}{list of ORDER objects where every object contains 
-the name of region schema value.
-The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}.
-Every condition accepts only one string value. (e.g. DESC("pvalue") )}
+\item{regions_ordering}{list of ordering function contains 
+name of region schema value.
+The function available are: \code{\link{ASC}}, \code{\link{DESC}}.}
 
 \item{fetch_opt}{string indicating the option used to fetch the 
 first k sample:
@@ -56,8 +54,8 @@ by default is 0, that's means all regions are fetched}
 \item{...}{Additional arguments for use in specific methods.}
 }
 \value{
-DataSet class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL order function
@@ -66,15 +64,10 @@ It is used to order either samples or sample regions or both, according to
 a set of metadata and/or region attributes, and/or region coordinates.
 Order can be specified as ascending / descending for every attribute
 The number of samples and their regions remain the same 
-(unless mtop/rtop parameters specified) but a new ordering metadata 
+(unless fetching options are specified) but a new ordering metadata 
 and/or region attribute is added.
 Sorted samples or regions have a new attribute "order", 
-added to either metadata, or regions, or both of them as specified in input
-The input mtop = k and rtop = m extracts the first k samples 
-and m regions respectively, the clause mtopg = k and rtopg = m 
-performs grouping operation, grouping by identical values 
-of ordering attributes and then selects the first k samples 
-or regions of each group
+added to either metadata, or regions, or both of them as specified in inputs
 }
 \examples{
 

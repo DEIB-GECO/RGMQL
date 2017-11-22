@@ -1,16 +1,15 @@
-#' GMQL Operation: PROJECT
+#' Method select
 #'
 #' It creates, from an existing dataset, a new dataset with all the samples 
 #' from input dataset, but keeping for each sample in the input dataset 
-#' only those metadata and/or region attributes expressed in the operator 
-#' parameter list.
+#' only those metadata and/or region attributes expressed.
 #' Region coordinates and values of the remaining metadata remain equal to 
 #' those in the input dataset. It allows to:
 #' \itemize{
 #' \item{Remove existing metadata and/or region attributes from a dataset}
-#' \item{Create new metadata and/or region attributes in the result}
+#' \item{Update new metadata and/or region attributes in the result}
 #' }
-#'
+#' 
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
@@ -48,8 +47,8 @@
 #' 
 #' @param ... Additional arguments for use in specific methods.
 #' 
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #'
 #' @examples
 #' 
@@ -94,7 +93,7 @@
 setMethod("select", "GMQLDataset",
             function(.data, metadata = NULL, metadata_update = NULL, 
                         all_but_meta = FALSE, regions = NULL, 
-                        regions_update = NULL, all_but_reg=FALSE)
+                        regions_update = NULL, all_but_reg = FALSE, ...)
             {
                 data = .data@value
                 r_update <- substitute(regions_update)

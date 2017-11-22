@@ -35,4 +35,4 @@ setMethod("show", "GMQLDataset",
                 cat(" value :",paste(object@value))
             })
 
-#object <- as.list(substitute(list(...)))[-1L]
+

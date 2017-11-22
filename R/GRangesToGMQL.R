@@ -36,7 +36,6 @@
 #'
 #' @examples
 #' 
-#' \dontrun{
 #' library(GenomicRanges)
 #' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
 #' score = 5L, GC = 0.45)
@@ -46,7 +45,8 @@
 #' grl = GRangesList(gr1, gr2)
 #' test_out_path <- system.file("example", package = "RGMQL")
 #' export_gmql(grl, test_out_path,TRUE)
-#' }
+#' 
+#' 
 #' @export
 #'
 export_gmql <- function(samples, dir_out, is_gtf)

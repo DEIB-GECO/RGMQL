@@ -34,17 +34,16 @@ left_input_data that overlap with at least one region in right_input_data
 (even just one base).}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL difference function
-}
-\details{
-It produces one sample in the result for each sample of the left operand,
-by keeping the same metadata of the left input sample and only those 
-regions (with their schema and values) of the left input sample which 
-do not intersect with any region in the right operand sample.
+
+It produces one sample in the result for each sample of the 
+left operand, by keeping the same metadata of the left input sample 
+and only those regions (with their schema and values) of the left input 
+sample which do not intersect with any region in the right operand sample.
 The optional \emph{joinby} clause is used to extract a subset of couples
 from the cartesian product of two dataset \emph{x} and \emph{y} 
 on which to apply the DIFFERENCE operator:

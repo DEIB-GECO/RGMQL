@@ -16,8 +16,7 @@ extend(.data, ...)
 \item{.data}{GMQLDataset class object}
 
 \item{...}{Additional arguments for use in specific methods.
-
-This method accept a series of aggregate function on region attribute.
+It accept a series of aggregate function on region attribute.
 All the element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
@@ -36,15 +35,15 @@ attributes. Two style are allowed:
 "mixed style" is not allowed}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL extend function
 
-It generates new metadata attributes as result of aggregate functions 
-applied to sample region attributes and adds them to the existing metadata 
-attributes of the sample.
+For each sample in an input dataset, it generates new metadata attributes 
+as result of aggregate functions applied to sample region attributes 
+and adds them to the existing metadata attributes of the sample.
 Aggregate functions are applied sample by sample.
 }
 \examples{

@@ -1,13 +1,13 @@
-#' GMQL Operation: SELECT
-#'
-#' It returns all the samples satisfying the predicate on metadata.
-#' If regions are specified, returns regions satisfying the predicate 
-#' on regions.
-#' If semijoin clauses are specified they are applied, too.
-#' When semijoin is defined, it extracts those samples containing all metadata 
-#' attribute defined in semijoin clause with at least one metadata value 
-#' in common with semi join dataset.
-#' If no metadata in common between input dataset and semi join dataset, 
+#' Method filter
+#' 
+#' It creates a new dataset from an existing one by extracting a subset of 
+#' samples and/or regions from the input dataset according to their predicate.
+#' each sample in the output dataset has the same region attributes, 
+#' values, and metadata as in the input dataset.
+#' When semijoin function is defined, it extracts those samples containing 
+#' all metadata attribute defined in semijoin clause with at least 
+#' one metadata value in common with semijoin dataset.
+#' If no metadata in common between input dataset and semijoin dataset, 
 #' no sample is extracted.
 #'
 #' @importFrom rJava J
@@ -20,16 +20,15 @@
 #' on metadata attribute. 
 #' Only !, |, ||, &, && are admitted.
 #' @param r_predicate logical predicate made up by R logical operation 
-#' on chema region values. 
+#' on schema region values. 
 #' Only !, |, ||, &, && are admitted.
 #' @param ... Additional arguments for use in specific methods.
-#' 
-#' @param semijoin \code{\link{semijoin}} function 
+#' It is also accept \code{\link{semijoin}} function 
 #' to define filter method with semijoin condition (see examples).
 #' 
 #' 
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #' 
@@ -43,17 +42,17 @@
 #' 
 #' \dontrun{
 #' 
-#' It creates a new dataset called 'jun_tf' by selecting those samples and 
-#' their regions from the existing 'data' dataset such that:
-#' Each output sample has a metadata attribute called antibody_target 
-#' with value JUN.
-#' Each output sample also has not a metadata attribute called "cell" 
-#' that has the same value of at least one of the values that a metadata 
-#' attribute equally called cell has in at least one sample 
-#' of the 'join_data' dataset.
-#' For each sample satisfying previous condition,only its regions that 
-#' have a region attribute called pValue with the associated value 
-#' less than 0.01 are conserved in output
+#' # It creates a new dataset called 'jun_tf' by selecting those samples and 
+#' # their regions from the existing 'data' dataset such that:
+#' # Each output sample has a metadata attribute called antibody_target 
+#' # with value JUN.
+#' # Each output sample also has not a metadata attribute called "cell" 
+#' # that has the same value of at least one of the values that a metadata 
+#' # attribute equally called cell has in at least one sample 
+#' # of the 'join_data' dataset.
+#' # For each sample satisfying previous condition,only its regions that 
+#' # have a region attribute called pValue with the associated value 
+#' # less than 0.01 are conserved in output
 #' 
 #' 
 #' init_gmql()
@@ -131,8 +130,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' considering semi_join IN semi_join_dataset
 #' 
 #' @param ... Additional arguments for use in specific methods.
-#' 
-#' This method accept a function to define condition evaluation on metadata.
+#' It is also accpet a functions to define condition evaluation on metadata.
 #' \itemize{
 #' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
@@ -143,9 +141,30 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' if both end with value.}
 #' }
 #' 
+#' @examples
+#' 
+#' # It creates a new dataset called 'jun_tf' by selecting those samples and 
+#' # their regions from the existing 'data' dataset such that:
+#' # Each output sample has a metadata attribute called antibody_target 
+#' # with value JUN.
+#' # Each output sample also has not a metadata attribute called "cell" 
+#' # that has the same value of at least one of the values that a metadata 
+#' # attribute equally called cell has in at least one sample 
+#' # of the 'join_data' dataset.
+#' # For each sample satisfying previous condition,only its regions that 
+#' # have a region attribute called pValue with the associated value 
+#' # less than 0.01 are conserved in output
+#' 
+#' 
+#' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+#' data <- read_dataset(test_path)
+#' join_data <-  read_dataset(test_path2)
+#' jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, DF("cell")))
+#' 
 #' @return semijoin condition as list
 #' @export
-#' 
 semijoin <- function(data, not_in = FALSE, ...)
 {
     semij_cond = list(...)

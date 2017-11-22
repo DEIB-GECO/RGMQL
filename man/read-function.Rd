@@ -4,7 +4,7 @@
 \alias{read}
 \alias{read_dataset}
 \alias{read}
-\title{GMQL Function: READ}
+\title{Function read}
 \usage{
 read_dataset(dataset, parser = "CustomParser", is_local = TRUE,
   is_GMQL = TRUE)
@@ -34,15 +34,13 @@ Default is CustomParser.}
 \item{samples}{GrangesList}
 }
 \value{
-DataSet class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
-Read a GMQL dataset or any other folder containig some homogenus sample
-from disk, saving in Scala memory that can be referenced in R
+Read a GMQL dataset, folder containig some homogenus sample from disk 
+or GrangesList saving in Scala memory that can be referenced in R.
 Also used to read a repository dataset in case of remote processing.
-
-Read a GrangesList saving in scala memory that can be referenced in R
 }
 \details{
 Normally a GMQL dataset contains an XML schema file that contains
@@ -50,6 +48,13 @@ name of column header. (e.g chr, start, stop, strand)
 The CustomParser read this XML schema; 
 if you already know what kind of schema your files are, use one of the 
 parser defined without reading any XML schema
+
+If GrangesList has no metadata: i.e. metadata() is empty, two metadata are
+generated.
+\itemize{
+\item{"Provider" = "Polimi"}
+\item{"Application" = "RGMQL"}
+}
 }
 \examples{
 
@@ -66,7 +71,7 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 r = read_dataset(test_path,"ANNParser")
 
 ## read remote public dataset stored into GMQL system repository 
-
+## If public dataset a prefix "public." is needed before dataset name
 r2 = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 
 }

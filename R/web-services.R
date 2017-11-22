@@ -24,15 +24,13 @@ if(getRversion() >= "3.1.0")
 #' @param username string name used during signup
 #' @param password string password used during signup
 #'
-#' @seealso \code{\link{logout_gmql}}
-#'
 #' @details
 #' if both username and password are NULL you will be logged as guest
 #' After login you will receive an authentication token.
 #' As token remains vaild on server (until the next login / registration) 
 #' a user can safely use a token fora previous session as a convenience, 
 #' this token is saved in Global environment to perform subsequent REST call 
-#' even on complete R restart (if is environemnt has been saved, of course ...)
+#' even on complete R restart (if is environemnt has been saved)
 #' If error occures a specific error is printed
 #'
 #' @return None
@@ -149,8 +147,8 @@ logout_gmql <- function(url)
 
 #' Shows all Queries
 #'
-#' It shows all the GMQL query saved on repository 
-#' using the proper GMQL web service available on a remote server
+#' It shows all the GMQL query saved on repository using the proper GMQL 
+#' web service available on a remote server
 #' 
 #' @import httr
 #'
@@ -168,6 +166,7 @@ logout_gmql <- function(url)
 #' if error occures, a specific error is printed
 #'
 #' @examples 
+#' 
 #' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' list <- show_queries_list(remote_url)
@@ -460,12 +459,14 @@ stop_job <- function(url, job_id)
 #' If error occures a specific error is printed
 #'
 #' @examples
-#' \dontrun{
+#' 
 #' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' 
 #' ## list all jobs
 #' list_jobs <- show_jobs_list(remote_url)
+#' 
+#' \dontrun{
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' 
 #' ## show job log
@@ -518,7 +519,9 @@ trace_job <- function(url, job_id)
 
 #' Show all jobs
 #'
-#' It show all Jobs (run, succeded or failed) invoked by user
+#' It show all Jobs (run, succeded or failed) invoked by user using the proper 
+#' GMQL web service available on a remote server
+#' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
@@ -832,9 +835,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #' @details
 #' If no error occur, print "Deleted Dataset", otherwise a specific error 
 #' is printed
-#'
-#' @seealso \code{\link{download_dataset}}
-#'
+#' 
 #' @examples
 #'
 #' \dontrun{
@@ -884,7 +885,6 @@ delete_dataset <- function(url,datasetName)
 #'
 #' @details
 #' If error occures a specific error is printed
-#'
 #'
 #' @examples
 #'

@@ -1,8 +1,8 @@
-#' GMQL Operation: EXTEND
+#' Method extend
 #'
-#' It generates new metadata attributes as result of aggregate functions 
-#' applied to sample region attributes and adds them to the existing metadata 
-#' attributes of the sample.
+#' For each sample in an input dataset, it generates new metadata attributes 
+#' as result of aggregate functions applied to sample region attributes 
+#' and adds them to the existing metadata attributes of the sample.
 #' Aggregate functions are applied sample by sample.
 #'
 #' @importFrom rJava .jnull
@@ -11,8 +11,7 @@
 #'
 #' @param .data GMQLDataset class object 
 #' @param ... Additional arguments for use in specific methods.
-#' 
-#' This method accept a series of aggregate function on region attribute.
+#' It accept a series of aggregate function on region attribute.
 #' All the element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
 #' The aggregate functions available are: \code{\link{SUM}}, 
@@ -30,8 +29,8 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #'

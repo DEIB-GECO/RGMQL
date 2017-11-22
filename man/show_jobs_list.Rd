@@ -18,7 +18,8 @@ Every job in the list is identified by:
 }
 }
 \description{
-It show all Jobs (run, succeded or failed) invoked by user
+It show all Jobs (run, succeded or failed) invoked by user using the proper 
+GMQL web service available on a remote server
 }
 \details{
 If error occures a specific error is printed

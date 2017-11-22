@@ -22,7 +22,7 @@
 #' You can always perform it, calling the function \code{\link{login_gmql}} 
 #' explicitly
 #' 
-#' @param username string name used during signup
+#' @param username string name used during signup 
 #' @param password string password used during signup
 #' 
 #' @return None
@@ -62,10 +62,10 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
     WrappeR$initGMQL(out_format,remote_processing)
 }
 
-#' GMQL Function: READ
+#' Function read
 #'
-#' Read a GMQL dataset or any other folder containig some homogenus sample
-#' from disk, saving in Scala memory that can be referenced in R
+#' Read a GMQL dataset, folder containig some homogenus sample from disk 
+#' or GrangesList saving in Scala memory that can be referenced in R.
 #' Also used to read a repository dataset in case of remote processing.
 #' 
 #' @importFrom rJava .jnull
@@ -89,8 +89,8 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' @param is_local logical value indicating local or remote dataset
 #' @param is_GMQL logical value indicating if is a GMQL dataset or not 
 #' 
-#' @return DataSet class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @details
 #' Normally a GMQL dataset contains an XML schema file that contains
@@ -98,6 +98,13 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' The CustomParser read this XML schema; 
 #' if you already know what kind of schema your files are, use one of the 
 #' parser defined without reading any XML schema
+#' 
+#' If GrangesList has no metadata: i.e. metadata() is empty, two metadata are
+#' generated.
+#' \itemize{
+#' \item{"Provider" = "Polimi"}
+#' \item{"Application" = "RGMQL"}
+#' }
 #'
 #' @examples
 #' 
@@ -114,7 +121,7 @@ init_gmql <- function(output_format = "gtf", remote_processing = FALSE,
 #' r = read_dataset(test_path,"ANNParser")
 #' 
 #' ## read remote public dataset stored into GMQL system repository 
-#' 
+#' ## If public dataset a prefix "public." is needed before dataset name
 #' r2 = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 #' 
 #' }
@@ -179,16 +186,12 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
         GMQLDataset(data)
 }
 
-#' GMQL Function: READ
-#'
-#' Read a GrangesList saving in scala memory that can be referenced in R
-#'
+
 #' @importFrom S4Vectors metadata
 #' @importFrom rJava J
 #' @importFrom rJava .jarray
 #' 
 #' @param samples GrangesList
-#' 
 #' 
 #' @name read
 #' @rdname read-function
@@ -274,11 +277,11 @@ We provide two metadata for you")
 
 #' Disable or Enable remote processing
 #'
-#' It allows to enable or disable remote processing
+#' It allows to enable or disable remote processing 
 #' 
 #' @details 
 #' The invocation of this function allow to change mode of processing.
-#' after materialization is not possbile to switch the processing mode, 
+#' after invoking collect() is not possbile to switch the processing mode, 
 #' 
 #' @importFrom rJava J
 #' 
@@ -290,7 +293,7 @@ We provide two metadata for you")
 #' @examples
 #' 
 #' # initialize with remote processing off
-#' init_gmql("tab",remote_processing=FALSE)
+#' init_gmql("tab",remote_processing = FALSE)
 #' 
 #' # change processing mode to remote
 #' remote_processing(TRUE)

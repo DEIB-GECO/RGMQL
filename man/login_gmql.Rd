@@ -28,7 +28,7 @@ After login you will receive an authentication token.
 As token remains vaild on server (until the next login / registration) 
 a user can safely use a token fora previous session as a convenience, 
 this token is saved in Global environment to perform subsequent REST call 
-even on complete R restart (if is environemnt has been saved, of course ...)
+even on complete R restart (if is environemnt has been saved)
 If error occures a specific error is printed
 }
 \examples{
@@ -36,7 +36,4 @@ If error occures a specific error is printed
 remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 
-}
-\seealso{
-\code{\link{logout_gmql}}
 }

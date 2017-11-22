@@ -1,10 +1,10 @@
 #' Method union
 #' 
-#' Wrapper to GMQL union function
+#' @description Wrapper to GMQL union function
 #' 
-#' It is used to integrate homogeneous or heterogeneous samples of two datasets 
-#' within a single dataset; for each sample of either input dataset, 
-#' a result sample is created as follows:
+#' @description It is used to integrate homogeneous or heterogeneous samples 
+#' of two datasets within a single dataset; for each sample of either input 
+#' dataset, a result sample is created as follows:
 #' \itemize{
 #' \item {Metadata are the same as in the original sample.}
 #' \item {Resulting schema is obtained by projecting the schema 
@@ -23,11 +23,11 @@
 #' 
 #' @importFrom rJava J
 #' 
-#' @param x GMQLDataset class object
-#' @param y GMQLDataset class object 
+#' @param x GMQLDataset object
+#' @param y GMQLDataset object 
 #'
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #'
 #' @examples
 #' 

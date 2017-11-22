@@ -27,9 +27,9 @@ GrangesList with associated metadata
 GMQL Operation: TAKE
 
 It saves the contents of a dataset that contains samples metadata 
-and samples regions.
-It is normally used to store in memoery the contents of any dataset 
-generated during a GMQL query. the operation can be very time-consuming.
+and samples regions as GrangesList.
+It is normally used to store in memory the contents of any dataset 
+generated during a GMQL query. The operation can be very time-consuming.
 If you have invoked any materialization before take function, 
 all those dataset will be materialized as folder.
 }

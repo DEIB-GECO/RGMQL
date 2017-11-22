@@ -11,7 +11,7 @@ None
 }
 \description{
 Execute GMQL query.
-The function works only after invoking at least one materialize
+The function works only after invoking at least one collect
 }
 \examples{
 

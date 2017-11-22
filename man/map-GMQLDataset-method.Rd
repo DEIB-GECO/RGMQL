@@ -47,8 +47,8 @@ if both end with value.}
 }}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL map function

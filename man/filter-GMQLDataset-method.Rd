@@ -22,29 +22,28 @@ on metadata attribute.
 Only !, |, ||, &, && are admitted.}
 
 \item{r_predicate}{logical predicate made up by R logical operation 
-on chema region values. 
+on schema region values. 
 Only !, |, ||, &, && are admitted.}
 
-\item{semijoin}{\code{\link{semijoin}} function 
+\item{...}{Additional arguments for use in specific methods.
+It is also accept \code{\link{semijoin}} function 
 to define filter method with semijoin condition (see examples).}
-
-\item{...}{Additional arguments for use in specific methods.}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL select function
 
-It returns all the samples satisfying the predicate on metadata.
-If regions are specified, returns regions satisfying the predicate 
-on regions.
-If semijoin clauses are specified they are applied, too.
-When semijoin is defined, it extracts those samples containing all metadata 
-attribute defined in semijoin clause with at least one metadata value 
-in common with semi join dataset.
-If no metadata in common between input dataset and semi join dataset, 
+It creates a new dataset from an existing one by extracting a subset of 
+samples and/or regions from the input dataset according to their predicate.
+each sample in the output dataset has the same region attributes, 
+values, and metadata as in the input dataset.
+When semijoin function is defined, it extracts those samples containing 
+all metadata attribute defined in semijoin clause with at least 
+one metadata value in common with semijoin dataset.
+If no metadata in common between input dataset and semijoin dataset, 
 no sample is extracted.
 }
 \examples{
@@ -59,17 +58,17 @@ s <- filter(input, Patient_age < 70)
 
 \dontrun{
 
-It creates a new dataset called 'jun_tf' by selecting those samples and 
-their regions from the existing 'data' dataset such that:
-Each output sample has a metadata attribute called antibody_target 
-with value JUN.
-Each output sample also has not a metadata attribute called "cell" 
-that has the same value of at least one of the values that a metadata 
-attribute equally called cell has in at least one sample 
-of the 'join_data' dataset.
-For each sample satisfying previous condition,only its regions that 
-have a region attribute called pValue with the associated value 
-less than 0.01 are conserved in output
+# It creates a new dataset called 'jun_tf' by selecting those samples and 
+# their regions from the existing 'data' dataset such that:
+# Each output sample has a metadata attribute called antibody_target 
+# with value JUN.
+# Each output sample also has not a metadata attribute called "cell" 
+# that has the same value of at least one of the values that a metadata 
+# attribute equally called cell has in at least one sample 
+# of the 'join_data' dataset.
+# For each sample satisfying previous condition,only its regions that 
+# have a region attribute called pValue with the associated value 
+# less than 0.01 are conserved in output
 
 
 init_gmql()

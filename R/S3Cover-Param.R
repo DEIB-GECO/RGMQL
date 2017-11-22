@@ -52,7 +52,8 @@ print.PARAMETER <- function(obj){
 #' 
 #' res = cover(exp, 2, ANY()+2/3)
 #' 
-#' @name COVER-PARAMETER
+#' @name ALL
+#' @aliases ALL
 #' @rdname cover-param-class
 #' @export
 #'
@@ -64,7 +65,8 @@ ALL <- function()
     return(list)
 }
 
-#' @name COVER-PARAMETER
+#' @name ANY
+#' @aliases ANY
 #' @rdname cover-param-class
 #' @export
 #'

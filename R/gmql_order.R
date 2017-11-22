@@ -1,28 +1,22 @@
-#' GMQL operation: ORDER
+#' Method arrange
 #'
 #' It is used to order either samples or sample regions or both, according to 
 #' a set of metadata and/or region attributes, and/or region coordinates.
 #' Order can be specified as ascending / descending for every attribute
 #' The number of samples and their regions remain the same 
-#' (unless mtop/rtop parameters specified) but a new ordering metadata 
+#' (unless fetching options are specified) but a new ordering metadata 
 #' and/or region attribute is added.
 #' Sorted samples or regions have a new attribute "order", 
-#' added to either metadata, or regions, or both of them as specified in input
-#' The input mtop = k and rtop = m extracts the first k samples 
-#' and m regions respectively, the clause mtopg = k and rtopg = m 
-#' performs grouping operation, grouping by identical values 
-#' of ordering attributes and then selects the first k samples 
-#' or regions of each group
+#' added to either metadata, or regions, or both of them as specified in inputs
 #'
 #' @importFrom rJava J
 #' @importFrom rJava .jnull
 #' @importFrom rJava .jarray
 #' 
 #' @param .data GMQLDataset class object
-#' @param metadata_ordering list of order objects where every object 
-#' contains the name of metadata.
-#' The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}
-#' Every condition accepts only one string value. (e.g. ASC("cell_type") )
+#' @param metadata_ordering list of ordering function contains name of 
+#' metadata.
+#' The function available are: \code{\link{ASC}}, \code{\link{DESC}}
 #' 
 #' @param fetch_opt string indicating the option used to fetch the 
 #' first k sample:
@@ -36,10 +30,9 @@
 #' @param num_fetch integer value identifying the number of region to fetch
 #' by default is 0, that's means all sample are fetched
 #' s
-#' @param regions_ordering list of ORDER objects where every object contains 
-#' the name of region schema value.
-#' The ORDER's available are: \code{\link{ASC}}, \code{\link{DESC}}.
-#' Every condition accepts only one string value. (e.g. DESC("pvalue") )
+#' @param regions_ordering list of ordering function contains 
+#' name of region schema value.
+#' The function available are: \code{\link{ASC}}, \code{\link{DESC}}.
 #' 
 #' @param reg_fetch_opt string indicating the option used to fetch the 
 #' first k regions:
@@ -54,10 +47,8 @@
 #' by default is 0, that's means all regions are fetched
 #' @param ... Additional arguments for use in specific methods.
 #' 
-#' 
-#' @return DataSet class object. It contains the value to use as input 
-#' for the subsequent GMQL function
-#' 
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #'
 #' @examples
 #' 

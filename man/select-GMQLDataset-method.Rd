@@ -12,7 +12,7 @@ select(.data, ...)
 
 \S4method{select}{GMQLDataset}(.data, metadata = NULL,
   metadata_update = NULL, all_but_meta = FALSE, regions = NULL,
-  regions_update = NULL, all_but_reg = FALSE)
+  regions_update = NULL, all_but_reg = FALSE, ...)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
@@ -54,21 +54,20 @@ are all except ones include in region parameter.
 if regions is not defined \emph{all_but_reg} is not considerd.}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL project function
 
 It creates, from an existing dataset, a new dataset with all the samples 
 from input dataset, but keeping for each sample in the input dataset 
-only those metadata and/or region attributes expressed in the operator 
-parameter list.
+only those metadata and/or region attributes expressed.
 Region coordinates and values of the remaining metadata remain equal to 
 those in the input dataset. It allows to:
 \itemize{
 \item{Remove existing metadata and/or region attributes from a dataset}
-\item{Create new metadata and/or region attributes in the result}
+\item{Update new metadata and/or region attributes in the result}
 }
 }
 \examples{

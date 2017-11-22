@@ -1,4 +1,4 @@
-#' GMQL Operation: COVER
+#' Method cover
 #'
 #' It takes as input a dataset containing one or more samples and returns 
 #' another dataset (with a single sample, if no \emph{groupby} option is 
@@ -84,21 +84,21 @@
 #' @param variation string identifying the cover GMQL function variation.
 #' The admissible string are:
 #' \itemize{
-#' \item{flat: returns the contiguous region that starts from the first end 
+#' \item{FLAT: returns the contiguous region that starts from the first end 
 #' and stops at the last end of the regions which would contribute 
 #' to each region of the \emph{cover}.}
-#' \item{summit: returns regions that start from a position
+#' \item{SUMMIT: returns regions that start from a position
 #' where the number of intersecting regions is not increasing afterwards and
 #' stops at a position where either the number of intersecting regions 
 #' decreases, or it violates the max accumulation index.}
-#' \item{histogram: returns the non-overlapping regions contributing to 
+#' \item{HISTOGRAM: returns the non-overlapping regions contributing to 
 #' the cover, each with its accumulation index value, which is assigned to 
 #' the AccIndex region attribute.}
-#' \item{cover: default value.}
+#' \item{COVER: default value.}
 #' }
 #' 
-#' @return GMQLDataset class object. It contains the value to use as input 
-#' for the subsequent GMQL function
+#' @return GMQLDataset object. It contains the value to use as input 
+#' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #' 

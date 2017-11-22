@@ -9,21 +9,20 @@
 \S4method{union}{GMQLDataset,GMQLDataset}(x, y)
 }
 \arguments{
-\item{x}{GMQLDataset class object}
+\item{x}{GMQLDataset object}
 
-\item{y}{GMQLDataset class object}
+\item{y}{GMQLDataset object}
 }
 \value{
-GMQLDataset class object. It contains the value to use as input 
-for the subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL union function
-}
-\details{
-It is used to integrate homogeneous or heterogeneous samples of two datasets 
-within a single dataset; for each sample of either input dataset, 
-a result sample is created as follows:
+
+It is used to integrate homogeneous or heterogeneous samples 
+of two datasets within a single dataset; for each sample of either input 
+dataset, a result sample is created as follows:
 \itemize{
 \item {Metadata are the same as in the original sample.}
 \item {Resulting schema is obtained by projecting the schema 

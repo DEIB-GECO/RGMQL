@@ -1,7 +1,7 @@
 #' GMQL Function: EXECUTE
 #'
 #' Execute GMQL query.
-#' The function works only after invoking at least one materialize
+#' The function works only after invoking at least one collect
 #' 
 #' @importFrom rJava J
 #' 
@@ -67,7 +67,9 @@ execute <- function()
 
 
 
-#' GMQL Operation: MATERIALIZE
+#' Method collect
+#' 
+#' Wrapper to GMQL materialize function
 #'
 #' It saves the contents of a dataset that contains samples metadata and 
 #' samples regions.
@@ -124,12 +126,12 @@ gmql_materialize <- function(input_data, dir_out, name)
 }
 
 
-#' GMQL Operation: TAKE
+#' Method take
 #'
 #' It saves the contents of a dataset that contains samples metadata 
-#' and samples regions.
-#' It is normally used to store in memoery the contents of any dataset 
-#' generated during a GMQL query. the operation can be very time-consuming.
+#' and samples regions as GrangesList.
+#' It is normally used to store in memory the contents of any dataset 
+#' generated during a GMQL query. The operation can be very time-consuming.
 #' If you have invoked any materialization before take function, 
 #' all those dataset will be materialized as folder.
 #'

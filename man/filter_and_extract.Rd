@@ -36,7 +36,7 @@ seqnames,ranges ans strand and a variable part made up by the regions
 defined as input.
 The metadata and metadata_prefix are used to filter the data and choose 
 only the samples that match at least one metdatata with its prefix.
-The regions are shown for each sample obtained from filtering.
+The input regions are shown for each sample obtained from filtering.
 }
 \details{
 This function works only with datatset or Grangeslist that have the same 

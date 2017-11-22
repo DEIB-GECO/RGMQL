@@ -18,12 +18,12 @@ It allows to enable or disable remote processing
 }
 \details{
 The invocation of this function allow to change mode of processing.
-after materialization is not possbile to switch the processing mode,
+after invoking collect() is not possbile to switch the processing mode,
 }
 \examples{
 
 # initialize with remote processing off
-init_gmql("tab",remote_processing=FALSE)
+init_gmql("tab",remote_processing = FALSE)
 
 # change processing mode to remote
 remote_processing(TRUE)

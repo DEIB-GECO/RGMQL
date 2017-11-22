@@ -101,7 +101,8 @@ check.DISTAL <- function(value)
 #' genometric_predicate = list(list(MD(1), DGE(12000), DOWN())), 
 #' DF("provider"), region_output = "RIGHT")
 #'
-#' @name DISTAL
+#' @name DL
+#' @aliases DL
 #' @rdname distal-class
 #' @export
 #' 
@@ -114,7 +115,8 @@ DL <- function(value)
     return(list)
 }
 
-#' @name DISTAL
+#' @name DG
+#' @aliases DG
 #' @rdname distal-class
 #' @export
 #' 
@@ -127,7 +129,8 @@ DG <- function(value)
     return(list)
 }
 
-#' @name DISTAL
+#' @name DLE
+#' @aliases DLE
 #' @rdname distal-class
 #' @export
 #' 
@@ -140,7 +143,8 @@ DLE <- function(value)
     return(list)
 }
 
-#' @name DISTAL
+#' @name DGE
+#' @aliases DGE
 #' @rdname distal-class
 #' @export
 #' 
@@ -153,7 +157,8 @@ DGE <- function(value)
     return(list)
 }
 
-#' @name DISTAL
+#' @name MD
+#' @aliases MD
 #' @rdname distal-class
 #' @export
 #' 
@@ -167,7 +172,8 @@ MD <- function(value)
 }
 
 
-#' @name DISTAL
+#' @name UP
+#' @aliases UP
 #' @rdname distal-class
 #' @export
 #' 
@@ -184,7 +190,8 @@ as.character.UP <- function(obj) {
 }
 
 
-#' @name DISTAL
+#' @name DOWN
+#' @aliases DOWN
 #' @rdname distal-class
 #' @export
 #' 

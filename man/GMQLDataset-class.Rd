@@ -16,6 +16,8 @@ instance of GMQL dataset
 }
 \description{
 Abstract class representing GMQL dataset
+
+Alloc GMQLDataset object with its value
 }
 \section{Slots}{
 

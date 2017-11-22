@@ -15,8 +15,7 @@ aggregate(x, ...)
 \item{x}{GMQLDataset class object}
 
 \item{...}{Additional arguments for use in specific methods.
-
-list of evalation function to define condition evaluation on metadata:
+It accepts a list of evalation function to define evaluation on metadata:
 \itemize{
 \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 if they both end with value and, if they have a further prefixes,
@@ -28,20 +27,21 @@ if both end with value.}
 }}
 }
 \value{
-DataSet class object. It contains the value to use as input for the
-  subsequent GMQL function
+GMQLDataset object. It contains the value to use as input 
+for the subsequent GMQLDataset method
 }
 \description{
 Wrapper to GMQL merge function
 
 It builds a dataset consisting of a single sample having as many regions as
 the number of regions of the input data and as many metadata as the union of
-the 'attribute-value' tuples of the input samples. A groupby clause can be
-specified on metadata: the samples are then partitioned in groups, each with
-a distinct value of the grouping metadata attributes. The operation is
-separately applied to each group, yielding one sample in the result for each
-group. Samples whose names are not present in the grouping metadata
-parameter are disregarded.
+the 'attribute-value' tuples of the input samples. 
+If at least one evaluation function is specified: the samples are then 
+partitioned in groups, each with a distinct value of the grouping metadata 
+attributes. The operation is separately applied to each group, yielding 
+one sample in the result for each group. 
+Samples whose names are not present in the grouping metadata parameter 
+are disregarded.
 }
 \examples{
 
