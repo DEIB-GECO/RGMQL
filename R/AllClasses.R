@@ -13,6 +13,10 @@ setClass("GMQLDataset",
             contains = c("DataTable"),
             representation(value = "character"))
 
+#' GMQLDataset alloc Function
+#' 
+#' Alloc GMQLDataset object with its value
+#' 
 #' @name GMQLDataset
 #' @importFrom methods new
 #' 
@@ -31,4 +35,4 @@ setMethod("show", "GMQLDataset",
                 cat(" value :",paste(object@value))
             })
 
-
+#object <- as.list(substitute(list(...)))[-1L]

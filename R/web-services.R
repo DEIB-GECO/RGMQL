@@ -10,7 +10,6 @@ if(getRversion() >= "3.1.0")
 ############################
 
 
-
 #' Login to GMQL
 #'
 #' Login to GMQL REST services suite as a registered user, specifying username 
