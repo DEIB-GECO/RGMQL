@@ -23,8 +23,9 @@
 #' on schema region values. 
 #' Only !, |, ||, &, && are admitted.
 #' @param ... Additional arguments for use in specific methods.
-#' It is also accept \code{\link{semijoin}} function 
-#' to define filter method with semijoin condition (see examples).
+#' 
+#' @param semijoin \code{\link{semijoin}} function to define filter method 
+#' with semijoin condition (see examples).
 #' 
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 

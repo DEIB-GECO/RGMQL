@@ -25,9 +25,10 @@ Only !, |, ||, &, && are admitted.}
 on schema region values. 
 Only !, |, ||, &, && are admitted.}
 
-\item{...}{Additional arguments for use in specific methods.
-It is also accept \code{\link{semijoin}} function 
-to define filter method with semijoin condition (see examples).}
+\item{semijoin}{\code{\link{semijoin}} function to define filter method 
+with semijoin condition (see examples).}
+
+\item{...}{Additional arguments for use in specific methods.}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 

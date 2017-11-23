@@ -130,7 +130,7 @@ gmql_join <- function(right_data, left_data, genometric_predicate, joinBy,
     else
         genomatrix <- .jnull("java/lang/String")
     
-    if(!is.null(joinBy))
+    if(!is.null(joinBy) && !length(joinBy) == 0)
         join_condition_matrix <- .jarray(.join_condition(joinBy), 
                                             dispatch = TRUE)
     else
