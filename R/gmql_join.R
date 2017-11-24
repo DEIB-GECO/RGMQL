@@ -17,7 +17,7 @@
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
 #' 
-#' @param genometric_predicate is a list of lists of DISTAL object
+#' @param genometric_predicate is a list of DISTAL object
 #' For details of DISTAL objects see:
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 #' \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}
@@ -73,7 +73,7 @@
 #' TSS = read_dataset(test_path)
 #' HM = read_dataset(test_path2)
 #' join_data = merge(TSS, HM, 
-#' genometric_predicate = list(list(MD(1), DLE(120000))), DF("provider"), 
+#' genometric_predicate = list(MD(1), DLE(120000)), DF("provider"), 
 #' region_output = "RIGHT")
 #' 
 #' 
@@ -101,30 +101,33 @@ gmql_join <- function(right_data, left_data, genometric_predicate, joinBy,
         if(!is.list(genometric_predicate))
             stop("genometric_predicate must be list of lists")
     
-        if(!all(sapply(genometric_predicate, function(x) is.list(x) )))
-            stop("genometric_predicate must be list of lists")
+        #if(!all(sapply(genometric_predicate, function(x) is.list(x) )))
+         #   stop("genometric_predicate must be list of lists")
     
-        lapply(genometric_predicate, function(list_pred) {
-            if(length(list_pred)>4)
-            {
-                warning("only 4 element per list, we cut the rest")
-                length(list_pred)=4
-            }
-            
-            if(!all(sapply(list_pred, function(x) {is(x,"DISTAL")} )))
-                stop("All elements should be DISTAL object")
-            })
+        #lapply(genometric_predicate, function(list_pred) {
+           # if(length(list_pred)>4)
+            #{
+             #   warning("only 4 element per list, we cut the rest")
+              #  length(list_pred)=4
+            #}
+        if(!all(sapply(genometric_predicate, function(x) {is(x,"DISTAL")} )))
+            stop("All elements should be DISTAL object")
+            #})
     
-        genomatrix <- t(sapply(genometric_predicate, function(list_pred) {
-            dist_array <- sapply(list_pred, function(x) {
+        #genomatrix <- t(sapply(genometric_predicate, function(list_pred) {
+        genomatrix <- t(sapply(genometric_predicate, function(x) {
                 new_value = as.character(x)
                 array <- c(new_value)
-            })
-            dist_array = c(dist_array,c("NA","NA"),c("NA","NA"),c("NA","NA"))
-            length(dist_array) = 8
-            dist_array
         }))
-    
+        na_matrix <- matrix("NA", nrow = 3, ncol = 2)
+        genomatrix <- rbind(genomatrix,na_matrix)
+        col <- dim(genomatrix)[1]
+        if(col>4)
+        {
+            array <- seq(5, to  = col)
+            genomatrix <- genomatrix[-array,]
+        }
+       # }))
         genomatrix <- .jarray(genomatrix, dispatch = TRUE)
     }
     else
