@@ -20,7 +20,10 @@
 {
     schema_name <- list.files(datasetName, pattern = "*.schema$",
                                 full.names = TRUE)
-    if(length(schema_name)==0)
+    schema_name_xml <- list.files(datasetName, pattern = "*.xml$",
+                                full.names = TRUE)
+    
+    if(length(schema_name)==0 || length(schema_name_xml) == 0)
         stop("schema not present")
     
     xml_schema <- xml2::read_xml(schema_name)

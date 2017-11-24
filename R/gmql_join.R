@@ -89,45 +89,29 @@ setMethod("merge", c("GMQLDataset","GMQLDataset"),
                     ptr_data_y <- y@value
                     joinBy = list(...)
                     gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
-                                joinBy, region_output="contig")
+                                joinBy, region_output)
                 })
 
 
-gmql_join <- function(right_data, left_data, genometric_predicate, joinBy, 
-                            region_output="contig")
+gmql_join <- function(left_data, right_data, genometric_predicate, joinBy, 
+                            region_output)
 {
     if(!is.null(genometric_predicate))
     {
+        if(length(genometric_predicate) >4)
+            stop("genometric_predicate: only 4 DISTAL condition")
+        
         if(!is.list(genometric_predicate))
-            stop("genometric_predicate must be list of lists")
+            stop("genometric_predicate must be a list")
     
-        #if(!all(sapply(genometric_predicate, function(x) is.list(x) )))
-         #   stop("genometric_predicate must be list of lists")
-    
-        #lapply(genometric_predicate, function(list_pred) {
-           # if(length(list_pred)>4)
-            #{
-             #   warning("only 4 element per list, we cut the rest")
-              #  length(list_pred)=4
-            #}
         if(!all(sapply(genometric_predicate, function(x) {is(x,"DISTAL")} )))
             stop("All elements should be DISTAL object")
-            #})
-    
-        #genomatrix <- t(sapply(genometric_predicate, function(list_pred) {
+         
         genomatrix <- t(sapply(genometric_predicate, function(x) {
                 new_value = as.character(x)
                 array <- c(new_value)
         }))
-        na_matrix <- matrix("NA", nrow = 3, ncol = 2)
-        genomatrix <- rbind(genomatrix,na_matrix)
-        col <- dim(genomatrix)[1]
-        if(col>4)
-        {
-            array <- seq(5, to  = col)
-            genomatrix <- genomatrix[-array,]
-        }
-       # }))
+        
         genomatrix <- .jarray(genomatrix, dispatch = TRUE)
     }
     else

@@ -65,7 +65,7 @@ Imports:
     dplyr,
     stats
 Depends:
-    R(>= 3.4.2)
+    R(<= 3.4.2)
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
