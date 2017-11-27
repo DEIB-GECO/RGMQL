@@ -10,7 +10,6 @@ setGeneric("aggregate", function(x, ...)
                                     standardGeneric("aggregate"))
 
 
-
 #' Method filter
 #' 
 #' Wrapper to GMQL select function
@@ -56,7 +55,7 @@ setGeneric("collect", function(x, dir_out = getwd(), name = "ds1", ...)
 
 #' Method take
 #' 
-#' GMQL Operation: TAKE
+#' Wrapper to take function
 #' 
 #' @name take
 #' @rdname take-GMQLDataset-method

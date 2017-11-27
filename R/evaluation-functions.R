@@ -4,8 +4,9 @@
 
 #' Condition evaluation functions
 #'
-#' These functions is used to create a series of metadata as string
-#' that require evaluation on value.
+#' These functions is used to support joinBy and/or groupBy function parameter.
+#' It create a list of one element: matrix containing the two coloumn:
+#' type of condition evaluation and the metadata attribute
 #'
 #' \itemize{
 #' \item{FN: It defines a FULL (FULLNAME) evaluation of the input values.

@@ -24,7 +24,7 @@ by default is 0 that means take all rows for each sample}
 GrangesList with associated metadata
 }
 \description{
-GMQL Operation: TAKE
+Wrapper to take function
 
 It saves the contents of a dataset that contains samples metadata 
 and samples regions as GrangesList.

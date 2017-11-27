@@ -270,8 +270,8 @@ In this example we show how versatile RGMQL package are.
 As specified above, we can directly read a list of GRanges previously created 
 starting from two GRanges.
 Both *read()* and *read_dataset()* functions returns a result object, 
-in this case *data_out* containing an internal R representation of the dataset 
-used as input for executing the subsequent GMQL operation.
+in this case *data_out*: an instance of GMQLDataset class used as input 
+for executing the subsequent GMQL operation.
 
 ### Queries
 
@@ -330,7 +330,8 @@ specific path defined as input parameter.
 ## Materialize the result dataset on disk
 collect(exon_res)
 ```
-by default *collect()* has R workig directoy as stored path.  
+by default *collect()* has R workig directoy as stored path and *ds1* as name 
+of resulted dataset folder 
 
 ### Execution
 

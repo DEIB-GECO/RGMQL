@@ -27,9 +27,6 @@ None
 \description{
 Wrapper to GMQL materialize function
 
-Wrapper to GMQL materialize function
-}
-\details{
 It saves the contents of a dataset that contains samples metadata and 
 samples regions.
 It is normally used to persist the contents of any dataset generated 

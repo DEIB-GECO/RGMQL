@@ -68,8 +68,6 @@ execute <- function()
 
 
 #' Method collect
-#' 
-#' Wrapper to GMQL materialize function
 #'
 #' It saves the contents of a dataset that contains samples metadata and 
 #' samples regions.

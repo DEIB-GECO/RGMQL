@@ -14,7 +14,7 @@
 
 \item{y}{GMQLDataset class object}
 
-\item{genometric_predicate}{is a list of lists of DISTAL object
+\item{genometric_predicate}{is a list of DISTAL object
 For details of DISTAL objects see:
 \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}}
@@ -82,7 +82,7 @@ test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 TSS = read_dataset(test_path)
 HM = read_dataset(test_path2)
 join_data = merge(TSS, HM, 
-genometric_predicate = list(list(MD(1), DLE(120000))), DF("provider"), 
+genometric_predicate = list(MD(1), DLE(120000)), DF("provider"), 
 region_output = "RIGHT")
 
 

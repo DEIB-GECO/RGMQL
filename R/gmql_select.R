@@ -62,7 +62,7 @@
 #' data <- read_dataset(test_path)
 #' join_data <- read_dataset(test_path2)
 #' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-#' semijoin(join_data, TRUE, DF("cell")))
+#' semijoin(join_data, TRUE, list(DF("cell"))))
 #' 
 #' }
 #' 
@@ -130,8 +130,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
 #' considering semi_join IN semi_join_dataset
 #' 
-#' @param ... Additional arguments for use in specific methods and functions 
-#' to define condition evaluation on metadata.
+#' @param groupBy it define condition evaluation on metadata.
 #' \itemize{
 #' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 #' if they both end with value and, if they have a further prefixes,
@@ -162,13 +161,18 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 #' data <- read_dataset(test_path)
 #' join_data <-  read_dataset(test_path2)
-#' jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, DF("cell")))
+#' jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, 
+#' list(DF("cell"))))
 #' 
 #' @return semijoin condition as list
 #' @export
-semijoin <- function(data, not_in = FALSE, ...)
+semijoin <- function(data, not_in = FALSE, groupBy = NULL)
 {
-    semij_cond = list(...)
+    if(!is.list(groupBy))
+        stop("groupBy: must be a list")
+    
+    semij_cond = groupBy
+    
     if(is.null(data))
         stop("data cannot be NULL")
     

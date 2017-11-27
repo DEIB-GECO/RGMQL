@@ -4,7 +4,7 @@
 \alias{semijoin}
 \title{Semijoin Condtion}
 \usage{
-semijoin(data, not_in = FALSE, ...)
+semijoin(data, not_in = FALSE, groupBy = NULL)
 }
 \arguments{
 \item{data}{GMQLDataset class object}
@@ -13,8 +13,7 @@ semijoin(data, not_in = FALSE, ...)
 considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
 considering semi_join IN semi_join_dataset}
 
-\item{...}{Additional arguments for use in specific methods.
-It is also accpet a functions to define condition evaluation on metadata.
+\item{groupBy}{it define condition evaluation on metadata.
 \itemize{
 \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
 if they both end with value and, if they have a further prefixes,

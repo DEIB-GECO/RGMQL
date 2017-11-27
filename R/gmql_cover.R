@@ -149,8 +149,7 @@ setMethod("cover", "GMQLDataset",
 
 
 
-gmql_cover <- function(data, min_acc, max_acc, groupBy = NULL, 
-                            aggregates = NULL, flag)
+gmql_cover <- function(data, min_acc, max_acc, groupBy, aggregates, flag)
 {
     
     if(!is.null(groupBy))

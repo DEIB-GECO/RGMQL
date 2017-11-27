@@ -907,7 +907,7 @@ delete_dataset <- function(url,datasetName)
 #' @rdname download_dataset
 #' @export
 #'
-download_dataset <- function(url,datasetName,path = getwd())
+download_dataset <- function(url, datasetName, path = getwd())
 {
     url <- sub("/*[/]$","",url)
     URL <- paste0(url,"/datasets/",datasetName,"/zip")
@@ -920,9 +920,9 @@ download_dataset <- function(url,datasetName,path = getwd())
     else
     {
         zip_path <- paste0(path,"/",datasetName,".zip")
-        dir_out <-paste0(path,"/")
-        writeBin(content,zip_path)
-        unzip(zip_path,exdir=dir_out)
+        dir_out <- paste0(path,"/")
+        writeBin(content, zip_path)
+        unzip(zip_path,exdir = dir_out)
         print("Download Complete")
     }
 }
