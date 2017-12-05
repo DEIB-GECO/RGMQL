@@ -390,7 +390,7 @@ Upon succesfull logon, you get a request token that you must use
 in every subsequent REST call.
 Login can be performed using the function:
 ```{r, eval = TRUE}
-test_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+test_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
 login_gmql(test_url)
 ```
 that saves the token in the Global R environment within the variable 
@@ -436,6 +436,12 @@ name_dataset <- job$datasets[[1]]$name
 download_dataset(test_url,name_dataset)
 ```
 
+Once done we can loogut from remote repository using:
+```{r, logout, eval = TRUE}
+logout_gmql(test_url)
+```
+*logout_gmql* delete the authToken from R environment
+
 ### Batch execution
 
 This execution type is similar to local processing 
@@ -446,7 +452,7 @@ using the functions in this RGMQL package.[see import/export](# Utilities)
 
 Before starting with examples, note that we have to log into remote 
 infrastructure with login function:
-```{r, login remote, eval = TRUE}
+```{r, login remote, eval = FALSE}
 login_gmql(test_url)
 ```
 Otherwise, we can initialize the data engine with a remote url:
@@ -598,7 +604,7 @@ We can also import only a part of a GMQL dataset into R environment,
 by filtering its content as follows:
 ```{r, filter_extract, eval = TRUE}
 
-data_in <- base::system.file("example", "TEAD", package = "RGMQL")
+data_in <- system.file("example", "TEAD", package = "RGMQL")
 matrix <- filter_and_extract(data_in, metadata = NULL,regions = c("count"))
 matrix
 

@@ -78,7 +78,7 @@ test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 data <- read_dataset(test_path)
 join_data <- read_dataset(test_path2)
 jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-semijoin(join_data, TRUE, DF("cell")))
+semijoin(join_data, TRUE, list(DF("cell"))))
 
 }
 

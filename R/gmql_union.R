@@ -22,6 +22,7 @@
 #' the dataset to which they originally belonged.
 #' 
 #' @importFrom rJava J
+#' @importFrom BiocGenerics union
 #' 
 #' @param x GMQLDataset object
 #' @param y GMQLDataset object 

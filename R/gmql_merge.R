@@ -10,9 +10,8 @@
 #' Samples whose names are not present in the grouping metadata parameter 
 #' are disregarded.
 #'
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jarray .jnull
+#' @importFrom S4Vectors aggregate
 #'
 #' @param x GMQLDataset class object
 #' @param ... Additional arguments for use in specific methods.

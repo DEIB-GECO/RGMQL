@@ -1,15 +1,3 @@
-#' Method aggregate
-#' 
-#' Wrapper to GMQL merge function
-#' 
-#' @name aggregate
-#' @rdname aggregate-GMQLDataset-method
-#' @aliases aggregate
-#'  
-setGeneric("aggregate", function(x, ...) 
-                                    standardGeneric("aggregate"))
-
-
 #' Method filter
 #' 
 #' Wrapper to GMQL select function
@@ -71,7 +59,6 @@ setGeneric("take", function(data, ...) standardGeneric("take"))
 #' @aliases extend GMQLDataset-method
 setGeneric("extend", function(.data, ...) standardGeneric("extend"))
 
-
 #' Method select
 #' 
 #' Wrapper to GMQL project function
@@ -80,6 +67,7 @@ setGeneric("extend", function(.data, ...) standardGeneric("extend"))
 #' @rdname select-GMQLDataset-method
 #' @aliases select 
 setGeneric("select", function(.data, ...) standardGeneric("select"))
+
 
 #' Method arrange
 #' 
@@ -93,4 +81,13 @@ setGeneric("arrange", function(.data, metadata_ordering = NULL,
                     regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0, 
                     reg_fetch_opt = NULL, reg_num_fetch = 0, ...) 
                             standardGeneric("arrange"))
+
+#' Method group_by
+#' 
+#' Wrapper to GMQL group function
+#' 
+#' @name group_by
+#' @rdname group_by-GMQLDataset-method
+#' @aliases group_by 
+setGeneric("group_by", function(.data, ...) standardGeneric("group_by"))
 

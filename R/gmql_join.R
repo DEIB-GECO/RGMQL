@@ -10,9 +10,8 @@
 #' The output metadata are the union of the input metadata, 
 #' with their attribute names prefixed with left or right respectively.
 #'
-#' @importFrom rJava .jnull
-#' @importFrom rJava J
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
+#' @importFrom S4Vectors merge
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
@@ -106,7 +105,7 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
     
         if(!all(sapply(genometric_predicate, function(x) {is(x,"DISTAL")} )))
             stop("All elements should be DISTAL object")
-         
+        
         genomatrix <- t(sapply(genometric_predicate, function(x) {
                 new_value = as.character(x)
                 array <- c(new_value)

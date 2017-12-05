@@ -12,9 +12,8 @@
 #' only those samples that have the same value for each attribute
 #' are considered when performing the difference.
 #'
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
+#' @importFrom BiocGenerics setdiff
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object

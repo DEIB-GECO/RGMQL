@@ -51,6 +51,7 @@ test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 data <- read_dataset(test_path)
 join_data <-  read_dataset(test_path2)
-jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, DF("cell")))
+jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, 
+list(DF("cell"))))
 
 }

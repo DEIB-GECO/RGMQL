@@ -244,7 +244,7 @@ We provide two metadata for you")
     {
         col_names <- plyr::revalue(col_names,c(start = "left", 
                                         end = "right", seqnames = "chr"))
-        schema_matrix <- cbind(toupper(col_types),col_names)
+        schema_matrix <- cbind(col_names,toupper(col_types))
         schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),
                                         c("group","width")),]
     }

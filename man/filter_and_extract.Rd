@@ -5,42 +5,49 @@
 \title{FILTER AND EXTRACT}
 \usage{
 filter_and_extract(data, metadata = NULL, metadata_prefix = NULL,
-  regions = NULL)
+  regions = NULL, suffix = "antibody_target")
 }
 \arguments{
-\item{data}{string GMQL dataset folder path or GrangesList 
+\item{data}{string GMQL dataset folder path or GrangesList
 object}
 
-\item{metadata}{vector of character containing names of metadata 
+\item{metadata}{vector of character containing names of metadata
 to be searched for in metadata files.
 data will be extracted if at least one condition is satisfied:
 this condition will be logically "ANDed" with prefix filtering (see below)
-if NULL no filtering action occured 
+if NULL no filtering action occured
 (i.e every sample will be taken for regions filtering)}
 
-\item{metadata_prefix}{vector of character that will filter metadata 
+\item{metadata_prefix}{vector of character that will filter metadata
 containing rispectively every element of this vector.
 number of elelment in both vector must match}
 
-\item{regions}{vector of character that will extract only region 
-attribute specified; if NULL no regions will be taken and the output 
+\item{regions}{vector of character that will extract only region
+attribute specified; if NULL no regions will be taken and the output
 will be only GRanges made up by the first attribute
 (seqnames,start,end,strand)}
+
+\item{suffix}{name for each metadata column of GRanges. by default is the 
+"antibody_target". This string is taken from sample metadata file or from
+metadata() associated. If not present, the column name is the name of 
+selected regions}
 }
 \value{
 granges with selected regions (if any) in elementMetadata
 }
 \description{
-This function let user to create a new GRangeslist with fixed information: 
-seqnames,ranges ans strand and a variable part made up by the regions 
+This function let user to create a new GRangeslist with fixed information:
+seqnames,ranges ans strand and a variable part made up by the regions
 defined as input.
-The metadata and metadata_prefix are used to filter the data and choose 
+The metadata and metadata_prefix are used to filter the data and choose
 only the samples that match at least one metdatata with its prefix.
 The input regions are shown for each sample obtained from filtering.
 }
 \details{
-This function works only with datatset or Grangeslist that have the same 
+This function works only with datatset or Grangeslist that have the same
 information about regions attribute (but of course different value)
+In case of Grangeslist data input the function will search for metadata
+into metadata() function associated to Grangeslist.
 }
 \examples{
 

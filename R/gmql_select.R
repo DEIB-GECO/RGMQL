@@ -10,10 +10,10 @@
 #' If no metadata in common between input dataset and semijoin dataset, 
 #' no sample is extracted.
 #'
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
 #' @importFrom methods isClass
+#' @importFrom glue glue
+#' @importFrom dplyr filter
 #' 
 #' @param .data GMQLDataset class object
 #' @param m_predicate logical predicate made up by R logical operation 
@@ -69,31 +69,34 @@
 #' @aliases filter filter-method
 #' @export
 setMethod("filter", "GMQLDataset",
-            function(.data, m_predicate = NULL, r_predicate = NULL, 
-                        semijoin = NULL, ...)
+        function(.data, m_predicate = NULL, r_predicate = NULL, 
+                    semijoin = NULL, ...)
+        {
+            val <- .data@value
+            meta_pred <- substitute(m_predicate)
+            if(!is.null(meta_pred))
             {
-                val <- .data@value
-                meta_pred <- substitute(m_predicate)
-                if(!is.null(meta_pred))
-                {
-                    predicate <- .trasform(deparse(meta_pred))
-                    predicate <- paste(predicate,collapse = "")
-                }
-                else
-                    predicate <- .jnull("java/lang/String")
+                predicate <- .trasform(deparse(meta_pred))
+                predicate <- paste(predicate,collapse = "")
+                predicate <- as.character(glue::glue(predicate))
                 
-                reg_pred <- substitute(r_predicate)
-                if(!is.null(reg_pred))
-                {
-                    region_predicate <- .trasform(deparse(reg_pred))
-                    region_predicate <- paste(region_predicate,collapse = "")
-                }
-                else
-                    region_predicate <- .jnull("java/lang/String")
-
-                gmql_select(val, predicate, region_predicate, semijoin)
-            })
-
+            }
+            else
+                predicate <- .jnull("java/lang/String")
+            
+            reg_pred <- substitute(r_predicate)
+            if(!is.null(reg_pred))
+            {
+                region_predicate <- .trasform(deparse(reg_pred))
+                region_predicate <- paste(region_predicate,collapse = "")
+                region_predicate <- as.character(glue::glue(region_predicate))
+                
+            }
+            else
+                region_predicate <- .jnull("java/lang/String")
+            
+            gmql_select(val, predicate, region_predicate, semijoin)
+        })
 
 gmql_select <- function(input_data, predicate, region_predicate, s_join)
 {

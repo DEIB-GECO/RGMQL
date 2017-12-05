@@ -39,7 +39,7 @@ execute <- function()
         {
             url <- WrappeR$get_url()
             .download_or_upload()
-            serialize_query(url,FALSE,data)
+            res <- serialize_query(url,FALSE,data)
         }
     }
 }
@@ -107,13 +107,18 @@ setMethod("collect", "GMQLDataset",
 
 gmql_materialize <- function(input_data, dir_out, name)
 {
-    dir_out <- sub("/*[/]$","",dir_out)
-    
-    res_dir_out <- paste0(dir_out,"/",name)
-    if(!dir.exists(res_dir_out))
-        dir.create(res_dir_out)
-    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    remote_proc <- WrappeR$is_remote_processing()
+    if(!remote_proc)
+    {
+        dir_out <- sub("/*[/]$","",dir_out)
+        res_dir_out <- paste0(dir_out,"/",name)
+        if(!dir.exists(res_dir_out))
+            dir.create(res_dir_out)
+    }
+    else
+        res_dir_out <- dir_out
+    
     response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])
     data <- response[2]

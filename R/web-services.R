@@ -1052,11 +1052,13 @@ sample_metadata <- function(url, datasetName,sampleName)
 #'
 sample_region <- function(url, datasetName,sampleName)
 {
+    
     url <- sub("/*[/]$","",url)
     URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
     h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
     req <- httr::GET(URL, httr::add_headers(h))
     content <- httr::content(req, 'parsed',encoding = "UTF-8")
+    
     
     if(req$status_code !=200)
         stop(content)
@@ -1064,6 +1066,8 @@ sample_region <- function(url, datasetName,sampleName)
     {
         list <- show_schema(url,datasetName)
         schema_type <- list$type
+        
+        #df <- read.table(textConnection(content),sep = "\t")
         
         temp <- tempfile("temp") #use temporary files
         write.table(content,temp,quote = FALSE,sep = '\t',col.names = FALSE,
