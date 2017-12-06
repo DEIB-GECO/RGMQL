@@ -4,9 +4,9 @@
 
 #' Condition evaluation functions
 #'
-#' These functions is used to support joinBy and/or groupBy function parameter.
+#' These functions are used to support joinBy and/or groupBy function parameter.
 #' It create a list of one element: matrix containing the two coloumn:
-#' type of condition evaluation and the metadata attribute
+#' type of condition evaluation and the metadata attribute name
 #'
 #' \itemize{
 #' \item{FN: It defines a FULL (FULLNAME) evaluation of the input values.
@@ -26,11 +26,9 @@
 #' 
 #' @examples
 #' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
+#' "where is my example?"
 #' 
-#' @name FN
+#' @name Evaluation-Function
 #' @aliases FN
 #' @rdname condition_eval_func
 #' @export
@@ -51,7 +49,7 @@ FN <- function(...)
     join_condition_matrix
 }
 
-#' @name EX
+#' @name Evaluation-Function
 #' @aliases EX
 #' @rdname condition_eval_func
 #' @export
@@ -72,7 +70,7 @@ EX <- function(...)
     join_condition_matrix
 }
 
-#' @name DF
+#' @name Evaluation-Function
 #' @aliases DF
 #' @rdname condition_eval_func
 #' @export

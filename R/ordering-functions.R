@@ -6,35 +6,44 @@
 #' Ordering functions
 #'
 #' These functions is used to create a series of metadata as string
-#' that require ordering on value; is used only in arrange method.
-#' (see example)
+#' that require ordering on value; is used only in arrange method
+#' (see example).
 #' 
 #' \itemize{
-#' \item{ASC: It defines a ascending order for input value}
+#' \item{ASC: It defines an ascending order for input value}
 #' \item{DESC: It defines a descending order for input value}
 #' }
 #' 
 #' @param ... series of metatdata as string
 #'
-#' @return ordering object
+#' @return Ordering object
 #' 
 #' @examples
 #' 
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named 
+#' ## "data" using customParser
+#' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
+#' data = read_dataset(test_path)
 #' 
-#' ## It orders the samples according to the Region_count metadata attribute 
-#' ## and takes the two samples that have the highest count. 
+#' ## It orders the samples according to the Region_Count metadata attribute 
+#' ## and takes the two samples that have the lowest count. 
 #'
-#' desc = arrange(r,list(ASC("Region_Count")), fetch_opt = "mtop", 
+#' asc = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
 #' num_fetch = 2)
-#'  
-#' asc = arrange(r, list(ASC("Region_Count")),list(DESC("score")),
-#' fetch_opt = "mtop", num_fetch = 5, reg_fetch_opt = "rtop", 
-#' reg_num_fetch = 7)
 #' 
-#' @name DESC
+#' ## It orders the samples according to the pvalue schema attribute 
+#' ## and takes the first five samples that have the lowest pvalue and the 
+#' ## first seven regions.
+#'  
+#' desc = arrange(data, list(DESC("pvalue")), fetch_opt = "mtop", num_fetch = 5, 
+#' reg_fetch_opt = "rtop", reg_num_fetch = 7)
+#' 
+#' @name Ordering-functions
 #' @aliases DESC
 #' @rdname ordering-class
 #' @export
@@ -56,7 +65,7 @@ DESC <- function(...)
     order_matrix
 }
 
-#' @name ASC
+#' @name Ordering-functions
 #' @aliases ASC
 #' @rdname ordering-class
 #' @export

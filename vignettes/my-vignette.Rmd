@@ -289,20 +289,29 @@ For each sample, quantify the mutations in each exon and select the exons
 with at least one mutation. Return the list of samples ordered by 
 the number of such exons.
 ```{r, query, eval = TRUE}
-## Read EXON dataset containing a single sample with exon regions 
-## and MUT dataset containing multiple samples with mutation regions
+
+## These statement defines the path to the folders "EXON" and "MUT" in the 
+## subdirectory "example" of the package "RGMQL"
 
 exon_path <- system.file("example", "EXON", package = "RGMQL")
 mut_path <- system.file("example", "MUT", package = "RGMQL")
+
+## Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
+## sample with exon regions and MUT folder as a GMQL dataset named "mut_ds" 
+## containing multiple samples with mutation regions
+
 exon_ds  <- read_dataset(exon_path)
 mut_ds  <- read_dataset(mut_path)
+
+## Filter out mut_ds based on predicate 
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
+## Filter out exon_ds based on predicate 
+
 exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
-
 
 ## For each mutation sample, count mutations within each exon while 
 ## mapping the mutations to the exon regions using the map() function 
@@ -331,7 +340,7 @@ specific path defined as input parameter.
 collect(exon_res)
 ```
 by default *collect()* has R workig directoy as stored path and *ds1* as name 
-of resulted dataset folder 
+of resulted dataset folder
 
 ### Execution
 
@@ -344,6 +353,8 @@ execute()
 are present in the GMQL query, otherwise an error is generated.
 Data are saved in the path specified in every *collect()* present 
 in the query.
+After the execution, the context of scalable data management engine is stopped 
+and a new invocation of *init_gmql()* is needed
 
 Beside *execute()* we can use: 
 ```{r, take, eval = TRUE}
@@ -361,8 +372,8 @@ exported all row could be very time and space consuming.
 
 ## Remote Processing
 
-RGMQL remote processing consumes computational power from 
-remote cluster/system while managing GMQL datasets.\newline
+RGMQL remote processing consumes computational power from remote 
+cluster/system while managing GMQL datasets.\newline
 
 Remote processing exits in two flavour:\newline
 
@@ -381,7 +392,6 @@ Remote processing exits in two flavour:\newline
 This RGMQL package allows to invoke REST services implementing the 
 commands specified at [link](http://130.186.13.219/gmql-rest/swagger/).
 
-
 #### Initialization
 
 GMQL REST services require login; so, the first step is to perform logon 
@@ -390,7 +400,7 @@ Upon succesfull logon, you get a request token that you must use
 in every subsequent REST call.
 Login can be performed using the function:
 ```{r, eval = TRUE}
-test_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+test_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(test_url)
 ```
 that saves the token in the Global R environment within the variable 
@@ -403,7 +413,7 @@ User can write a GMQL query as in the following example, and run it as
 second parameter of the *run_query()* function.
 ```{r, run, eval = FALSE}
 
-job <- run_query(test_url, "query_1", "DNA = SELECT() HG19_TCGA_dnaseq; 
+job <- run_query(test_url, "query_1", "DNA = SELECT() Example_Dataset_1; 
 MATERIALIZE DNA INTO RESULT_DS;", output_gtf = FALSE)
 
 ```
@@ -464,16 +474,20 @@ in this way login is automatically performed as specified above
 After init, we can start building our queries:
 ```{r, remote query, eval = TRUE}
 
-## Read EXON dataset containing a single sample with exon regions 
-## and MUT dataset containing multiple samples with mutation regions
+## Read the remote dataset HG19_TCGA_dnaseq 
+## Read the remote dataset HG19_BED_ANNOTATION 
 
-exon_ds  <- read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
-mut_ds  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
+TCGA_dnaseq  <- read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
+HG19_bed_ann  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
 
-mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
+## Filter out HG19_bed_ann based on predicate 
+
+mut = filter(HG19_bed_ann, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-exon =  filter(exon_ds, annotation_type == 'exons' & 
+## Filter out TCGA_dnaseq based on predicate 
+
+exon =  filter(TCGA_dnaseq, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
 ## For each mutation sample, count mutations within each exon while 
@@ -503,7 +517,8 @@ collect(exon_res)
 ```{r, remote execute, eval = FALSE}
 execute()
 ```
-
+With remote processing, after the execution, the context of scalable 
+data management engine is not stopped 
 
 ## Mixed Processing
 
@@ -511,7 +526,7 @@ The previous processing flavour can be switched using the function:
 ```{r, switch mode, eval = TRUE}
 remote_processing(TRUE)
 ```
-An user can switch mode until the first *collect()* has been performed.
+An user can switch mode until the first *materialize()* has been performed.
 
 This kind of processing comes from the fact that the *read()* function can 
 accept both local dataset and repository dataset, 
@@ -519,14 +534,23 @@ even in the same query as in the following example:
 ```{r, mixed query, eval = TRUE}
 
 
-## Read EXON dataset containing a single sample with exon regions 
-## and MUT dataset containing multiple samples with mutation regions
+## This statement defines the path to the folder "EXON" in the subdirectory 
+## "example" of the package "RGMQL"
+
 exon_path <- system.file("example", "EXON", package = "RGMQL")
 
-exon_ds  <- read_dataset(exon_path,is_local = TRUE)
-mut_ds  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
+## Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
+## sample with exon regions
 
-mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
+exon_ds  <- read_dataset(exon_path,is_local = TRUE)
+
+## Read the remote dataset HG19_BED_ANNOTATION 
+
+HG19_bed_ann  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
+
+## Filter out based on predicate
+
+mut = filter(HG19_bed_ann, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
 exon =  filter(exon_ds, annotation_type == 'exons' & 
@@ -562,7 +586,7 @@ execute()
 ```
 
 As we can see the two *read()* functions read from different sources: 
-*exon_ds* from local dataset, *mut_ds* from repository.
+*exon_ds* from local dataset, *HG19_bed_ann* from repository.
 
 If we set local processing to false (*remote_processing(FALSE)*), 
 the execution is performed locally downloading all remote repositories, 
@@ -583,7 +607,13 @@ if present, as data structure suitable to further processing in other packages.
 
 We can import a GMQL dataset into R environment as follows:
 ```{r, import, eval = TRUE}
+## This statement defines the path to the folder "EXON" in the subdirectory 
+## "example" of the package "RGMQL"
+
 dataset_path <- system.file("example", "EXON", package = "RGMQL")
+
+# Import the GMQL dataset as GRangesList
+
 data <- import_gmql(dataset_path, is_gtf = FALSE)
 data
 ```
@@ -591,8 +621,13 @@ the second parameter *is_gtf* must specifies the file format: .GTF or .GDM.
 
 We can export a GRangesList as GMQL dataset as follows:
 ```{r, export, eval = TRUE}
+## This statement defines the path to  the subdirectory "example" of the 
+## package "RGMQL"
 
 dir_out <- system.file("example", package = "RGMQL")
+
+# Export the GRangesList as GMQL dataset at  destination path
+
 export_gmql(data, dir_out, is_gtf = TRUE)
 
 ```
@@ -603,8 +638,11 @@ the second parameter *is_gtf* specifies the file format: .GTF or .GDM.
 We can also import only a part of a GMQL dataset into R environment, 
 by filtering its content as follows:
 ```{r, filter_extract, eval = TRUE}
+## This statement defines the path to the folder "TEAD" in the subdirectory 
+## "example" of the package "RGMQL"
 
 data_in <- system.file("example", "TEAD", package = "RGMQL")
+
 matrix <- filter_and_extract(data_in, metadata = NULL,regions = c("count"))
 matrix
 

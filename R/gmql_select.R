@@ -1,3 +1,32 @@
+filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL, 
+                                    semijoin = NULL)
+{
+    val <- .data@value
+    meta_pred <- substitute(m_predicate)
+    if(!is.null(meta_pred))
+    {
+        predicate <- .trasform(deparse(meta_pred))
+        predicate <- paste(predicate,collapse = "")
+        predicate <- as.character(glue::glue(predicate))
+        
+    }
+    else
+        predicate <- .jnull("java/lang/String")
+    
+    reg_pred <- substitute(r_predicate)
+    if(!is.null(reg_pred))
+    {
+        region_predicate <- .trasform(deparse(reg_pred))
+        region_predicate <- paste(region_predicate,collapse = "")
+        region_predicate <- as.character(glue::glue(region_predicate))
+        
+    }
+    else
+        region_predicate <- .jnull("java/lang/String")
+    
+    gmql_select(val, predicate, region_predicate, semijoin)
+}
+
 #' Method filter
 #' 
 #' It creates a new dataset from an existing one by extracting a subset of 
@@ -22,7 +51,6 @@
 #' @param r_predicate logical predicate made up by R logical operation 
 #' on schema region values. 
 #' Only !, |, ||, &, && are admitted.
-#' @param ... Additional arguments for use in specific methods.
 #' 
 #' @param semijoin \code{\link{semijoin}} function to define filter method 
 #' with semijoin condition (see examples).
@@ -65,38 +93,12 @@
 #' semijoin(join_data, TRUE, list(DF("cell"))))
 #' 
 #' }
-#' 
-#' @aliases filter filter-method
+#' @name filter
+#' @rdname filter
+#' @aliases filter,GMQLDataset-method
+#' @aliases filter-method
 #' @export
-setMethod("filter", "GMQLDataset",
-        function(.data, m_predicate = NULL, r_predicate = NULL, 
-                    semijoin = NULL, ...)
-        {
-            val <- .data@value
-            meta_pred <- substitute(m_predicate)
-            if(!is.null(meta_pred))
-            {
-                predicate <- .trasform(deparse(meta_pred))
-                predicate <- paste(predicate,collapse = "")
-                predicate <- as.character(glue::glue(predicate))
-                
-            }
-            else
-                predicate <- .jnull("java/lang/String")
-            
-            reg_pred <- substitute(r_predicate)
-            if(!is.null(reg_pred))
-            {
-                region_predicate <- .trasform(deparse(reg_pred))
-                region_predicate <- paste(region_predicate,collapse = "")
-                region_predicate <- as.character(glue::glue(region_predicate))
-                
-            }
-            else
-                region_predicate <- .jnull("java/lang/String")
-            
-            gmql_select(val, predicate, region_predicate, semijoin)
-        })
+setMethod("filter", "GMQLDataset", filter.GMQLDateset)
 
 gmql_select <- function(input_data, predicate, region_predicate, s_join)
 {
@@ -192,6 +194,8 @@ semijoin <- function(data, not_in = FALSE, groupBy = NULL)
     
     semijoin <- list("semijoin" = join_condition_matrix)
 }
+
+
 
 
 .trasform <- function(predicate=NULL)

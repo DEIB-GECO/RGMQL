@@ -56,6 +56,8 @@
 #' 
 #' }
 #' 
+#' @name extend
+#' @rdname extend
 #' @aliases extend-method
 #' @export
 setMethod("extend", "GMQLDataset", function(.data, ...)

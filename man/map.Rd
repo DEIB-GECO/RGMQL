@@ -4,6 +4,7 @@
 \name{map}
 \alias{map}
 \alias{map,GMQLDataset-method}
+\alias{map}
 \alias{map-method}
 \title{Method map}
 \usage{

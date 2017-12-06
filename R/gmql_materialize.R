@@ -13,7 +13,7 @@
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' rd = read_dataset(test_path)
 #' filtered = filter(rd)
-#' aggr = aggregate(filtered, DF("antibody_targer","cell_karyotype"))
+#' aggr = aggregate(filtered, list(DF("antibody_targer","cell_karyotype")))
 #' collect(aggr, dir_out = test_path)
 #' 
 #' \dontrun{
@@ -65,45 +65,61 @@ execute <- function()
     }
 }
 
+collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
+{
+    ptr_data <- x@value
+    gmql_materialize(ptr_data, dir_out, name)
+}
 
 
 #' Method collect
 #'
-#' It saves the contents of a dataset that contains samples metadata and 
-#' samples regions.
-#' It is normally used to persist the contents of any dataset generated 
-#' during a GMQL query.
+#' @description Wrapper to GMQL MATERIALIZE operator
+#' 
+#' @description It saves the content of a dataset that contains samples 
+#' metadata and regions. It is normally used to persist the content of any 
+#' dataset generated during a GMQL query.
 #' Any dataset can be materialized, but the operation can be time-consuming.
 #' For best performance, materialize the relevant data only.
 #'
 #' @importFrom rJava J
+#' @importFrom dplyr collect
 #' 
 #' @param x GMQLDataset class object
 #' @param dir_out destination folder path.
-#' by default is current working directory of the R process
-#' @param name name of the result dataset
+#' by default it is the current working directory of the R process
+#' @param name name of the result dataset. by default it is the string "ds1"
 #' 
-#' @param ... Additional arguments for use in specific methods
+#' @details 
+#' 
+#' An error occures if the directory already exist at the destination
+#' folder path
 #' 
 #' @return None
 #'
 #' @examples
+#' 
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named 
+#' ## "data" using customParser
 #'
 #' init_gmql()
-#' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' r = read_dataset(test_path)
-#' s = filter(r)
-#' m = aggregate(s, DF("antibody_targer","cell_karyotype"))
-#' collect(m, dir_out = test_path)
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' data = read_dataset(test_path)
 #' 
+#' ## The following statement materialize the dataset, previoulsy read, at 
+#' ## th specific destination path into local folder "ds1" opportunely created
+#' 
+#' collect(data, dir_out = test_path)
+#' 
+#' @name collect
+#' @rdname collect
+#' @aliases collect,GMQLDataset-method
 #' @aliases collect-method
 #' @export
-setMethod("collect", "GMQLDataset",
-            function(x, dir_out = getwd(), name = "ds1")
-            {
-                ptr_data <- x@value
-                gmql_materialize(ptr_data, dir_out, name)
-            })
+setMethod("collect", "GMQLDataset",collect.GMQLDataset)
 
 gmql_materialize <- function(input_data, dir_out, name)
 {
@@ -157,9 +173,11 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' rd = read_dataset(test_path)
-#' aggr = aggregate(rd, DF("antibody_target", "cell_karyotype"))
+#' aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
 #' taken <- take(aggr, rows = 45)
 #' 
+#' @name take
+#' @rdname take
 #' @aliases take-method
 #' @export
 setMethod("take", "GMQLDataset",
@@ -168,7 +186,6 @@ setMethod("take", "GMQLDataset",
                 ptr_data <- data@value
                 gmql_take(ptr_data, rows)
             })
-
 
 gmql_take <- function(input_data, rows = 0L)
 {

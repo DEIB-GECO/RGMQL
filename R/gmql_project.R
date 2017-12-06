@@ -1,8 +1,37 @@
+select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL, 
+                            all_but_meta = FALSE, regions = NULL, 
+                            regions_update = NULL, all_but_reg = FALSE) 
+{
+    data = .data@value
+    r_update <- substitute(regions_update)
+    if(!is.null(r_update))
+    {
+        reg_update <- .trasform_update(deparse(r_update))
+        reg_update <- paste(reg_update,collapse = "")
+    }
+    else
+        reg_update <- .jnull("java/lang/String")
+    
+    m_update <- substitute(metadata_update)
+    if(!is.null(m_update))
+    {
+        meta_update <- .trasform_update(deparse(m_update))
+        meta_update <- paste(meta_update,collapse = "")
+    }
+    else
+        meta_update <- .jnull("java/lang/String")
+    
+    gmql_project(data, metadata, meta_update, all_but_meta, regions, 
+                    reg_update, all_but_reg)
+}
+
 #' Method select
-#'
-#' It creates, from an existing dataset, a new dataset with all the samples 
-#' from input dataset, but keeping for each sample in the input dataset 
-#' only those metadata and/or region attributes expressed.
+#' 
+#' @description Wrapper to GMQL PROJECT operator 
+#' 
+#' @description It creates, from an existing dataset, a new dataset with all 
+#' the samples from input dataset, but keeping for each sample in the input 
+#' dataset only those metadata and/or region attributes expressed.
 #' Region coordinates and values of the remaining metadata remain equal to 
 #' those in the input dataset. It allows to:
 #' \itemize{
@@ -10,9 +39,8 @@
 #' \item{Update new metadata and/or region attributes in the result}
 #' }
 #' 
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
+#' @importFrom dplyr select
 #' 
 #' @param .data GMQLDataset class object
 #' 
@@ -44,9 +72,7 @@
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
 #' \item{SQRT, META, NIL constructor object defined by OPERATOR object}
 #' }
-#' 
-#' @param ... Additional arguments for use in specific methods.
-#' 
+#'  
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #'
@@ -87,37 +113,12 @@
 #' 
 #' }
 #' 
-#'
-#' @aliases select, select-method
+#' @name select
+#' @rdname select
+#' @aliases select,GMQLDataset-method
+#' @aliases select-method
 #' @export
-setMethod("select", "GMQLDataset",
-            function(.data, metadata = NULL, metadata_update = NULL, 
-                        all_but_meta = FALSE, regions = NULL, 
-                        regions_update = NULL, all_but_reg = FALSE, ...)
-            {
-                data = .data@value
-                r_update <- substitute(regions_update)
-                if(!is.null(r_update))
-                {
-                    reg_update <- .trasform_update(deparse(r_update))
-                    reg_update <- paste(reg_update,collapse = "")
-                }
-                else
-                    reg_update <- .jnull("java/lang/String")
-                
-                m_update <- substitute(metadata_update)
-                if(!is.null(m_update))
-                {
-                    meta_update <- .trasform_update(deparse(m_update))
-                    meta_update <- paste(meta_update,collapse = "")
-                }
-                else
-                    meta_update <- .jnull("java/lang/String")
-                
-                gmql_project(data, metadata, meta_update,
-                                all_but_meta, regions, 
-                                reg_update, all_but_reg)
-            })
+setMethod("select", "GMQLDataset",select.GMQLDataset)
 
 gmql_project <-function(input_data, metadata, metadata_update, all_but_meta, 
                             regions, regions_update, all_but_reg)

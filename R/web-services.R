@@ -341,25 +341,41 @@ run_query_fromfile <- function(url, fileName, filePath, output_gtf = TRUE)
 
 #' Compile GMQL query
 #'
-#' It compiles the GMQL query into repository taken from file or insert as text 
-#' string, using the proper GMQL web service available on a remote server
+#' It compiles a GMQL query taken from file or inserted as text string, 
+#' using the proper GMQL web service available on a remote server
 #' 
 #' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param query string text of the query
-#'
+#' @param filePath string path of txt file containing a GMQL query
+#' 
 #' @return None
 #'
 #' @examples
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+#' ## Login to GMQL REST services suite as guest
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' compile_query(remote_url, "DATASET = SELECT() HG19_TCGA_dnaseq;
+#' 
+#' ## This statement get the query as text string and run the compile 
+#' ## web service
+#' 
+#' compile_query(remote_url, "DATASET = SELECT() Example_Dataset_1;
 #' MATERIALIZE DATASET INTO RESULT_DS;")
 #' 
+#' ## logout from GMQL REST services suite
+#' 
+#' logout_gmql(remote_url)
+#' 
 #' \dontrun{
+#' 
+#' ## This statement defines the path to the file "query1.txt" in the 
+#' ## subdirectory "example" of the package "RGMQL" and run the compile 
+#' ## web service
+#' 
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
 #' compile_query_fromfile(remote_url, test_query)
@@ -384,9 +400,6 @@ compile_query <- function(url, query)
         return(content)
 }
 
-
-#' @param filePath string path of txt files containing a GMQL query
-#'
 #' @name compile_query
 #' @rdname compile_query
 #' @export
@@ -833,7 +846,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #' @return None
 #' 
 #' @details
-#' If no error occur, print "Deleted Dataset", otherwise a specific error 
+#' If no error occur, it prints "Deleted Dataset", otherwise a specific error 
 #' is printed
 #' 
 #' @examples
@@ -842,9 +855,9 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 #' 
 #' ## This dataset does not exist
 #' 
-#' remote_url <- "http://genomic.elet.polimi.it/gmql-rest-r/"
+#' remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' delete_dataset(remote_url, "job_test1_test101_20170604_180908_RESULT_DS")
+#' delete_dataset(remote_url, "test1_20170604_180908_RESULT_DS")
 #' 
 #' }
 #' 

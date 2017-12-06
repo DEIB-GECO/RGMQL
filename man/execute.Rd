@@ -19,7 +19,7 @@ init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
 rd = read_dataset(test_path)
 filtered = filter(rd)
-aggr = aggregate(filtered, DF("antibody_targer","cell_karyotype"))
+aggr = aggregate(filtered, list(DF("antibody_targer","cell_karyotype")))
 collect(aggr, dir_out = test_path)
 
 \dontrun{

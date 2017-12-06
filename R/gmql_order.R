@@ -1,77 +1,89 @@
+arrange.GMQLDataset <- function(.data, metadata_ordering = NULL, 
+        regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0, 
+        reg_fetch_opt = NULL, reg_num_fetch = 0)
+{
+    ptr_data <- .data@value
+    gmql_order(ptr_data, metadata_ordering, regions_ordering, 
+                fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
+}
+
 #' Method arrange
-#'
-#' It is used to order either samples or sample regions or both, according to 
-#' a set of metadata and/or region attributes, and/or region coordinates.
-#' Order can be specified as ascending / descending for every attribute
-#' The number of samples and their regions remain the same 
-#' (unless fetching options are specified) but a new ordering metadata 
-#' and/or region attribute is added.
+#' 
+#' @description Wrapper to GMQL ORDER operator
+#' 
+#' @description It is used to order either samples or sample regions or both, 
+#' according to a set of metadata and/or region attributes.
+#' Order can be specified as ascending / descending for every attribute. 
+#' The number of samples and their regions remain the same as well as 
+#' their attributes, (unless fetching options are specified) but a new 
+#' ordering metadata and/or region attribute is added.
 #' Sorted samples or regions have a new attribute "order", 
 #' added to either metadata, or regions, or both of them as specified in inputs
 #'
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
+#' @importFrom dplyr arrange
 #' 
 #' @param .data GMQLDataset class object
-#' @param metadata_ordering list of ordering function contains name of 
-#' metadata.
-#' The function available are: \code{\link{ASC}}, \code{\link{DESC}}
+#' @param metadata_ordering list of ordering functions containing name of 
+#' metadata attribute.
+#' The functions available are: \code{\link{ASC}}, \code{\link{DESC}}
 #' 
 #' @param fetch_opt string indicating the option used to fetch the 
-#' first k sample:
+#' first k samples; it can assume the values:
 #' \itemize{
-#' \item{mtop: it fetch the first k sample}
-#' \item{mtopp: it fetch the first k sample in each group.}
-#' \item{mtopg: it fetch the percentage of sample.}
+#' \item{mtop: it fetches the first k samples}
+#' \item{mtopg: it fetches the percentage of samples.}
+#' \item{mtopp: it fetches the first k samples in each group.}
+#' 
 #' }
 #' if NULL, \emph{num_fetch} is not considered 
 #' 
-#' @param num_fetch integer value identifying the number of region to fetch
-#' by default is 0, that's means all sample are fetched
+#' @param num_fetch integer value identifying the number of samples to fetch;
+#' by default it is 0, that means all samples are fetched
 #' s
-#' @param regions_ordering list of ordering function contains 
-#' name of region schema value.
-#' The function available are: \code{\link{ASC}}, \code{\link{DESC}}.
+#' @param regions_ordering list of ordering functions containing name of 
+#' region attribute.
+#' The functions available are: \code{\link{ASC}}, \code{\link{DESC}}.
 #' 
 #' @param reg_fetch_opt string indicating the option used to fetch the 
-#' first k regions:
+#' first k regions; it can assume the values:
 #' \itemize{
-#' \item{rtop: it fetch the first k regions.}
-#' \item{rtopp: it fetch the first k regions in each group.}
-#' \item{rtopg: it fetch the percentage of regions.}
+#' \item{rtop: it fetches the first k regions.}
+#' \item{rtopg: it fetches the first k percentage of regions.}
+#' \item{rtopp: it fetches the first k regions in each group.}
 #' }
 #' if NULL, \emph{reg_num_fetch} is not considered 
 #' 
 #' @param reg_num_fetch integer value identifying the number of region to fetch
-#' by default is 0, that's means all regions are fetched
-#' @param ... Additional arguments for use in specific methods.
+#' by default it is 0, that means all regions are fetched
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #'
 #' @examples
 #' 
-#' ## It orders the samples according to the Region_count metadata attribute 
-#' ## and takes the two samples that have the highest count. 
-#'
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named 
+#' ## "data" using customParser
+#' 
 #' init_gmql()
-#' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' r = read_dataset(test_path)
-#' o = arrange(r, list(ASC("Region_Count")),fetch_opt = "mtop",num_fetch = 2)
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' data = read_dataset(test_path)
 #' 
+#' ## The following statement orders the samples according to the Region_Count 
+#' ## metadata attribute and takes the two samples that have the highest count. 
+#'
+#' o = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
+#' num_fetch = 2)
 #' 
-#' @aliases sort-method
+#' @name arrange
+#' @rdname arrange
+#' @aliases arrange,GMQLDataset-method
+#' @aliases arrange-method
 #' @export
-setMethod("arrange", "GMQLDataset",
-            function(.data, metadata_ordering = NULL, regions_ordering = NULL, 
-                    fetch_opt = NULL, num_fetch = 0, reg_fetch_opt = NULL, 
-                    reg_num_fetch = 0, ...)
-            {
-                ptr_data <- .data@value
-                gmql_order(ptr_data, metadata_ordering, regions_ordering, 
-                    fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
-            })
+setMethod("arrange", "GMQLDataset", arrange.GMQLDataset)
 
 gmql_order <- function(data, metadata_ordering, regions_ordering,
                     fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
@@ -135,8 +147,8 @@ gmql_order <- function(data, metadata_ordering, regions_ordering,
 {
     opt <- tolower(opt)
     if(!identical("mtop",opt) && !identical("mtopp",opt) && 
-                    !identical("mtopg",opt) && !identical("rtop",opt) && 
-                    !identical("rtopp",opt) && !identical("rtopg",opt))
+        !identical("mtopg",opt) && !identical("rtop",opt) && 
+        !identical("rtopp",opt) && !identical("rtopg",opt))
         stop("option not admissable")
     opt
 }

@@ -87,7 +87,7 @@ as.character.OPERATOR <- function(obj) {
 #' exp = read_dataset(test_path)
 #' out = select(exp, metadata_update = list(concSq = SQRT("concentration")))
 #' 
-#' @name META
+#' @name OPERATOR-Object
 #' @aliases META
 #' @rdname operator-class
 #' @export
@@ -123,7 +123,7 @@ check.META <- function(type)
 }
 
 
-#' @name NIL
+#' @name OPERATOR-Object
 #' @aliases NIL
 #' @rdname operator-class
 #' @export
@@ -147,7 +147,7 @@ check.NIL <- function(value)
     
 }
 
-#' @name SQRT
+#' @name OPERATOR-Object
 #' @aliases SQRT
 #' @rdname operator-class
 #' @export

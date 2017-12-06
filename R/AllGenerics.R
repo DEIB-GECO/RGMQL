@@ -1,20 +1,9 @@
-#' Method filter
-#' 
-#' Wrapper to GMQL select function
-#' 
-#' @name filter
-#' @rdname filter-GMQLDataset-method
-#' @aliases filter
-#' 
-setGeneric("filter", function(.data, m_predicate = NULL, r_predicate = NULL, 
-                            semijoin = NULL, ...) standardGeneric("filter"))
-
 #' Method cover
 #' 
-#' Wrapper to GMQL cover function
+#' Wrapper to GMQL COVER operator
 #' 
 #' @name cover
-#' @rdname cover-GMQLDataset-method
+#' @rdname cover
 #' @aliases cover
 #' 
 setGeneric("cover", function(data, ...) standardGeneric("cover"))
@@ -24,21 +13,10 @@ setGeneric("cover", function(data, ...) standardGeneric("cover"))
 #' Wrapper to GMQL map function
 #' 
 #' @name map
-#' @rdname map-GMQLDataset-method
-#' @aliases map
+#' @rdname map
+#' @aliases map,GMQLDataset-method
 #' 
 setGeneric("map", function(x, y, ...) standardGeneric("map"))
-
-
-#' Method collect
-#' 
-#' Wrapper to GMQL materialize function
-#' 
-#' @name collect
-#' @rdname collect-GMQLDataset-method
-#' @export
-setGeneric("collect", function(x, dir_out = getwd(), name = "ds1", ...) 
-                standardGeneric("collect"))
 
 
 #' Method take
@@ -46,7 +24,9 @@ setGeneric("collect", function(x, dir_out = getwd(), name = "ds1", ...)
 #' Wrapper to take function
 #' 
 #' @name take
-#' @rdname take-GMQLDataset-method
+#' @rdname take
+#' @aliases take,GMQLDataset-method
+#' 
 setGeneric("take", function(data, ...) standardGeneric("take"))
 
 
@@ -55,39 +35,8 @@ setGeneric("take", function(data, ...) standardGeneric("take"))
 #' Wrapper to GMQL extend function
 #' 
 #' @name extend
-#' @rdname extend-GMQLDataset-method
-#' @aliases extend GMQLDataset-method
+#' @rdname extend
+#' @aliases extend,GMQLDataset-method
+#' 
 setGeneric("extend", function(.data, ...) standardGeneric("extend"))
-
-#' Method select
-#' 
-#' Wrapper to GMQL project function
-#' 
-#' @name select
-#' @rdname select-GMQLDataset-method
-#' @aliases select 
-setGeneric("select", function(.data, ...) standardGeneric("select"))
-
-
-#' Method arrange
-#' 
-#' Wrapper to GMQL order function
-#' 
-#' @name arrange
-#' @rdname arrange-GMQLDataset-method
-#' @aliases arrange 
-#' 
-setGeneric("arrange", function(.data, metadata_ordering = NULL, 
-                    regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0, 
-                    reg_fetch_opt = NULL, reg_num_fetch = 0, ...) 
-                            standardGeneric("arrange"))
-
-#' Method group_by
-#' 
-#' Wrapper to GMQL group function
-#' 
-#' @name group_by
-#' @rdname group_by-GMQLDataset-method
-#' @aliases group_by 
-setGeneric("group_by", function(.data, ...) standardGeneric("group_by"))
 

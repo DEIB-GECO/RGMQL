@@ -25,34 +25,48 @@ print.PARAMETER <- function(obj){
 #' to be used in GMQL cover method
 #' 
 #' \itemize{
-#' \item{ANY: It defines any amount of overlapping regions to be considered.}
-#' \item{ALL: It defines the minimum (and/or maximum) to the number of samples 
-#' in the input dataset.}
+#' \item{ALL: It represents the number of samples in the input dataset.}
+#' \item{ANY: It represents any amount of overlapping regions to be 
+#' considered.}
 #' }
 #' 
-#' @return param object
+#' @return Param object
 #'
 #' @examples
+#' 
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the file "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+#' ## using customParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
 #' 
-#' ## This statement produces an output dataset with a single output sample. 
-#' ## The COVER operation considers all areas defined by a minimum 
-#' ## of two overlapping regions in the input samples, 
-#' ## up to maximum amount of overlapping regions.
+#' ## The following statement produces an output dataset with a single 
+#' ## output sample. The COVER operation considers all areas defined by 
+#' ## a minimum of two overlapping regions in the input samples, 
+#' ## up to maximum amount of overlapping regions equal to the number 
+#' ## of input samples.
 #' 
 #' res = cover(exp, 2, ALL())
 #' 
-#' ## This statement produces an output dataset with a single output sample. 
-#' ## The COVER operation considers all areas defined by a minimum 
-#' ## of two overlapping regions in the input samples, 
+#' ## The following statement produces an output dataset with a single 
+#' ## output sample. The COVER operation considers all areas defined by 
+#' ## a minimum of two overlapping regions in the input samples, 
 #' ## up to any amount of overlapping regions.
 #' 
-#' res = cover(exp, 2, ANY()+2/3)
+#' res = cover(exp, 2, ANY())
 #' 
-#' @name ALL
+#' ## The following statement produces an output dataset with a single 
+#' ## output sample. The COVER operation considers all areas defined by 
+#' ## a half of maximum amount of overlapping regions in the input samples, 
+#' ## up to any amount of overlapping regions.
+#' 
+#' res = cover(exp, ALL()/2, ANY())
+#' 
+#' @name Cover-Param
 #' @aliases ALL
 #' @rdname cover-param-class
 #' @export
@@ -65,7 +79,7 @@ ALL <- function()
     return(list)
 }
 
-#' @name ANY
+#' @name Cover-Param
 #' @aliases ANY
 #' @rdname cover-param-class
 #' @export

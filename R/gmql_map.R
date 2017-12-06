@@ -74,6 +74,8 @@
 #' out = map(ref,exp, minScore = MIN("score"), 
 #' joinBy = list(DF("cell_tissue")))
 #' 
+#' @name map
+#' @rdname map
 #' @aliases map-method
 #' @export
 setMethod("map", "GMQLDataset",

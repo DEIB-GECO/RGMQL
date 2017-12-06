@@ -20,7 +20,7 @@ It deletes single private dataset specified by name from repository
 using the proper GMQL web service available on a remote server
 }
 \details{
-If no error occur, print "Deleted Dataset", otherwise a specific error 
+If no error occur, it prints "Deleted Dataset", otherwise a specific error 
 is printed
 }
 \examples{
@@ -29,9 +29,9 @@ is printed
 
 ## This dataset does not exist
 
-remote_url <- "http://genomic.elet.polimi.it/gmql-rest-r/"
+remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
-delete_dataset(remote_url, "job_test1_test101_20170604_180908_RESULT_DS")
+delete_dataset(remote_url, "test1_20170604_180908_RESULT_DS")
 
 }
 

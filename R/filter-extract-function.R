@@ -1,44 +1,44 @@
-#' FILTER AND EXTRACT
+#' Filter and extract function
 #'
-#' This function let user to create a new GRangeslist with fixed information:
-#' seqnames,ranges ans strand and a variable part made up by the regions
-#' defined as input.
-#' The metadata and metadata_prefix are used to filter the data and choose
-#' only the samples that match at least one metdatata with its prefix.
-#' The input regions are shown for each sample obtained from filtering.
+#' This function lets user to create a new GRangesList with fixed information:
+#' seqnames, ranges and strand, and a variable part made up by the regions
+#' defined as input. The metadata and metadata_prefix are used to filter 
+#' the data and choose only the samples that match at least one metdatata 
+#' with its prefix. The input regions are shown for each sample obtained 
+#' from filtering.
 #'
 #' @import xml2
 #' @importFrom dplyr bind_cols
 #' @importFrom data.table fread
 #' @importFrom rtracklayer import
 #'
-#' @param data string GMQL dataset folder path or GrangesList
+#' @param data string GMQL dataset folder path or GRangesList
 #' object
-#' @param metadata vector of character containing names of metadata
+#' @param metadata vector of strings containing names of metadata attributes
 #' to be searched for in metadata files.
-#' data will be extracted if at least one condition is satisfied:
-#' this condition will be logically "ANDed" with prefix filtering (see below)
-#' if NULL no filtering action occured
-#' (i.e every sample will be taken for regions filtering)
-#' @param metadata_prefix vector of character that will filter metadata
+#' Data will be extracted if at least one condition is satisfied:
+#' this condition is logically "ANDed" with prefix filtering (see below)
+#' if NULL no filtering action occures
+#' (i.e every sample is taken for region filtering)
+#' @param metadata_prefix vector of strings that will filter metadata
 #' containing rispectively every element of this vector.
-#' number of elelment in both vector must match
-#' @param regions vector of character that will extract only region
-#' attribute specified; if NULL no regions will be taken and the output
-#' will be only GRanges made up by the first attribute
-#' (seqnames,start,end,strand)
+#' number of element in both vector must match
+#' @param regions vector of strings that extracts only region attribute 
+#' specified; if NULL no regions attribute is taken and the output is only 
+#' GRanges made up by the region coordinate attributes 
+#' (seqnames, start, end, strand)
 #' @param suffix name for each metadata column of GRanges. by default is the 
 #' "antibody_target". This string is taken from sample metadata file or from
 #' metadata() associated. If not present, the column name is the name of 
 #' selected regions
 #'
 #' @details
-#' This function works only with datatset or Grangeslist that have the same
+#' This function works only with datatset or GRangesList that has the same
 #' information about regions attribute (but of course different value)
 #' In case of Grangeslist data input the function will search for metadata
 #' into metadata() function associated to Grangeslist.
 #'
-#' @return granges with selected regions (if any) in elementMetadata
+#' @return Granges with selected regions (if any) in elementMetadata
 #'
 #' @examples
 #'

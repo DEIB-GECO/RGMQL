@@ -16,23 +16,38 @@ and base url; service name is added automatically}
 
 \item{query}{string text of the query}
 
-\item{filePath}{string path of txt files containing a GMQL query}
+\item{filePath}{string path of txt file containing a GMQL query}
 }
 \value{
 None
 }
 \description{
-It compiles the GMQL query into repository taken from file or insert as text 
-string, using the proper GMQL web service available on a remote server
+It compiles a GMQL query taken from file or inserted as text string, 
+using the proper GMQL web service available on a remote server
 }
 \examples{
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+## Login to GMQL REST services suite as guest
+
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
-compile_query(remote_url, "DATASET = SELECT() HG19_TCGA_dnaseq;
+
+## This statement get the query as text string and run the compile 
+## web service
+
+compile_query(remote_url, "DATASET = SELECT() Example_Dataset_1;
 MATERIALIZE DATASET INTO RESULT_DS;")
 
+## logout from GMQL REST services suite
+
+logout_gmql(remote_url)
+
 \dontrun{
+
+## This statement defines the path to the file "query1.txt" in the 
+## subdirectory "example" of the package "RGMQL" and run the compile 
+## web service
+
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")
 compile_query_fromfile(remote_url, test_query)

@@ -4,6 +4,7 @@
 \name{take}
 \alias{take}
 \alias{take,GMQLDataset-method}
+\alias{take}
 \alias{take-method}
 \title{Method take}
 \usage{
@@ -38,7 +39,7 @@ all those dataset will be materialized as folder.
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 rd = read_dataset(test_path)
-aggr = aggregate(rd, DF("antibody_target", "cell_karyotype"))
+aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
 taken <- take(aggr, rows = 45)
 
 }

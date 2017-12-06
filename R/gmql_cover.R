@@ -5,14 +5,15 @@
 #' specified) by “collapsing” the input dataset samples and their regions 
 #' according to certain rules specified by the input parameters.
 #' The attributes of the output genomic regions are only the region 
-#' coordinates, and Jaccard indexes (JaccardIntersect and JaccardResult).
+#' coordinates, and Jaccard indexes (\emph{JaccardIntersect} and 
+#' \emph{JaccardResult}).
 #' Jaccard Indexes are standard measures of similarity of the contributing 
 #' regions, added as default region attributes.
 #' The JaccardIntersect index is calculated as the ratio between the lengths 
 #' of the intersection and of the union of the contributing regions; 
 #' the JaccardResult index is calculated as the ratio between the lengths 
 #' of the result and the union of the contributing regions.
-#' If aggregate functions are specified, a new attributes is added for 
+#' If aggregate functions are specified, a new attribute is added for 
 #' each aggregate function specified.
 #' Output metadata are the union of the input ones.
 #' If \emph{groupby} clause is specified, the input samples are partitioned 
@@ -24,54 +25,47 @@
 #' 
 #' @include AllClasses.R
 #' @importFrom methods is
-#' @importFrom rJava J
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
 #' 
 #' @param data GMQLDataset class object
 #' @param min_acc minimum number of overlapping regions to be considered 
-#' during execution
-#' Is a integer number, declared also as string.
-#' minAcc accept also:
+#' during execution. It is an integer number, declared also as string.
+#' minAcc accepts also:
 #' \itemize{
-#' \item{PARAMETER class object: \code{\link{ALL}} that represents the number 
+#' \item{PARAMETER class object: \code{\link{ALL}}, that represents the number 
 #' of samples in the input dataset}
-#' \item{and expression built using PARAMETER object: (ALL() + N) / K or
-#' ALL() / K }
+#' \item{an expression built using PARAMETER object: (ALL() + N) / K or
+#' ALL() / K, with N and K integer values }
 #' }
 #' @param max_acc maximum number of overlapping regions to be considered 
-#' during execution
-#' Is a integer number, declared also as string.
+#' during execution. It is an integer number, declared also as string.
 #' maxAcc accept also:
 #' \itemize{
-#' \item{PARAMETER class object: \code{\link{ALL}} that represents the number 
+#' \item{PARAMETER class object: \code{\link{ALL}}, that represents the number 
 #' of samples in the input dataset}
-#' \item{PARAMETER calss object: \code{\link{ANY}}} that acts as a wildcard, 
-#' considering any amount of overlapping.
-#' \item{and expression built using PARAMETER object: (ALL() + N) / K or
-#' ALL() / K }
+#' \item{PARAMETER class object: \code{\link{ANY}}}, that acts as a wildcard, 
+#' considering any amount of overlapping regions.
+#' \item{an expression built using PARAMETER object: (ALL() + N) / K or
+#' ALL() / K, with N and K integer values  }
 #' }
-#' @param groupBy list of evalation function to define condition 
-#' evaluation on metadata:
+#' @param groupBy list of evalation functions to define evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
+#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
+#' if they both end with \emph{value} and, if they have further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
+#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+#' as \emph{value} match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
+#' if both end with \emph{value}.}
 #' }
-#' @param ... Additional arguments for use in specific methods.
-#' 
-#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
-#' The \emph{aggregate} is an object of class AGGREGATES
-#' The aggregate functions available are: \code{\link{SUM}}, 
+#' @param ... a series of expressions separated by comma in the form 
+#' \emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 
+#' class AGGREGATES. The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
 #' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
 #' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
 #' \code{\link{Q2}}, \code{\link{Q3}}.
-#' Every aggregate accepts a string value, execet for COUNT, which does not 
+#' Every aggregate accepts a string value, except for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 
 #' attributes. Two style are allowed:
@@ -81,53 +75,60 @@
 #' }
 #' "mixed style" is not allowed
 #'
-#' @param variation string identifying the cover GMQL function variation.
-#' The admissible string are:
+#' @param variation string identifying the cover GMQL operator variation.
+#' The admissible strings are:
 #' \itemize{
-#' \item{FLAT: returns the contiguous region that starts from the first end 
-#' and stops at the last end of the regions which would contribute 
-#' to each region of the \emph{cover}.}
-#' \item{SUMMIT: returns regions that start from a position
+#' \item{FLAT: It returns the regions that start from the first end and stop 
+#' at the last end of the regions which would contribute to each region 
+#' of the \emph{cover}.}
+#' \item{SUMMIT: It returns regions that start from a position
 #' where the number of intersecting regions is not increasing afterwards and
-#' stops at a position where either the number of intersecting regions 
+#' stop at a position where either the number of intersecting regions 
 #' decreases, or it violates the max accumulation index.}
-#' \item{HISTOGRAM: returns the non-overlapping regions contributing to 
-#' the cover, each with its accumulation index value, which is assigned to 
-#' the AccIndex region attribute.}
+#' \item{HISTOGRAM: It returns the non-overlapping regions contributing to 
+#' the \emph{cover}, each with its accumulation index value, which is assigned 
+#' to the \emph{AccIndex} region attribute.}
 #' \item{COVER: default value.}
 #' }
+#' Can be all caps or lowercase
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #' 
 #' @examples
 #' 
-#' ## This statement produces an output dataset with a single output sample. 
-#' ## The COVER operation considers all areas defined by a minimum 
-#' ## of two overlapping regions in the input samples, 
-#' ## up to any amount of overlapping regions.
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+#' ## using customParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
+#'   
+#' ## the following statement produces an output dataset with a single output 
+#' ## sample. The COVER operation considers all areas defined by a minimum 
+#' ## of two overlapping regions in the input samples, up to any amount of 
+#' ## overlapping regions.
+#' 
 #' res = cover(exp, 2, ANY())
 #'
-#' \dontrun{
-#' ## This GMQL statement computes the result grouping the input exp samples 
-#' ## by the values of their cell metadata attribute, 
+#' ## The following GMQL statement computes the result grouping the input 
+#' ## exp samples by the values of their cell metadata attribute, 
 #' ## thus one output res sample is generated for each cell type; 
 #' ## output regions are produced where at least 2 and at most 3 regions 
 #' ## of grouped exp samples overlap, setting as attributes of the resulting 
 #' ## regions the minimum pvalue of the overlapping regions (min_pvalue) 
 #' ## and their Jaccard indexes (JaccardIntersect and JaccardResult).
 #' 
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
 #' res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
 #' min_pValue = MIN("pvalue"))
-#' }
 #' 
-#' @aliases cover cover-method
+#' @name cover
+#' @rdname cover
+#' @aliases cover,GMQLDataset-method
+#' @aliases cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
             function(data, min_acc, max_acc, groupBy = NULL, 

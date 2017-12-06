@@ -1,60 +1,73 @@
 #' Method aggregate
 #' 
-#' It builds a dataset consisting of a single sample having as many regions as
-#' the number of regions of the input data and as many metadata as the union of
-#' the 'attribute-value' tuples of the input samples. 
-#' If at least one evaluation function is specified: the samples are then 
+#' @description Wrapper to GMQL MERGE operator
+#' 
+#' @description It builds a dataset consisting of a single sample having as 
+#' many regions as the number of regions of all the input dataset samples
+#' and as many metadata as the union of the 'attribute-value' tuples of the 
+#' input samples. If \emph{groupBy} is specified: the samples are then 
 #' partitioned in groups, each with a distinct value of the grouping metadata 
 #' attributes. The operation is separately applied to each group, yielding 
-#' one sample in the result for each group. 
-#' Samples whose names are not present in the grouping metadata parameter 
-#' are disregarded.
+#' one sample in the result for each group. Samples whose metadata are 
+#' not present in the grouping metadata parameter are disregarded.
 #'
 #' @importFrom rJava J .jarray .jnull
 #' @importFrom S4Vectors aggregate
 #'
 #' @param x GMQLDataset class object
-#' @param ... Additional arguments for use in specific methods.
-#' It accepts a list of evalation function to define evaluation on metadata:
+#' @param groupBy list of evalation functions to define evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
+#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
+#' if they both end with \emph{value} and, if they have further prefixes,
+#' the two prefix sequences are identical}
+#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+#' as \emph{value} match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
+#' if both end with \emph{value}.}
 #' }
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #'
 #' @examples
-#'
-#' # It creates a dataset called merged which contains one sample for each
-#' # antibody_target value found within the metadata of the exp dataset sample;
-#' # each created sample contains all regions from all 'exp' samples
-#' # with a specific value for their antibody_target and cell metadata
-#' # attributes.
+#' 
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+#' ## using customParser
 #'
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_dataset(test_path)
-#' merged = aggregate(exp, DF("antibody_target","cell"))
 #'
+#' ## This statement creates a dataset called merged which contains one 
+#' ## sample for each antibody_target and cell value found within the metadata 
+#' ## of the exp dataset sample; each created sample contains all regions 
+#' ## from all 'exp' samples with a specific value for their 
+#' ## antibody_target and cell metadata
+#' ## attributes.
+#'
+#' merged = aggregate(exp, list(DF("antibody_target","cell")))
+#'
+#' @name aggregate
+#' @rdname aggregate
+#' @aliases aggregate,GMQLDataset-method
 #' @aliases aggregate-method
 #' @export
 #' 
 setMethod("aggregate", "GMQLDataset",
-            function(x, ...)
+            function(x, groupBy = NULL)
             {
                 ptr_data = x@value
-                groupBy = list(...)
                 gmql_merge(ptr_data, groupBy)
             })
 
 gmql_merge <- function(input_data, groupBy)
 {
+    if(!is.list(groupBy))
+        stop("groupBy must be list")
+    
     if(!is.null(groupBy) && !length(groupBy) == 0)
     {
         cond <- .join_condition(groupBy)

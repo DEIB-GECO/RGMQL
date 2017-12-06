@@ -1,7 +1,7 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 0.99.36
+Version: 0.99.37
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
 Description: This package brings the GenoMetric Query Language (GMQL)
@@ -82,7 +82,6 @@ biocViews:
 Collate: 
     'AllClasses.R'
     'AllGenerics.R'
-    'GMQL4TFarm.R'
     'GMQLtoGRanges.R'
     'GRangesToGMQL.R'
     'S3Aggregates.R'
@@ -91,6 +90,7 @@ Collate:
     'S3Operator.R'
     'Utils.R'
     'evaluation-functions.R'
+    'filter-extract-function.R'
     'gmql_cover.R'
     'gmql_difference.R'
     'gmql_extend.R'

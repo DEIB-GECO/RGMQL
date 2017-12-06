@@ -3,8 +3,8 @@
 \docType{methods}
 \name{extend}
 \alias{extend}
-\alias{GMQLDataset-method}
 \alias{extend,GMQLDataset-method}
+\alias{extend}
 \alias{extend-method}
 \title{Method extend}
 \usage{

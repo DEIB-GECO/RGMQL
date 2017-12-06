@@ -158,7 +158,7 @@ take_value.META_AGGREGATES <- function(obj){
 #' res = extend(exp, m_score = MEDIAN("score"))
 #' 
 #' 
-#' @name SUM
+#' @name AGGREGATES-Object
 #' @aliases SUM
 #' @rdname aggr-class
 #' @export
@@ -173,7 +173,7 @@ SUM <- function(value)
     return(list)
 }
 
-#' @name MIN
+#' @name AGGREGATES-Object
 #' @aliases MIN
 #' @rdname aggr-class
 #' @export
@@ -189,7 +189,7 @@ MIN <- function(value)
 }
 
 
-#' @name MAX
+#' @name AGGREGATES-Object
 #' @aliases MAX
 #' @rdname aggr-class 
 #' @export
@@ -204,7 +204,7 @@ MAX <- function(value)
     return(list)
 }
 
-#' @name AVG
+#' @name AGGREGATES-Object
 #' @aliases AVG
 #' @rdname aggr-class
 #' @export
@@ -219,7 +219,7 @@ AVG <- function(value)
     return(list)
 }
 
-#' @name BAG
+#' @name AGGREGATES-Object
 #' @aliases BAG
 #' @rdname aggr-class
 #' @export
@@ -234,7 +234,7 @@ BAG <- function(value)
     return(list)
 }
 
-#' @name COUNT
+#' @name AGGREGATES-Object
 #' @aliases COUNT
 #' @rdname aggr-class
 #' @export
@@ -252,7 +252,7 @@ as.character.COUNT <- function(obj) {
 }
 check.COUNT <- function(obj){}
 
-#' @name STD
+#' @name AGGREGATES-Object
 #' @aliases STD
 #' @rdname aggr-class
 #' @export
@@ -268,7 +268,7 @@ STD <- function(value)
 }
 
 
-#' @name MEDIAN
+#' @name AGGREGATES-Object
 #' @aliases MEDIAN
 #' @rdname aggr-class
 #' @export
@@ -283,7 +283,7 @@ MEDIAN <- function(value)
     return(list)
 }
 
-#' @name Q1
+#' @name AGGREGATES-Object
 #' @aliases Q1
 #' @rdname aggr-class
 #' @export
@@ -298,7 +298,7 @@ Q1 <- function(value)
     return(list)
 }
 
-#' @name Q2
+#' @name AGGREGATES-Object
 #' @aliases Q2
 #' @rdname aggr-class
 #' @export
@@ -312,7 +312,7 @@ Q2 <- function(value)
     return(list)
 }
 
-#' @name Q3
+#' @name AGGREGATES-Object
 #' @aliases Q3
 #' @rdname aggr-class
 #' @export
@@ -327,7 +327,7 @@ Q3 <- function(value)
     return(list)
 }
 
-#' @name BAGD
+#' @name AGGREGATES-Object
 #' @aliases BAGD
 #' @rdname aggr-class
 #' @export
