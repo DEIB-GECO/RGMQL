@@ -5,7 +5,7 @@
 #' Condition evaluation functions
 #'
 #' These functions are used to support joinBy and/or groupBy function parameter.
-#' It create a list of one element: matrix containing the two coloumn:
+#' They create a 2-D array made up by two coloumn:
 #' type of condition evaluation and the metadata attribute name
 #'
 #' \itemize{
@@ -13,16 +13,16 @@
 #' FULL evaluation: two attributes match if they both end with value and,
 #' if they have further prefixes, the two prefix sequences are identical}
 #' \item{EX: It defines a EXACT evaluation of the input values.
-#' EXACT evaluation: only attributes exactly as value will match; 
+#' EXACT evaluation: only attributes exactly as value match; 
 #' no further prefixes are allowed. }
 #' \item{DF: It defines a DEFAULT evaluation of the input values.
 #' DEFAULT evaluation: the two attributes match if both end with value.}
 #' }
 #'
-#' @param ... series of string identifying name of metadata attribute 
+#' @param ... series of string identifying a name of metadata attribute 
 #' to be evaluated
 #' 
-#' @return list of 2-D array containing method of evaluation and metadata
+#' @return 2-D array containing method of evaluation and metadata
 #' 
 #' @examples
 #' 

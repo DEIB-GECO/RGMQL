@@ -13,7 +13,7 @@ if(getRversion() >= "3.1.0")
 #' Login to GMQL
 #'
 #' Login to GMQL REST services suite as a registered user, specifying username 
-#' and password, or as guest using the proper GMQL web service available 
+#' and password, or as guest, using the proper GMQL web service available 
 #' on a remote server
 #' 
 #' @import httr
@@ -25,19 +25,20 @@ if(getRversion() >= "3.1.0")
 #' @param password string password used during signup
 #'
 #' @details
-#' if both username and password are NULL you will be logged as guest
+#' If both username and password are NULL you will be logged as guest.
 #' After login you will receive an authentication token.
 #' As token remains vaild on server (until the next login / registration) 
-#' a user can safely use a token fora previous session as a convenience, 
-#' this token is saved in Global environment to perform subsequent REST call 
-#' even on complete R restart (if is environemnt has been saved)
-#' If error occures a specific error is printed
+#' a user can safely use a token for a previous session as a convenience;
+#' this token is saved in R Global environment to perform subsequent REST call 
+#' even on complete R restart (if the environment has been saved).
+#' If error occurs a specific error is printed
 #'
 #' @return None
 #'
 #' @examples
-#' ## login as guest
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' ## Login to GMQL REST services suite as guest
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
 #' 
 #' @name login_gmql
@@ -99,13 +100,14 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #'
 #' @details
 #' After logout the authentication token will be invalidated.
-#' The authentication token is removed from Global environment
-#' If error occures a specific error is printed
+#' The authentication token is removed from R Global environment.
+#' If error occurs, a specific error is printed
 #' 
 #' @examples
 #' 
-#' ## login as guest, then logout
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' ## Login to GMQL REST services suite as guest, then logout
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
 #' logout_gmql(remote_url)
 #' 
@@ -147,27 +149,26 @@ logout_gmql <- function(url)
 
 #' Shows all Queries
 #'
-#' It shows all the GMQL query saved on repository using the proper GMQL 
-#' web service available on a remote server
+#' It shows all the GMQL queries saved on remote repository using the proper 
+#' GMQL web service available on a remote server
 #' 
 #' @import httr
 #'
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #'
-#' @return list of queries
-#' Every query in the list is identified by:
+#' @return list of queries. Every query in the list is identified by:
 #' \itemize{
 #' \item{name: name of query}
 #' \item{text: text of GMQL query}
 #' }
 #'
 #' @details
-#' if error occures, a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples 
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' list <- show_queries_list(remote_url)
 #' 
@@ -192,7 +193,7 @@ show_queries_list <- function(url)
 
 #' Save GMQL query
 #'
-#' It saves the GMQL query into repository taken from file or insert as text 
+#' It saves a GMQL query into repository, taken from file or inserted as text 
 #' string, using the proper GMQL web service available on a remote server
 #' 
 #' @import httr
@@ -200,21 +201,28 @@ show_queries_list <- function(url)
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param queryName string name of query
-#' @param queryTxt string text of GMQL query
+#' @param query string text of GMQL query
 #'
 #' @return None
 #'
 #' @details
-#' if you save a query with the same name of an other query already stored 
-#' in repository you will overwrite it,
-#' if no error occures print "Saved" otherwise print the content error
+#' If you save a query with the same name of another query already stored 
+#' in repository you will overwrite it; if no error occurs prints, 
+#' "Saved" otherwise it prints the content error
 #'
 #' @examples
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+#' ## Login to GMQL REST services suite as guest
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
+#' 
+#' ## This statement saves query with name "dna_query" 
+#' 
 #' save_query(remote_url, "dna_query", "DATASET = SELECT() HG19_TCGA_dnaseq; 
 #' MATERIALIZE DATASET INTO RESULT_DS;")
+#' 
+## This statement saves query with name "query1" reading it from file
 #' 
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
@@ -262,15 +270,15 @@ save_query_fromfile <- function(url, queryName, filePath)
 
 #' Run a GMQL query
 #' 
-#' It runs the GMQL query into repository taken from file or insert as text 
+#' It runs a GMQL query into repository taken from file or inserted as text 
 #' string, using the proper GMQL web service available on a remote server
 #' 
 #' @import httr
 #' 
-#' @param url url of server: It must contain the server address 
+#' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
-#' @param fileName name of the file
-#' @param query text of the query
+#' @param queryName string name of the file
+#' @param query string text of the GMQL query
 #' @param output_gtf logical value indicating file format used for 
 #' storing samples generated by the query.
 #' The possiblities are: 
@@ -282,26 +290,27 @@ save_query_fromfile <- function(url, queryName, filePath)
 #' @return None
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
 #' 
 #' \dontrun{
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' run_query(remote_url, "query_1", "DATASET = SELECT() HG19_TCGA_dnaseq;
+#' run_query(remote_url, "query_1", "DATASET = SELECT() Example_Dataset1;
 #' MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
 #' 
 #' test_path <- system.file("example", package = "RGMQL")
 #' test_query <- file.path(test_path, "query1.txt")
-#' run_query(remote_url, "query_1", test_query, output_gtf = FALSE)
+#' run_query_fromfile(remote_url, test_query, output_gtf = FALSE)
 #' }
 #' 
 #' @rdname run_query
 #' @name run_query
 #' @export
 #'
-run_query <- function(url, fileName, query, output_gtf = TRUE)
+run_query <- function(url, queryName, query, output_gtf = TRUE)
 {
     if(output_gtf)
         out <- "GTF"
@@ -329,13 +338,14 @@ run_query <- function(url, fileName, query, output_gtf = TRUE)
 #' @name run_query
 #' @export
 #' 
-run_query_fromfile <- function(url, fileName, filePath, output_gtf = TRUE)
+run_query_fromfile <- function(url, filePath, output_gtf = TRUE)
 {
     if(!file.exists(filePath))
         stop("file does not exist")
     
     query <- readLines(filePath)
-    run_query(url,fileName,query,output_gtf)
+    queryName <- sub('\\..*$', '', basename(filePath))
+    run_query(url, queryName, query, output_gtf)
 }
 
 
@@ -426,14 +436,20 @@ compile_query_fromfile <- function(url ,filePath)
 #' @return None
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs a specific error is printed
 #'
 #' @examples
 #' 
 #' \dontrun{
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' ## login to GMQL REST services suite at remote url
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
+#' 
+#' ## show all jobs at GMQL remote system and select one running job saving
+#' ## into 'jobs_1' (in this case is the first of the list) and stop it
+#' 
 #' list_jobs <- show_jobs_list(remote_url)
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' stop_job(remote_url, jobs_1)
@@ -456,36 +472,35 @@ stop_job <- function(url, job_id)
         print(content)
 }
 
-
 #' Show a job log or trace
 #'
-#' It show a job log or traces a specific job
+#' It shows a job log or traces a specific job
 #'
 #' @import httr
 #' @param url string url of server: It must contain the server address
 #' and base url; service name is added automatically
 #' @param job_id string id of the job
 #'
-#' @return log or trace text
+#' @return Log or trace text
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs a specific error is printed
 #'
 #' @examples
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' 
-#' ## list all jobs
+#' ## List all jobs
 #' list_jobs <- show_jobs_list(remote_url)
 #' 
 #' \dontrun{
 #' jobs_1 <- list_jobs$jobs[[1]]
 #' 
-#' ## show job log
+#' ## Show job log
 #' show_job_log(remote_url, jobs_1)
 #' 
-#' ## trace job
+#' ## Trace job
 #' trace_job(remote_url, jobs_1)
 #' 
 #' }
@@ -532,24 +547,23 @@ trace_job <- function(url, job_id)
 
 #' Show all jobs
 #'
-#' It show all Jobs (run, succeded or failed) invoked by user using the proper 
+#' It shows all jobs (run, succeded or failed) invoked by user using the proper 
 #' GMQL web service available on a remote server
 #' 
 #' @import httr
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #'
-#' @return list of jobs
-#' Every job in the list is identified by:
+#' @return List of jobs. Every job in the list is identified by:
 #' \itemize{
 #' \item{id: unique job identifier}
 #' }
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' list_jobs <- show_jobs_list(remote_url)
 #' 
@@ -575,29 +589,27 @@ show_jobs_list <- function(url)
 #       WEB DATASET        #
 ############################
 
-#' Show Datasets
+#' Show datasets
 #'
-#' It show all GMQL dataset stored in repository using the proper GMQL 
-#' web service available on a remote server
+#' It shows all GMQL datasets stored in remote repository using the proper 
+#' GMQL web service available on a remote server
 #' 
 #' @import httr
 #' @param url single string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #'
-#' @return list of datasets.
-#'
-#' Every dataset in the list is identified by:
+#' @return List of datasets. Every dataset in the list is identified by:
 #' \itemize{
 #' \item{name: name of dataset}
 #' \item{owner: public or name of the user}
 #' }
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
 #' list <- show_datasets_list(remote_url)
 #' @name show_dataset
@@ -629,11 +641,10 @@ show_datasets_list <- function(url)
 #' and base url; service name is added automatically
 #' @param datasetName name of dataset to get
 #' if the dataset is a public dataset, we have to add "public." as prefix, 
-#' as shown in the example below otherwise no prefix is needed
+#' as shown in the example below, otherwise no prefix is needed
 #'
-#' @return list of samples in dataset.
-#'
-#' Every sample in the list is identified by:
+#' @return List of samples in dataset. Every sample in the list is identified 
+#' by:
 #' \itemize{
 #' \item{id: id of sample}
 #' \item{name: name of sample}
@@ -641,13 +652,18 @@ show_datasets_list <- function(url)
 #' }
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' ## Login to GMQL REST services suite as guest
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
-#' list <- show_samples_list(remote_url, "public.HG19_BED_ANNOTATION")
+#' 
+#' ## It show all sample present into public dataset 'Example_Dataset1'
+#' 
+#' list <- show_samples_list(remote_url, "public.Example_Dataset1")
 #' 
 #' @name show_samples_list
 #' @rdname show_samples_list
@@ -677,22 +693,25 @@ show_samples_list <- function(url,datasetName)
 #' if the dataset is a public dataset, we have to add "public." as prefix, 
 #' as shown in the example below otherwise no prefix is needed
 #'
-#' @return list of region schema fields.
-#'
-#' Every field in the list is identified by:
+#' @return list of region schema fields. Every field in the list is identified 
+#' by:
 #' \itemize{
 #' \item{name: name of field (e.g. chr, start, end, strand ...)}
-#' \item{fieldType: (e.g STRING, DOUBLE ...)}
+#' \item{fieldType: (e.g. STRING, DOUBLE, ...)}
 #' }
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #' 
 #' @examples
+#' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
-#' list <- show_schema(remote_url, "public.HG19_BED_ANNOTATION")
+#' 
+#' ## show schema of public dataset 'Example_Dataset1'
+#' 
+#' list <- show_schema(remote_url, "public.Example_Dataset1")
 #' 
 #' @name show_schema
 #' @rdname show_schema
@@ -717,13 +736,14 @@ show_schema <- function(url,datasetName)
 #'
 #' It uploads a folder (GMQL or not) containing sample files using 
 #' the proper GMQL web service available on a remote server: 
-#' a new dataset is created on repository
+#' a new dataset is created on remote repository
 #' 
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
-#' @param datasetName name of dataset to get
-#' @param folderPath string local path to the folder containing the samples
-#' @param schemaName string name of schema used to parse the samples
+#' @param datasetName name of dataset to create in repository
+#' @param folderPath string local path to the folder containing the samples 
+#' files
+#' @param schemaName string name of schema used to parse the samples;
 #' schemaName available are:
 #' \itemize{
 #' \item{NARROWPEAK}
@@ -732,31 +752,42 @@ show_schema <- function(url,datasetName)
 #' \item{BED}
 #' \item{BEDGRAPH}
 #' }
-#' if schema is NULL it's looking for a XML schema file to read
-#' @param isGMQL logical value indicating whether is GMQL dataset or not
+#' if schemaName is NULL it's looking for a XML schema file to read
+#' @param isGMQL logical value indicating whether it is uploaded a GMQL 
+#' dataset or not
 #'
 #' @return None
 #'
 #' @details
-#' If no error occures print "Upload Complete", otherwise a specific error 
+#' If no error occurs, it prints "Upload Complete", otherwise a specific error 
 #' is printed
 #'
 #' @examples
 #'
 #' \dontrun{
 #' 
-#' ### upload of GMQL dataset with no schema selection
+#' ## This statement defines the path to the folder "DATASET_GDM" in the 
+#' ## subdirectory "example" of the package "RGMQL"
+#' 
 #' test_path <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' remote_url <- "http://genomic.elet.polimi.it/gmql-rest-r/"
+#' 
+#' ## login to GMQL REST services suite at remote url
+#' 
+#' remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
+#' 
+#' ## upload of GMQL dataset with "dataset1" as name without specifying any 
+#' ## schema 
+#' 
 #' upload_dataset(remote_url, "dataset1", folderPath = test_path)
+#' 
 #' }
 #' @name upload_dataset
 #' @rdname upload_dataset
 #' @export
 #'
-upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
-                                isGMQL=TRUE)
+upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
+                                    isGMQL = TRUE)
 {
     if(isGMQL)
         folderPath <- paste0(folderPath,"/files")
@@ -834,7 +865,7 @@ upload_dataset <- function(url,datasetName,folderPath,schemaName=NULL,
 
 #' Delete dataset
 #'
-#' It deletes single private dataset specified by name from repository 
+#' It deletes single private dataset specified by name from remote repository 
 #' using the proper GMQL web service available on a remote server
 #' 
 #' @import httr
@@ -882,38 +913,38 @@ delete_dataset <- function(url,datasetName)
 
 #' Download Dataset
 #'
-#' It donwloads private dataset as zip file from repository to local path or
-#' donwloads saving it into R environemnt as GrangesList using the proper 
-#' GMQL web service available on a remote server
+#' It donwloads private dataset as zip file from remote repository to local 
+#' path, or donwloads and saves it into R environment as GRangesList using 
+#' the proper GMQL web service available on a remote server
 #' 
 #' @import httr
 #' @importFrom utils unzip
 #'
 #' @param url string url of server: It must contain the server address 
-#' and base url; service name will be added automatically
+#' and base url; service name are added automatically
 #' @param datasetName string name of dataset we want to get
-#' @param path string local path folder where store dataset,
-#' by defualt is R working directory
+#' @param path string local path folder where to store dataset,
+#' by default it is R working directory
 #' @return None
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
 #'
-#' ## download dataset in r working directory
+#' ## Download dataset in r working directory
 #' ## in this case we try to download public dataset
 #' 
 #' \dontrun{
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
-#' download_dataset(remote_url, "public.HG19_BED_ANNOTATION", path = getwd())
+#' download_dataset(remote_url, "public.Example_Dataset1", path = getwd())
 #' 
-#' ## create grangeslist from public dataset HG19_BED_ANNOTATION got 
+#' ## Create GRangesList from public dataset Example_Dataset1 got 
 #' ## from repository
 #' 
-#' download_as_GRangesList(remote_url, "public.HG19_BED_ANNOTATION")
+#' download_as_GRangesList(remote_url, "public.Example_Dataset1")
 #' }
 #' 
 #' @name download_dataset
@@ -944,7 +975,7 @@ download_dataset <- function(url, datasetName, path = getwd())
 #' @importClassesFrom GenomicRanges GRangesList
 #' @importFrom S4Vectors metadata
 #' 
-#' @return GrangesList containing all GMQL sample in dataset
+#' @return GRangesList containing all GMQL sample in dataset
 #' 
 #' @name download_as_GRangesList
 #' @rdname download_dataset
@@ -990,16 +1021,21 @@ download_as_GRangesList <- function(url,datasetName)
 #' @param datasetName string name of dataset to get
 #' @param sampleName string sample name to get
 #'
-#' @return list of metadata in the form 'key = value'
+#' @return List of metadata in the form 'key = value'
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
+#' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
-#' sample_metadata(remote_url, "public.HG19_BED_ANNOTATION", "promoters")
+#' 
+#' ## This statement retrieves metadata for sample 'S_00000' from public 
+#' ## dataset 'Example_Dataset1'
+#' 
+#' sample_metadata(remote_url, "public.Example_Dataset1", "S_00000")
 #' 
 #'
 #' @name sample_metadata
@@ -1027,9 +1063,9 @@ sample_metadata <- function(url, datasetName,sampleName)
 }
 
 
-#' Shows regions from a dataset sample
+#' Shows regions data from a dataset sample
 #' 
-#' It retrieves regions for a specific sample 
+#' It retrieves regions data for a specific sample 
 #' (whose name is specified in the paramter "sampleName")
 #' in a specific dataset 
 #' (whose name is specified in the parameter "datasetName") 
@@ -1046,17 +1082,25 @@ sample_metadata <- function(url, datasetName,sampleName)
 #' @param datasetName string name of dataset to get
 #' @param sampleName string sample name to get
 #'
-#' @return Granges data containing regions of sample
+#' @return GRanges data containing regions of sample
 #'
 #' @details
-#' If error occures a specific error is printed
+#' If error occurs, a specific error is printed
 #'
 #' @examples
 #' 
 #' \dontrun{
-#' remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+#' 
+#' ## Login to GMQL REST services suite as guest
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' sample_region(remote_url, "public.HG19_BED_ANNOTATION", "promoters")
+#' 
+#' ## This statement retrieves regions data for sample "S_00000" from public 
+#' ## dataset "Example_Dataset1"
+#'  
+#' sample_region(remote_url, "public.Example_Dataset1", "S_00000")
+#' 
 #' }
 #' 
 #' @name sample_region

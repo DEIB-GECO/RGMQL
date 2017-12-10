@@ -95,6 +95,7 @@ Collate:
     'gmql_difference.R'
     'gmql_extend.R'
     'gmql_group.R'
+    'gmql_init.R'
     'gmql_join.R'
     'gmql_map.R'
     'gmql_materialize.R'

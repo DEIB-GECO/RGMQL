@@ -2,36 +2,51 @@
 % Please edit documentation in R/gmql_select.R
 \name{semijoin}
 \alias{semijoin}
-\title{Semijoin Condtion}
+\title{Semijoin condtion}
 \usage{
 semijoin(data, not_in = FALSE, groupBy = NULL)
 }
 \arguments{
 \item{data}{GMQLDataset class object}
 
-\item{not_in}{logical value: T => semijoin is perfomed 
-considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
-considering semi_join IN semi_join_dataset}
+\item{not_in}{logical value: TRUE => for a given sample of input dataset
+".data" in \code{\link{filter}} method if and only if there exists at 
+least one sample in dataset 'data' with metadata attributes defined 
+in groupBy and these attributes of 'data' have at least one value in 
+common with the same attributes defined in one sample of '.data'
+FALSE => semijoin condition is evaluated accordingly.}
 
-\item{groupBy}{it define condition evaluation on metadata.
+\item{groupBy}{list of evalation functions to define evaluation on metadata:
 \itemize{
-\item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-if they both end with value and, if they have a further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-as value will match; no further prefixes are allowed. }
-\item{\code{\link{DF}}: Default evaluation, the two attributes match 
-if both end with value.}
+\item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
+if they both end with \emph{value} and, if they have further prefixes,
+the two prefix sequence are identical.}
+\item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+as \emph{value} match; no further prefixes are allowed.}
+\item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
+if both end with \emph{value}.}
 }}
 }
 \value{
 semijoin condition as list
 }
 \description{
-This function is use as support to filter method to define 
+This function is used as support to the filter method to define 
 semijoin conditions on metadata
 }
 \examples{
+
+## These statements initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+## "example" of the package "RGMQL" and opens such folders as a GMQL dataset 
+## named "data" and "join_data" respectively
+
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+data <- read_dataset(test_path)
+join_data <-  read_dataset(test_path2)
 
 # It creates a new dataset called 'jun_tf' by selecting those samples and 
 # their regions from the existing 'data' dataset such that:
@@ -41,17 +56,11 @@ semijoin conditions on metadata
 # that has the same value of at least one of the values that a metadata 
 # attribute equally called cell has in at least one sample 
 # of the 'join_data' dataset.
-# For each sample satisfying previous condition,only its regions that 
+# For each sample satisfying previous conditions, only its regions that 
 # have a region attribute called pValue with the associated value 
 # less than 0.01 are conserved in output
 
-
-init_gmql()
-test_path <- system.file("example", "DATASET", package = "RGMQL")
-test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-data <- read_dataset(test_path)
-join_data <-  read_dataset(test_path2)
-jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, 
-list(DF("cell"))))
+jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
+semijoin(join_data, TRUE, list(DF("cell"))))
 
 }

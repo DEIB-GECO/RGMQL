@@ -1,6 +1,6 @@
 #' GMQL Function: EXECUTE
 #'
-#' Execute GMQL query.
+#' It executes GMQL query.
 #' The function works only after invoking at least one collect
 #' 
 #' @importFrom rJava J
@@ -8,15 +8,24 @@
 #' @return None
 #'
 #' @examples
-#'
+#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+#' ## named "data"
+#' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' rd = read_dataset(test_path)
-#' filtered = filter(rd)
-#' aggr = aggregate(filtered, list(DF("antibody_targer","cell_karyotype")))
-#' collect(aggr, dir_out = test_path)
+#' data = read_dataset(test_path)
 #' 
+#' ## The following statement materialize the dataset, previoulsy read, at 
+#' ## th specific destination path into local folder "ds1" opportunely created
+#' 
+#' collect(data, dir_out = test_path)
+#' 
+#' ## This statement executes GMQL query.
 #' \dontrun{
+#' 
 #' execute()
 #' }
 #' @export
@@ -147,32 +156,40 @@ gmql_materialize <- function(input_data, dir_out, name)
 
 #' Method take
 #'
-#' It saves the contents of a dataset that contains samples metadata 
-#' and samples regions as GrangesList.
-#' It is normally used to store in memory the contents of any dataset 
+#' It saves the content of a dataset that contains samples metadata 
+#' and samples regions as GRangesList.
+#' It is normally used to store in memory the content of any dataset 
 #' generated during a GMQL query. The operation can be very time-consuming.
 #' If you have invoked any materialization before take function, 
-#' all those dataset will be materialized as folder.
+#' all those datasets are materialized as folders.
 #'
-#' @import GenomicRanges
+#' @importFrom GenomicRanges makeGRangesFromDataFrame
+#' @importFrom S4Vectors metadata
 #' @importFrom stats setNames
-#' @importFrom rJava J
-#' @importFrom rJava .jevalArray
+#' @importFrom rJava J .jevalArray
+#' @importFrom GenomicRanges GRangesList
 #' 
 #' @param data returned object from any GMQL function
 #' @param rows number of rows for each sample regions that you want to 
-#' retrieve and stored in memory.
-#' by default is 0 that means take all rows for each sample
+#' retrieve and store in memory.
+#' By default it is 0 that means take all rows for each sample
 #' 
-#' @param ... Additional arguments for use in specific methods
+#' @param ... Additional arguments for use in other specific methods of the 
+#' generic take function
 #' 
-#' @return GrangesList with associated metadata
+#' @return GRangesList with associated metadata
 #'
 #' @examples
-#'
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+#' ## named "rd" using customParser
+#' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' rd = read_dataset(test_path)
+#' 
 #' aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
 #' taken <- take(aggr, rows = 45)
 #' 

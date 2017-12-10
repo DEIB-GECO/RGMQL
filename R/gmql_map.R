@@ -1,12 +1,12 @@
 #' Method map
 #'
 #' It computes, for each sample in the right dataset, aggregates over the 
-#' values of the right regions that intersect with a region in a left sample, 
-#' for each region of each sample in the left dataset;
+#' values of the right dataset regions that intersect with a region in a left 
+#' dataset sample, for each region of each sample in the left dataset;
 #' The number of generated output samples is the Cartesian product 
 #' of the samples in the two input datasets;
-#' each output sample has the same regions as the related input left sample, 
-#' with their attributes and values, plus the attributes computed as 
+#' each output sample has the same regions as the related input left dataset 
+#' sample, with their attributes and values, plus the attributes computed as 
 #' aggregates over right region values.
 #' Output sample metadata are the union of the related input sample metadata,
 #' whose attribute names are prefixed with "left" or "right" respectively.
@@ -22,41 +22,51 @@
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object 
 #' 
-#' @param ... Additional arguments for use in specific methods.
-#' 
-#' In this case a series of element in the form \emph{key} = \emph{aggregate}.
-#' The \emph{aggregate} is an object of class AGGREGATES
-#' The aggregate functions available are: \code{\link{SUM}}, 
+#' @param ... a series of expressions separated by comma in the form 
+#' \emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 
+#' class AGGREGATES. The aggregate functions available are: \code{\link{SUM}}, 
 #' \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
 #' \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
 #' \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
 #' \code{\link{Q2}}, \code{\link{Q3}}.
-#' Every aggregate accepts a string value, execet for COUNT
-#' Argument of 'aggregate' must exist in schema
-#' Two style are allowed:
+#' Every aggregate accepts a string value, except for COUNT, which does not 
+#' have any value.
+#' Argument of 'aggregate function' must exist in schema, i.e. among region 
+#' attributes. Two styles are allowed:
 #' \itemize{
 #' \item list of key-value pairs: e.g. sum = SUM("pvalue")
 #' \item list of values: e.g. SUM("pvalue")
 #' }
 #' "mixed style" is not allowed
 #'
-#' @param joinBy list of evalation function to define condition 
-#' evaluation on metadata:
+#' @param joinBy list of evalation functions to define evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
+#' \item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
+#' if they both end with \emph{value} and, if they have further prefixes,
+#' the two prefix sequence are identical.}
+#' \item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+#' as \emph{value} match; no further prefixes are allowed.}
+#' \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
+#' if both end with \emph{value}.}
 #' }
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #' 
 #' @examples
-#'
+#' 
+#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+#' ## "example" of the package "RGMQL" and opens such folder as a GMQL 
+#' ## dataset named "exp" and "ref" respectively using customParser
+#' 
+#' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+#' exp = read_dataset(test_path)
+#' ref = read_dataset(test_path2)
+#' 
 #' # It counts the number of regions in each sample from exp that overlap with 
 #' # a ref region, and for each ref region it computes the minimum score 
 #' # of all the regions in each exp sample that overlap with it. 
@@ -66,12 +76,7 @@
 #' # but with a different value from the one(s) of ref sample(s), 
 #' # are disregarded.
 #' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' exp = read_dataset(test_path)
-#' ref = read_dataset(test_path2)
-#' out = map(ref,exp, minScore = MIN("score"), 
+#' out = map(ref, exp, minScore = MIN("score"), 
 #' joinBy = list(DF("cell_tissue")))
 #' 
 #' @name map

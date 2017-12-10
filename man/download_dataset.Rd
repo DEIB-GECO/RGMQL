@@ -11,41 +11,41 @@ download_as_GRangesList(url, datasetName)
 }
 \arguments{
 \item{url}{string url of server: It must contain the server address 
-and base url; service name will be added automatically}
+and base url; service name are added automatically}
 
 \item{datasetName}{string name of dataset we want to get}
 
-\item{path}{string local path folder where store dataset,
-by defualt is R working directory}
+\item{path}{string local path folder where to store dataset,
+by default it is R working directory}
 }
 \value{
 None
 
-GrangesList containing all GMQL sample in dataset
+GRangesList containing all GMQL sample in dataset
 }
 \description{
-It donwloads private dataset as zip file from repository to local path or
-donwloads saving it into R environemnt as GrangesList using the proper 
-GMQL web service available on a remote server
+It donwloads private dataset as zip file from remote repository to local 
+path, or donwloads and saves it into R environment as GRangesList using 
+the proper GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 
-## download dataset in r working directory
+## Download dataset in r working directory
 ## in this case we try to download public dataset
 
 \dontrun{
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
-download_dataset(remote_url, "public.HG19_BED_ANNOTATION", path = getwd())
+download_dataset(remote_url, "public.Example_Dataset1", path = getwd())
 
-## create grangeslist from public dataset HG19_BED_ANNOTATION got 
+## Create GRangesList from public dataset Example_Dataset1 got 
 ## from repository
 
-download_as_GRangesList(remote_url, "public.HG19_BED_ANNOTATION")
+download_as_GRangesList(remote_url, "public.Example_Dataset1")
 }
 
 }

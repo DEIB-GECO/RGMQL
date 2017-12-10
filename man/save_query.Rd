@@ -15,28 +15,34 @@ and base url; service name is added automatically}
 
 \item{queryName}{string name of query}
 
-\item{queryTxt}{string text of GMQL query}
-
 \item{filePath}{string local file path of txt file containing a GMQL query}
+
+\item{query}{string text of GMQL query}
 }
 \value{
 None
 }
 \description{
-It saves the GMQL query into repository taken from file or insert as text 
+It saves a GMQL query into repository, taken from file or inserted as text 
 string, using the proper GMQL web service available on a remote server
 }
 \details{
-if you save a query with the same name of an other query already stored 
-in repository you will overwrite it,
-if no error occures print "Saved" otherwise print the content error
+If you save a query with the same name of another query already stored 
+in repository you will overwrite it; if no error occurs prints, 
+"Saved" otherwise it prints the content error
 }
 \examples{
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r/"
+## Login to GMQL REST services suite as guest
+
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
+
+## This statement saves query with name "dna_query" 
+
 save_query(remote_url, "dna_query", "DATASET = SELECT() HG19_TCGA_dnaseq; 
 MATERIALIZE DATASET INTO RESULT_DS;")
+
 
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")

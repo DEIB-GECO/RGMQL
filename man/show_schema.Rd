@@ -15,12 +15,11 @@ if the dataset is a public dataset, we have to add "public." as prefix,
 as shown in the example below otherwise no prefix is needed}
 }
 \value{
-list of region schema fields.
-
-Every field in the list is identified by:
+list of region schema fields. Every field in the list is identified 
+by:
 \itemize{
 \item{name: name of field (e.g. chr, start, end, strand ...)}
-\item{fieldType: (e.g STRING, DOUBLE ...)}
+\item{fieldType: (e.g. STRING, DOUBLE, ...)}
 }
 }
 \description{
@@ -28,12 +27,16 @@ It shows the region attribute schema of a specific GMQL dataset using
 the proper GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
+## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
-list <- show_schema(remote_url, "public.HG19_BED_ANNOTATION")
+
+## show schema of public dataset 'Example_Dataset1'
+
+list <- show_schema(remote_url, "public.Example_Dataset1")
 
 }

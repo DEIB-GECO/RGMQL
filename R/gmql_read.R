@@ -1,131 +1,67 @@
-#' Init GMQL Server
-#'
-#' Initialize and run GMQL server for executing GMQL query
-#' It is also perform a login to GMQL REST services suite if needed
-#' 
-#' @importFrom rJava J
-#' 
-#' @param output_format string identifies the output format of sample files.
-#' Can be TAB, GTF or COLLECT
-#' \itemize{
-#' \item{TAB: tab delimited file format}
-#' \item{GTF: file format used to hold information about gene structure.
-#' It is a tab-delimited text format based on the general feature format}
-#' \item{COLLECT: used for storing output in memory}
-#' }
-#' @param remote_processing logical value specifying the processing mode.
-#' True for processing on cluster (remote), false for local processing.
-#' 
-#' @param url string url of server: It must contain the server address 
-#' and base url; service name is added automatically.
-#' If null, no login is performed.
-#' You can always perform it, calling the function \code{\link{login_gmql}} 
-#' explicitly
-#' 
-#' @param username string name used during signup 
-#' @param password string password used during signup
-#' 
-#' @return None
-#'
-#' @examples
-#'
-#' ## initialize GMQL with local processing with sample files output format 
-#' ## as Tab delimited
-#' 
-#' init_gmql("tab", FALSE)
-#' 
-#' \dontrun{
-#' 
-#' ## initialize GMQL with remote processing
-#' remote_url = "http://130.186.13.219/gmql-rest"
-#' init_gmql(remote_processing = TRUE, url = remote_url)
-#' 
-#' }
-#' 
-#' @export
-#'
-init_gmql <- function(output_format = "gtf", remote_processing = FALSE, 
-                        url = NULL, username = NULL, password = NULL)
-{
-    out_format <- toupper(output_format)
-    if(!identical(out_format,"TAB") && !identical(out_format,"GTF") && 
-        !identical(out_format,"COLLECT"))
-        stop("output_format must be TAB, GTF or COLLECT")
-    .check_logical(remote_processing)
-    
-    # mettere attesa da input keyboard, controllare se token già esiste 
-    # da sessione precedente
-    if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
-        login_gmql(url,username,password)
-    
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    WrappeR$initGMQL(out_format,remote_processing)
-}
-
 #' Function read
 #'
-#' Read a GMQL dataset, folder containig some homogenus sample from disk 
-#' or GrangesList saving in Scala memory that can be referenced in R.
-#' Also used to read a repository dataset in case of remote processing.
+#' It reads a GMQL dataset, as a folder containig some homogenus samples on 
+#' disk or as a GrangesList; it saving in Scala memory in a way that can be 
+#' referenced in R. It is also used to read a repository dataset in case of
+#' remote processing.
 #' 
-#' @importFrom rJava .jnull
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jnull .jarray
 #' @importFrom methods is
-#' @importFrom rJava J
 #' 
-#' @param dataset folder path for GMQL dataset or datasetname on repository
+#' @param dataset folder path for GMQL dataset or dataset name on repository
 #' @param parser string used to parsing dataset files
 #' The Parser's available are:
 #' \itemize{
-#' \item{BedParser}
 #' \item{ANNParser}
 #' \item{BroadProjParser}
-#' \item{BedParser}
 #' \item{NarrowPeakParser}
 #' \item{RnaSeqParser}
 #' \item{CustomParser.}
 #' }
 #' Default is CustomParser.
 #' @param is_local logical value indicating local or remote dataset
-#' @param is_GMQL logical value indicating if is a GMQL dataset or not 
+#' @param is_GMQL logical value indicating GMQL dataset or not 
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #' 
 #' @details
 #' Normally a GMQL dataset contains an XML schema file that contains
-#' name of column header. (e.g chr, start, stop, strand)
-#' The CustomParser read this XML schema; 
-#' if you already know what kind of schema your files are, use one of the 
-#' parser defined without reading any XML schema
+#' name of region attributes. (e.g chr, start, stop, strand)
+#' The CustomParser reads this XML schema; 
+#' if you already know what kind of schema your files have, use one of the 
+#' parsers defined, without reading any XML schema.
 #' 
-#' If GrangesList has no metadata: i.e. metadata() is empty, two metadata are
+#' If GRangesList has no metadata: i.e. metadata() is empty, two metadata are
 #' generated.
 #' \itemize{
-#' \item{"Provider" = "Polimi"}
-#' \item{"Application" = "RGMQL"}
+#' \item{"provider" = "PoliMi"}
+#' \item{"application" = "RGMQL"}
 #' }
 #'
 #' @examples
 #' 
-#' ## read local dataset with CustomParser
+#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+#' ## named "data"
+#' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path)
+#' data = read_dataset(test_path)
 #' 
-#' \dontrun{
+#' ## This statement opens such folder as a GMQL dataset named "data" using 
+#' ## "NarrowPeakParser" 
+#' dataPeak = read_dataset(test_path,"NarrowPeakParser")
 #' 
-#' ## read local dataset with other Parser
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' r = read_dataset(test_path,"ANNParser")
+#' ## This statement reads a remote public dataset stored into GMQL system 
+#' ## repository. For a public dataset in a (remote) GMQL repository the 
+#' ## prefix "public." is needed before dataset name
 #' 
-#' ## read remote public dataset stored into GMQL system repository 
-#' ## If public dataset a prefix "public." is needed before dataset name
-#' r2 = read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
+#' data1 = read_dataset("public.Example_Dataset1",is_local = FALSE)
 #' 
-#' }
-#' @name read
+#' @name read_dataset
 #' @rdname read-function
 #' @export
 #'
@@ -188,12 +124,11 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 
 
 #' @importFrom S4Vectors metadata
-#' @importFrom rJava J
-#' @importFrom rJava .jarray
+#' @importFrom rJava J .jarray
 #' 
-#' @param samples GrangesList
+#' @param samples GRangesList
 #' 
-#' @name read
+#' @name read_dataset
 #' @rdname read-function
 #' @export
 #'
@@ -210,7 +145,7 @@ read <- function(samples)
         warning("GrangesList has no metadata.
 We provide two metadata for you")
         index_meta <- rep(1:len,each = len)
-        rep_meta <- rep(c("Provider","Polimi", "Application", "R-GMQL"),
+        rep_meta <- rep(c("provider","PoliMi", "application", "RGMQL"),
                             times=len)
         meta_matrix <- matrix(rep_meta,ncol = 2,byrow = TRUE)
         meta_matrix <- cbind(index_meta,meta_matrix)
@@ -274,38 +209,4 @@ We provide two metadata for you")
     
     parser
 }
-
-#' Disable or Enable remote processing
-#'
-#' It allows to enable or disable remote processing 
-#' 
-#' @details 
-#' The invocation of this function allow to change mode of processing.
-#' after invoking collect() is not possbile to switch the processing mode, 
-#' 
-#' @importFrom rJava J
-#' 
-#' @param is_remote logical value used in order to set the processing mode.
-#' TRUE you will set a remote query processing mode otherwise will be local,
-#' 
-#' @return None
-#' 
-#' @examples
-#' 
-#' # initialize with remote processing off
-#' init_gmql("tab",remote_processing = FALSE)
-#' 
-#' # change processing mode to remote
-#' remote_processing(TRUE)
-#'
-#' @export
-#' 
-remote_processing<-function(is_remote)
-{
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    .check_logical(is_remote)
-    response <- WrappeR$remote_processing(is_remote)
-    print(response)
-}
-
 

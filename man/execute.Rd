@@ -10,19 +10,28 @@ execute()
 None
 }
 \description{
-Execute GMQL query.
+It executes GMQL query.
 The function works only after invoking at least one collect
 }
 \examples{
+## Thi statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" in the subdirectory "example" 
+## of the package "RGMQL" and opens such folder as a GMQL dataset 
+## named "data"
 
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
-rd = read_dataset(test_path)
-filtered = filter(rd)
-aggr = aggregate(filtered, list(DF("antibody_targer","cell_karyotype")))
-collect(aggr, dir_out = test_path)
+data = read_dataset(test_path)
 
+## The following statement materialize the dataset, previoulsy read, at 
+## th specific destination path into local folder "ds1" opportunely created
+
+collect(data, dir_out = test_path)
+
+## This statement executes GMQL query.
 \dontrun{
+
 execute()
 }
 }

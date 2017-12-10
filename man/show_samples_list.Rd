@@ -33,7 +33,7 @@ If error occures a specific error is printed
 }
 \examples{
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 list <- show_samples_list(remote_url, "public.HG19_BED_ANNOTATION")
 

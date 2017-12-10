@@ -15,19 +15,17 @@ extend(.data, ...)
 \arguments{
 \item{.data}{GMQLDataset class object}
 
-\item{...}{Additional arguments for use in specific methods.
-It accept a series of aggregate function on region attribute.
-All the element in the form \emph{key} = \emph{aggregate}.
-The \emph{aggregate} is an object of class AGGREGATES
-The aggregate functions available are: \code{\link{SUM}}, 
+\item{...}{a series of expressions separated by comma in the form 
+\emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 
+class AGGREGATES. The aggregate functions available are: \code{\link{SUM}}, 
 \code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
 \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
 \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
 \code{\link{Q2}}, \code{\link{Q3}}.
-Every aggregate accepts a string value, execet for COUNT, which does not 
+Every aggregate accepts a string value, except for COUNT, which does not 
 have any value.
 Argument of 'aggregate function' must exist in schema, i.e. among region 
-attributes. Two style are allowed:
+attributes. Two styles are allowed:
 \itemize{
 \item list of key-value pairs: e.g. sum = SUM("pvalue")
 \item list of values: e.g. SUM("pvalue")
@@ -39,7 +37,7 @@ GMQLDataset object. It contains the value to use as input
 for the subsequent GMQLDataset method
 }
 \description{
-Wrapper to GMQL extend function
+Wrapper to GMQL EXTEND operator
 
 For each sample in an input dataset, it generates new metadata attributes 
 as result of aggregate functions applied to sample region attributes 
@@ -48,26 +46,27 @@ Aggregate functions are applied sample by sample.
 }
 \examples{
 
-## it counts the regions in each sample and stores their number as value 
-## of the new metadata RegionCount attribute of the sample.
+## This statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" in the subdirectory "example" 
+## of the package "RGMQL" and opens such folder as a GMQL dataset 
+## named "data"
+
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-r <- read_dataset(test_path)
-e <- extend(r, RegionCount = COUNT())
+data <- read_dataset(test_path)
 
-\dontrun{
+## This statement counts the regions in each sample and stores their number 
+## as value of the new metadata attribute RegionCount of the sample.
 
-## it copies all samples of exp dataset into res dataset, 
+e <- extend(data, RegionCount = COUNT())
+
+## This statement copies all samples of data dataset into 'res' dataset, 
 ## and then calculates for each of them two new metadata attributes:
 ##  1. RegionCount is the number of sample regions;
 ##  2. MinP is the minimum pvalue of the sample regions.
-## res sample regions are the same as the ones in exp.
+## res sample regions are the same as the ones in data.
 
-init_gmql()
-test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_dataset(test_path)
-res = extend(exp, RegionCount = COUNT(), MinP = MIN("pvalue"))
-
-}
+res = extend(data, RegionCount = COUNT(), MinP = MIN("pvalue"))
 
 }

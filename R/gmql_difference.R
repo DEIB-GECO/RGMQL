@@ -1,13 +1,13 @@
 #' Method setdiff
 #' 
-#' @description Wrapper to GMQL difference function
+#' @description Wrapper to GMQL DIFFERENCE operator
 #' 
 #' @description It produces one sample in the result for each sample of the 
 #' left operand, by keeping the same metadata of the left input sample 
 #' and only those regions (with their schema and values) of the left input 
 #' sample which do not intersect with any region in the right operand sample.
 #' The optional \emph{joinby} clause is used to extract a subset of couples
-#' from the cartesian product of two dataset \emph{x} and \emph{y} 
+#' from the Cartesian product of two dataset \emph{x} and \emph{y} 
 #' on which to apply the DIFFERENCE operator:
 #' only those samples that have the same value for each attribute
 #' are considered when performing the difference.
@@ -17,19 +17,16 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
-#' @param ... Additional arguments for use in specific methods.
-#' 
-#' This method accept a function to define condition evaluation on metadata.
+#' @param joinBy list of evalation functions to define evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
+#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
+#' if they both end with \emph{value} and, if they have further prefixes,
 #' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
+#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+#' as \emph{value} match; no further prefixes are allowed. }
+#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
+#' if both end with \emph{value}.}
 #' }
-#' 
 #' @param is_exact single logical value: TRUE means that the region difference 
 #' is executed only on regions in left_input_data with exactly the same 
 #' coordinates of at least one region present in right_input_data; 
@@ -42,47 +39,48 @@
 #' 
 #'
 #' @examples
-#'
-#' ## This GMQL statement returns all the regions in the first dataset 
-#' ## that do not overlap any region in the second dataset.
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+#' ## "example" of the package "RGMQL" and opens such folder as a GMQL 
+#' ## dataset named "data1" and "data2" respectively using customParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' r_left = read_dataset(test_path)
-#' r_right = read_dataset(test_path2)
-#' out = setdiff(r_left, r_right)
+#' data1 = read_dataset(test_path)
+#' data2 = read_dataset(test_path2)
 #' 
-#' \dontrun{
+#' ## This GMQL statement returns all the regions in the first dataset 
+#' ## that do not overlap any region in the second dataset.
+#' 
+#' out = setdiff(data1, data2)
+#' 
 #' ## This GMQL statement extracts for every pair of samples s1 in EXP1 
 #' ## and s2 in EXP2 having the same value of the metadata 
 #' ## attribute 'antibody_target' the regions that appear in s1 but 
 #' ## do not overlap any region in s2; 
 #' ## metadata of the result are the same as the metadata of s1.
 #' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' exp1 = read_dataset(test_path)
-#' exp2 = read_dataset(test_path2)
-#' out = setdiff(exp1, exp2, DF("antibody_target"))
+#' out_t = setdiff(data1, data2, DF("antibody_target"))
 #'
-#' }
 #' @name setdiff
 #' @aliases setdiff,GMQLDataset,GMQLDataset-method
 #' @aliases setdiff-method
 #' @export
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
-            function(x, y, ..., is_exact = FALSE)
+            function(x, y, joinBy = NULL, is_exact = FALSE)
             {
                 ptr_data_x = x@value
                 ptr_data_y = y@value
-                joinBy = list(...)
                 gmql_difference(ptr_data_x, ptr_data_y, is_exact, joinBy)
             })
 
 gmql_difference <- function(left_data, right_data, is_exact, joinBy)
 {
+    if(!is.list(joinBy))
+        stop("joinBy: must be a list")
+    
     if(!is.null(joinBy) && !length(joinBy) == 0)
     {
         cond <- .join_condition(joinBy)

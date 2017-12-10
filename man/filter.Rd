@@ -12,12 +12,12 @@
 \arguments{
 \item{.data}{GMQLDataset class object}
 
-\item{m_predicate}{logical predicate made up by R logical operation 
-on metadata attribute. 
+\item{m_predicate}{logical predicate made up by R logical operations 
+on metadata attributes. 
 Only !, |, ||, &, && are admitted.}
 
-\item{r_predicate}{logical predicate made up by R logical operation 
-on schema region values. 
+\item{r_predicate}{logical predicate made up by R logical operations 
+on region attributes. 
 Only !, |, ||, &, && are admitted.}
 
 \item{semijoin}{\code{\link{semijoin}} function to define filter method 
@@ -28,48 +28,57 @@ GMQLDataset object. It contains the value to use as input
 for the subsequent GMQLDataset method
 }
 \description{
-It creates a new dataset from an existing one by extracting a subset of 
-samples and/or regions from the input dataset according to their predicate.
-each sample in the output dataset has the same region attributes, 
+Wrapper to GMQL SELECT operator
+
+It creates a new dataset from an existing one by extracting a 
+subset of samples and/or regions from the input dataset according to their 
+predicate. Each sample in the output dataset has the same region attributes, 
 values, and metadata as in the input dataset.
 When semijoin function is defined, it extracts those samples containing 
-all metadata attribute defined in semijoin clause with at least 
+all metadata attributes defined in semijoin clause with at least 
 one metadata value in common with semijoin dataset.
 If no metadata in common between input dataset and semijoin dataset, 
 no sample is extracted.
 }
 \examples{
 
-## It selects from input data samples of patients younger than 70 years old, 
-## based on filtering on sample metadata attribute Patient_age
+## This statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" in the subdirectory "example" 
+## of the package "RGMQL" and opens such folder as a GMQL dataset 
+## named "data"
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-input <- read_dataset(test_path)
-s <- filter(input, Patient_age < 70)
+data <- read_dataset(test_path) 
 
-\dontrun{
+## This statement selects from input data samples of patients younger 
+## than 70 years old, based on filtering on sample metadata attribute 
+## 'patient_age'
 
-## It creates a new dataset called 'jun_tf' by selecting those samples and 
-## their regions from the existing 'data' dataset such that:
+filter_data <- filter(data, patient_age < 70)
+
+## This statement defines the path to the folders "DATASET_GDM" in the 
+## subdirectory "example" of the package "RGMQL" and opens such folder 
+## as a GMQL dataset named "join_data"
+
+test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+join_data <- read_dataset(test_path2) 
+
+## This statement creates a new dataset called 'jun_tf' by selecting those 
+## samples and their regions from the existing 'data' dataset such that:
 ## Each output sample has a metadata attribute called antibody_target 
 ## with value JUN.
 ## Each output sample also has not a metadata attribute called "cell" 
 ## that has the same value of at least one of the values that a metadata 
 ## attribute equally called cell has in at least one sample 
 ## of the 'join_data' dataset.
-## For each sample satisfying previous condition,only its regions that 
+## For each sample satisfying previous conditions, only its regions that 
 ## have a region attribute called pValue with the associated value 
 ## less than 0.01 are conserved in output
 
-
-init_gmql()
-test_path <- system.file("example", "DATASET", package = "RGMQL")
-test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-data <- read_dataset(test_path)
-join_data <- read_dataset(test_path2)
 jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
 semijoin(join_data, TRUE, list(DF("cell"))))
 
-}
+
 }

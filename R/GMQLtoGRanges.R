@@ -1,7 +1,7 @@
-#' Create GRangesList from GMQL Dataset
+#' Create GRangesList from GMQL dataset
 #'
-#' It create a GrangesList from GMQL samples in dataset
-#' It reads sample files in GTF or GDM/tabulated format
+#' It creates a GRangesList from GMQL samples in dataset. 
+#' It reads sample files in GTF or GDM/tab-delimited format.
 #'
 #' @importFrom rtracklayer import
 #' @importClassesFrom GenomicRanges GRangesList
@@ -9,16 +9,19 @@
 #' @importFrom utils read.delim
 #' @import xml2
 #'
-#' @param dataset_path string GMQL dataset folder path
-#' @param is_gtf logical value indicating if samples inside are in GTF format
-#' if TRUE and dataset does not contain gtf sample an error occures 
+#' @param dataset_path string with GMQL dataset folder path
+#' @param is_gtf logical value indicating if dataset samples are in GTF format;
+#' if TRUE and dataset does not contain GTF samples an error occurs 
 #' 
-#' @return GrangesList containing all GMQL samples in dataset
+#' @return GRangesList containing all GMQL samples in dataset
 #'
 #' @seealso \code{\link{export_gmql}}
 #'
 #' @examples
-#'
+#' 
+#' ## This statement defines the path to the subdirectory "example" of the 
+#' ## package "RGMQL" and import as GRangesList the GMQL dataset
+#' 
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' grl = import_gmql(test_path, TRUE)
 #'

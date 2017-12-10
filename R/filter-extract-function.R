@@ -20,9 +20,9 @@
 #' this condition is logically "ANDed" with prefix filtering (see below)
 #' if NULL no filtering action occures
 #' (i.e every sample is taken for region filtering)
-#' @param metadata_prefix vector of strings that will filter metadata
-#' containing rispectively every element of this vector.
-#' number of element in both vector must match
+#' @param metadata_prefix vector of strings that will support the metadata
+#' filtering. If defined every defined 'metadata' are concatenated with the 
+#' corresponding prefix.
 #' @param regions vector of strings that extracts only region attribute 
 #' specified; if NULL no regions attribute is taken and the output is only 
 #' GRanges made up by the region coordinate attributes 
@@ -33,18 +33,26 @@
 #' selected regions
 #'
 #' @details
-#' This function works only with datatset or GRangesList that has the same
-#' information about regions attribute (but of course different value)
+#' This function works only with datatset or GRangesList which samples or 
+#' Granges have the same regions coordinates (chr, ranges, strand)
+#' 
 #' In case of Grangeslist data input the function will search for metadata
 #' into metadata() function associated to Grangeslist.
 #'
-#' @return Granges with selected regions (if any) in elementMetadata
+#' @return GRanges with selected regions
 #'
 #' @examples
-#'
+#' 
+#' ## This statement defines the path to the folders "DATASET" in the 
+#' ## subdirectory "example" of the package "RGMQL" and filter such folder 
+#' ## dataset including at output only "pvalue" and "peak" regions
+#' 
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' filter_and_extract(test_path,regions = c("pvalue", "peak"))
-#'
+#' filter_and_extract(test_path, regions = c("pvalue", "peak"))
+#' 
+#' ## This statement import a GMQL dataset as GRangesList and filter it 
+#' ## including at output only "pvalue" and "peak" regions
+#' 
 #' grl = import_gmql(test_path, TRUE)
 #' filter_and_extract(grl, regions = c("pvalue", "peak"))
 #'

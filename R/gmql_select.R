@@ -29,12 +29,13 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 
 #' Method filter
 #' 
-#' It creates a new dataset from an existing one by extracting a subset of 
-#' samples and/or regions from the input dataset according to their predicate.
-#' each sample in the output dataset has the same region attributes, 
+#' @description Wrapper to GMQL SELECT operator 
+#' @description It creates a new dataset from an existing one by extracting a 
+#' subset of samples and/or regions from the input dataset according to their 
+#' predicate. Each sample in the output dataset has the same region attributes, 
 #' values, and metadata as in the input dataset.
 #' When semijoin function is defined, it extracts those samples containing 
-#' all metadata attribute defined in semijoin clause with at least 
+#' all metadata attributes defined in semijoin clause with at least 
 #' one metadata value in common with semijoin dataset.
 #' If no metadata in common between input dataset and semijoin dataset, 
 #' no sample is extracted.
@@ -45,11 +46,11 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' @importFrom dplyr filter
 #' 
 #' @param .data GMQLDataset class object
-#' @param m_predicate logical predicate made up by R logical operation 
-#' on metadata attribute. 
+#' @param m_predicate logical predicate made up by R logical operations 
+#' on metadata attributes. 
 #' Only !, |, ||, &, && are admitted.
-#' @param r_predicate logical predicate made up by R logical operation 
-#' on schema region values. 
+#' @param r_predicate logical predicate made up by R logical operations 
+#' on region attributes. 
 #' Only !, |, ||, &, && are admitted.
 #' 
 #' @param semijoin \code{\link{semijoin}} function to define filter method 
@@ -61,38 +62,45 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' 
 #' @examples
 #' 
-#' ## It selects from input data samples of patients younger than 70 years old, 
-#' ## based on filtering on sample metadata attribute Patient_age
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+#' ## named "data"
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' input <- read_dataset(test_path)
-#' s <- filter(input, Patient_age < 70)
+#' data <- read_dataset(test_path) 
 #' 
-#' \dontrun{
+#' ## This statement selects from input data samples of patients younger 
+#' ## than 70 years old, based on filtering on sample metadata attribute 
+#' ## 'patient_age'
 #' 
-#' ## It creates a new dataset called 'jun_tf' by selecting those samples and 
-#' ## their regions from the existing 'data' dataset such that:
+#' filter_data <- filter(data, patient_age < 70)
+#' 
+#' ## This statement defines the path to the folders "DATASET_GDM" in the 
+#' ## subdirectory "example" of the package "RGMQL" and opens such folder 
+#' ## as a GMQL dataset named "join_data"
+#' 
+#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+#' join_data <- read_dataset(test_path2) 
+#' 
+#' ## This statement creates a new dataset called 'jun_tf' by selecting those 
+#' ## samples and their regions from the existing 'data' dataset such that:
 #' ## Each output sample has a metadata attribute called antibody_target 
 #' ## with value JUN.
 #' ## Each output sample also has not a metadata attribute called "cell" 
 #' ## that has the same value of at least one of the values that a metadata 
 #' ## attribute equally called cell has in at least one sample 
 #' ## of the 'join_data' dataset.
-#' ## For each sample satisfying previous condition,only its regions that 
+#' ## For each sample satisfying previous conditions, only its regions that 
 #' ## have a region attribute called pValue with the associated value 
 #' ## less than 0.01 are conserved in output
 #' 
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data <- read_dataset(test_path)
-#' join_data <- read_dataset(test_path2)
 #' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
 #' semijoin(join_data, TRUE, list(DF("cell"))))
 #' 
-#' }
+#' 
 #' @name filter
 #' @rdname filter
 #' @aliases filter,GMQLDataset-method
@@ -124,29 +132,44 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
         
 }
 
-#' Semijoin Condtion
+#' Semijoin condtion
 #' 
-#' This function is use as support to filter method to define 
+#' This function is used as support to the filter method to define 
 #' semijoin conditions on metadata  
 #' 
 #' @param data GMQLDataset class object
 #' 
-#' @param not_in logical value: T => semijoin is perfomed 
-#' considering semi_join NOT IN semi_join_dataset, F => semijoin is performed 
-#' considering semi_join IN semi_join_dataset
+#' @param not_in logical value: TRUE => for a given sample of input dataset
+#' ".data" in \code{\link{filter}} method if and only if there exists at 
+#' least one sample in dataset 'data' with metadata attributes defined 
+#' in groupBy and these attributes of 'data' have at least one value in 
+#' common with the same attributes defined in one sample of '.data'
+#' FALSE => semijoin condition is evaluated accordingly.
 #' 
-#' @param groupBy it define condition evaluation on metadata.
+#' @param groupBy list of evalation functions to define evaluation on metadata:
 #' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
+#' \item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
+#' if they both end with \emph{value} and, if they have further prefixes,
+#' the two prefix sequence are identical.}
+#' \item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+#' as \emph{value} match; no further prefixes are allowed.}
+#' \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
+#' if both end with \emph{value}.}
 #' }
 #' 
 #' @examples
+#' 
+#' ## These statements initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+#' ## "example" of the package "RGMQL" and opens such folders as a GMQL dataset 
+#' ## named "data" and "join_data" respectively
+#' 
+#' init_gmql()
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
+#' data <- read_dataset(test_path)
+#' join_data <-  read_dataset(test_path2)
 #' 
 #' # It creates a new dataset called 'jun_tf' by selecting those samples and 
 #' # their regions from the existing 'data' dataset such that:
@@ -156,21 +179,16 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' # that has the same value of at least one of the values that a metadata 
 #' # attribute equally called cell has in at least one sample 
 #' # of the 'join_data' dataset.
-#' # For each sample satisfying previous condition,only its regions that 
+#' # For each sample satisfying previous conditions, only its regions that 
 #' # have a region attribute called pValue with the associated value 
 #' # less than 0.01 are conserved in output
 #' 
-#' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data <- read_dataset(test_path)
-#' join_data <-  read_dataset(test_path2)
-#' jun_tf <- filter(data,NULL,NULL, semijoin(join_data, TRUE, 
-#' list(DF("cell"))))
+#' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
+#' semijoin(join_data, TRUE, list(DF("cell"))))
 #' 
 #' @return semijoin condition as list
 #' @export
+#' 
 semijoin <- function(data, not_in = FALSE, groupBy = NULL)
 {
     if(!is.list(groupBy))

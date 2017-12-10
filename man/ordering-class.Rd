@@ -50,7 +50,7 @@ num_fetch = 2)
 ## and takes the first five samples that have the lowest pvalue and the 
 ## first seven regions.
  
-desc = arrange(data, list(DESC("pvalue")), fetch_opt = "mtop", num_fetch = 5, 
-reg_fetch_opt = "rtop", reg_num_fetch = 7)
+desc = arrange(data, list(DESC("pvalue")), fetch_opt = "mtop", 
+num_fetch = 5, reg_fetch_opt = "rtop", reg_num_fetch = 7)
 
 }

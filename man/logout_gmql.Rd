@@ -19,13 +19,14 @@ using the proper GMQL web service available on a remote server
 }
 \details{
 After logout the authentication token will be invalidated.
-The authentication token is removed from Global environment
-If error occures a specific error is printed
+The authentication token is removed from R Global environment.
+If error occurs, a specific error is printed
 }
 \examples{
 
-## login as guest, then logout
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+## Login to GMQL REST services suite as guest, then logout
+
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 logout_gmql(remote_url)
 

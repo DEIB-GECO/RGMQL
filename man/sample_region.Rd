@@ -2,7 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{sample_region}
 \alias{sample_region}
-\title{Shows regions from a dataset sample}
+\title{Shows regions data from a dataset sample}
 \usage{
 sample_region(url, datasetName, sampleName)
 }
@@ -15,24 +15,32 @@ and base url; service name is added automatically}
 \item{sampleName}{string sample name to get}
 }
 \value{
-Granges data containing regions of sample
+GRanges data containing regions of sample
 }
 \description{
-It retrieves regions for a specific sample 
+It retrieves regions data for a specific sample 
 (whose name is specified in the paramter "sampleName")
 in a specific dataset 
 (whose name is specified in the parameter "datasetName") 
 using the proper GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 
 \dontrun{
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+
+## Login to GMQL REST services suite as guest
+
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
-sample_region(remote_url, "public.HG19_BED_ANNOTATION", "promoters")
+
+## This statement retrieves regions data for sample "S_00000" from public 
+## dataset "Example_Dataset1"
+ 
+sample_region(remote_url, "public.Example_Dataset1", "S_00000")
+
 }
 
 }

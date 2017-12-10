@@ -15,30 +15,37 @@ take(data, ...)
 \arguments{
 \item{data}{returned object from any GMQL function}
 
-\item{...}{Additional arguments for use in specific methods}
+\item{...}{Additional arguments for use in other specific methods of the 
+generic take function}
 
 \item{rows}{number of rows for each sample regions that you want to 
-retrieve and stored in memory.
-by default is 0 that means take all rows for each sample}
+retrieve and store in memory.
+By default it is 0 that means take all rows for each sample}
 }
 \value{
-GrangesList with associated metadata
+GRangesList with associated metadata
 }
 \description{
-Wrapper to take function
+Wrapper to TAKE operation
 
-It saves the contents of a dataset that contains samples metadata 
-and samples regions as GrangesList.
-It is normally used to store in memory the contents of any dataset 
+It saves the content of a dataset that contains samples metadata 
+and samples regions as GRangesList.
+It is normally used to store in memory the content of any dataset 
 generated during a GMQL query. The operation can be very time-consuming.
 If you have invoked any materialization before take function, 
-all those dataset will be materialized as folder.
+all those datasets are materialized as folders.
 }
 \examples{
+## This statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folder "DATASET" in the subdirectory "example"
+## of the package "RGMQL" and opens such folder as a GMQL dataset 
+## named "rd" using customParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 rd = read_dataset(test_path)
+
 aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
 taken <- take(aggr, rows = 45)
 

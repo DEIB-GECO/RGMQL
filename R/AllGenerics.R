@@ -10,7 +10,7 @@ setGeneric("cover", function(data, ...) standardGeneric("cover"))
 
 #' Method map
 #' 
-#' Wrapper to GMQL map function
+#' Wrapper to GMQL MAP operator
 #' 
 #' @name map
 #' @rdname map
@@ -21,7 +21,7 @@ setGeneric("map", function(x, y, ...) standardGeneric("map"))
 
 #' Method take
 #' 
-#' Wrapper to take function
+#' Wrapper to TAKE operation
 #' 
 #' @name take
 #' @rdname take
@@ -32,7 +32,7 @@ setGeneric("take", function(data, ...) standardGeneric("take"))
 
 #' Method extend
 #' 
-#' Wrapper to GMQL extend function
+#' Wrapper to GMQL EXTEND operator 
 #' 
 #' @name extend
 #' @rdname extend

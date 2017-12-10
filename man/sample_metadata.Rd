@@ -15,20 +15,25 @@ and base url; service name is added automatically}
 \item{sampleName}{string sample name to get}
 }
 \value{
-list of metadata in the form 'key = value'
+List of metadata in the form 'key = value'
 }
 \description{
 It retrieves metadata for a specific sample in dataset using the proper 
 GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
+## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
-sample_metadata(remote_url, "public.HG19_BED_ANNOTATION", "promoters")
+
+## This statement retrieves metadata for sample 'S_00000' from public 
+## dataset 'Example_Dataset1'
+
+sample_metadata(remote_url, "public.Example_Dataset1", "S_00000")
 
 
 }

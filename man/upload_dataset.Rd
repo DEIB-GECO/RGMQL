@@ -11,11 +11,12 @@ upload_dataset(url, datasetName, folderPath, schemaName = NULL,
 \item{url}{string url of server: It must contain the server address 
 and base url; service name is added automatically}
 
-\item{datasetName}{name of dataset to get}
+\item{datasetName}{name of dataset to create in repository}
 
-\item{folderPath}{string local path to the folder containing the samples}
+\item{folderPath}{string local path to the folder containing the samples 
+files}
 
-\item{schemaName}{string name of schema used to parse the samples
+\item{schemaName}{string name of schema used to parse the samples;
 schemaName available are:
 \itemize{
 \item{NARROWPEAK}
@@ -24,9 +25,10 @@ schemaName available are:
 \item{BED}
 \item{BEDGRAPH}
 }
-if schema is NULL it's looking for a XML schema file to read}
+if schemaName is NULL it's looking for a XML schema file to read}
 
-\item{isGMQL}{logical value indicating whether is GMQL dataset or not}
+\item{isGMQL}{logical value indicating whether it is uploaded a GMQL 
+dataset or not}
 }
 \value{
 None
@@ -34,20 +36,30 @@ None
 \description{
 It uploads a folder (GMQL or not) containing sample files using 
 the proper GMQL web service available on a remote server: 
-a new dataset is created on repository
+a new dataset is created on remote repository
 }
 \details{
-If no error occures print "Upload Complete", otherwise a specific error 
+If no error occurs, it prints "Upload Complete", otherwise a specific error 
 is printed
 }
 \examples{
 
 \dontrun{
 
-### upload of GMQL dataset with no schema selection
+## This statement defines the path to the folder "DATASET_GDM" in the 
+## subdirectory "example" of the package "RGMQL"
+
 test_path <- system.file("example", "DATASET_GDM", package = "RGMQL")
-remote_url <- "http://genomic.elet.polimi.it/gmql-rest-r/"
+
+## login to GMQL REST services suite at remote url
+
+remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
+
+## upload of GMQL dataset with "dataset1" as name without specifying any 
+## schema 
+
 upload_dataset(remote_url, "dataset1", folderPath = test_path)
+
 }
 }

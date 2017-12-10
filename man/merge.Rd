@@ -7,49 +7,45 @@
 \title{Method merge}
 \usage{
 \S4method{merge}{GMQLDataset,GMQLDataset}(x, y, genometric_predicate = NULL,
-  region_output = "contig", ...)
+  region_output = "contig", joinBy = NULL)
 }
 \arguments{
 \item{x}{GMQLDataset class object}
 
 \item{y}{GMQLDataset class object}
 
-\item{genometric_predicate}{is a list of DISTAL object
+\item{genometric_predicate}{it is a list of DISTAL objects
 For details of DISTAL objects see:
 \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}}
 
-\item{region_output}{single string that declare which region is given in 
-output for each input pair of left dataset right dataset regions 
+\item{region_output}{single string that declares which region is given in 
+output for each input pair of left dataset and right dataset regions 
 satisfying the genometric predicate:
 \itemize{
-\item{left: outputs the anchor regions from left_input_data that satisfy 
-the genometric predicate}
-\item{right: outputs the experiment regions from right_input_data that 
-satisfy the genometric predicate}
-\item{int (intersection): outputs the overlapping part (intersection) 
-of the left_input_data and right_input_data regions that satisfy 
-the genometric predicate; if the intersection is empty, 
-no output is produced}
-\item{contig: outputs the concatenation between the left_input_data and 
-right_input_data regions that satisfy the genometric predicate, 
-(i.e. the output regionis defined as having left (right) coordinates
-equal to the minimum (maximum) of the corresponding coordinate values 
-in the left_input_data and right_input_data regions satisfying 
+\item{LEFT: It outputs the anchor regions from 'x' that satisfy the 
+genometric predicate}
+\item{RIGHT: It outputs the experiment regions from 'y' that satisfy the 
+genometric predicate}
+\item{INT (intersection): It outputs the overlapping part (intersection) 
+of the 'x' and 'y' regions that satisfy the genometric predicate; if the 
+intersection is empty, no output is produced}
+\item{CAT: It outputs the concatenation between the 'x' and 'y' regions 
+that satisfy the genometric predicate, (i.e. the output regionis defined as 
+having left (right) coordinates equal to the minimum (maximum) of the 
+corresponding coordinate values in the 'x' and 'y' regions satisfying 
 the genometric predicate)}
 }}
 
-\item{...}{Additional arguments for use in specific methods.
-
-This method accept a function to define condition evaluation on metadata.
+\item{joinBy}{list of evalation functions to define evaluation on metadata:
 \itemize{
-\item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-if they both end with value and, if they have a further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-as value will match; no further prefixes are allowed. }
-\item{\code{\link{DF}}: Default evaluation, the two attributes match 
-if both end with value.}
+\item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
+if they both end with \emph{value} and, if they have further prefixes,
+the two prefix sequence are identical.}
+\item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
+as \emph{value} match; no further prefixes are allowed.}
+\item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
+if both end with \emph{value}.}
 }}
 }
 \value{
@@ -57,30 +53,41 @@ GMQLDataset object. It contains the value to use as input
 for the subsequent GMQLDataset method
 }
 \description{
-It takes in input two datasets, respectively known as nchor (left) 
-and experiment (right) and returns a dataset of samples consisting of 
-regions extracted from the operands according to the specified condition
+Wrapper to GMQL JOIN operator
+
+It takes in input two datasets, respectively known as anchor 
+(left) and experiment (right) and returns a dataset of samples consisting 
+of regions extracted from the operands according to the specified condition
 (a.k.a \emph{genometric_predicate}).
 The number of generated output samples is the Cartesian product 
 of the number of samples in the anchor and in the experiment dataset 
-(if \emph{by} is not specified).
+(if \emph{joinBy} is not specified).
 The output metadata are the union of the input metadata, 
-with their attribute names prefixed with left or right respectively.
+with their attribute names prefixed with left or right dataset name, 
+respectively.
 }
 \examples{
 
-# Given a dataset 'hm' and one called 'tss' with a sample including 
-# Transcription Start Site annotations, it searches for those regions of hm 
-# that are at a minimal distance from a transcription start site (TSS) 
-# and takes the first/closest one for each TSS, provided that such distance 
-# is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
-# from the same provider (joinby clause).
+## Thi statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+## "example" of the package "RGMQL" and opens such folder as a GMQL 
+## dataset named "exp" and "ref" respectively using customParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 TSS = read_dataset(test_path)
 HM = read_dataset(test_path2)
+
+## Given a dataset 'HM' and one called 'TSS' with a sample including 
+## Transcription Start Site annotations, it searches for those regions of HM 
+## that are at a minimal distance from a transcription start site (TSS) 
+## and takes the first/closest one for each TSS, provided that such distance 
+## is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
+## from the same provider (joinby clause).
+
+
 join_data = merge(TSS, HM, 
 genometric_predicate = list(MD(1), DLE(120000)), DF("provider"), 
 region_output = "RIGHT")

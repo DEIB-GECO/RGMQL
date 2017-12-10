@@ -32,74 +32,83 @@ DOWN()
 }
 \arguments{
 \item{value}{string identifying distance between genomic regions 
-in base pairs,}
+in base pair,}
 }
 \value{
-distal object
+Distal object
 }
 \description{
 This class constructor is used to create instances of DISTAL object
-to be used in GMQL functions that use genometric predicate parameter
-requiring distal condition on value
+to be used in GMQL JOIN operations (RGMQL merge functions) that use 
+genometric predicate parameter requiring distal condition on value
 }
 \details{
 \itemize{
 \item{DL: It denotes the less distance clause, 
-which selects all the regions of the experiment such that their distance 
-from the anchor region is less than 'value' bases.}
+which selects all the regions of a joined experiment dataset sample such 
+that their distance from the anchor region of a joined reference dataset 
+sample is less than 'value' bases.}
 \item{DLE: It denotes the less distance clause, 
-which selects all the regions of the experiment such that their distance 
-from the anchor region is less than, or equal to, 'value' bases.}
-\item{DG: it denotes the less distance clause, 
-which selects all the regions of the experiment such that their distance 
-from the anchor region is greater than 'value' bases. }
-\item{DGE: It denotes the less distance clause, which selects all the 
-regions of the experiment such that their distance from the anchor region 
-is greater than, or equal to, 'value' bases.}
+which selects all the regions of a joined experiment dataset sample such 
+that their distance from the anchor region of a joined reference dataset 
+sample is less than, or equal to, 'value' bases.}
+\item{DG: It denotes the less distance clause, 
+which selects all the regions of a joined experiment dataset sample such 
+that their distance from the anchor region of a joined reference dataset 
+sample is greater than 'value' bases. }
+\item{DGE: It denotes the less distance clause, 
+which selects all the regions of a joined experiment dataset sample such 
+that their distance from the anchor region of a joined reference dataset 
+sample is greater than, or equal to, 'value' bases.}
 \item{MD: It denotes the minimum distance clause, which selects 
-the 'value' regions of the experiment at minimial distance from the 
-anchor region.}
+the first 'value' regions of a joined experiment at minimial distance 
+from the anchor region of a joined reference dataset sample.}
 \item{UP: It denotes the upstream direction of the genome.
-They are interpreted as predicates that must hold on the regions 
-of the experiment.
-UP is true when region of experiment is in the upstream genome 
-of the anchor region.
+It makes predicates to be hold on the upstream of the regions of a joined 
+experiment dataset sample.
+UP is true when region of a joined experiment dataset sample is in the
+upstream genome of the anchor region of a joined reference dataset sample.
 When this clause is not present, distal conditions apply to both 
-the directions of the genome.}
-\item{DOWN: It denotes the downstream direction of the genome.
-They are interpreted as predicates that must hold on the regions of 
-the experiment.
-DOWN is true when region of experiment is in the downstream genome of 
-the anchor region.
-When this clause is not present, distal conditions apply to both the 
-directions of the genome. }
+directions of the genome.}
+\item{DOWN:  It denotes the downstream direction of the genome.
+It makes predicates to be hold on the downstream of the regions of a joined 
+experiment dataset sample.
+UP is true when region of a joined experiment dataset sample is in the
+downstream genome of the anchor region of a joined reference dataset sample.
+When this clause is not present, distal conditions apply to both 
+directions of the genome.}
 }
 }
 \examples{
+## Thi statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
+## "example" of the package "RGMQL" and opens such folder as a GMQL 
+## dataset named "TSS" and "HM" respectively using customParser
 
 init_gmql()
-test_path <- system.file("example","DATASET",package = "RGMQL")
-test_path2 <- system.file("example","DATASET_GDM",package = "RGMQL")
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
 TSS = read_dataset(test_path)
 HM = read_dataset(test_path2)
 
 ## Given a dataset HM and one called TSS with a sample including 
-# Transcription Start Site annotations, it searches for those regions of hm 
-# that are at a minimal distance from a transcription start site (TSS) 
-# and takes the first/closest one for each TSS, 
-# provided that such distance is lesser than 1200 bases and joined TSS 
-# and HM samples are obtained from the same provider (joinby clause).
+## Transcription Start Site annotations, it searches for those regions of HM 
+## that are at a minimal distance from a transcription start site (TSS) 
+## and takes the first/closest one for each TSS, provided that such 
+## distance is lesser than 1200 bases and joined TSS and HM samples are 
+## obtained from the same provider (joinby clause).
 
 join_data = merge(TSS, HM, 
 genometric_predicate = list(MD(1), DL(1200)), DF("provider"), 
 region_output = "RIGHT")
 
-#' # Given a dataset 'hm' and one called 'tss' with a sample including 
-# Transcription Start Site annotations, it searches for those regions of hm 
-# that are at a minimal distance from a transcription start site (TSS) 
-# and takes the first/closest one for each TSS, provided that such distance 
-# is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
-# from the same provider (joinby clause).
+## Given a dataset 'HM' and one called 'TSS' with a sample including 
+## Transcription Start Site annotations, it searches for those regions of HM 
+## that are at a minimal distance from a transcription start site (TSS) 
+## and takes the first/closest one for each TSS, provided that such distance 
+## is greater than 12K bases and joined 'tss' and 'hm' samples are obtained 
+## from the same provider (joinby clause).
 
 join_data = merge(TSS, HM, 
 genometric_predicate = list(MD(1), DGE(12000), DOWN()), 

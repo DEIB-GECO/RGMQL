@@ -1,6 +1,6 @@
-#' Create GMQL dataset from GrangesList
+#' Create GMQL dataset from GRangesList
 #'
-#' It create GMQL dataset from GRangesList.
+#' It creates GMQL dataset from GRangesList.
 #' All samples are in GDM (tab-separated values) or GTF file format
 #'
 #' @import xml2
@@ -11,8 +11,9 @@
 #' @importFrom S4Vectors metadata
 #' @import GenomicRanges
 #'
-#' @param samples GrangesList
-#' @param dir_out folder path where create a folder and write the sample files
+#' @param samples GRangesList
+#' @param dir_out folder path where to create a folder and write the sample 
+#' files
 #' @param is_gtf logical value indicating if samples have to be exported
 #' with GTF or GDM format
 #'
@@ -21,28 +22,43 @@
 #' @seealso \code{\link{import_gmql}} 
 #'
 #' @details
-#' The GMQL dataset is made up by two differet file type
+#' The GMQL dataset is made up by two different file types:
 #'
 #' \itemize{
-#' \item{metadata files: contain metadata associated to corrisponding sample}
-#' \item{region files: contain many genomic regions }
-#' \item{region schema file: XML file contains region attributes 
+#' \item{metadata files: they contain metadata associated to corrisponding 
+#' sample.}
+#' \item{region files: they contain many genomic regions data.}
+#' \item{region schema file: XML file that contains region attribute name 
 #' (e.g. chr, start, end, pvalue)}
 #' }
-#' region sample files and metadata files are associated through file name:
+#' Region sample files and metadata files are associated through file name:
 #' for example S_0001.gdm for region file and S_0001.gdm.meta for 
 #' its metadata file
 #'
 #'
 #' @examples
 #' 
+#' ## load and attach add-on GenomicRanges package
 #' library(GenomicRanges)
+#' 
+#' ## These statemens create two GRanges with the region attribute: seqnames, 
+#' ## ranges (region coordinates) and strand, plus two column element:  
+#' ## score and GC
+#' 
 #' gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
 #' score = 5L, GC = 0.45)
 #' gr2 <- GRanges(seqnames = c("chr1", "chr1"),
 #' ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
 #' score = 3:4, GC = c(0.3, 0.5))
+#' 
+#' ## This statement creates a GRangesList using the previous GRanges 
+#' 
 #' grl = GRangesList(gr1, gr2)
+#' 
+#' ## This statement defines the path to the subdirectory "example" of the 
+#' ## package "RGMQL" and export the GRangesList as GMQL dataset using the 
+#' ## last name of 'dir_out' path as dataset name
+#' 
 #' test_out_path <- system.file("example", package = "RGMQL")
 #' export_gmql(grl, test_out_path,TRUE)
 #' 

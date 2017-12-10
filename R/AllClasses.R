@@ -6,7 +6,7 @@
 #' @slot value value associated to GMQL dataset
 #' @name GMQLDataset-class
 #' @rdname GMQLDataset-class
-#' 
+#' @noRd
 #' @return instance of GMQL dataset
 #' 
 setClass("GMQLDataset",
@@ -22,7 +22,7 @@ setClass("GMQLDataset",
 #' 
 #' @param value value associated to GMQL dataset
 #' @rdname GMQLDataset-class
-#' 
+#' @noRd
 GMQLDataset <- function(value) {
     dataset <- new("GMQLDataset",value = value)
     return(dataset)

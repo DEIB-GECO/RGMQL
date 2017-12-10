@@ -13,7 +13,7 @@
 \arguments{
 \item{.data}{GMQLDataset class object}
 
-\item{metadata}{vector of string made up by metadata attribute}
+\item{metadata}{vector of string made up by metadata attributes}
 
 \item{metadata_update}{list of updating rules in the form of 
 key = value generating new metadata.
@@ -21,31 +21,31 @@ To specify the new values, the following options are available:
 \itemize{
 \item{All aggregation functions already defined by AGGREGATES object}
 \item{All basic mathematical operations (+, -, *, /), including parenthesis}
-\item{SQRT, META, NIL constructor object defined by OPERATOR object}
+\item{SQRT, META, NIL constructor objects defined by OPERATOR object}
 }}
 
 \item{all_but_meta}{logical value indicating which metadata 
-you want to exclude; If FALSE only the metadata you choose is kept 
-in the output of the project operation, if TRUE the metadata 
-are all except ones include in region parameter.
-if metadata is not defined \emph{all_but_meta} is not considerd.}
+you want to exclude; If FALSE only the metadata you choose are kept 
+in the output of the operation; if TRUE the metadata 
+are all kept except those in metadata.
+If metadata is not defined \emph{all_but_meta} is not considerd.}
 
-\item{regions}{vector of string made up by schema field attribute}
+\item{regions}{vector of string made up by region attributes}
 
 \item{regions_update}{list of updating rules in the form of 
-key = value generating new genomic region attributes.
+key = value generating new genomic region attributes and values.
 To specify the new values, the following options are available:
 \itemize{
 \item{All aggregation functions already defined by AGGREGATES object}
 \item{All basic mathematical operations (+, -, *, /), including parenthesis}
-\item{SQRT, META, NIL constructor object defined by OPERATOR object}
+\item{SQRT, META, NIL constructor objects defined by OPERATOR object}
 }}
 
-\item{all_but_reg}{logical value indicating which schema field attribute 
-you want to exclude; if FALSE only the regions you choose is kept 
-in the output of the project operation, if TRUE the schema region 
-are all except ones include in region parameter.
-if regions is not defined \emph{all_but_reg} is not considerd.}
+\item{all_but_reg}{logical value indicating which region attributes
+you want to exclude; if FALSE, only the regions you choose are kept 
+in the output of the operation; if TRUE the regions
+are all kept except those in region parameter.
+If regions is not defined, \emph{all_but_reg} is not considerd.}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -61,10 +61,19 @@ Region coordinates and values of the remaining metadata remain equal to
 those in the input dataset. It allows to:
 \itemize{
 \item{Remove existing metadata and/or region attributes from a dataset}
-\item{Update new metadata and/or region attributes in the result}
+\item{Update or set new metadata and/or region attributes in the result}
 }
 }
 \examples{
+## This statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folders "DATASET" in the subdirectory "example" 
+## of the package "RGMQL" and opens such folder as a GMQL dataset 
+## named "data"
+
+init_gmql()
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+data = read_dataset(test_path)
 
 ## It creates a new dataset called CTCF_NORM_SCORE by preserving all 
 ## region attributes apart from score, and creating a new region attribute 
@@ -74,15 +83,11 @@ those in the input dataset. It allows to:
 ## a new metadata attribute called normalized with value 1, 
 ## which can be used in future selections.
 
-init_gmql()
-test_path <- system.file("example", "DATASET", package = "RGMQL")
-input = read_dataset(test_path)
-CTCF_NORM_SCORE = select(input, metadata_update = list(normalized = 1), 
+
+CTCF_NORM_SCORE = select(data, metadata_update = list(normalized = 1), 
 regions_update = list(new_score = (score / 1000.0) + 100), 
 regions = c("score"), all_but_reg = TRUE)
 
-
-\dontrun{
 
 ## It produces an output dataset that contains the same samples 
 ## as the input dataset. 
@@ -92,13 +97,9 @@ regions = c("score"), all_but_reg = TRUE)
 ## and as metadata attributes only the specified ones, 
 ## i.e. manually_curated_tissue_status and manually_curated_tumor_tag.
 
-init_gmql()
-test_path <- system.file("example", "DATASET", package = "RGMQL")
-DS_in = read_dataset(test_path)
-DS_out = select(DS_in, regions = c("variant_classification", 
+DS_out = select(data, regions = c("variant_classification", 
 "variant_type"), metadata = c("manually_curated_tissue_status", 
 "manually_curated_tumor_tag"))
 
-}
 
 }

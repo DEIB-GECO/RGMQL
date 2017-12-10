@@ -17,29 +17,29 @@ and base url; service name is added automatically}
 \item{job_id}{string id of the job}
 }
 \value{
-log or trace text
+Log or trace text
 }
 \description{
-It show a job log or traces a specific job
+It shows a job log or traces a specific job
 }
 \details{
-If error occures a specific error is printed
+If error occurs a specific error is printed
 }
 \examples{
 
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 
-## list all jobs
+## List all jobs
 list_jobs <- show_jobs_list(remote_url)
 
 \dontrun{
 jobs_1 <- list_jobs$jobs[[1]]
 
-## show job log
+## Show job log
 show_job_log(remote_url, jobs_1)
 
-## trace job
+## Trace job
 trace_job(remote_url, jobs_1)
 
 }

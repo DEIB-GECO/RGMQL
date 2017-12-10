@@ -39,37 +39,41 @@ as.character.OPERATOR <- function(obj) {
 #' to be used in GMQL functions that require operator on value.
 #' 
 #' \itemize{
-#' \item{META: It prepared input parameter to be passed to library function 
-#' meta, performing all the type conversion needed}
-#' \item{SQRT: It prepared input parameter to be passed to library function 
-#' sqrt, performing all the type conversion needed}
-#' \item{NIL: It prepared input parameter to be passed to library function 
-#' null, performing all the type conversion needed}
+#' \item{META: It prepares input parameter to be passed to library function 
+#' meta, performing all the type conversions needed}
+#' \item{SQRT: It prepares input parameter to be passed to library function 
+#' sqrt, performing all the type conversions needed}
+#' \item{NIL: It prepares input parameter to be passed to library function 
+#' null, performing all the type conversions needed}
 #' }
 #' 
-#' @param value string identifying name of metadata attribute or region 
-#' attribute
-#' @param type string identifying the type of the attribute value
-#' must be: integer, double or string
+#' @param value string identifying name of metadata attribute
+#' @param type string identifying the type of the attribute value;
+#' it must be: INTEGER, DOUBLE or STRING
 #'
-#' @return operator object
+#' @return Operator object
 #' 
 #' 
 #' @examples
+#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
+#' ## named "exp"
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_dataset(test_path)
 #' 
-#' ## allows to select, in all input sample, all those regions for which the 
-#' ## region attribute score has a value which is greater than the metadata 
-#' ## attribute value "avg_score" in their sample.
+#' ## This statement allows to select, in all input sample, all those regions 
+#' ## for which the region attribute score has a value which is greater 
+#' ## than the metadata attribute value "avg_score" in their sample.
 #' 
 #' data = filter(exp, r_predicate = score > META("avg_score"))
 #' 
-#' ## It define a new numeric region attribute with "null" value. 
+#' ## This statement defines a new numeric region attribute with "null" value. 
 #' ## The syntax for creating a new attribute with null value is 
-#' ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
+#' ## attribute_name = NULL(TYPE), where type may be INTEGER, DOUBLE or STRING.
 #' 
 #' out = select(exp, regions_update = list(signal = NIL("INTEGER"), 
 #' pvalue = NIL("DOUBLE")))
@@ -82,9 +86,6 @@ as.character.OPERATOR <- function(obj) {
 #' ## with value correspondent to the mathematical squared root 
 #' ## of the pre-existing metadata attribute concentration.
 #' 
-#' init_gmql()
-#' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
 #' out = select(exp, metadata_update = list(concSq = SQRT("concentration")))
 #' 
 #' @name OPERATOR-Object
@@ -92,7 +93,7 @@ as.character.OPERATOR <- function(obj) {
 #' @rdname operator-class
 #' @export
 #'
-META <- function(value,type=NULL)
+META <- function(value, type = NULL)
 {
     check.OPERATOR(value)
     if(!is.null(type))
@@ -128,11 +129,11 @@ check.META <- function(type)
 #' @rdname operator-class
 #' @export
 #'
-NIL <- function(value)
+NIL <- function(type)
 {
-    check.NIL(value)
+    check.NIL(type)
     
-    list <- list(value = value)
+    list <- list(value = type)
     ## Set the name for the class
     class(list) <- c("NIL","OPERATOR")
     return(list)

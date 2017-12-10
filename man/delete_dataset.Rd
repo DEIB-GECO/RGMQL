@@ -16,7 +16,7 @@ and base url; service name is added automatically}
 None
 }
 \description{
-It deletes single private dataset specified by name from repository 
+It deletes single private dataset specified by name from remote repository 
 using the proper GMQL web service available on a remote server
 }
 \details{

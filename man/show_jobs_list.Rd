@@ -22,10 +22,10 @@ It show all Jobs (run, succeded or failed) invoked by user using the proper
 GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs a specific error is printed
 }
 \examples{
-remote_url = "http://genomic.elet.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 list_jobs <- show_jobs_list(remote_url)
 
