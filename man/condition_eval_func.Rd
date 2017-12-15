@@ -7,6 +7,8 @@
 \alias{EX}
 \alias{Evaluation-Function}
 \alias{DF}
+\alias{Evaluation-Function}
+\alias{condition_evaluation}
 \title{Condition evaluation functions}
 \usage{
 FN(...)
@@ -14,6 +16,8 @@ FN(...)
 EX(...)
 
 DF(...)
+
+condition_evaluation(...)
 }
 \arguments{
 \item{...}{series of string identifying a name of metadata attribute 

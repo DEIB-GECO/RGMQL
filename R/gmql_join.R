@@ -24,16 +24,8 @@
 #' \code{\link{DLE}}, \code{\link{DGE}}, \code{\link{DL}}, \code{\link{DG}},
 #' \code{\link{MD}}, \code{\link{UP}}, \code{\link{DOWN}}
 #' 
-#' @param joinBy list of evalation functions to define evaluation on metadata:
-#' \itemize{
-#' \item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
-#' if they both end with \emph{value} and, if they have further prefixes,
-#' the two prefix sequence are identical.}
-#' \item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-#' as \emph{value} match; no further prefixes are allowed.}
-#' \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
-#' if both end with \emph{value}.}
-#' }
+#' @param joinBy \code{\link{condition_evaluation}} function to support 
+#' methods with groupBy or JoinBy input paramter
 #' 
 #' @param region_output single string that declares which region is given in 
 #' output for each input pair of left dataset and right dataset regions 
@@ -93,7 +85,6 @@ setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 {
                     ptr_data_x <- x@value
                     ptr_data_y <- y@value
-                    joinBy = list(...)
                     gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
                                 joinBy, region_output)
                 })
@@ -123,17 +114,20 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
     else
         genomatrix <- .jnull("java/lang/String")
     
-    if(!is.null(joinBy) && !length(joinBy) == 0)
-        join_condition_matrix <- .jarray(.join_condition(joinBy), 
-                                            dispatch = TRUE)
+    if(!is.null(joinBy))
+    {
+        cond <- .join_condition(joinBy)
+        if(is.null(cond))
+            join_condition_matrix <- .jnull("java/lang/String")
+        else
+            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    }
     else
         join_condition_matrix <- .jnull("java/lang/String")
     
     ouput <- toupper(region_output)
-    if(!identical(ouput,"CAT") && !identical(ouput,"LEFT") && 
-        !identical(ouput,"RIGHT") && !identical(ouput,"INT") && 
-        !identical(ouput,"RIGHT_DIST") && !identical(ouput,"BOTH") &&
-        !identical(ouput,"LEFT_DIST"))
+    if(!ouput %in% c("CAT", "LEFT", "RIGHT", "INT", "BOTH", "RIGHT_DIST", 
+                        "LEFT_DIST"))
         stop("region_output must be cat, left, right, right_dist, left_dist 
                 or int (intersection)")
     

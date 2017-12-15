@@ -290,45 +290,45 @@ with at least one mutation. Return the list of samples ordered by
 the number of such exons.
 ```{r, query, eval = TRUE}
 
-## These statement defines the path to the folders "EXON" and "MUT" in the 
-## subdirectory "example" of the package "RGMQL"
+# These statement defines the path to the folders "EXON" and "MUT" in the 
+# subdirectory "example" of the package "RGMQL"
 
 exon_path <- system.file("example", "EXON", package = "RGMQL")
 mut_path <- system.file("example", "MUT", package = "RGMQL")
 
-## Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
-## sample with exon regions and MUT folder as a GMQL dataset named "mut_ds" 
-## containing multiple samples with mutation regions
+# Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
+# sample with exon regions and MUT folder as a GMQL dataset named "mut_ds" 
+# containing multiple samples with mutation regions
 
 exon_ds  <- read_dataset(exon_path)
 mut_ds  <- read_dataset(mut_path)
 
-## Filter out mut_ds based on predicate 
+# Filter out mut_ds based on predicate 
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-## Filter out exon_ds based on predicate 
+# Filter out exon_ds based on predicate 
 
 exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-## For each mutation sample, count mutations within each exon while 
-## mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, count mutations within each exon while 
+# mapping the mutations to the exon regions using the map() function 
 
 exon1 <- map(exon, mut)
 
-## Remove exons in each sample that do not contain mutations
+# Remove exons in each sample that do not contain mutations
 
 exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
-## Using the extend() function, count how many exons remain in each sample and
-## store the result in the sample metadata as a new attribute???value pair, 
-## with exon_count as attribute name 
+# Using the extend() function, count how many exons remain in each sample and
+# store the result in the sample metadata as a new attribute???value pair, 
+# with exon_count as attribute name 
 
 exon3 <- extend(exon2, exon_count = COUNT())
 
-## Order samples in descending order of the added metadata exon_count 
+# Order samples in descending order of the added metadata exon_count 
 
 exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
@@ -336,7 +336,8 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 If you want to store persistently the result, you can materialize it into 
 specific path defined as input parameter.
 ```{r, materialize, eval = TRUE}
-## Materialize the result dataset on disk
+# Materialize the result dataset on disk
+
 collect(exon_res)
 ```
 by default *collect()* has R workig directoy as stored path and *ds1* as name 
@@ -474,38 +475,38 @@ in this way login is automatically performed as specified above
 After init, we can start building our queries:
 ```{r, remote query, eval = TRUE}
 
-## Read the remote dataset HG19_TCGA_dnaseq 
-## Read the remote dataset HG19_BED_ANNOTATION 
+# Read the remote dataset HG19_TCGA_dnaseq 
+# Read the remote dataset HG19_BED_ANNOTATION 
 
 TCGA_dnaseq  <- read_dataset("public.HG19_TCGA_dnaseq",is_local = FALSE)
 HG19_bed_ann  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
 
-## Filter out HG19_bed_ann based on predicate 
+# Filter out HG19_bed_ann based on predicate 
 
 mut = filter(HG19_bed_ann, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-## Filter out TCGA_dnaseq based on predicate 
+# Filter out TCGA_dnaseq based on predicate 
 
 exon =  filter(TCGA_dnaseq, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-## For each mutation sample, count mutations within each exon while 
-## mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, count mutations within each exon while 
+# mapping the mutations to the exon regions using the map() function 
 
 exon1 <- map(exon, mut)
 
-## Remove exons in each sample that do not contain mutations
+# Remove exons in each sample that do not contain mutations
 
 exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
-## Using the extend() function, count how many exons remain in each sample and
-## store the result in the sample metadata as a new attribute???value pair, 
-## with exon_count as attribute name 
+# Using the extend() function, count how many exons remain in each sample and
+# store the result in the sample metadata as a new attribute???value pair, 
+# with exon_count as attribute name 
 
 exon3 <- extend(exon2, exon_count = COUNT())
 
-## Order samples in descending order of the added metadata exon_count 
+# Order samples in descending order of the added metadata exon_count 
 
 exon_res = arrange(exon3,list(DESC("exon_count")))
 ```
@@ -534,21 +535,21 @@ even in the same query as in the following example:
 ```{r, mixed query, eval = TRUE}
 
 
-## This statement defines the path to the folder "EXON" in the subdirectory 
-## "example" of the package "RGMQL"
+# This statement defines the path to the folder "EXON" in the subdirectory 
+# "example" of the package "RGMQL"
 
 exon_path <- system.file("example", "EXON", package = "RGMQL")
 
-## Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
-## sample with exon regions
+# Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
+# sample with exon regions
 
 exon_ds  <- read_dataset(exon_path,is_local = TRUE)
 
-## Read the remote dataset HG19_BED_ANNOTATION 
+# Read the remote dataset HG19_BED_ANNOTATION 
 
 HG19_bed_ann  <- read_dataset("public.HG19_BED_ANNOTATION",is_local = FALSE)
 
-## Filter out based on predicate
+# Filter out based on predicate
 
 mut = filter(HG19_bed_ann, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
@@ -556,22 +557,22 @@ mut = filter(HG19_bed_ann, manually_curated__dataType == 'dnaseq' &
 exon =  filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-## For each mutation sample, count mutations within each exon while 
-## mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, count mutations within each exon while 
+# mapping the mutations to the exon regions using the map() function 
 
 exon1 <- map(exon, mut)
 
-## Remove exons in each sample that do not contain mutations
+# Remove exons in each sample that do not contain mutations
 
 exon2 <- filter(exon1, count_Exon_Mut >= 1)
 
-## Using the extend() function, count how many exons remain in each sample and
-## store the result in the sample metadata as a new attribute???value pair, 
-## with exon_count as attribute name 
+# Using the extend() function, count how many exons remain in each sample and
+# store the result in the sample metadata as a new attribute???value pair, 
+# with exon_count as attribute name 
 
 exon3 <- extend(exon2, exon_count = COUNT())
 
-## Order samples in descending order of the added metadata exon_count 
+# Order samples in descending order of the added metadata exon_count 
 
 exon_res = arrange(exon3,list(DESC("exon_count")))
 
@@ -607,8 +608,8 @@ if present, as data structure suitable to further processing in other packages.
 
 We can import a GMQL dataset into R environment as follows:
 ```{r, import, eval = TRUE}
-## This statement defines the path to the folder "EXON" in the subdirectory 
-## "example" of the package "RGMQL"
+# This statement defines the path to the folder "EXON" in the subdirectory 
+# "example" of the package "RGMQL"
 
 dataset_path <- system.file("example", "EXON", package = "RGMQL")
 
@@ -621,8 +622,8 @@ the second parameter *is_gtf* must specifies the file format: .GTF or .GDM.
 
 We can export a GRangesList as GMQL dataset as follows:
 ```{r, export, eval = TRUE}
-## This statement defines the path to  the subdirectory "example" of the 
-## package "RGMQL"
+# This statement defines the path to  the subdirectory "example" of the 
+# package "RGMQL"
 
 dir_out <- system.file("example", package = "RGMQL")
 
@@ -638,8 +639,8 @@ the second parameter *is_gtf* specifies the file format: .GTF or .GDM.
 We can also import only a part of a GMQL dataset into R environment, 
 by filtering its content as follows:
 ```{r, filter_extract, eval = TRUE}
-## This statement defines the path to the folder "TEAD" in the subdirectory 
-## "example" of the package "RGMQL"
+# This statement defines the path to the folder "TEAD" in the subdirectory 
+# "example" of the package "RGMQL"
 
 data_in <- system.file("example", "TEAD", package = "RGMQL")
 

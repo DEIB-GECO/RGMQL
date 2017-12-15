@@ -64,9 +64,11 @@ filter_and_extract <- function(data, metadata = NULL,
                                 suffix = "antibody_target")
 {
     if(is(data,"GRangesList"))
-        .extract_from_GRangesList(data, metadata, metadata_prefix, regions)
+        .extract_from_GRangesList(data, metadata, metadata_prefix, regions, 
+                                    suffix)
     else
-        .extract_from_dataset(data, metadata, metadata_prefix, regions, suffix)
+        .extract_from_dataset(data, metadata, metadata_prefix, regions, 
+                                    suffix)
 }
 
 .extract_from_dataset <- function(datasetName, metadata, metadata_prefix, 
@@ -130,7 +132,7 @@ filter_and_extract <- function(data, metadata = NULL,
 }
 
 .extract_from_GRangesList <- function(rangesList, metadata, metadata_prefix, 
-                                        regions)
+                                        regions, suffix)
 {
     if(!is(rangesList,"GRangesList"))
         stop("only GrangesList admitted")
@@ -139,7 +141,8 @@ filter_and_extract <- function(data, metadata = NULL,
         stop("rangesList empty")
     
     meta_list <- metadata(rangesList)
-    samples <- .check_metadata_list(metadata, metadata_prefix,meta_list)
+    samples <- .check_metadata_list(metadata, metadata_prefix, meta_list, 
+                                        suffix)
     if(length(unlist(samples))<=0)
         samples <- rangesList
     else
@@ -166,7 +169,7 @@ filter_and_extract <- function(data, metadata = NULL,
     g1
 }
 
-.check_metadata_list <- function(metadata,metadata_prefix,meta_list)
+.check_metadata_list <- function(metadata,metadata_prefix,meta_list,col_name)
 {
     vec_meta <- paste0(metadata_prefix,metadata)
     list <- mapply(function(x,index){

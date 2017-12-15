@@ -41,6 +41,7 @@ If error occurs, a specific error is printed
 \examples{
 
 \dontrun{
+
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 run_query(remote_url, "query_1", "DATASET = SELECT() Example_Dataset1;
@@ -48,7 +49,7 @@ MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
 
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")
-run_query_fromfile(remote_url, "query_1", test_query, output_gtf = FALSE)
+run_query_fromfile(remote_url, test_query, output_gtf = FALSE)
 }
 
 }

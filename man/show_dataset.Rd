@@ -3,7 +3,7 @@
 \name{show_dataset}
 \alias{show_dataset}
 \alias{show_datasets_list}
-\title{Show Datasets}
+\title{Show datasets}
 \usage{
 show_datasets_list(url)
 }
@@ -12,20 +12,18 @@ show_datasets_list(url)
 and base url; service name is added automatically}
 }
 \value{
-list of datasets.
-
-Every dataset in the list is identified by:
+List of datasets. Every dataset in the list is identified by:
 \itemize{
 \item{name: name of dataset}
 \item{owner: public or name of the user}
 }
 }
 \description{
-It show all GMQL dataset stored in repository using the proper GMQL 
-web service available on a remote server
+It shows all GMQL datasets stored in remote repository using the proper 
+GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 

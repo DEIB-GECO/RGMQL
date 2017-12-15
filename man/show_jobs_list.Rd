@@ -11,18 +11,17 @@ show_jobs_list(url)
 and base url; service name is added automatically}
 }
 \value{
-list of jobs
-Every job in the list is identified by:
+List of jobs. Every job in the list is identified by:
 \itemize{
 \item{id: unique job identifier}
 }
 }
 \description{
-It show all Jobs (run, succeded or failed) invoked by user using the proper 
+It shows all jobs (run, succeded or failed) invoked by user using the proper 
 GMQL web service available on a remote server
 }
 \details{
-If error occurs a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"

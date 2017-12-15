@@ -64,8 +64,19 @@
 # meta join condition
 .join_condition <- function(cond)
 {
-    join_condition_matrix <- do.call(rbind, cond)
-    join_condition_matrix
+    cond_matrix <- NULL
+    def <- cond$def
+    if(!is.null(def))
+        cond_matrix <- rbind(cond_matrix, def)
+    
+    exact <- cond$exact
+    if(!is.null(exact))
+        cond_matrix <- rbind(cond_matrix, exact)
+    
+    full <- cond$full
+    if(!is.null(full))
+        cond_matrix <- rbind(cond_matrix, full)
+    cond_matrix
 }
 
 .check_input <- function(value)

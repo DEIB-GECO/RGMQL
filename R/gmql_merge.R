@@ -15,16 +15,8 @@
 #' @importFrom S4Vectors aggregate
 #'
 #' @param x GMQLDataset class object
-#' @param groupBy list of evalation functions to define evaluation on metadata:
-#' \itemize{
-#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
-#' if they both end with \emph{value} and, if they have further prefixes,
-#' the two prefix sequences are identical}
-#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-#' as \emph{value} match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
-#' if both end with \emph{value}.}
-#' }
+#' @param groupBy \code{\link{condition_evaluation}} function to support 
+#' methods with groupBy or JoinBy input paramter
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
@@ -48,7 +40,7 @@
 #' ## antibody_target and cell metadata
 #' ## attributes.
 #'
-#' merged = aggregate(exp, list(DF("antibody_target","cell")))
+#' merged = aggregate(exp, condition_evaluation(c("antibody_target","cell")))
 #'
 #' @name aggregate
 #' @rdname aggregate
@@ -65,13 +57,13 @@ setMethod("aggregate", "GMQLDataset",
 
 gmql_merge <- function(input_data, groupBy)
 {
-    if(!is.list(groupBy))
-        stop("groupBy must be list")
-    
-    if(!is.null(groupBy) && !length(groupBy) == 0)
+    if(!is.null(groupBy))
     {
         cond <- .join_condition(groupBy)
-        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+        if(is.null(cond))
+            join_condition_matrix <- .jnull("java/lang/String")
+        else
+            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
         join_condition_matrix <- .jnull("java/lang/String")

@@ -50,7 +50,7 @@ only those samples that have the same value for each attribute
 are considered when performing the difference.
 }
 \examples{
-## Thi statement initializes and runs the GMQL server for local execution 
+## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
 ## "example" of the package "RGMQL" and opens such folder as a GMQL 

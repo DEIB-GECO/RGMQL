@@ -53,8 +53,9 @@
 setMethod("union", c("GMQLDataset","GMQLDataset"),
             function(x, y)
             {
-                ptr_data_x = x@value
-                ptr_data_y = y@value
+                
+                ptr_data_x = value(x)
+                ptr_data_y = value(y)
                 gmql_union(ptr_data_x, ptr_data_y)
             })
 

@@ -48,16 +48,9 @@
 #' \item{an expression built using PARAMETER object: (ALL() + N) / K or
 #' ALL() / K, with N and K integer values  }
 #' }
-#' @param groupBy list of evalation functions to define evaluation on metadata:
-#' \itemize{
-#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
-#' if they both end with \emph{value} and, if they have further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-#' as \emph{value} match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
-#' if both end with \emph{value}.}
-#' }
+#' @param groupBy \code{\link{condition_evaluation}} function to support 
+#' methods with groupBy or JoinBy input paramter
+#' 
 #' @param ... a series of expressions separated by comma in the form 
 #' \emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 
 #' class AGGREGATES. The aggregate functions available are: \code{\link{SUM}}, 
@@ -122,7 +115,7 @@
 #' ## regions the minimum pvalue of the overlapping regions (min_pvalue) 
 #' ## and their Jaccard indexes (JaccardIntersect and JaccardResult).
 #' 
-#' res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
+#' res = cover(exp, 2, 3, groupBy = condition_evaluation(c("cell")), 
 #' min_pValue = MIN("pvalue"))
 #' 
 #' @name cover
@@ -156,12 +149,15 @@ gmql_cover <- function(data, min_acc, max_acc, groupBy, aggregates, flag)
     if(!is.null(groupBy))
     {
         cond <- .join_condition(groupBy)
-        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+        if(is.null(cond))
+            join_condition_matrix <- .jnull("java/lang/String")
+        else
+            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
         join_condition_matrix <- .jnull("java/lang/String")
 
-    if(!is.null(aggregates) && !length(aggregates) == 0)
+    if(!is.null(aggregates) && length(aggregates))
     {
         aggr <- .aggregates(aggregates,"AGGREGATES")
         metadata_matrix <- .jarray(aggr, dispatch = TRUE)

@@ -12,12 +12,11 @@ and base url; service name is added automatically}
 
 \item{datasetName}{name of dataset to get
 if the dataset is a public dataset, we have to add "public." as prefix, 
-as shown in the example below otherwise no prefix is needed}
+as shown in the example below, otherwise no prefix is needed}
 }
 \value{
-list of samples in dataset.
-
-Every sample in the list is identified by:
+List of samples in dataset. Every sample in the list is identified 
+by:
 \itemize{
 \item{id: id of sample}
 \item{name: name of sample}
@@ -29,12 +28,17 @@ It show all sample from a specific GMQL dataset using the proper
 GMQL web service available on a remote server
 }
 \details{
-If error occures a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 
+## Login to GMQL REST services suite as guest
+
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
-list <- show_samples_list(remote_url, "public.HG19_BED_ANNOTATION")
+
+## It show all sample present into public dataset 'Example_Dataset1'
+
+list <- show_samples_list(remote_url, "public.Example_Dataset1")
 
 }

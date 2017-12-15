@@ -35,4 +35,8 @@ setMethod("show", "GMQLDataset",
                 cat(" value :",paste(object@value))
             })
 
+setGeneric("value", function(.dataset) standardGeneric("value"))
+
+setMethod("value", "GMQLDataset", function(.dataset) .dataset@value)
+
 

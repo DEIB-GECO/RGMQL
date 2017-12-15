@@ -319,7 +319,7 @@ run_query <- function(url, queryName, query, output_gtf = TRUE)
     
     req <- httr::GET(url)
     real_URL <- req$url
-    URL <- paste0(real_URL,"queries/run/",fileName,"/",out)
+    URL <- paste0(real_URL,"queries/run/",queryName,"/",out)
     h <- c('Accept' = "Application/json",
                 'Content-Type' = 'text/plain','X-Auth-Token' = authToken)
     
