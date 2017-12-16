@@ -170,11 +170,11 @@ gmql_project <-function(input_data, metadata, metadata_update, all_but_meta,
     response <- WrappeR$project(metadata, metadata_update, all_but_meta, 
                     regions, regions_update, all_but_reg, input_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }
 
 .trasform_update <- function(predicate=NULL)

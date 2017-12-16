@@ -80,11 +80,20 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
 {
     if(!is.null(group_meta))
     {
-        cond <- .join_condition(group_meta)
-        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+        if("condition" %in% names(group_meta))
+        {
+            cond <- .join_condition(group_meta)
+            if(is.null(cond))
+                join_matrix <- .jnull("java/lang/String")
+            else
+                join_matrix <- .jarray(cond, dispatch = TRUE)
+        }
+        else
+            stop("use function condition_evaluation()")
     }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
+    
     
     if(!is.null(group_reg))
     {
@@ -94,7 +103,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
         group_reg <- group_reg[!group_reg %in% ""]
         group_reg <- group_reg[!duplicated(group_reg)]
         
-        if(length(group_reg)==0)
+        if(!length(group_reg))
             group_reg <- .jnull("java/lang/String")
         
         group_reg <- .jarray(metadata)
@@ -102,7 +111,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
     else
         group_reg <- .jnull("java/lang/String")
     
-    if(!is.null(meta_aggregates) && !length(meta_aggregates) == 0)
+    if(!is.null(meta_aggregates) && length(meta_aggregates))
     {
         aggr <- .aggregates(meta_aggregates,"AGGREGATES")
         metadata_matrix <- .jarray(aggr, dispatch = TRUE)
@@ -110,7 +119,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
     else
         metadata_matrix <- .jnull("java/lang/String")
     
-    if(!is.null(region_aggregates) && !length(region_aggregates) == 0)
+    if(!is.null(region_aggregates) && length(region_aggregates))
     {
         aggr <- .aggregates(region_aggregates,"AGGREGATES")
         region_matrix <- .jarray(aggr, dispatch = TRUE)
@@ -119,12 +128,12 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
         region_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$group(join_condition_matrix, metadata_matrix, 
-                                group_reg, region_matrix, input_data)
+    response <- WrappeR$group(join_matrix, metadata_matrix, group_reg, 
+                                region_matrix, input_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }

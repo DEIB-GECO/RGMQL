@@ -39,16 +39,16 @@ execute <- function()
     
     response <- WrappeR$execute()
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
     {
         if(remote_proc)
         {
             url <- WrappeR$get_url()
             .download_or_upload()
-            res <- serialize_query(url,FALSE,data)
+            res <- serialize_query(url,FALSE,val)
         }
     }
 }
@@ -56,8 +56,8 @@ execute <- function()
 .download_or_upload <- function()
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    data <- .jevalArray(WrappeR$get_dataset_list(),simplify = TRUE)
-    data_list <- apply(data, 1, as.list)
+    datasets <- .jevalArray(WrappeR$get_dataset_list(),simplify = TRUE)
+    data_list <- apply(datasets, 1, as.list)
     url <- WrappeR$get_url()
     remote <- WrappeR$is_remote_processing()
     if(remote)
@@ -76,7 +76,7 @@ execute <- function()
 
 collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 {
-    ptr_data <- x@value
+    ptr_data <- value(x)
     gmql_materialize(ptr_data, dir_out, name)
 }
 
@@ -146,9 +146,9 @@ gmql_materialize <- function(input_data, dir_out, name)
     
     response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
         invisible(NULL)
 }
@@ -169,7 +169,7 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' @importFrom rJava J .jevalArray
 #' @importFrom GenomicRanges GRangesList
 #' 
-#' @param data returned object from any GMQL function
+#' @param .data returned object from any GMQL function
 #' @param rows number of rows for each sample regions that you want to 
 #' retrieve and store in memory.
 #' By default it is 0 that means take all rows for each sample
@@ -198,9 +198,9 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' @aliases take-method
 #' @export
 setMethod("take", "GMQLDataset",
-            function(data, rows = 0L)
+            function(.data, rows = 0L)
             {
-                ptr_data <- data@value
+                ptr_data <- value(.data)
                 gmql_take(ptr_data, rows)
             })
 
@@ -229,11 +229,11 @@ gmql_take <- function(input_data, rows = 0L)
     
     reg_data_frame <- as.data.frame(reg)
     list <- split(reg_data_frame, reg_data_frame[1])
-    names <- c("seqname","start","end","strand",schema)
+    seq_name <- c("seqname","start","end","strand",schema)
     
     sampleList <- lapply(list, function(x){
         x <- x[-1]
-        names(x) <- names
+        names(x) <- seq_name
         g <- GenomicRanges::makeGRangesFromDataFrame(x,
                                     keep.extra.columns = TRUE,
                                     start.field = "start",

@@ -81,10 +81,10 @@
 #' @export
 setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 function(x, y, genometric_predicate = NULL, 
-                    region_output = "contig", joinBy = NULL)
+                    region_output = "CAT", joinBy = NULL)
                 {
-                    ptr_data_x <- x@value
-                    ptr_data_y <- y@value
+                    ptr_data_x <- value(x)
+                    ptr_data_y <- value(y)
                     gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
                                 joinBy, region_output)
                 })
@@ -118,12 +118,12 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
     {
         cond <- .join_condition(joinBy)
         if(is.null(cond))
-            join_condition_matrix <- .jnull("java/lang/String")
+            join_matrix <- .jnull("java/lang/String")
         else
-            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+            join_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
     
     ouput <- toupper(region_output)
     if(!ouput %in% c("CAT", "LEFT", "RIGHT", "INT", "BOTH", "RIGHT_DIST", 
@@ -132,12 +132,12 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
                 or int (intersection)")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$join(genomatrix,join_condition_matrix, 
-                                ouput,right_data, left_data)
+    response <- WrappeR$join(genomatrix, join_matrix, ouput, left_data, 
+                                right_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }

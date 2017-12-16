@@ -37,16 +37,8 @@ corresponding coordinate values in the 'x' and 'y' regions satisfying
 the genometric predicate)}
 }}
 
-\item{joinBy}{list of evalation functions to define evaluation on metadata:
-\itemize{
-\item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
-if they both end with \emph{value} and, if they have further prefixes,
-the two prefix sequence are identical.}
-\item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-as \emph{value} match; no further prefixes are allowed.}
-\item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
-if both end with \emph{value}.}
-}}
+\item{joinBy}{\code{\link{condition_evaluation}} function to support 
+methods with groupBy or JoinBy input paramter}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 

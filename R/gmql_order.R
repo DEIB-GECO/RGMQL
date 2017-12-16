@@ -1,8 +1,8 @@
 arrange.GMQLDataset <- function(.data, metadata_ordering = NULL, 
-        regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0, 
-        reg_fetch_opt = NULL, reg_num_fetch = 0)
+        regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0L, 
+        reg_fetch_opt = NULL, reg_num_fetch = 0L)
 {
-    ptr_data <- .data@value
+    ptr_data <- value(.data)
     gmql_order(ptr_data, metadata_ordering, regions_ordering, 
                 fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
 }
@@ -85,7 +85,7 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' @export
 setMethod("arrange", "GMQLDataset", arrange.GMQLDataset)
 
-gmql_order <- function(data, metadata_ordering, regions_ordering,
+gmql_order <- function(input_data, metadata_ordering, regions_ordering,
                     fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
 {
     if(!is.null(fetch_opt))
@@ -96,12 +96,12 @@ gmql_order <- function(data, metadata_ordering, regions_ordering,
     if(!is.null(num_fetch))
         .check_opt_value(num_fetch)
     else
-        num_fetch <- 0
+        num_fetch <- 0L
     
     if(!is.null(reg_num_fetch))
         .check_opt_value(reg_num_fetch)
     else
-        reg_num_fetch <- 0  
+        reg_num_fetch <- 0L
     
     if(!is.null(reg_fetch_opt))
         reg_fetch_opt <- .check_option(reg_fetch_opt)
@@ -127,13 +127,13 @@ gmql_order <- function(data, metadata_ordering, regions_ordering,
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$order(meta_matrix, fetch_opt, as.integer(num_fetch), 
                         reg_fetch_opt, as.integer(reg_num_fetch), 
-                        region_matrix, data)
+                        region_matrix, input_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }
 
 
@@ -146,9 +146,7 @@ gmql_order <- function(data, metadata_ordering, regions_ordering,
 .check_option <- function(opt)
 {
     opt <- tolower(opt)
-    if(!identical("mtop",opt) && !identical("mtopp",opt) && 
-        !identical("mtopg",opt) && !identical("rtop",opt) && 
-        !identical("rtopp",opt) && !identical("rtopg",opt))
+    if(!opt %in% c("mtop", "mtopp", "mtopg", "rtop", "rtopp", "rtopg"))
         stop("option not admissable")
     opt
 }

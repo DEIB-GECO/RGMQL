@@ -51,7 +51,7 @@
 setMethod("aggregate", "GMQLDataset",
             function(x, groupBy = NULL)
             {
-                ptr_data = x@value
+                ptr_data = value(x)
                 gmql_merge(ptr_data, groupBy)
             })
 
@@ -61,20 +61,20 @@ gmql_merge <- function(input_data, groupBy)
     {
         cond <- .join_condition(groupBy)
         if(is.null(cond))
-            join_condition_matrix <- .jnull("java/lang/String")
+            join_matrix <- .jnull("java/lang/String")
         else
-            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+            join_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$merge(join_condition_matrix, input_data)
+    response <- WrappeR$merge(join_matrix, input_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }
 

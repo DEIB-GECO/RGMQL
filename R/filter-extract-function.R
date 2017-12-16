@@ -21,7 +21,7 @@
 #' if NULL no filtering action occures
 #' (i.e every sample is taken for region filtering)
 #' @param metadata_prefix vector of strings that will support the metadata
-#' filtering. If defined every defined 'metadata' are concatenated with the 
+#' filtering. If defined, each 'metadata' are concatenated with the 
 #' corresponding prefix.
 #' @param regions vector of strings that extracts only region attribute 
 #' specified; if NULL no regions attribute is taken and the output is only 

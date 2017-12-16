@@ -2,46 +2,35 @@
 % Please edit documentation in R/evaluation-functions.R
 \name{Evaluation-Function}
 \alias{Evaluation-Function}
-\alias{FN}
-\alias{Evaluation-Function}
-\alias{EX}
-\alias{Evaluation-Function}
-\alias{DF}
-\alias{Evaluation-Function}
 \alias{condition_evaluation}
 \title{Condition evaluation functions}
 \usage{
-FN(...)
-
-EX(...)
-
-DF(...)
-
-condition_evaluation(...)
+condition_evaluation(default = c(""), full = c(""), exact = c(""))
 }
 \arguments{
-\item{...}{series of string identifying a name of metadata attribute 
-to be evaluated}
+\item{default}{series of string identifying a name of metadata attribute 
+to be evaluated.
+It defines a DEFAULT evaluation of the input values.
+DEFAULT evaluation: the two attributes match if both end with value.}
+
+\item{full}{series of string identifying a name of metadata attribute 
+to be evaluated.
+It defines a FULL (FULLNAME) evaluation of the input values.
+FULL evaluation: two attributes match if they both end with value and,
+if they have further prefixes, the two prefix sequences are identical.}
+
+\item{exact}{series of string identifying a name of metadata attribute 
+to be evaluated.
+It defines a EXACT evaluation of the input values.
+EXACT evaluation: only attributes exactly as value match; 
+no further prefixes are allowed.}
 }
 \value{
-2-D array containing method of evaluation and metadata
+list of 2-D array containing method of evaluation and metadata 
+attribute name
 }
 \description{
-These functions are used to support joinBy and/or groupBy function parameter.
-They create a 2-D array made up by two coloumn:
-type of condition evaluation and the metadata attribute name
-}
-\details{
-\itemize{
-\item{FN: It defines a FULL (FULLNAME) evaluation of the input values.
-FULL evaluation: two attributes match if they both end with value and,
-if they have further prefixes, the two prefix sequences are identical}
-\item{EX: It defines a EXACT evaluation of the input values.
-EXACT evaluation: only attributes exactly as value match; 
-no further prefixes are allowed. }
-\item{DF: It defines a DEFAULT evaluation of the input values.
-DEFAULT evaluation: the two attributes match if both end with value.}
-}
+This function is used to support joinBy and/or groupBy function parameter.
 }
 \examples{
 

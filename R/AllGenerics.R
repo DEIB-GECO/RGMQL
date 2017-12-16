@@ -6,7 +6,7 @@
 #' @rdname cover
 #' @aliases cover
 #' 
-setGeneric("cover", function(data, ...) standardGeneric("cover"))
+setGeneric("cover", function(.data, ...) standardGeneric("cover"))
 
 #' Method map
 #' 
@@ -27,7 +27,7 @@ setGeneric("map", function(x, y, ...) standardGeneric("map"))
 #' @rdname take
 #' @aliases take,GMQLDataset-method
 #' 
-setGeneric("take", function(data, ...) standardGeneric("take"))
+setGeneric("take", function(.data, ...) standardGeneric("take"))
 
 
 #' Method extend

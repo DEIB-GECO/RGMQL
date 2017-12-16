@@ -19,7 +19,7 @@ if NULL no filtering action occures
 (i.e every sample is taken for region filtering)}
 
 \item{metadata_prefix}{vector of strings that will support the metadata
-filtering. If defined every defined 'metadata' are concatenated with the 
+filtering. If defined, each 'metadata' are concatenated with the 
 corresponding prefix.}
 
 \item{regions}{vector of strings that extracts only region attribute 

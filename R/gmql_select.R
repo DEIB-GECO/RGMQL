@@ -137,7 +137,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' This function is used as support to the filter method to define 
 #' semijoin conditions on metadata  
 #' 
-#' @param data GMQLDataset class object
+#' @param .data GMQLDataset class object
 #' 
 #' @param not_in logical value: TRUE => for a given sample of input dataset
 #' ".data" in \code{\link{filter}} method if and only if there exists at 
@@ -189,7 +189,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' @return semijoin condition as list
 #' @export
 #' 
-semijoin <- function(data, not_in = FALSE, groupBy = NULL)
+semijoin <- function(.data, not_in = FALSE, groupBy = NULL)
 {
     if(!is.list(groupBy))
         stop("groupBy: must be a list")
@@ -203,7 +203,7 @@ semijoin <- function(data, not_in = FALSE, groupBy = NULL)
         stop("data: Must be a GMQLDataset object") 
     
     .check_logical(not_in)
-    ptr_data <- data@value
+    ptr_data <- value(.data)
     
     data_cond <- cbind(ptr_data,not_in)
     cond <- .join_condition(semij_cond)

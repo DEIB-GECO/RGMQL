@@ -86,34 +86,40 @@
 setMethod("map", "GMQLDataset",
             function(x, y, ..., joinBy = NULL)
             {
-                r_data <- x@value
-                l_data <- y@value
+                left_data <- value(x)
+                right_data <- value(y)
                 aggregates = list(...)
-                gmql_map(r_data, l_data, aggregates, joinBy)
+                gmql_map(left_data, right_data, aggregates, joinBy)
             })
 
 
-gmql_map <- function(l_data, r_data, aggregates, joinBy)
+gmql_map <- function(left_data, right_data, aggregates, joinBy)
 {
-    if(!is.null(aggregates) && !length(aggregates) == 0)
-        metadata_matrix <- .jarray(.aggregates(aggregates,"AGGREGATES"),
-                                    dispatch = TRUE)
+    if(!is.null(aggregates) && length(aggregates))
+    {
+        aggr <- .aggregates(aggregates, "META_AGGREGATES")
+        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+    }
     else
-        metadata_matrix = .jnull("java/lang/String")
+        metadata_matrix <- .jnull("java/lang/String")
     
     if(!is.null(joinBy))
-        join_condition_matrix <- .jarray(.join_condition(joinBy),
-                                            dispatch = TRUE)
+    {
+        cond <- .join_condition(joinBy)
+        if(is.null(cond))
+            join_matrix <- .jnull("java/lang/String")
+        else
+            join_matrix <- .jarray(cond, dispatch = TRUE)
+    }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response<-WrappeR$map(join_condition_matrix, metadata_matrix, l_data, 
-                            r_data)
+    response<-WrappeR$map(join_matrix, metadata_matrix, left_data, right_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }

@@ -27,7 +27,7 @@
 #' @importFrom methods is
 #' @importFrom rJava J .jnull .jarray
 #' 
-#' @param data GMQLDataset class object
+#' @param .data GMQLDataset class object
 #' @param min_acc minimum number of overlapping regions to be considered 
 #' during execution. It is an integer number, declared also as string.
 #' minAcc accepts also:
@@ -124,10 +124,10 @@
 #' @aliases cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
-            function(data, min_acc, max_acc, groupBy = NULL, 
+            function(.data, min_acc, max_acc, groupBy = NULL, 
                     variation = "cover", ...)
             {
-                val <- data@value
+                val <- value(.data)
                 s_min <- substitute(min_acc)
                 s_min <- .trasform_cover(deparse(s_min))                
                 s_max <- substitute(max_acc)
@@ -143,19 +143,23 @@ setMethod("cover", "GMQLDataset",
 
 
 
-gmql_cover <- function(data, min_acc, max_acc, groupBy, aggregates, flag)
+gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
 {
-    
     if(!is.null(groupBy))
     {
-        cond <- .join_condition(groupBy)
-        if(is.null(cond))
-            join_condition_matrix <- .jnull("java/lang/String")
+        if("condition" %in% names(groupBy))
+        {
+            cond <- .join_condition(groupBy)
+            if(is.null(cond))
+                join_matrix <- .jnull("java/lang/String")
+            else
+                join_matrix <- .jarray(cond, dispatch = TRUE)
+        }
         else
-            join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+            stop("use function condition_evaluation()")
     }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
 
     if(!is.null(aggregates) && length(aggregates))
     {
@@ -167,33 +171,33 @@ gmql_cover <- function(data, min_acc, max_acc, groupBy, aggregates, flag)
 
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- switch(flag,
-        "COVER" = WrappeR$cover(min_acc, max_acc, join_condition_matrix,
-                                    metadata_matrix, data),
-        "FLAT" = WrappeR$flat(min_acc, max_acc, join_condition_matrix,
-                                    metadata_matrix, data),
-        "SUMMIT" = WrappeR$summit(min_acc,max_acc, join_condition_matrix,
-                                    metadata_matrix, data),
-        "HISTOGRAM" = WrappeR$histogram(min_acc, max_acc, 
-                        join_condition_matrix, metadata_matrix, data))
+        "COVER" = WrappeR$cover(min_acc, max_acc, join_matrix,
+                                    metadata_matrix, input_data),
+        "FLAT" = WrappeR$flat(min_acc, max_acc, join_matrix,
+                                    metadata_matrix, input_data),
+        "SUMMIT" = WrappeR$summit(min_acc,max_acc, join_matrix,
+                                    metadata_matrix, input_data),
+        "HISTOGRAM" = WrappeR$histogram(min_acc, max_acc, join_matrix, 
+                                    metadata_matrix, input_data))
     if(is.null(response))
         stop("no admissible variation: cover, flat, summit, histogram")
     
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }
 
 .check_cover_param <- function(param, is_min)
 {
-    if(length(param)>1)
+    if(length(param))
         stop("length > 1")
 
     if(is.numeric(param))
     {
-        if(param<=0)
+        if(param <= 0)
             stop("No negative value")
         else
             return(as.character(param))

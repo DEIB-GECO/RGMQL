@@ -59,7 +59,7 @@
 #' @export
 setMethod("extend", "GMQLDataset", function(.data, ...)
             {
-                ptr_data = .data@value
+                ptr_data = value(.data)
                 meta <- list(...)
                 gmql_extend(ptr_data, meta)
             })
@@ -67,7 +67,7 @@ setMethod("extend", "GMQLDataset", function(.data, ...)
 
 gmql_extend <-function(input_data, meta)
 {
-    if(!is.null(meta) && !length(meta) == 0)
+    if(!is.null(meta) && length(meta))
     {
         aggr <- .aggregates(meta, "META_AGGREGATES")
         metadata_matrix <- .jarray(aggr, dispatch = TRUE)
@@ -78,9 +78,9 @@ gmql_extend <-function(input_data, meta)
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$extend(metadata_matrix, input_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }

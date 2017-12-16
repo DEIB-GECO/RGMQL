@@ -53,7 +53,6 @@
 setMethod("union", c("GMQLDataset","GMQLDataset"),
             function(x, y)
             {
-                
                 ptr_data_x = value(x)
                 ptr_data_y = value(y)
                 gmql_union(ptr_data_x, ptr_data_y)
@@ -64,9 +63,9 @@ gmql_union <- function(left_data, right_data)
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$union(left_data, right_data)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }

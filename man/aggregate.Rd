@@ -11,16 +11,8 @@
 \arguments{
 \item{x}{GMQLDataset class object}
 
-\item{groupBy}{list of evalation functions to define evaluation on metadata:
-\itemize{
-\item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
-if they both end with \emph{value} and, if they have further prefixes,
-the two prefix sequences are identical}
-\item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-as \emph{value} match; no further prefixes are allowed. }
-\item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
-if both end with \emph{value}.}
-}}
+\item{groupBy}{\code{\link{condition_evaluation}} function to support 
+methods with groupBy or JoinBy input paramter}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -57,6 +49,6 @@ exp = read_dataset(test_path)
 ## antibody_target and cell metadata
 ## attributes.
 
-merged = aggregate(exp, list(DF("antibody_target","cell")))
+merged = aggregate(exp, condition_evaluation(c("antibody_target","cell")))
 
 }

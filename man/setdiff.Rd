@@ -14,16 +14,8 @@
 
 \item{y}{GMQLDataset class object}
 
-\item{joinBy}{list of evalation functions to define evaluation on metadata:
-\itemize{
-\item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
-if they both end with \emph{value} and, if they have further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-as \emph{value} match; no further prefixes are allowed. }
-\item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
-if both end with \emph{value}.}
-}}
+\item{joinBy}{\code{\link{condition_evaluation}} function to support 
+methods with groupBy or JoinBy input paramter}
 
 \item{is_exact}{single logical value: TRUE means that the region difference 
 is executed only on regions in left_input_data with exactly the same 
@@ -73,6 +65,6 @@ out = setdiff(data1, data2)
 ## do not overlap any region in s2; 
 ## metadata of the result are the same as the metadata of s1.
 
-out_t = setdiff(data1, data2, DF("antibody_target"))
+out_t = setdiff(data1, data2, condition_evaluation(c("cell")))
 
 }

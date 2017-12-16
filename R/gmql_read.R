@@ -112,8 +112,8 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
     }
 
     parser_name <- .check_parser(parser)
-    response <- WrappeR$readDataset(dataset,parser_name, is_local, is_GMQL, 
-                                        schema_matrix,schema_XML)
+    response <- WrappeR$readDataset(dataset, parser_name, is_local, is_GMQL, 
+                                        schema_matrix, schema_XML)
     error <- strtoi(response[1])
     data <- response[2]
     if(error!=0)
@@ -142,11 +142,10 @@ read <- function(samples)
     {
         #repeat meta for each sample in samples list
         len <- length(samples)
-        warning("GrangesList has no metadata.
-We provide two metadata for you")
-        index_meta <- rep(1:len,each = len)
+        warning("No metadata.\nWe provide two metadata for you")
+        index_meta <- rep(seq_len(len),each = len)
         rep_meta <- rep(c("provider","PoliMi", "application", "RGMQL"),
-                            times=len)
+                            times = len)
         meta_matrix <- matrix(rep_meta,ncol = 2,byrow = TRUE)
         meta_matrix <- cbind(index_meta,meta_matrix)
     }
@@ -199,12 +198,8 @@ We provide two metadata for you")
 .check_parser <- function(parser)
 {
     parser <- toupper(parser)
-    if(!identical(parser,"BEDPARSER") && !identical(parser,"ANNPARSER") &&
-        !identical(parser,"BROADPROJPARSER") && 
-        !identical(parser,"BASICPARSER") && 
-        !identical(parser,"NARROWPEAKPARSER") && 
-        !identical(parser,"RNASEQPARSER") && 
-        !identical(parser,"CUSTOMPARSER"))
+    if(!parser %in% c("BEDPARSER","ANNPARSER","BROADPROJPARSER","BASICPARSER",
+                "NARROWPEAKPARSER","RNASEQPARSER","CUSTOMPARSER"))
         stop("parser not defined")
     
     parser

@@ -45,9 +45,9 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
                     url = NULL, username = NULL, password = NULL)
 {
     out_format <- toupper(output_format)
-    if(!identical(out_format,"TAB") && !identical(out_format,"GTF") && 
-                !identical(out_format,"COLLECT"))
-        stop("output_format must be TAB, GTF or COLLECT")
+    if(!out_format %in% c("TAB", "GTF", "COLLECT"))
+        stop("output_format: must be TAB, GTF or COLLECT")
+    
     .check_logical(remote_processing)
     
     # mettere attesa da input keyboard, controllare se token già esiste 

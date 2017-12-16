@@ -17,16 +17,9 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
-#' @param joinBy list of evalation functions to define evaluation on metadata:
-#' \itemize{
-#' \item{\code{\link{FN}}(value): Fullname evaluation, two attributes match 
-#' if they both end with \emph{value} and, if they have further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-#' as \emph{value} match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}(value): Default evaluation, the two attributes match 
-#' if both end with \emph{value}.}
-#' }
+#' @param joinBy \code{\link{condition_evaluation}} function to support 
+#' methods with groupBy or JoinBy input paramter
+#' 
 #' @param is_exact single logical value: TRUE means that the region difference 
 #' is executed only on regions in left_input_data with exactly the same 
 #' coordinates of at least one region present in right_input_data; 
@@ -62,7 +55,7 @@
 #' ## do not overlap any region in s2; 
 #' ## metadata of the result are the same as the metadata of s1.
 #' 
-#' out_t = setdiff(data1, data2, DF("antibody_target"))
+#' out_t = setdiff(data1, data2, condition_evaluation(c("cell")))
 #'
 #' @name setdiff
 #' @aliases setdiff,GMQLDataset,GMQLDataset-method
@@ -71,33 +64,33 @@
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
             function(x, y, joinBy = NULL, is_exact = FALSE)
             {
-                ptr_data_x = x@value
-                ptr_data_y = y@value
+                ptr_data_x = value(x)
+                ptr_data_y = value(y)
                 gmql_difference(ptr_data_x, ptr_data_y, is_exact, joinBy)
             })
 
 gmql_difference <- function(left_data, right_data, is_exact, joinBy)
 {
-    if(!is.list(joinBy))
-        stop("joinBy: must be a list")
-    
-    if(!is.null(joinBy) && !length(joinBy) == 0)
+    if(!is.null(joinBy))
     {
         cond <- .join_condition(joinBy)
-        join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+        if(is.null(cond))
+            join_matrix <- .jnull("java/lang/String")
+        else
+            join_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
-        join_condition_matrix <- .jnull("java/lang/String")
+        join_matrix <- .jnull("java/lang/String")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$difference(join_condition_matrix, right_data, 
-                                        left_data, is_exact)
+    response <- WrappeR$difference(join_matrix, left_data, right_data, 
+                                        is_exact)
     error <- strtoi(response[1])
-    data <- response[2]
+    val <- response[2]
     if(error!=0)
-        stop(data)
+        stop(val)
     else
-        GMQLDataset(data)
+        GMQLDataset(val)
 }
 
 
