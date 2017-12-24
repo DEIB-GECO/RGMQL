@@ -1,7 +1,7 @@
 filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL, 
                                     semijoin = NULL)
 {
-    val <- .data@value
+    val <- value(.data)
     meta_pred <- substitute(m_predicate)
     if(!is.null(meta_pred))
     {

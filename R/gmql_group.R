@@ -106,7 +106,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
         if(!length(group_reg))
             group_reg <- .jnull("java/lang/String")
         
-        group_reg <- .jarray(metadata)
+        group_reg <- .jarray(group_reg)
     }
     else
         group_reg <- .jnull("java/lang/String")

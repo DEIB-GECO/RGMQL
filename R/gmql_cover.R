@@ -192,7 +192,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
 
 .check_cover_param <- function(param, is_min)
 {
-    if(length(param))
+    if(length(param) > 1)
         stop("length > 1")
 
     if(is.numeric(param))

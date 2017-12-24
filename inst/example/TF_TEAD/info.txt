@@ -1,0 +1,7 @@
+Average region length	239.97
+Created by	guest_new2289
+Creation date	2017/12/03 14:29:11
+Number of regions	19857
+Number of samples	1
+Query name	TF_TEAD
+Size	1.23 MB

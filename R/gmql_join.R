@@ -26,7 +26,7 @@
 #' 
 #' @param joinBy \code{\link{condition_evaluation}} function to support 
 #' methods with groupBy or JoinBy input paramter
-#' 
+#' @param reg_attr vector of string made up by schema field attribute
 #' @param region_output single string that declares which region is given in 
 #' output for each input pair of left dataset and right dataset regions 
 #' satisfying the genometric predicate:
@@ -81,17 +81,17 @@
 #' @export
 setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 function(x, y, genometric_predicate = NULL, 
-                    region_output = "CAT", joinBy = NULL)
+                    region_output = "CAT", joinBy = NULL, reg_attr = NULL)
                 {
                     ptr_data_x <- value(x)
                     ptr_data_y <- value(y)
                     gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
-                                joinBy, region_output)
+                                joinBy, region_output, reg_attr)
                 })
 
 
 gmql_join <- function(left_data, right_data, genometric_predicate, joinBy, 
-                            region_output)
+                            region_output, reg_attributes)
 {
     if(!is.null(genometric_predicate))
     {
@@ -125,6 +125,22 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
     else
         join_matrix <- .jnull("java/lang/String")
     
+    if(!is.null(reg_attributes))
+    {
+        if(!is.character(reg_attributes))
+            stop("metadata: no valid input")
+        
+        reg_attributes <- reg_attributes[!reg_attributes %in% ""]
+        reg_attributes <- reg_attributes[!duplicated(reg_attributes)]
+        
+        if(!length(reg_attributes))
+            reg_attributes <- .jnull("java/lang/String")
+        
+        reg_attributes <- .jarray(reg_attributes)
+    }
+    else
+        reg_attributes <- .jnull("java/lang/String")
+    
     ouput <- toupper(region_output)
     if(!ouput %in% c("CAT", "LEFT", "RIGHT", "INT", "BOTH", "RIGHT_DIST", 
                         "LEFT_DIST"))
@@ -132,8 +148,8 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
                 or int (intersection)")
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$join(genomatrix, join_matrix, ouput, left_data, 
-                                right_data)
+    response <- WrappeR$join(genomatrix, join_matrix, ouput,reg_attributes,
+                                left_data, right_data)
     error <- strtoi(response[1])
     val <- response[2]
     if(error!=0)

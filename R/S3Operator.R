@@ -118,8 +118,7 @@ check.META <- function(type)
 {
     check.OPERATOR(value)
     value <- toupper(value)
-    if(!identical(value,"DOUBLE") && !identical(value,"INTEGER") &&
-            !identical(value,"STRING"))
+    if(!value %in% c("DOUBLE","INTEGER","STRING"))
         stop("only DOUBLE or INTEGER or STRING")
 }
 
@@ -143,7 +142,7 @@ check.NIL <- function(value)
 {
     check.OPERATOR(value)
     value <- toupper(value)
-    if(!identical(value,"DOUBLE") && !identical(value,"INTEGER"))
+    if(!value %in% c("DOUBLE","INTEGER"))
         stop("only DOUBLE or INTEGER")
     
 }

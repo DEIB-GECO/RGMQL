@@ -1,0 +1,3 @@
+TF_TEAD = SELECT(assay == "ChIP-seq" AND assembly == 	"hg19" AND project == "ENCODE" AND file_status == "released" AND 		biosample_term_name == "H1-hESC" AND output_type == "optimal idr thresholded peaks"
+AND experiment_target == "TEAD4-human") HG19_ENCODE_NARROW_AUG_2017;
+MATERIALIZE TF_TEAD INTO TF_TEAD;

@@ -65,15 +65,15 @@
 .join_condition <- function(cond)
 {
     cond_matrix <- NULL
-    def <- cond$def
+    def <- cond$condition$def
     if(!is.null(def))
         cond_matrix <- rbind(cond_matrix, def)
     
-    exact <- cond$exact
+    exact <- cond$condition$exact
     if(!is.null(exact))
         cond_matrix <- rbind(cond_matrix, exact)
     
-    full <- cond$full
+    full <- cond$condition$full
     if(!is.null(full))
         cond_matrix <- rbind(cond_matrix, full)
     cond_matrix

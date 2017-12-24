@@ -1,0 +1,59 @@
+antibody_accession
+	ENCAB000ALW	1
+assay
+	ChIP-seq	1
+assembly
+	hg19	1
+audit_internal_action
+	biological replicates with identical biosample	1
+	missing derived_from	1
+audit_warning
+	inconsistent platforms	1
+	low read length	1
+	mixed read lengths	1
+biosample_age
+	unknown	1
+biosample_life_stage
+	embryonic	1
+biosample_organism
+	Homo sapiens	1
+biosample_sex
+	male	1
+biosample_term_id
+	EFO:0003042	1
+biosample_term_name
+	H1-hESC	1
+biosample_type
+	stem cell	1
+experiment_accession
+	ENCSR000BRY	1
+experiment_date_released
+	2012-09-10	1
+experiment_target
+	TEAD4-human	1
+file_accession
+	ENCFF002CJR	1
+file_download_url
+	https://www.encodeproject.org/files/ENCFF002CJR/@@download/ENCFF002CJR.bed.gz	1
+file_format
+	bed narrowPeak	1
+file_status
+	released	1
+lab
+	ENCODE Consortium Analysis Working Group	1
+library_extraction_method
+	see document	1
+library_lysis_method
+	see document	1
+library_made_from
+	DNA	1
+library_strand_specific
+	False	1
+md5sum
+	c852448911067252d6b3be1e7ea922d5	1
+output_type
+	optimal idr thresholded peaks	1
+project
+	ENCODE	1
+size
+	409026	1

@@ -256,10 +256,10 @@ filter_and_extract <- function(data, metadata = NULL,
         df_only_regions <- dplyr::bind_cols(df_list)
         complete_df <- dplyr::bind_cols(df,df_only_regions)
         
-        region_names <- names(complete_df)[-(1:4)]
+        region_names <- names(complete_df)[-(seq_len(4))]
         region_names <- gsub('[0-9]+', '',region_names)
         region_names <- paste(region_names,suffixes,sep = ".")
-        region_names <- c(names(complete_df)[(1:4)],region_names )
+        region_names <- c(names(complete_df)[(seq_len(4))],region_names )
         names(complete_df) <- region_names
         g <- GenomicRanges::makeGRangesFromDataFrame(complete_df,
                             keep.extra.columns = TRUE,

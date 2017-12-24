@@ -843,11 +843,8 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
         }
         else
         {
-            if(!identical(schema_name,"narrowpeak") && 
-                !identical(schema_name,"vcf") && 
-                !identical(schema_name,"broadpeak") && 
-                !identical(schema_name,"bed")  && 
-                !identical(schema_name,"bedgraph"))
+            if(!schema_name %in% c("narrowpeak","vcf","broadpeak","bed",
+                                    "bedgraph"))
                 stop("schema not admissable")
             
             URL <- paste0(real_URL,"datasets/",datasetName,
