@@ -34,7 +34,7 @@
 #' @aliases condition_evaluation
 #' @rdname condition_eval_func
 #' @export
-condition_evaluation <- function(default = c(""), full = c(""), exact = c(""))
+conds <- function(default = c(""), full = c(""), exact = c(""))
 {
     df <- .condition("DEF",default)
     fn <- .condition("FULL",full)

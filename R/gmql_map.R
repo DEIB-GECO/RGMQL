@@ -49,6 +49,8 @@
 #' \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
 #' if both end with \emph{value}.}
 #' }
+#' @param count_name string defining the metadata count name; if it is 
+#' not specifying the name is "count_left_right" 
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
@@ -84,16 +86,16 @@
 #' @aliases map-method
 #' @export
 setMethod("map", "GMQLDataset",
-            function(x, y, ..., joinBy = NULL)
+            function(x, y, ..., joinBy = NULL, count_name = NULL)
             {
                 left_data <- value(x)
                 right_data <- value(y)
                 aggregates = list(...)
-                gmql_map(left_data, right_data, aggregates, joinBy)
+                gmql_map(left_data, right_data,aggregates, joinBy, count_name)
             })
 
 
-gmql_map <- function(left_data, right_data, aggregates, joinBy)
+gmql_map <- function(left_data, right_data, aggregates, joinBy, count_name)
 {
     if(!is.null(aggregates) && length(aggregates))
     {
@@ -114,8 +116,17 @@ gmql_map <- function(left_data, right_data, aggregates, joinBy)
     else
         join_matrix <- .jnull("java/lang/String")
     
+    if(!is.null(count_name))
+    {
+        if(!is.character(count_name))
+            stop("count_name: must be string")
+    }
+    else
+        count_name <- .jnull("java/lang/String")
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response<-WrappeR$map(join_matrix, metadata_matrix, left_data, right_data)
+    response<-WrappeR$map(join_matrix, metadata_matrix, count_name, left_data, 
+                            right_data)
     error <- strtoi(response[1])
     val <- response[2]
     if(error!=0)

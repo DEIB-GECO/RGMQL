@@ -7,7 +7,7 @@
 \title{Method merge}
 \usage{
 \S4method{merge}{GMQLDataset,GMQLDataset}(x, y, genometric_predicate = NULL,
-  region_output = "contig", joinBy = NULL)
+  region_output = "CAT", joinBy = NULL, reg_attr = NULL)
 }
 \arguments{
 \item{x}{GMQLDataset class object}
@@ -35,10 +35,26 @@ that satisfy the genometric predicate, (i.e. the output regionis defined as
 having left (right) coordinates equal to the minimum (maximum) of the 
 corresponding coordinate values in the 'x' and 'y' regions satisfying 
 the genometric predicate)}
+\item{LEFT_DISTINCT: It outputs the duplicate elimination of "x" output 
+regions with the same values, regardless the "y" paired region and its 
+values. In this case, the output regions attributes and their values are 
+all those of "x", and the output metadata are equal to the "x" metadata, 
+without additional prefixes}
+\item{RIGHT_DISTINCT: It outputs the duplicate elimination of "y" output 
+regions with the same values, regardless the "x" paired region and its 
+values. In this case, the output regions attributes and their values are 
+all those of "y", and the output metadata are equal to the "y" metadata, 
+without additional prefixes}
+\item{BOTH: outputs the same regions as LEFT, but it adds in the output 
+region attributes the coordinates of the "y" dataset region that, 
+together with the output "x" dataset region, satisfies the equi predicate 
+and the genometric predicate}
 }}
 
 \item{joinBy}{\code{\link{condition_evaluation}} function to support 
 methods with groupBy or JoinBy input paramter}
+
+\item{reg_attr}{vector of string made up by schema field attribute}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 

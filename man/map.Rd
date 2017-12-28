@@ -10,7 +10,7 @@
 \usage{
 map(x, y, ...)
 
-\S4method{map}{GMQLDataset}(x, y, ..., joinBy = NULL)
+\S4method{map}{GMQLDataset}(x, y, ..., joinBy = NULL, count_name = NULL)
 }
 \arguments{
 \item{x}{GMQLDataset class object}
@@ -44,6 +44,9 @@ as \emph{value} match; no further prefixes are allowed.}
 \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
 if both end with \emph{value}.}
 }}
+
+\item{count_name}{string defining the metadata count name; if it is 
+not specifying the name is "count_left_right"}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 

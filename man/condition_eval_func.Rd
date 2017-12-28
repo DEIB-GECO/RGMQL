@@ -2,25 +2,26 @@
 % Please edit documentation in R/evaluation-functions.R
 \name{Evaluation-Function}
 \alias{Evaluation-Function}
+\alias{conds}
 \alias{condition_evaluation}
 \title{Condition evaluation functions}
 \usage{
-condition_evaluation(default = c(""), full = c(""), exact = c(""))
+conds(default = c(""), full = c(""), exact = c(""))
 }
 \arguments{
-\item{default}{series of string identifying a name of metadata attribute 
-to be evaluated.
-It defines a DEFAULT evaluation of the input values.
+\item{default}{concatenation of string identifying a name of metadata 
+attribute to be evaluated. 
+It defines a DEFAULT evaluation of the input values. 
 DEFAULT evaluation: the two attributes match if both end with value.}
 
-\item{full}{series of string identifying a name of metadata attribute 
-to be evaluated.
+\item{full}{concatenation of string identifying a name of metadata 
+attribute to be evaluated.
 It defines a FULL (FULLNAME) evaluation of the input values.
 FULL evaluation: two attributes match if they both end with value and,
 if they have further prefixes, the two prefix sequences are identical.}
 
-\item{exact}{series of string identifying a name of metadata attribute 
-to be evaluated.
+\item{exact}{concatenation of string identifying a name of metadata 
+attribute to be evaluated.
 It defines a EXACT evaluation of the input values.
 EXACT evaluation: only attributes exactly as value match; 
 no further prefixes are allowed.}

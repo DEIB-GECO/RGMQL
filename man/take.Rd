@@ -8,12 +8,12 @@
 \alias{take-method}
 \title{Method take}
 \usage{
-take(data, ...)
+take(.data, ...)
 
-\S4method{take}{GMQLDataset}(data, rows = 0L)
+\S4method{take}{GMQLDataset}(.data, rows = 0L)
 }
 \arguments{
-\item{data}{returned object from any GMQL function}
+\item{.data}{returned object from any GMQL function}
 
 \item{...}{Additional arguments for use in other specific methods of the 
 generic take function}

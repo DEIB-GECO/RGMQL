@@ -4,10 +4,10 @@
 \alias{semijoin}
 \title{Semijoin condtion}
 \usage{
-semijoin(data, not_in = FALSE, groupBy = NULL)
+semijoin(.data, not_in = FALSE, groupBy = NULL)
 }
 \arguments{
-\item{data}{GMQLDataset class object}
+\item{.data}{GMQLDataset class object}
 
 \item{not_in}{logical value: TRUE => for a given sample of input dataset
 ".data" in \code{\link{filter}} method if and only if there exists at 

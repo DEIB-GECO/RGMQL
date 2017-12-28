@@ -7,13 +7,13 @@
 \alias{cover,GMQLDataset-method}
 \title{Method cover}
 \usage{
-cover(data, ...)
+cover(.data, ...)
 
-\S4method{cover}{GMQLDataset}(data, min_acc, max_acc, groupBy = NULL,
+\S4method{cover}{GMQLDataset}(.data, min_acc, max_acc, groupBy = NULL,
   variation = "cover", ...)
 }
 \arguments{
-\item{data}{GMQLDataset class object}
+\item{.data}{GMQLDataset class object}
 
 \item{...}{a series of expressions separated by comma in the form 
 \emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 

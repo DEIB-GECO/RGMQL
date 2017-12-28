@@ -43,6 +43,20 @@
 #' having left (right) coordinates equal to the minimum (maximum) of the 
 #' corresponding coordinate values in the 'x' and 'y' regions satisfying 
 #' the genometric predicate)}
+#' \item{LEFT_DISTINCT: It outputs the duplicate elimination of "x" output 
+#' regions with the same values, regardless the "y" paired region and its 
+#' values. In this case, the output regions attributes and their values are 
+#' all those of "x", and the output metadata are equal to the "x" metadata, 
+#' without additional prefixes}
+#' \item{RIGHT_DISTINCT: It outputs the duplicate elimination of "y" output 
+#' regions with the same values, regardless the "x" paired region and its 
+#' values. In this case, the output regions attributes and their values are 
+#' all those of "y", and the output metadata are equal to the "y" metadata, 
+#' without additional prefixes}
+#' \item{BOTH: It outputs the same regions as LEFT, but it adds in the output 
+#' region attributes the coordinates of the "y" dataset region that, 
+#' together with the output "x" dataset region, satisfies the equi predicate 
+#' and the genometric predicate}
 #' }
 #'
 #' @return GMQLDataset object. It contains the value to use as input 
@@ -85,13 +99,13 @@ setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 {
                     ptr_data_x <- value(x)
                     ptr_data_y <- value(y)
-                    gmql_join(ptr_data_x, ptr_data_y, genometric_predicate, 
-                                joinBy, region_output, reg_attr)
+                    gmql_join(ptr_data_x, ptr_data_y, 
+                        genometric_predicate, joinBy, region_output, reg_attr)
                 })
 
 
 gmql_join <- function(left_data, right_data, genometric_predicate, joinBy, 
-                            region_output, reg_attributes)
+                        region_output, reg_attributes)
 {
     if(!is.null(genometric_predicate))
     {

@@ -32,8 +32,8 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' first k samples; it can assume the values:
 #' \itemize{
 #' \item{mtop: it fetches the first k samples}
-#' \item{mtopg: it fetches the percentage of samples.}
-#' \item{mtopp: it fetches the first k samples in each group.}
+#' \item{mtopp: it fetches the first k percentage of samples.}
+#' \item{mtopg: it fetches the first k samples in each group.}
 #' 
 #' }
 #' if NULL, \emph{num_fetch} is not considered 
@@ -49,8 +49,8 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' first k regions; it can assume the values:
 #' \itemize{
 #' \item{rtop: it fetches the first k regions.}
-#' \item{rtopg: it fetches the first k percentage of regions.}
-#' \item{rtopp: it fetches the first k regions in each group.}
+#' \item{rtopp: it fetches the first k percentage of regions.}
+#' \item{rtopg: it fetches the first k regions in each group.}
 #' }
 #' if NULL, \emph{reg_num_fetch} is not considered 
 #' 

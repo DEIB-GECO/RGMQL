@@ -7,8 +7,8 @@
 \title{Method arrange}
 \usage{
 \S4method{arrange}{GMQLDataset}(.data, metadata_ordering = NULL,
-  regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0,
-  reg_fetch_opt = NULL, reg_num_fetch = 0)
+  regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0L,
+  reg_fetch_opt = NULL, reg_num_fetch = 0L)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
