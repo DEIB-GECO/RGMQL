@@ -83,7 +83,7 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
         
         schema_XML <- list.files(dataset, pattern = "*.schema$",
                                     full.names = TRUE)
-        if(length(schema_XML) == 0)
+        if(!length(schema_XML))
             stop("schema must be present")
         
         schema_matrix <- .jnull("java/lang/String")
@@ -99,12 +99,12 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
             stop("You have to log on using login function")
         
         list <- show_schema(url,dataset)
-        schema_names <- sapply(list$fields, function(x){x$name})
-        schema_type <- sapply(list$fields, function(x){x$type})
+        schema_names <- vapply(list$fields, function(x){x$name},character(1))
+        schema_type <- vapply(list$fields, function(x){x$type},character(1))
         schema_matrix <- cbind(schema_type,schema_names)
         #schema_type <- list$type
         
-        if(is.null(schema_matrix) || length(schema_matrix)==0)
+        if(is.null(schema_matrix) || !length(schema_matrix))
             schema_matrix <- .jnull("java/lang/String")
         else
             schema_matrix <- .jarray(schema_matrix, dispatch = TRUE)
@@ -116,7 +116,7 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
                                         schema_matrix, schema_XML)
     error <- strtoi(response[1])
     data <- response[2]
-    if(error!=0)
+    if(error)
         stop(data)
     else
         GMQLDataset(data)
@@ -138,11 +138,12 @@ read <- function(samples)
         stop("only GrangesList")
     
     meta <- S4Vectors::metadata(samples)
-    if(is.null(meta) || length(meta)==0) 
+    if(is.null(meta) || !length(meta)) 
     {
         #repeat meta for each sample in samples list
         len <- length(samples)
-        warning("No metadata.\nWe provide two metadata for you")
+        warning("No metadata.\nWe provide two metadata for you:
+                \n1.provider = PoliMi\n2.application = RGMQL\n")
         index_meta <- rep(seq_len(len),each = len)
         rep_meta <- rep(c("provider","PoliMi", "application", "RGMQL"),
                             times = len)
@@ -160,10 +161,11 @@ read <- function(samples)
     
     df <- data.frame(samples)
     df <- df[-2] #delete group_name
-    region_matrix <- as.matrix(sapply(df, as.character))
+    len_df <- dim(df)[1] # number of rows
+    region_matrix <- as.matrix(vapply(df, as.character,character(len_df)))
     region_matrix[is.na(region_matrix)] <- "NA"
     region_matrix <- region_matrix[,setdiff(colnames(region_matrix),"width")]
-    col_types <- sapply(df,class)
+    col_types <- vapply(df,class,character(1))
     col_names <- names(col_types)
     #re order the schema?
     if("phase" %in% col_names) # if GTF, change

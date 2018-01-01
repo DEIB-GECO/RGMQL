@@ -17,8 +17,8 @@
 #' 
 #' @param x GMQLDataset class object
 #' @param y GMQLDataset class object
-#' @param joinBy \code{\link{condition_evaluation}} function to support 
-#' methods with groupBy or JoinBy input paramter
+#' @param joinBy \code{\link{conds}} function to support methods with 
+#' groupBy or JoinBy input paramter
 #' 
 #' @param is_exact single logical value: TRUE means that the region difference 
 #' is executed only on regions in left_input_data with exactly the same 
@@ -30,7 +30,6 @@
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
 #' 
-#'
 #' @examples
 #' ## This statement initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
@@ -55,7 +54,7 @@
 #' ## do not overlap any region in s2; 
 #' ## metadata of the result are the same as the metadata of s1.
 #' 
-#' out_t = setdiff(data1, data2, condition_evaluation(c("cell")))
+#' out_t = setdiff(data1, data2, conds("cell"))
 #'
 #' @name setdiff
 #' @aliases setdiff,GMQLDataset,GMQLDataset-method
@@ -87,7 +86,7 @@ gmql_difference <- function(left_data, right_data, is_exact, joinBy)
                                         is_exact)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

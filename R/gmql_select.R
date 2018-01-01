@@ -98,7 +98,7 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' ## less than 0.01 are conserved in output
 #' 
 #' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-#' semijoin(join_data, TRUE, list(DF("cell"))))
+#' semijoin(join_data, TRUE, conds("cell")))
 #' 
 #' 
 #' @name filter
@@ -125,7 +125,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
                                     input_data)
     error <- strtoi(response[1])
     data <- response[2]
-    if(error!=0)
+    if(error)
         stop(data)
     else
         GMQLDataset(data)
@@ -136,6 +136,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' 
 #' This function is used as support to the filter method to define 
 #' semijoin conditions on metadata  
+#' 
 #' 
 #' @param .data GMQLDataset class object
 #' 
@@ -184,39 +185,44 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' # less than 0.01 are conserved in output
 #' 
 #' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-#' semijoin(join_data, TRUE, list(DF("cell"))))
+#' semijoin(join_data, TRUE, conds("cell")))
 #' 
 #' @return semijoin condition as list
 #' @export
 #' 
-semijoin <- function(.data, not_in = FALSE, groupBy = NULL)
+semijoin <- function(.data, not_in = FALSE, groupBy)
 {
-    if(!is.list(groupBy))
-        stop("groupBy: must be a list")
+    if(!is.null(groupBy))
+    {
+        if("condition" %in% names(groupBy))
+        {
+            cond <- .join_condition(groupBy)
+            if(is.null(cond))
+                stop("groupBy cannot be NULL")
+        }
+        else
+            stop("use function conds()")
+    }
+    else
+        stop("groupBy cannot be NULL")
     
-    semij_cond = groupBy
+    if(is.null(.data))
+        stop(".data cannot be NULL")
     
-    if(is.null(data))
-        stop("data cannot be NULL")
-    
-    if(!isClass("GMQLDataset", data))
+    if(!isClass("GMQLDataset", .data))
         stop("data: Must be a GMQLDataset object") 
     
     .check_logical(not_in)
     ptr_data <- value(.data)
-    
     data_cond <- cbind(ptr_data,not_in)
-    cond <- .join_condition(semij_cond)
-    cond <- rbind(data_cond,cond)
-    join_condition_matrix <- .jarray(cond, dispatch = TRUE)
+    all_conds <- rbind(data_cond,cond)
+    join_condition_matrix <- .jarray(all_conds, dispatch = TRUE)
     
     semijoin <- list("semijoin" = join_condition_matrix)
 }
 
 
-
-
-.trasform <- function(predicate=NULL)
+.trasform <- function(predicate)
 {
     predicate <- gsub("&|&&","AND",predicate)
     predicate <- gsub("\\||\\|\\|","OR",predicate)

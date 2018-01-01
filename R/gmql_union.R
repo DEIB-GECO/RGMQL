@@ -64,7 +64,7 @@ gmql_union <- function(left_data, right_data)
     response <- WrappeR$union(left_data, right_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

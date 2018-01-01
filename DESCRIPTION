@@ -8,21 +8,18 @@ Description: This package brings the GenoMetric Query Language (GMQL)
     functionalities into the R environment. GMQL is a high-level, declarative
     language to query and compare multiple and heterogeneous genomic datasets
     for biomedical knowledge discovery. It allows expressing easily queries and
-    processing over genomic regions and their metadata, in a way similar to what
-    can be done with the Structured Query Language (SQL) over a relational database,
-    to extract genomic regions of interest and compute their properties. GMQL
-    adopts algorithms designed for big data and their efficient implementation
-    using cloud-computing technologies, including Apache Hadoop framework and
-    Spark engine; these make GMQL able to run on modern high performance computing
+    processing over genomic regions and their metadata, to extract genomic regions 
+    of interest and compute their properties. GMQL adopts algorithms designed 
+    for big data and their efficient implementation using cloud-computing 
+    technologies, including Apache Hadoop framework and Spark engine; 
+    these make GMQL able to run on modern high performance computing
     infrastructures, CPU clusters and network infrastructures, in order to achieve
-    scalability and performance on big data. With GMQL very complex genomic
-    operations can be written as simple queries, with implicit iteration over
-    thousands of heterogeneous samples, and computed efficiently in few minutes over
-    servers or clouds. This RGMQL package is built over a scalable data management
-    engine written in Scala programming language, released as Scala API; it provides
-    a set of functions to create, manipulate and extract genomic data from different
-    data sources both from local and remote datasets. These RGMQL functions allow
-    performing complex queries and processing without knowing the GMQL syntax,
+    scalability and performance on big data. This RGMQL package is built over 
+    a scalable data management engine written in Scala programming language, 
+    released as Scala API; it provides a set of functions to create, 
+    manipulate and extract genomic data from different data sources both 
+    from local and remote datasets. These RGMQL functions allow performing 
+    complex queries and processing without knowing the GMQL syntax,
     but leveraging on R idiomatic paradigm and logic. RGMQL provides two different
     approaches in writing GMQL queries and processing scripts: a) REST calls b)
     standard R APIs The REST approach let users to log into a remote infrastructure
@@ -67,7 +64,7 @@ Imports:
     glue,
     BiocGenerics
 Depends:
-    R(>= 3.4.2)
+    R(<= 3.4.2), RGMQLScalaLibs
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,

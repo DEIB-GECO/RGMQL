@@ -28,7 +28,7 @@
 #' 
 #' @examples
 #' 
-#' "where is my example?"
+#' "Where is my example?"
 #' 
 #' @name Evaluation-Function
 #' @aliases condition_evaluation
@@ -51,10 +51,10 @@ conds <- function(default = c(""), full = c(""), exact = c(""))
         join_condition_matrix <- NULL
     else
     {
-        join_condition_matrix <- t(sapply(array, function(x) {
+        join_condition_matrix <- t(vapply(array, function(x) {
             new_value = c(cond, x)
             matrix <- matrix(new_value)
-        }))
+        },character(2)))
     }
     join_condition_matrix
 }

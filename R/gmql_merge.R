@@ -40,7 +40,7 @@
 #' ## antibody_target and cell metadata
 #' ## attributes.
 #'
-#' merged = aggregate(exp, condition_evaluation(c("antibody_target","cell")))
+#' merged = aggregate(exp, conds(c("antibody_target","cell")))
 #'
 #' @name aggregate
 #' @rdname aggregate
@@ -72,7 +72,7 @@ gmql_merge <- function(input_data, groupBy)
     response <- WrappeR$merge(join_matrix, input_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

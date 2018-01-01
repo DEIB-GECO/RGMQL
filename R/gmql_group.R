@@ -1,7 +1,7 @@
 group_by.GMQLDateset <- function(.data, groupBy_meta = NULL, 
     groupBy_regions = NULL, region_aggregates = NULL, meta_aggregates = NULL)
 {
-    ptr_data = .data@value
+    ptr_data = value(.data)
     gmql_group(ptr_data, groupBy_meta, groupBy_regions, region_aggregates, 
                 meta_aggregates)
 }
@@ -14,16 +14,9 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = NULL,
 #' @importFrom dplyr group_by
 #' 
 #' @param .data GMQLDataset object
-#' @param groupBy_meta it define condition evaluation on metadata.
-#' \itemize{
-#' \item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-#' if they both end with value and, if they have a further prefixes,
-#' the two prefix sequence are identical}
-#' \item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-#' as value will match; no further prefixes are allowed. }
-#' \item{\code{\link{DF}}: Default evaluation, the two attributes match 
-#' if both end with value.}
-#' }
+#' @param groupBy_meta \code{\link{conds}} function to support methods with 
+#' groupBy or JoinBy input parameter
+#' 
 #' @param groupBy_regions vector of string made up by schema field attribute
 #' @param region_aggregates It accept a series of aggregate function on 
 #' region attribute. 
@@ -89,7 +82,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
                 join_matrix <- .jarray(cond, dispatch = TRUE)
         }
         else
-            stop("use function condition_evaluation()")
+            stop("use function conds()")
     }
     else
         join_matrix <- .jnull("java/lang/String")
@@ -132,7 +125,7 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
                                 region_matrix, input_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

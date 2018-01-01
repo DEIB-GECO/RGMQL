@@ -40,7 +40,7 @@ execute <- function()
     response <- WrappeR$execute()
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
     {
@@ -62,13 +62,13 @@ execute <- function()
     remote <- WrappeR$is_remote_processing()
     if(remote)
     {
-        sapply(data_list,function(x){
+        lapply(data_list,function(x){
             if(!is.null(x[[1]]) && !is.na(x[[1]]))
                 upload_dataset(url,x[[2]],x[[1]],x[[3]],FALSE)})
     }
     else
     {
-        sapply(data_list,function(x){
+        lapply(data_list,function(x){
             if(!is.null(x[[2]]) && !is.na(x[[2]]))
                 download_dataset(url,x[[2]],x[[1]])})
     }
@@ -147,7 +147,7 @@ gmql_materialize <- function(input_data, dir_out, name)
     response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         invisible(NULL)
@@ -204,7 +204,7 @@ setMethod("take", "GMQLDataset",
                 gmql_take(ptr_data, rows)
             })
 
-gmql_take <- function(input_data, rows = 0L)
+gmql_take <- function(input_data, rows)
 {
     rows <- as.integer(rows[1])
     if(rows<0)
@@ -214,7 +214,7 @@ gmql_take <- function(input_data, rows = 0L)
     response <- WrappeR$take(input_data, rows)
     error <- strtoi(response[1])
     data <- response[2]
-    if(error!=0)
+    if(error)
         stop(data)
     
     reg <- .jevalArray(WrappeR$get_reg(),simplify = TRUE)

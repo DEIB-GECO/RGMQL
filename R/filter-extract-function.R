@@ -86,25 +86,25 @@ filter_and_extract <- function(data, metadata = NULL,
     gtf_meta_files <- list.files(datasetName, pattern = "*.gtf.meta$",
                                     full.names = TRUE)
     
-    if(length(gdm_meta_files)==0 && length(gtf_meta_files)==0)
+    if(!length(gdm_meta_files) && !length(gtf_meta_files))
         stop("no samples present or no files format supported")
     
-    if(length(gdm_meta_files)>=1 && length(gtf_meta_files)>=1)
+    if(length(gdm_meta_files) && length(gtf_meta_files))
         stop("GMQL dataset cannot be mixed dataset: no GTF and GDM together")
     
     vector_field <- .schema_header(datasetName)
     
-    if(length(gdm_meta_files)>0)
+    if(length(gdm_meta_files))
     {
         samples_with_suffix <- .check_metadata_files(metadata,metadata_prefix,
                                                 gdm_meta_files, suffix)
         
-        samples_file <- sapply(samples_with_suffix, function(x) x$sample)
-        suffix_vec <- sapply(samples_with_suffix, function(x) x$suffix)
+        samples_file <- lapply(samples_with_suffix, function(x) x$sample)
+        suffix_vec <- lapply(samples_with_suffix, function(x) x$suffix)
         suffixes <- unlist(suffix_vec)
         samples_to_read <- unlist(samples_file)
         
-        if(length(samples_to_read)>0)
+        if(length(samples_to_read))
             samples_to_read <- gsub(".meta$", "", samples_to_read)
         else
             samples_to_read <- gsub(".meta$", "", gdm_meta_files)
@@ -117,12 +117,12 @@ filter_and_extract <- function(data, metadata = NULL,
         samples_with_suffix <- .check_metadata_files(metadata,metadata_prefix,
                                                     gtf_meta_files, suffix)
         
-        samples_file <- sapply(samples_with_suffix, function(x) x$sample)
-        suffix_vec <- sapply(samples_with_suffix, function(x) x$suffix)
+        samples_file <- lapply(samples_with_suffix, function(x) x$sample)
+        suffix_vec <- lapply(samples_with_suffix, function(x) x$suffix)
         suffixes <- unlist(suffix_vec)
         samples_to_read <- unlist(samples_file)
         
-        if(length(samples_to_read)>0)
+        if(length(samples_to_read))
             samples_to_read <- gsub(".meta$", "", samples_to_read)
         else
             samples_to_read <- gsub(".meta$", "", gtf_meta_files)
@@ -137,13 +137,13 @@ filter_and_extract <- function(data, metadata = NULL,
     if(!is(rangesList,"GRangesList"))
         stop("only GrangesList admitted")
     
-    if(length(rangesList)<=0)
+    if(!length(rangesList))
         stop("rangesList empty")
     
     meta_list <- metadata(rangesList)
     samples <- .check_metadata_list(metadata, metadata_prefix, meta_list, 
                                         suffix)
-    if(length(unlist(samples))<=0)
+    if(!length(unlist(samples)))
         samples <- rangesList
     else
     {
@@ -174,8 +174,8 @@ filter_and_extract <- function(data, metadata = NULL,
     vec_meta <- paste0(metadata_prefix,metadata)
     list <- mapply(function(x,index){
         vec_names <- names(x)
-        a <- sapply(vec_meta, function(y) {
-            which(y==vec_names)
+        a <- lapply(vec_meta, function(y) {
+            which(y == vec_names)
         })
         ## we would like that manage more index from grep
         found <- as.logical(length(unlist(a)))
@@ -191,9 +191,7 @@ filter_and_extract <- function(data, metadata = NULL,
     meta_list <- lapply(meta_files, function(x){
         list <- .add_metadata(x)
         vec_names <- names(list)
-        a <- sapply(vec_meta, function(y) {
-            grep(y,vec_names)
-        })
+        a <- lapply(vec_meta, function(y)grep(y,vec_names))
         ## we would like that manage more index from grep
         found <- as.logical(length(unlist(a)))
         index <- grep(suffix,vec_names)
@@ -249,7 +247,7 @@ filter_and_extract <- function(data, metadata = NULL,
             if(!is.null(regions))
                 col_names <- col_names[col_names %in% regions]
             
-            if(length(col_names)!=0)
+            if(length(col_names))
                 r <- subset(region_frame,TRUE,col_names)
         },regions,vector_field)
 

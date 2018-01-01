@@ -134,7 +134,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
         },files_sub_dir)
     }
     # first regions to get column names
-    col_names <- sapply(elementMetadata(samples[[1]]),class) 
+    col_names <- vapply(elementMetadata(samples[[1]]),class,character(1)) 
     # write schema XML
     .write_schema(col_names,files_sub_dir,to_GTF)
     c = .counter(0)
@@ -145,9 +145,9 @@ export_gmql <- function(samples, dir_out, is_gtf)
 .write_metadata <- function(meta_list,sample_name)
 {
     #create my own list if metadata empty
-    if(length(meta_list)==0){
+    if(!length(meta_list))
         meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
-    }
+    
     names_list <- names(meta_list)
     value_list <- unlist(meta_list)
     file_meta_name = paste0(sample_name,".meta")

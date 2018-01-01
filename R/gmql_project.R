@@ -2,7 +2,7 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
                             all_but_meta = FALSE, regions = NULL, 
                             regions_update = NULL, all_but_reg = FALSE) 
 {
-    data = .data@value
+    data = value(.data)
     r_update <- substitute(regions_update)
     if(!is.null(r_update))
     {
@@ -132,7 +132,7 @@ gmql_project <-function(input_data, metadata, metadata_update, all_but_meta,
         metadata <- metadata[!metadata %in% ""]
         metadata <- metadata[!duplicated(metadata)]
         
-        if(length(metadata)==0)
+        if(!length(metadata))
             metadata <- .jnull("java/lang/String")
         
         metadata <- .jarray(metadata)
@@ -148,7 +148,7 @@ gmql_project <-function(input_data, metadata, metadata_update, all_but_meta,
         regions = regions[!regions %in% ""]
         regions = regions[!duplicated(regions)]
         
-        if(length(regions)==0)
+        if(!length(regions))
             regions <- .jnull("java/lang/String")
         
         regions <- .jarray(regions)
@@ -171,13 +171,13 @@ gmql_project <-function(input_data, metadata, metadata_update, all_but_meta,
                     regions, regions_update, all_but_reg, input_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)
 }
 
-.trasform_update <- function(predicate=NULL)
+.trasform_update <- function(predicate)
 {
     predicate <- gsub("list\\(","",predicate)
     predicate <- gsub("\\)$","",predicate)

@@ -45,11 +45,11 @@ import_gmql <- function(dataset_path, is_gtf)
     if(!dir.exists(datasetName))
         stop("Directory does not exists")
 
-    if(length(list.files(datasetName))==0)
+    if(!length(list.files(datasetName)))
         stop("no samples present in this dataset")
 
     regions <- list.files(datasetName, pattern = "*.gtf$",full.names = TRUE)
-    if(length(regions) != 0)
+    if(length(regions))
     {
         name_samples <- lapply(regions, function(x){
             gsub("*.gtf", "", basename(x))})
@@ -62,7 +62,7 @@ import_gmql <- function(dataset_path, is_gtf)
         stop("No GTF files present")
 
     meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = TRUE)
-    if(length(meta) != 0)
+    if(length(meta))
     {
         meta_list <- lapply(meta, .add_metadata)
         names(meta_list) <- name_samples
@@ -83,17 +83,17 @@ import_gmql <- function(dataset_path, is_gtf)
     if(!dir.exists(datasetName))
         stop("Directory does not exists")
 
-    if(length(list.files(datasetName))==0)
+    if(!length(list.files(datasetName)))
         stop("no samples present in this dataset")
 
     regions <- list.files(datasetName, pattern = "*.gdm$",full.names = TRUE)
-    if(length(regions) != 0)
+    if(length(regions))
     {
         name_samples <- lapply(regions, function(x){
             gsub("*.gdm", "",basename(x))})
         vector_field <- .schema_header(datasetName)
 
-        names(vector_field)=NULL
+        names(vector_field) <- NULL
         sampleList <- lapply(regions,function(x){
             df <- read.delim(x,col.names = vector_field,header = FALSE)
             g <- GenomicRanges::makeGRangesFromDataFrame(df,
@@ -108,7 +108,7 @@ import_gmql <- function(dataset_path, is_gtf)
         stop("No GDM files present")
 
     meta <- list.files(datasetName, pattern = "*.gdm.meta$",full.names = TRUE)
-    if(length(meta) != 0)
+    if(length(meta))
     {
         meta_list <- lapply(meta, .add_metadata)
         names(meta_list) <- name_samples

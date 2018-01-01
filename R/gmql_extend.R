@@ -79,7 +79,7 @@ gmql_extend <-function(input_data, meta)
     response <- WrappeR$extend(metadata_matrix, input_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

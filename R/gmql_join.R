@@ -43,12 +43,12 @@
 #' having left (right) coordinates equal to the minimum (maximum) of the 
 #' corresponding coordinate values in the 'x' and 'y' regions satisfying 
 #' the genometric predicate)}
-#' \item{LEFT_DISTINCT: It outputs the duplicate elimination of "x" output 
+#' \item{LEFT_DIST: It outputs the duplicate elimination of "x" output 
 #' regions with the same values, regardless the "y" paired region and its 
 #' values. In this case, the output regions attributes and their values are 
 #' all those of "x", and the output metadata are equal to the "x" metadata, 
 #' without additional prefixes}
-#' \item{RIGHT_DISTINCT: It outputs the duplicate elimination of "y" output 
+#' \item{RIGHT_DIST: It outputs the duplicate elimination of "y" output 
 #' regions with the same values, regardless the "x" paired region and its 
 #' values. In this case, the output regions attributes and their values are 
 #' all those of "y", and the output metadata are equal to the "y" metadata, 
@@ -109,19 +109,20 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
 {
     if(!is.null(genometric_predicate))
     {
-        if(length(genometric_predicate) >4)
+        if(length(genometric_predicate) > 4)
             stop("genometric_predicate: only 4 DISTAL condition")
         
         if(!is.list(genometric_predicate))
             stop("genometric_predicate must be a list")
     
-        if(!all(sapply(genometric_predicate, function(x) {is(x,"DISTAL")} )))
+        if(!all(vapply(genometric_predicate, function(x) {is(x,"DISTAL")},
+                        logical(1))))
             stop("All elements should be DISTAL object")
         
-        genomatrix <- t(sapply(genometric_predicate, function(x) {
+        genomatrix <- t(vapply(genometric_predicate, function(x) {
                 new_value = as.character(x)
                 array <- c(new_value)
-        }))
+        },character(2)))
         
         genomatrix <- .jarray(genomatrix, dispatch = TRUE)
     }
@@ -166,7 +167,7 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
                                 left_data, right_data)
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)

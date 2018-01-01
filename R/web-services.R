@@ -82,6 +82,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
     {
         assign("authToken",content$authToken,.GlobalEnv)
         WrappeR <- J("it/polimi/genomics/r/Wrapper")
+        url <- paste0(url,"/")
         WrappeR$save_tokenAndUrl(authToken,url)
         print(paste("your Token is",authToken))
     }
@@ -793,7 +794,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
         folderPath <- paste0(folderPath,"/files")
     
     files <- list.files(folderPath,full.names = TRUE)
-    if(length(files)==0)
+    if(!length(files))
         stop("no files present")
     count = .counter(0)
     
@@ -801,9 +802,9 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
         file <- httr::upload_file(x)
     })
     
-    list_files_names <- sapply(list_files, function(x) {
+    list_files_names <- vapply(list_files, function(x) {
         paste0("file",count())
-    })
+    },character(1))
     
     names(list_files) <- list_files_names
     req <- httr::GET(url)
@@ -817,7 +818,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
     {
         schema_name <- list.files(folderPath, pattern = "*.schema$",
                                     full.names = TRUE)
-        if(length(schema_name)==0)
+        if(!length(schema_name))
             stop("schema must be present")
         
         list_files <- list(list("schema" = httr::upload_file(schema_name)),
@@ -832,7 +833,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
         {
             schema_name <- list.files(folderPath, pattern = "*.schema$",
                                         full.names = TRUE)
-            if(length(schema_name)==0)
+            if(!length(schema_name))
                 stop("schema must be present")
             
             list_files <- list(list("schema" = httr::upload_file(schema_name)),
@@ -982,9 +983,7 @@ download_as_GRangesList <- function(url,datasetName)
 {
     list <- show_samples_list(url,datasetName)
     samples <- list$samples
-    sample_list_name <- sapply(samples, function(x){
-        name <- x$name
-    })
+    sample_list_name <- vapply(samples, function(x) x$name, character(1))
     
     sampleList <- lapply(samples, function(x){
         name <- x$name
@@ -1050,7 +1049,7 @@ sample_metadata <- function(url, datasetName,sampleName)
     #trasform text to list
     metadata <- strsplit(content, "\n")
     metadata <- strsplit(unlist(metadata), "\t")
-    names(metadata) <- sapply(metadata, `[[`, 1)
+    names(metadata) <- vapply(metadata, `[[`, character(1),1)
     listMeta <- lapply(metadata, `[`, -1)
     
     if(req$status_code !=200)
@@ -1126,13 +1125,11 @@ sample_region <- function(url, datasetName,sampleName)
         temp <- tempfile("temp") #use temporary files
         write.table(content,temp,quote = FALSE,sep = '\t',col.names = FALSE,
                         row.names = FALSE)
-        if(schema_type=="gtf")
+        if(identical(schema_type, "gtf"))
             samples <- rtracklayer::import(temp,format = "gtf")
         else
         {
-            vector_field <- sapply(list$fields,function(x){
-                name <- x$name
-            })
+            vector_field <- vapply(list$fields,function(x)x$name,character(1))
             df <- data.table::fread(temp,header = FALSE,sep = "\t")
             a <- df[1,2]
             if(is.na(as.numeric(a)))

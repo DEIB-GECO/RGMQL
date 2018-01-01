@@ -48,8 +48,8 @@
 #' \item{an expression built using PARAMETER object: (ALL() + N) / K or
 #' ALL() / K, with N and K integer values  }
 #' }
-#' @param groupBy \code{\link{condition_evaluation}} function to support 
-#' methods with groupBy or JoinBy input paramter
+#' @param groupBy \code{\link{conds}} function to support methods with 
+#' groupBy or JoinBy input parameter
 #' 
 #' @param ... a series of expressions separated by comma in the form 
 #' \emph{key} = \emph{aggregate}. The \emph{aggregate} is an object of 
@@ -115,8 +115,7 @@
 #' ## regions the minimum pvalue of the overlapping regions (min_pvalue) 
 #' ## and their Jaccard indexes (JaccardIntersect and JaccardResult).
 #' 
-#' res = cover(exp, 2, 3, groupBy = condition_evaluation(c("cell")), 
-#' min_pValue = MIN("pvalue"))
+#' res = cover(exp, 2, 3, groupBy = conds("cell"), min_pValue = MIN("pvalue"))
 #' 
 #' @name cover
 #' @rdname cover
@@ -141,9 +140,7 @@ setMethod("cover", "GMQLDataset",
                 gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
             })
 
-
-
-gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
+gmql_cover <- function(input_data, min_acc, max_acc, groupBy,aggregates,flag)
 {
     if(!is.null(groupBy))
     {
@@ -156,7 +153,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
                 join_matrix <- .jarray(cond, dispatch = TRUE)
         }
         else
-            stop("use function condition_evaluation()")
+            stop("use function conds()")
     }
     else
         join_matrix <- .jnull("java/lang/String")
@@ -184,7 +181,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
     
     error <- strtoi(response[1])
     val <- response[2]
-    if(error!=0)
+    if(error)
         stop(val)
     else
         GMQLDataset(val)
@@ -195,14 +192,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
     if(length(param) > 1)
         stop("length > 1")
 
-    if(is.numeric(param))
-    {
-        if(param <= 0)
-            stop("No negative value")
-        else
-            return(as.character(param))
-    }
-    else if(is.character(param))
+    if(is.character(param))
     {
         if(is_min && identical(param,"ANY"))
             stop("min cannot assume ANY as value")
@@ -214,7 +204,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy, aggregates, flag)
     
 }
 
-.trasform_cover <- function(predicate=NULL)
+.trasform_cover <- function(predicate)
 {
     predicate <- gsub("\\(\\)","",predicate)
 }

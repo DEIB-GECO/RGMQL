@@ -72,6 +72,8 @@ take_value.META_AGGREGATES <- function(obj){
 #' function sum, performing all the type conversions needed  }
 #' \item{COUNT: It prepares input parameter to be passed to the library 
 #' function count, performing all the type conversions needed }
+#' \item{COUNTSAMP: It prepares input parameter to be passed to the library 
+#' function third quartile, performing all the type conversions needed }
 #' \item{MIN: It prepares input parameter to be passed to the library 
 #' function minimum, performing all the type conversions needed  }
 #' \item{MAX: It prepares input parameter to be passed to the library 
@@ -195,6 +197,25 @@ as.character.COUNT <- function(obj) {
     c(class,"")
 }
 check.COUNT <- function(obj){}
+
+
+#' @name AGGREGATES-Object
+#' @aliases COUNTSAMP
+#' @rdname aggr-class
+#' @export
+#'
+COUNTSAMP <- function()
+{
+    list <- list()
+    ## Set the name for the class
+    class(list) <- c("COUNTSAMP","AGGREGATES","META_AGGREGATES")
+    return(list)
+}
+as.character.COUNTSAMP <- function(obj) {
+    class <- class(obj)[1]
+    c(class,"")
+}
+check.COUNTSAMP <- function(obj){}
 
 
 #' @name AGGREGATES-Object

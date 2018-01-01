@@ -12,7 +12,7 @@
 {
     x <- scan(files, what="", sep="\n")
     y <- strsplit(x, "\t")
-    names(y) <- sapply(y, `[[`, 1)
+    names(y) <- vapply(y, `[[`,character(1), 1)
     listMeta <- lapply(y, `[`, -1)
 }
 
@@ -23,7 +23,7 @@
     schema_name_xml <- list.files(datasetName, pattern = "*.xml$",
                                 full.names = TRUE)
     
-    if(length(schema_name)==0 && length(schema_name_xml) == 0)
+    if(!length(schema_name) && !length(schema_name_xml))
         stop("schema not present")
     
     xml_schema <- xml2::read_xml(schema_name)
@@ -37,24 +37,24 @@
     if(!is.list(meta_data))
         stop("meta_data: invalid input")
     
-    if(!all(sapply(meta_data, function(x) is(x,class))))
+    if(!all(vapply(meta_data, function(x) is(x,class), logical(1))))
         stop("All elements must be META_AGGREGATES object")
     
     names <- names(meta_data)
     if(is.null(names))
     {
         warning("You did not assign a names to a list.\nWe build it for you")
-        names <- sapply(meta_data, take_value.META_AGGREGATES)
+        names <- vapply(meta_data, take_value.META_AGGREGATES,character(1))
     }
     else
     {
         if("" %in% names)
             stop("No partial names assignment is allowed")
     }
-    aggregate_matrix <- t(sapply(meta_data, function(x) {
+    aggregate_matrix <- t(vapply(meta_data, function(x) {
         new_value = as.character(x)
         matrix <- matrix(new_value)
-    }))
+    },character(2)))
     
     m_names <- matrix(names)
     metadata_matrix <- cbind(m_names,aggregate_matrix)
