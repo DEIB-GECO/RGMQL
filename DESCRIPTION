@@ -64,7 +64,7 @@ Imports:
     glue,
     BiocGenerics
 Depends:
-    R(<= 3.4.2), RGMQLScalaLibs
+    R(<= 3.4.2), RGMQLScalaLib
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,
