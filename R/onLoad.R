@@ -1,6 +1,6 @@
-#' @importFrom rJava .jpackage
-#' @importFrom rJava .jinit
-
+#' @importFrom rJava .jpackage .jinit
+#' @import RGMQLScalaLib
+#' 
 .onLoad <- function(libname, pkgname) {
     .jpackage(pkgname, lib.loc = libname)
     # tools::vignetteEngine("knitr", pattern = "[.]Rmd$", package = "knitr")
@@ -16,7 +16,6 @@
 }
 
 
-#' @importFrom utils download.file
 #' @importFrom rJava .jinit .jaddClassPath
 #' 
 initGMQLscalaAPI <- function(libLoc, mem = "12G") {

@@ -50,7 +50,7 @@ no sample is extracted.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data <- read_dataset(test_path) 
+data <- read_GMQL(test_path) 
 
 ## This statement selects from input data samples of patients younger 
 ## than 70 years old, based on filtering on sample metadata attribute 
@@ -63,7 +63,7 @@ filter_data <- filter(data, patient_age < 70)
 ## as a GMQL dataset named "join_data"
 
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-join_data <- read_dataset(test_path2) 
+join_data <- read_GMQL(test_path2) 
 
 ## This statement creates a new dataset called 'jun_tf' by selecting those 
 ## samples and their regions from the existing 'data' dataset such that:
@@ -74,11 +74,11 @@ join_data <- read_dataset(test_path2)
 ## attribute equally called cell has in at least one sample 
 ## of the 'join_data' dataset.
 ## For each sample satisfying previous conditions, only its regions that 
-## have a region attribute called pValue with the associated value 
+## have a region attribute called 'pvalue' with the associated value 
 ## less than 0.01 are conserved in output
 
-jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-semijoin(join_data, TRUE, list(DF("cell"))))
+jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
+semijoin(join_data, TRUE, conds("cell")))
 
 
 }

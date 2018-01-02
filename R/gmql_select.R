@@ -70,7 +70,7 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data <- read_dataset(test_path) 
+#' data <- read_GMQL(test_path) 
 #' 
 #' ## This statement selects from input data samples of patients younger 
 #' ## than 70 years old, based on filtering on sample metadata attribute 
@@ -83,7 +83,7 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' ## as a GMQL dataset named "join_data"
 #' 
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' join_data <- read_dataset(test_path2) 
+#' join_data <- read_GMQL(test_path2) 
 #' 
 #' ## This statement creates a new dataset called 'jun_tf' by selecting those 
 #' ## samples and their regions from the existing 'data' dataset such that:
@@ -94,10 +94,10 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' ## attribute equally called cell has in at least one sample 
 #' ## of the 'join_data' dataset.
 #' ## For each sample satisfying previous conditions, only its regions that 
-#' ## have a region attribute called pValue with the associated value 
+#' ## have a region attribute called 'pvalue' with the associated value 
 #' ## less than 0.01 are conserved in output
 #' 
-#' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
+#' jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
 #' semijoin(join_data, TRUE, conds("cell")))
 #' 
 #' 
@@ -147,16 +147,8 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' common with the same attributes defined in one sample of '.data'
 #' FALSE => semijoin condition is evaluated accordingly.
 #' 
-#' @param groupBy list of evalation functions to define evaluation on metadata:
-#' \itemize{
-#' \item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
-#' if they both end with \emph{value} and, if they have further prefixes,
-#' the two prefix sequence are identical.}
-#' \item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-#' as \emph{value} match; no further prefixes are allowed.}
-#' \item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
-#' if both end with \emph{value}.}
-#' }
+#' @param groupBy \code{\link{condition_evaluation}} function to support 
+#' methods with groupBy or JoinBy input paramter
 #' 
 #' @examples
 #' 
@@ -169,8 +161,8 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data <- read_dataset(test_path)
-#' join_data <-  read_dataset(test_path2)
+#' data <- read_GMQL(test_path)
+#' join_data <-  read_GMQL(test_path2)
 #' 
 #' # It creates a new dataset called 'jun_tf' by selecting those samples and 
 #' # their regions from the existing 'data' dataset such that:
@@ -184,7 +176,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' # have a region attribute called pValue with the associated value 
 #' # less than 0.01 are conserved in output
 #' 
-#' jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
+#' jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
 #' semijoin(join_data, TRUE, conds("cell")))
 #' 
 #' @return semijoin condition as list

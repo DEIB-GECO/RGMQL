@@ -33,8 +33,3 @@ attribute name
 \description{
 This function is used to support joinBy and/or groupBy function parameter.
 }
-\examples{
-
-"where is my example?"
-
-}

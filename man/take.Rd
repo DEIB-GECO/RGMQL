@@ -44,9 +44,9 @@ all those datasets are materialized as folders.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-rd = read_dataset(test_path)
+rd = read_GMQL(test_path)
 
-aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
+aggr = aggregate(rd, conds(c("antibody_target", "cell_karyotype")))
 taken <- take(aggr, rows = 45)
 
 }

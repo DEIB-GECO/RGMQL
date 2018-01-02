@@ -9,7 +9,7 @@
 \usage{
 cover(.data, ...)
 
-\S4method{cover}{GMQLDataset}(.data, min_acc, max_acc, groupBy = NULL,
+\S4method{cover}{GMQLDataset}(.data, min_acc, max_acc, groupBy = conds(),
   variation = "cover", ...)
 }
 \arguments{
@@ -54,8 +54,8 @@ considering any amount of overlapping regions.
 ALL() / K, with N and K integer values  }
 }}
 
-\item{groupBy}{\code{\link{condition_evaluation}} function to support 
-methods with groupBy or JoinBy input paramter}
+\item{groupBy}{\code{\link{conds}} function to support methods with 
+groupBy or JoinBy input parameter}
 
 \item{variation}{string identifying the cover GMQL operator variation.
 The admissible strings are:
@@ -114,7 +114,7 @@ are disregarded.
 
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
-exp = read_dataset(test_path)
+exp = read_GMQL(test_path)
   
 ## the following statement produces an output dataset with a single output 
 ## sample. The COVER operation considers all areas defined by a minimum 
@@ -131,7 +131,6 @@ res = cover(exp, 2, ANY())
 ## regions the minimum pvalue of the overlapping regions (min_pvalue) 
 ## and their Jaccard indexes (JaccardIntersect and JaccardResult).
 
-res = cover(exp, 2, 3, groupBy = condition_evaluation(c("cell")), 
-min_pValue = MIN("pvalue"))
+res = cover(exp, 2, 3, groupBy = conds("cell"), min_pValue = MIN("pvalue"))
 
 }

@@ -4,7 +4,7 @@
 \alias{semijoin}
 \title{Semijoin condtion}
 \usage{
-semijoin(.data, not_in = FALSE, groupBy = NULL)
+semijoin(.data, not_in = FALSE, groupBy)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
@@ -16,16 +16,8 @@ in groupBy and these attributes of 'data' have at least one value in
 common with the same attributes defined in one sample of '.data'
 FALSE => semijoin condition is evaluated accordingly.}
 
-\item{groupBy}{list of evalation functions to define evaluation on metadata:
-\itemize{
-\item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
-if they both end with \emph{value} and, if they have further prefixes,
-the two prefix sequence are identical.}
-\item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-as \emph{value} match; no further prefixes are allowed.}
-\item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
-if both end with \emph{value}.}
-}}
+\item{groupBy}{\code{\link{condition_evaluation}} function to support 
+methods with groupBy or JoinBy input paramter}
 }
 \value{
 semijoin condition as list
@@ -45,8 +37,8 @@ semijoin conditions on metadata
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-data <- read_dataset(test_path)
-join_data <-  read_dataset(test_path2)
+data <- read_GMQL(test_path)
+join_data <-  read_GMQL(test_path2)
 
 # It creates a new dataset called 'jun_tf' by selecting those samples and 
 # their regions from the existing 'data' dataset such that:
@@ -60,7 +52,7 @@ join_data <-  read_dataset(test_path2)
 # have a region attribute called pValue with the associated value 
 # less than 0.01 are conserved in output
 
-jun_tf <- filter(data, antibody_target == "JUN", pValue < 0.01, 
-semijoin(join_data, TRUE, list(DF("cell"))))
+jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
+semijoin(join_data, TRUE, conds("cell")))
 
 }

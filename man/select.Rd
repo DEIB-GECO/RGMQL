@@ -73,7 +73,7 @@ those in the input dataset. It allows to:
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data = read_dataset(test_path)
+data = read_GMQL(test_path)
 
 ## It creates a new dataset called CTCF_NORM_SCORE by preserving all 
 ## region attributes apart from score, and creating a new region attribute 

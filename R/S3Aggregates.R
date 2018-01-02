@@ -112,7 +112,7 @@ take_value.META_AGGREGATES <- function(obj){
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' exp = read_dataset(test_path)
+#' exp = read_GMQL(test_path)
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, and 
 #' ## then calculates new metadata attribute for each of them: 
@@ -137,8 +137,7 @@ take_value.META_AGGREGATES <- function(obj){
 #' ## attribute the average signal of the overlapping regions; 
 #' ## the result has one sample for each input cell.
 #' 
-#' res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
-#' avg_signal = AVG("signal") )
+#' res = cover(exp, 2, 3, groupBy = conds("cell"), avg_signal = AVG("signal"))
 #' 
 #' ## This statement copies all samples of DATA dataset into OUT dataset, 
 #' ## and then for each of them it adds another metadata attribute, allScores, 

@@ -6,6 +6,8 @@
 \alias{AGGREGATES-Object}
 \alias{COUNT}
 \alias{AGGREGATES-Object}
+\alias{COUNTSAMP}
+\alias{AGGREGATES-Object}
 \alias{MIN}
 \alias{AGGREGATES-Object}
 \alias{MAX}
@@ -30,6 +32,8 @@
 SUM(value)
 
 COUNT()
+
+COUNTSAMP()
 
 MIN(value)
 
@@ -67,6 +71,8 @@ to be used in GMQL functions that require aggregate on value.
 function sum, performing all the type conversions needed  }
 \item{COUNT: It prepares input parameter to be passed to the library 
 function count, performing all the type conversions needed }
+\item{COUNTSAMP: It prepares input parameter to be passed to the library 
+function third quartile, performing all the type conversions needed }
 \item{MIN: It prepares input parameter to be passed to the library 
 function minimum, performing all the type conversions needed  }
 \item{MAX: It prepares input parameter to be passed to the library 
@@ -101,7 +107,7 @@ function third quartile, performing all the type conversions needed }
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_dataset(test_path)
+exp = read_GMQL(test_path)
 
 ## This statement copies all samples of exp dataset into res dataset, and 
 ## then calculates new metadata attribute for each of them: 
@@ -126,8 +132,7 @@ res = extend(exp, max_score = MAX("score"))
 ## attribute the average signal of the overlapping regions; 
 ## the result has one sample for each input cell.
 
-res = cover(exp, 2, 3, groupBy = list(DF("cell")), 
-avg_signal = AVG("signal") )
+res = cover(exp, 2, 3, groupBy = conds("cell"), avg_signal = AVG("signal"))
 
 ## This statement copies all samples of DATA dataset into OUT dataset, 
 ## and then for each of them it adds another metadata attribute, allScores, 

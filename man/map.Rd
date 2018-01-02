@@ -10,7 +10,7 @@
 \usage{
 map(x, y, ...)
 
-\S4method{map}{GMQLDataset}(x, y, ..., joinBy = NULL, count_name = NULL)
+\S4method{map}{GMQLDataset}(x, y, ..., joinBy = conds(), count_name = "")
 }
 \arguments{
 \item{x}{GMQLDataset class object}
@@ -34,16 +34,8 @@ attributes. Two styles are allowed:
 }
 "mixed style" is not allowed}
 
-\item{joinBy}{list of evalation functions to define evaluation on metadata:
-\itemize{
-\item{ \code{\link{FN}}(value): Fullname evaluation, two attributes match 
-if they both end with \emph{value} and, if they have further prefixes,
-the two prefix sequence are identical.}
-\item{ \code{\link{EX}}(value): Exact evaluation, only attributes exactly 
-as \emph{value} match; no further prefixes are allowed.}
-\item{ \code{\link{DF}}(value): Default evaluation, the two attributes match 
-if both end with \emph{value}.}
-}}
+\item{joinBy}{\code{\link{conds}} function to support methods with 
+groupBy or JoinBy input parameter}
 
 \item{count_name}{string defining the metadata count name; if it is 
 not specifying the name is "count_left_right"}
@@ -85,8 +77,8 @@ present with equal values in both M1 and  M2
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-exp = read_dataset(test_path)
-ref = read_dataset(test_path2)
+exp = read_GMQL(test_path)
+ref = read_GMQL(test_path2)
 
 # It counts the number of regions in each sample from exp that overlap with 
 # a ref region, and for each ref region it computes the minimum score 
@@ -97,7 +89,6 @@ ref = read_dataset(test_path2)
 # but with a different value from the one(s) of ref sample(s), 
 # are disregarded.
 
-out = map(ref, exp, minScore = MIN("score"), 
-joinBy = list(DF("cell_tissue")))
+out = map(ref, exp, minScore = MIN("score"), joinBy = conds("cell_tissue"))
 
 }

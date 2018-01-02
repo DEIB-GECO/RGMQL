@@ -73,8 +73,8 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' TSS = read_dataset(test_path)
-#' HM = read_dataset(test_path2)
+#' TSS = read_GMQL(test_path)
+#' HM = read_GMQL(test_path2)
 #' 
 #' ## Given a dataset 'HM' and one called 'TSS' with a sample including 
 #' ## Transcription Start Site annotations, it searches for those regions of HM 
@@ -83,10 +83,8 @@
 #' ## is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
 #' ## from the same provider (joinby clause).
 #' 
-#' 
-#' join_data = merge(TSS, HM, 
-#' genometric_predicate = list(MD(1), DLE(120000)), DF("provider"), 
-#' region_output = "RIGHT")
+#' join_data = merge(TSS, HM, genometric_predicate = list(MD(1), DLE(120000)), 
+#' conds("provider"), region_output = "RIGHT")
 #' 
 #' 
 #' @name merge
@@ -95,7 +93,7 @@
 #' @export
 setMethod("merge", c("GMQLDataset","GMQLDataset"),
                 function(x, y, genometric_predicate = NULL, 
-                    region_output = "CAT", joinBy = NULL, reg_attr = NULL)
+                    region_output = "CAT", joinBy = conds(), reg_attr = c(""))
                 {
                     ptr_data_x <- value(x)
                     ptr_data_y <- value(y)
@@ -150,8 +148,8 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
         
         if(!length(reg_attributes))
             reg_attributes <- .jnull("java/lang/String")
-        
-        reg_attributes <- .jarray(reg_attributes)
+        else
+            reg_attributes <- .jarray(reg_attributes, dispatch = TRUE)
     }
     else
         reg_attributes <- .jnull("java/lang/String")

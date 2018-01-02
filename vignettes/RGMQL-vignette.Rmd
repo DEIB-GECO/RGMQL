@@ -247,17 +247,17 @@ As data are already in the user computer, we simply execute:
 
 ```{r, read GMQL dataset}
 gmql_dataset_path <- system.file("example", "EXON", package = "RGMQL")
-data_out = read_dataset(gmql_dataset_path)
+data_out = read_GMQL(gmql_dataset_path)
 ```
 In this case we are reading a GMQL dataset specified by the path of 
 its folder "EXON" within the subdirectory "example" of the package "RGMQL".
-It does not matter what kind of format the data are, *read_dataset()* reads 
+It does not matter what kind of format the data are, *read_GMQL()* reads 
 many standard tab-delimited text formats without the need of specifying any  
 additional input parameter.
 
 2. GRangesList:\newline
 For better integration in the R environment and with other R packages, 
-we provide the *read()* function to read directly from R memory/environment 
+we provide the *read_GRangesList()* function to read directly from R memory/environment
 using GRangesList as input.
 
 ```{r, read GRangesList}
@@ -270,12 +270,12 @@ gr2 <- GRanges(seqnames = c("chr1", "chr1"),
 	score = 3:4, GC = c(0.3, 0.5))
 
 grl <- GRangesList("txA" = gr1, "txB" = gr2)
-data_out <- read(grl)
+data_out <- read_GRangesList(grl)
 ```
 In this example we show how versatile the RGMQL package is.
 As specified above, we can directly read a list of GRanges previously created 
 starting from two GRanges.
-Both *read()* and *read_dataset()* functions return a result object, 
+Both *read_GRangesList()* and *read_GMQL()* functions return a result object, 
 in this case *data_out*: an instance of GMQLDataset class used as input 
 for executing the subsequent GMQL operation.
 
@@ -306,8 +306,8 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 # sample with exon regions, and MUT folder as a GMQL dataset named "mut_ds" 
 # containing multiple samples with mutation regions
 
-exon_ds <- read_dataset(exon_path)
-mut_ds <- read_dataset(mut_path)
+exon_ds <- read_GMQL(exon_path)
+mut_ds <- read_GMQL(mut_path)
 
 # Filter out mut_ds based on predicate 
 
@@ -484,8 +484,8 @@ After initialization, we can start building our query:
 ## Read the remote dataset HG19_TCGA_dnaseq 
 ## Read the remote dataset HG19_BED_ANNOTATION 
 
-TCGA_dnaseq <- read_dataset("public.HG19_TCGA_dnaseq", is_local = FALSE)
-HG19_bed_ann <- read_dataset("public.HG19_BED_ANNOTATION", is_local = FALSE)
+TCGA_dnaseq <- read_GMQL("public.HG19_TCGA_dnaseq", is_local = FALSE)
+HG19_bed_ann <- read_GMQL("public.HG19_BED_ANNOTATION", is_local = FALSE)
 
 ## Filter out TCGA_dnaseq based on predicate 
 
@@ -535,7 +535,7 @@ remote_processing(TRUE)
 ```
 An user can switch processing mode until the first *collect()* has been performed.
 
-This kind of processing comes from the fact that the *read()* function can 
+This kind of processing comes from the fact that the *read_GMQL()* function can 
 accept either a local dataset or a remote repository dataset, 
 even in the same query as in the following example:
 ```{r, mixed query}
@@ -549,11 +549,11 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 # Read MUT folder as a GMQL dataset named "mut_ds" containing a single 
 # sample with mutation regions
 
-mut_ds <- read_dataset(mut_path, is_local = TRUE)
+mut_ds <- read_GMQL(mut_path, is_local = TRUE)
 
 # Read the remote dataset HG19_BED_ANNOTATION 
 
-HG19_bed_ann <- read_dataset("public.HG19_BED_ANNOTATION", is_local = FALSE)
+HG19_bed_ann <- read_GMQL("public.HG19_BED_ANNOTATION", is_local = FALSE)
 
 # Filter out based on predicate
 
@@ -592,7 +592,7 @@ collect(exon_res)
 execute()
 ```
 
-As we can see, the two *read()* functions above read from different sources: 
+As we can see, the two *read_GMQL()* functions above read from different sources: 
 *mut_ds* from local dataset, *HG19_bed_ann* from remote repository.
 
 If we set remote processing to false (*remote_processing(FALSE)*), 

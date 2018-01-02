@@ -23,7 +23,7 @@ and password, or as guest, using the proper GMQL web service available
 on a remote server
 }
 \details{
-If both username and password are NULL you will be logged as guest.
+If both username and password are missing you will be logged as guest.
 After login you will receive an authentication token.
 As token remains vaild on server (until the next login / registration) 
 a user can safely use a token for a previous session as a convenience;

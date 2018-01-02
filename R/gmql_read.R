@@ -49,24 +49,26 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_dataset(test_path)
+#' data = read_GMQL(test_path)
 #' 
 #' ## This statement opens such folder as a GMQL dataset named "data" using 
 #' ## "NarrowPeakParser" 
-#' dataPeak = read_dataset(test_path,"NarrowPeakParser")
+#' dataPeak = read_GMQL(test_path,"NarrowPeakParser")
 #' 
 #' ## This statement reads a remote public dataset stored into GMQL system 
 #' ## repository. For a public dataset in a (remote) GMQL repository the 
 #' ## prefix "public." is needed before dataset name
 #' 
-#' data1 = read_dataset("public.Example_Dataset1",is_local = FALSE)
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' login_gmql(remote_url)
+#' data1 = read_GMQL("public.Example_Dataset1",is_local = FALSE)
 #' 
-#' @name read_dataset
+#' @name read_GMQL
 #' @rdname read-function
 #' @export
 #'
-read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE, 
-                            is_GMQL=TRUE)
+read_GMQL <- function(dataset, parser = "CustomParser", is_local = TRUE, 
+                            is_GMQL = TRUE)
 {
     .check_input(dataset)
     .check_logical(is_local)
@@ -128,11 +130,11 @@ read_dataset <- function(dataset, parser = "CustomParser", is_local=TRUE,
 #' 
 #' @param samples GRangesList
 #' 
-#' @name read_dataset
+#' @name read_GMQL
 #' @rdname read-function
 #' @export
 #'
-read <- function(samples)
+read_GRangesList <- function(samples)
 {
     if(!is(samples,"GRangesList"))
         stop("only GrangesList")

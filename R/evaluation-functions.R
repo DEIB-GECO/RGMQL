@@ -26,9 +26,6 @@
 #' @return list of 2-D array containing method of evaluation and metadata 
 #' attribute name
 #' 
-#' @examples
-#' 
-#' "Where is my example?"
 #' 
 #' @name Evaluation-Function
 #' @aliases condition_evaluation

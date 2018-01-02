@@ -89,8 +89,8 @@ directions of the genome.}
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-TSS = read_dataset(test_path)
-HM = read_dataset(test_path2)
+TSS = read_GMQL(test_path)
+HM = read_GMQL(test_path2)
 
 ## Given a dataset HM and one called TSS with a sample including 
 ## Transcription Start Site annotations, it searches for those regions of HM 
@@ -100,7 +100,7 @@ HM = read_dataset(test_path2)
 ## obtained from the same provider (joinby clause).
 
 join_data = merge(TSS, HM, 
-genometric_predicate = list(MD(1), DL(1200)), DF("provider"), 
+genometric_predicate = list(MD(1), DL(1200)), conds("provider"), 
 region_output = "RIGHT")
 
 ## Given a dataset 'HM' and one called 'TSS' with a sample including 
@@ -111,7 +111,7 @@ region_output = "RIGHT")
 ## from the same provider (joinby clause).
 
 join_data = merge(TSS, HM, 
-genometric_predicate = list(MD(1), DGE(12000), DOWN()), 
-DF("provider"), region_output = "RIGHT")
+genometric_predicate = list(MD(1), DGE(12000), DOWN()), conds("provider"), 
+region_output = "RIGHT")
 
 }

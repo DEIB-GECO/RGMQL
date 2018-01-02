@@ -40,8 +40,8 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data1 = read_dataset(test_path)
-#' data2 = read_dataset(test_path2)
+#' data1 = read_GMQL(test_path)
+#' data2 = read_GMQL(test_path2)
 #' 
 #' ## This GMQL statement returns all the regions in the first dataset 
 #' ## that do not overlap any region in the second dataset.
@@ -61,7 +61,7 @@
 #' @aliases setdiff-method
 #' @export
 setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
-            function(x, y, joinBy = NULL, is_exact = FALSE)
+            function(x, y, joinBy = conds(), is_exact = FALSE)
             {
                 ptr_data_x = value(x)
                 ptr_data_y = value(y)

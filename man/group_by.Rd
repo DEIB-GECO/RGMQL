@@ -6,27 +6,19 @@
 \alias{group_by,GMQLDataset-method}
 \title{Method group_by}
 \usage{
-\S4method{group_by}{GMQLDataset}(.data, groupBy_meta = NULL,
-  groupBy_regions = NULL, region_aggregates = NULL,
+\S4method{group_by}{GMQLDataset}(.data, groupBy_meta = conds(),
+  groupBy_regions = c(""), region_aggregates = NULL,
   meta_aggregates = NULL)
 }
 \arguments{
 \item{.data}{GMQLDataset object}
 
-\item{groupBy_meta}{it define condition evaluation on metadata.
-\itemize{
-\item{\code{\link{FN}}: Fullname evaluation, two attributes match 
-if they both end with value and, if they have a further prefixes,
-the two prefix sequence are identical}
-\item{\code{\link{EX}}: Exact evaluation, only attributes exactly 
-as value will match; no further prefixes are allowed. }
-\item{\code{\link{DF}}: Default evaluation, the two attributes match 
-if both end with value.}
-}}
+\item{groupBy_meta}{\code{\link{conds}} function to support methods with 
+groupBy or JoinBy input parameter}
 
 \item{groupBy_regions}{vector of string made up by schema field attribute}
 
-\item{region_aggregates}{It accept a series of aggregate function on 
+\item{region_aggregates}{It accept a list of aggregate function on 
 region attribute. 
 All the element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
@@ -45,7 +37,7 @@ attributes. Two style are allowed:
 }
 "mixed style" is not allowed}
 
-\item{meta_aggregates}{It accept a series of aggregate function on 
+\item{meta_aggregates}{It accept a list of aggregate function on 
 metadata attribute.
 All the element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
@@ -72,5 +64,56 @@ for the subsequent GMQLDataset method
 Wrapper to GMQL GROUP operator
 }
 \examples{
+
+## This statement initializes and runs the GMQL server for local execution 
+## and creation of results on disk. Then, with system.file() it defines 
+## the path to the folder "DATASET" in the subdirectory "example"
+## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+## using customParser
+
+init_gmql()
+test_path <- system.file("example","DATASET",package = "RGMQL")
+exp = read_GMQL(test_path)
+
+## This GMQL statement groups samples of the input 'exp' dataset according to 
+## their value of the metadata attribute 'tumor_type' and computes the 
+## maximum value that the metadata attribute size takes inside the samples 
+## belonging to each group. The samples in the output GROUPS_T dataset 
+## have a new _group metadata attribute which indicates which group they 
+## belong to, based on the grouping on the metadata attribute tumor_type. 
+## In addition, they present the new metadata aggregate attribute MaxSize. 
+## Note that the samples without metadata attribute tumor_type are assigned 
+## to a single group with _group value equal 0
+
+GROUPS_T = group_by(exp, conds("tumor_type"), 
+meta_aggregates = list(max_size = MAX("size")))
+
+## This GMQL statement takes as input dataset the same input dataset as 
+## the previous example. Yet, it calculates new _group values based on the 
+## grouping attribute 'cell', and adds the metadata aggregate attribute 
+## 'n_samp', which counts the number of samples belonging to the respective 
+## group. It has the following output GROUPS_C dataset samples 
+## (note that now no sample has metadata attribute _group with value equal 0 
+## since all input samples include the metadata attribute cell, 
+## with different values, on which the new grouping is based)
+
+GROUPS_C = group_by(exp, conds("cell"),
+meta_aggregates = list(n_samp AS COUNTSAMP()))
+
+## This GMQL statement groups the regions of each 'exp' dataset sample by 
+## region coordinates chr, left, right, strand  (these are implicitly 
+## considered) and the additional region attribute score (which is explicitly 
+## specified), and keeps only one region for each group. 
+## In the output GROUPS dataset schema, the new region attributes 
+## avg_pvalue and max_qvalue are added, respectively computed as the 
+## average of the values taken by the pvalue and the maximum of the values 
+## taken by the qvalue region attributes in the regions grouped together, 
+## and the computed value is assigned to each region of each output sample. 
+## Note that the region attributes which are not coordinates or score are 
+## discarded.
+
+GROUPS = group_by(exp, group_reg = "score", 
+region_aggregates = list(avg_pvalue = AVG("pvalue"), 
+max_qvalue = MAX("qvalue")))
 
 }

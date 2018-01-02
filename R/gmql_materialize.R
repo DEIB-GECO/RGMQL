@@ -16,7 +16,7 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' data = read_dataset(test_path)
+#' data = read_GMQL(test_path)
 #' 
 #' ## The following statement materialize the dataset, previoulsy read, at 
 #' ## th specific destination path into local folder "ds1" opportunely created
@@ -116,7 +116,7 @@ collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 #'
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_dataset(test_path)
+#' data = read_GMQL(test_path)
 #' 
 #' ## The following statement materialize the dataset, previoulsy read, at 
 #' ## th specific destination path into local folder "ds1" opportunely created
@@ -188,9 +188,9 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' rd = read_dataset(test_path)
+#' rd = read_GMQL(test_path)
 #' 
-#' aggr = aggregate(rd, list(DF("antibody_target", "cell_karyotype")))
+#' aggr = aggregate(rd, conds(c("antibody_target", "cell_karyotype")))
 #' taken <- take(aggr, rows = 45)
 #' 
 #' @name take

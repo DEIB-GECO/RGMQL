@@ -6,7 +6,7 @@
 \alias{aggregate,GMQLDataset-method}
 \title{Method aggregate}
 \usage{
-\S4method{aggregate}{GMQLDataset}(x, groupBy = NULL)
+\S4method{aggregate}{GMQLDataset}(x, groupBy = conds())
 }
 \arguments{
 \item{x}{GMQLDataset class object}
@@ -40,7 +40,7 @@ not present in the grouping metadata parameter are disregarded.
 
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
-exp = read_dataset(test_path)
+exp = read_GMQL(test_path)
 
 ## This statement creates a dataset called merged which contains one 
 ## sample for each antibody_target and cell value found within the metadata 
@@ -49,6 +49,6 @@ exp = read_dataset(test_path)
 ## antibody_target and cell metadata
 ## attributes.
 
-merged = aggregate(exp, condition_evaluation(c("antibody_target","cell")))
+merged = aggregate(exp, conds(c("antibody_target","cell")))
 
 }

@@ -7,8 +7,8 @@
 \title{Method arrange}
 \usage{
 \S4method{arrange}{GMQLDataset}(.data, metadata_ordering = NULL,
-  regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0L,
-  reg_fetch_opt = NULL, reg_num_fetch = 0L)
+  regions_ordering = NULL, fetch_opt = "", num_fetch = 0L,
+  reg_fetch_opt = "", reg_num_fetch = 0L)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
@@ -25,8 +25,8 @@ The functions available are: \code{\link{ASC}}, \code{\link{DESC}}.}
 first k samples; it can assume the values:
 \itemize{
 \item{mtop: it fetches the first k samples}
-\item{mtopg: it fetches the percentage of samples.}
-\item{mtopp: it fetches the first k samples in each group.}
+\item{mtopp: it fetches the first k percentage of samples.}
+\item{mtopg: it fetches the first k samples in each group.}
 
 }
 if NULL, \emph{num_fetch} is not considered}
@@ -39,8 +39,8 @@ s}
 first k regions; it can assume the values:
 \itemize{
 \item{rtop: it fetches the first k regions.}
-\item{rtopg: it fetches the first k percentage of regions.}
-\item{rtopp: it fetches the first k regions in each group.}
+\item{rtopp: it fetches the first k percentage of regions.}
+\item{rtopg: it fetches the first k regions in each group.}
 }
 if NULL, \emph{reg_num_fetch} is not considered}
 
@@ -73,7 +73,7 @@ added to either metadata, or regions, or both of them as specified in inputs
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data = read_dataset(test_path)
+data = read_GMQL(test_path)
 
 ## The following statement orders the samples according to the Region_Count 
 ## metadata attribute and takes the two samples that have the highest count. 

@@ -37,8 +37,8 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data1 <- read_dataset(test_path)
-#' data2 <- read_dataset(test_path2)
+#' data1 <- read_GMQL(test_path)
+#' data2 <- read_GMQL(test_path2)
 #' 
 #' ## This statement creates a dataset called 'full' which contains all samples 
 #' ## from the datasets 'data1' and 'data2'

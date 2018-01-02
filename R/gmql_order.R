@@ -1,6 +1,6 @@
 arrange.GMQLDataset <- function(.data, metadata_ordering = NULL, 
-        regions_ordering = NULL, fetch_opt = NULL, num_fetch = 0L, 
-        reg_fetch_opt = NULL, reg_num_fetch = 0L)
+        regions_ordering = NULL, fetch_opt = "", num_fetch = 0L, 
+        reg_fetch_opt = "", reg_num_fetch = 0L)
 {
     ptr_data <- value(.data)
     gmql_order(ptr_data, metadata_ordering, regions_ordering, 
@@ -70,7 +70,7 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_dataset(test_path)
+#' data = read_GMQL(test_path)
 #' 
 #' ## The following statement orders the samples according to the Region_Count 
 #' ## metadata attribute and takes the two samples that have the highest count. 
@@ -88,7 +88,7 @@ setMethod("arrange", "GMQLDataset", arrange.GMQLDataset)
 gmql_order <- function(input_data, metadata_ordering, regions_ordering,
                     fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
 {
-    if(!is.null(fetch_opt))
+    if(!is.null(fetch_opt) && !identical(fetch_opt,""))
         fetch_opt <- .check_option(fetch_opt)
     else
         fetch_opt <- .jnull("java/lang/String")
@@ -103,7 +103,7 @@ gmql_order <- function(input_data, metadata_ordering, regions_ordering,
     else
         reg_num_fetch <- 0L
     
-    if(!is.null(reg_fetch_opt))
+    if(!is.null(reg_fetch_opt) && !identical(reg_fetch_opt,""))
         reg_fetch_opt <- .check_option(reg_fetch_opt)
     else
         reg_fetch_opt <- .jnull("java/lang/String")

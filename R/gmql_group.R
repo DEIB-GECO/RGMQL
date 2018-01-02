@@ -1,5 +1,5 @@
-group_by.GMQLDateset <- function(.data, groupBy_meta = NULL, 
-    groupBy_regions = NULL, region_aggregates = NULL, meta_aggregates = NULL)
+group_by.GMQLDateset <- function(.data, groupBy_meta = conds(), 
+    groupBy_regions = c(""), region_aggregates = NULL, meta_aggregates = NULL)
 {
     ptr_data = value(.data)
     gmql_group(ptr_data, groupBy_meta, groupBy_regions, region_aggregates, 
@@ -18,7 +18,7 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = NULL,
 #' groupBy or JoinBy input parameter
 #' 
 #' @param groupBy_regions vector of string made up by schema field attribute
-#' @param region_aggregates It accept a series of aggregate function on 
+#' @param region_aggregates It accept a list of aggregate function on 
 #' region attribute. 
 #' All the element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
@@ -36,7 +36,7 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = NULL,
 #' \item list of values: e.g. SUM("pvalue")
 #' }
 #' "mixed style" is not allowed
-#' @param meta_aggregates It accept a series of aggregate function on 
+#' @param meta_aggregates It accept a list of aggregate function on 
 #' metadata attribute.
 #' All the element in the form \emph{key} = \emph{aggregate}.
 #' The \emph{aggregate} is an object of class AGGREGATES
@@ -60,6 +60,57 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = NULL,
 #' for the subsequent GMQLDataset method
 #'
 #' @examples
+#' 
+#' ## This statement initializes and runs the GMQL server for local execution 
+#' ## and creation of results on disk. Then, with system.file() it defines 
+#' ## the path to the folder "DATASET" in the subdirectory "example"
+#' ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
+#' ## using customParser
+#'
+#' init_gmql()
+#' test_path <- system.file("example","DATASET",package = "RGMQL")
+#' exp = read_GMQL(test_path)
+#' 
+#' ## This GMQL statement groups samples of the input 'exp' dataset according to 
+#' ## their value of the metadata attribute 'tumor_type' and computes the 
+#' ## maximum value that the metadata attribute size takes inside the samples 
+#' ## belonging to each group. The samples in the output GROUPS_T dataset 
+#' ## have a new _group metadata attribute which indicates which group they 
+#' ## belong to, based on the grouping on the metadata attribute tumor_type. 
+#' ## In addition, they present the new metadata aggregate attribute MaxSize. 
+#' ## Note that the samples without metadata attribute tumor_type are assigned 
+#' ## to a single group with _group value equal 0
+#' 
+#' GROUPS_T = group_by(exp, conds("tumor_type"), 
+#' meta_aggregates = list(max_size = MAX("size")))
+#' 
+#' ## This GMQL statement takes as input dataset the same input dataset as 
+#' ## the previous example. Yet, it calculates new _group values based on the 
+#' ## grouping attribute 'cell', and adds the metadata aggregate attribute 
+#' ## 'n_samp', which counts the number of samples belonging to the respective 
+#' ## group. It has the following output GROUPS_C dataset samples 
+#' ## (note that now no sample has metadata attribute _group with value equal 0 
+#' ## since all input samples include the metadata attribute cell, 
+#' ## with different values, on which the new grouping is based)
+#' 
+#' GROUPS_C = group_by(exp, conds("cell"),
+#' meta_aggregates = list(n_samp AS COUNTSAMP()))
+#' 
+#' ## This GMQL statement groups the regions of each 'exp' dataset sample by 
+#' ## region coordinates chr, left, right, strand  (these are implicitly 
+#' ## considered) and the additional region attribute score (which is explicitly 
+#' ## specified), and keeps only one region for each group. 
+#' ## In the output GROUPS dataset schema, the new region attributes 
+#' ## avg_pvalue and max_qvalue are added, respectively computed as the 
+#' ## average of the values taken by the pvalue and the maximum of the values 
+#' ## taken by the qvalue region attributes in the regions grouped together, 
+#' ## and the computed value is assigned to each region of each output sample. 
+#' ## Note that the region attributes which are not coordinates or score are 
+#' ## discarded.
+#' 
+#' GROUPS = group_by(exp, group_reg = "score", 
+#' region_aggregates = list(avg_pvalue = AVG("pvalue"), 
+#' max_qvalue = MAX("qvalue")))
 #' 
 #' @name group_by
 #' @rdname group_by

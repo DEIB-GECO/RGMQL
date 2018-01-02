@@ -47,7 +47,7 @@ null, performing all the type conversions needed}
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_dataset(test_path)
+exp = read_GMQL(test_path)
 
 ## This statement allows to select, in all input sample, all those regions 
 ## for which the region attribute score has a value which is greater 

@@ -28,7 +28,7 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_dataset(test_path)
+#' data = read_GMQL(test_path)
 #' 
 #' ## It orders the samples according to the Region_Count metadata attribute 
 #' ## and takes the two samples that have the lowest count. 

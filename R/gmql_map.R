@@ -58,8 +58,8 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' exp = read_dataset(test_path)
-#' ref = read_dataset(test_path2)
+#' exp = read_GMQL(test_path)
+#' ref = read_GMQL(test_path2)
 #' 
 #' # It counts the number of regions in each sample from exp that overlap with 
 #' # a ref region, and for each ref region it computes the minimum score 
@@ -77,7 +77,7 @@
 #' @aliases map-method
 #' @export
 setMethod("map", "GMQLDataset",
-            function(x, y, ..., joinBy = NULL, count_name = "")
+            function(x, y, ..., joinBy = conds(), count_name = "")
             {
                 left_data <- value(x)
                 right_data <- value(y)

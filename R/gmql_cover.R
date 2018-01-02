@@ -98,7 +98,7 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' exp = read_dataset(test_path)
+#' exp = read_GMQL(test_path)
 #'   
 #' ## the following statement produces an output dataset with a single output 
 #' ## sample. The COVER operation considers all areas defined by a minimum 
@@ -123,7 +123,7 @@
 #' @aliases cover-method
 #' @export
 setMethod("cover", "GMQLDataset",
-            function(.data, min_acc, max_acc, groupBy = NULL, 
+            function(.data, min_acc, max_acc, groupBy = conds(), 
                     variation = "cover", ...)
             {
                 val <- value(.data)

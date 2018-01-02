@@ -7,7 +7,7 @@
 \title{Method merge}
 \usage{
 \S4method{merge}{GMQLDataset,GMQLDataset}(x, y, genometric_predicate = NULL,
-  region_output = "CAT", joinBy = NULL, reg_attr = NULL)
+  region_output = "CAT", joinBy = conds(), reg_attr = c(""))
 }
 \arguments{
 \item{x}{GMQLDataset class object}
@@ -35,17 +35,17 @@ that satisfy the genometric predicate, (i.e. the output regionis defined as
 having left (right) coordinates equal to the minimum (maximum) of the 
 corresponding coordinate values in the 'x' and 'y' regions satisfying 
 the genometric predicate)}
-\item{LEFT_DISTINCT: It outputs the duplicate elimination of "x" output 
+\item{LEFT_DIST: It outputs the duplicate elimination of "x" output 
 regions with the same values, regardless the "y" paired region and its 
 values. In this case, the output regions attributes and their values are 
 all those of "x", and the output metadata are equal to the "x" metadata, 
 without additional prefixes}
-\item{RIGHT_DISTINCT: It outputs the duplicate elimination of "y" output 
+\item{RIGHT_DIST: It outputs the duplicate elimination of "y" output 
 regions with the same values, regardless the "x" paired region and its 
 values. In this case, the output regions attributes and their values are 
 all those of "y", and the output metadata are equal to the "y" metadata, 
 without additional prefixes}
-\item{BOTH: outputs the same regions as LEFT, but it adds in the output 
+\item{BOTH: It outputs the same regions as LEFT, but it adds in the output 
 region attributes the coordinates of the "y" dataset region that, 
 together with the output "x" dataset region, satisfies the equi predicate 
 and the genometric predicate}
@@ -85,8 +85,8 @@ respectively.
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-TSS = read_dataset(test_path)
-HM = read_dataset(test_path2)
+TSS = read_GMQL(test_path)
+HM = read_GMQL(test_path2)
 
 ## Given a dataset 'HM' and one called 'TSS' with a sample including 
 ## Transcription Start Site annotations, it searches for those regions of HM 
@@ -95,10 +95,8 @@ HM = read_dataset(test_path2)
 ## is lesser than 120K bases and joined 'tss' and 'hm' samples are obtained 
 ## from the same provider (joinby clause).
 
-
-join_data = merge(TSS, HM, 
-genometric_predicate = list(MD(1), DLE(120000)), DF("provider"), 
-region_output = "RIGHT")
+join_data = merge(TSS, HM, genometric_predicate = list(MD(1), DLE(120000)), 
+conds("provider"), region_output = "RIGHT")
 
 
 }

@@ -6,7 +6,7 @@
 \alias{setdiff,GMQLDataset,GMQLDataset-method}
 \title{Method setdiff}
 \usage{
-\S4method{setdiff}{GMQLDataset,GMQLDataset}(x, y, joinBy = NULL,
+\S4method{setdiff}{GMQLDataset,GMQLDataset}(x, y, joinBy = conds(),
   is_exact = FALSE)
 }
 \arguments{
@@ -14,8 +14,8 @@
 
 \item{y}{GMQLDataset class object}
 
-\item{joinBy}{\code{\link{condition_evaluation}} function to support 
-methods with groupBy or JoinBy input paramter}
+\item{joinBy}{\code{\link{conds}} function to support methods with 
+groupBy or JoinBy input paramter}
 
 \item{is_exact}{single logical value: TRUE means that the region difference 
 is executed only on regions in left_input_data with exactly the same 
@@ -51,8 +51,8 @@ are considered when performing the difference.
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-data1 = read_dataset(test_path)
-data2 = read_dataset(test_path2)
+data1 = read_GMQL(test_path)
+data2 = read_GMQL(test_path2)
 
 ## This GMQL statement returns all the regions in the first dataset 
 ## that do not overlap any region in the second dataset.
@@ -65,6 +65,6 @@ out = setdiff(data1, data2)
 ## do not overlap any region in s2; 
 ## metadata of the result are the same as the metadata of s1.
 
-out_t = setdiff(data1, data2, condition_evaluation(c("cell")))
+out_t = setdiff(data1, data2, conds("cell"))
 
 }

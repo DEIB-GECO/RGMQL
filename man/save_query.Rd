@@ -15,9 +15,9 @@ and base url; service name is added automatically}
 
 \item{queryName}{string name of query}
 
-\item{filePath}{string local file path of txt file containing a GMQL query}
+\item{queryTxt}{string text of GMQL query}
 
-\item{query}{string text of GMQL query}
+\item{filePath}{string local file path of txt file containing a GMQL query}
 }
 \value{
 None

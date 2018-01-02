@@ -42,7 +42,7 @@ folder path
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data = read_dataset(test_path)
+data = read_GMQL(test_path)
 
 ## The following statement materialize the dataset, previoulsy read, at 
 ## th specific destination path into local folder "ds1" opportunely created

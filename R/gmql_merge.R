@@ -31,7 +31,7 @@
 #'
 #' init_gmql()
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' exp = read_dataset(test_path)
+#' exp = read_GMQL(test_path)
 #'
 #' ## This statement creates a dataset called merged which contains one 
 #' ## sample for each antibody_target and cell value found within the metadata 
@@ -49,7 +49,7 @@
 #' @export
 #' 
 setMethod("aggregate", "GMQLDataset",
-            function(x, groupBy = NULL)
+            function(x, groupBy = conds())
             {
                 ptr_data = value(x)
                 gmql_merge(ptr_data, groupBy)

@@ -25,7 +25,7 @@ if(getRversion() >= "3.1.0")
 #' @param password string password used during signup
 #'
 #' @details
-#' If both username and password are NULL you will be logged as guest.
+#' If both username and password are missing you will be logged as guest.
 #' After login you will receive an authentication token.
 #' As token remains vaild on server (until the next login / registration) 
 #' a user can safely use a token for a previous session as a convenience;
@@ -202,7 +202,7 @@ show_queries_list <- function(url)
 #' @param url string url of server: It must contain the server address 
 #' and base url; service name is added automatically
 #' @param queryName string name of query
-#' @param query string text of GMQL query
+#' @param queryTxt string text of GMQL query
 #'
 #' @return None
 #'
