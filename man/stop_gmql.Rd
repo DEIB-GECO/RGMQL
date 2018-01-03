@@ -14,8 +14,8 @@ Stop GMQL server
 }
 \examples{
 
-## These statements initializes GMQL with local processing with sample files 
-## output format as tab delimited and then stop it
+## These statements initializes GMQL with local processing with sample 
+## files output format as tab delimited and then stop it
 
 init_gmql("tab", FALSE)
 

@@ -96,21 +96,21 @@ export_gmql <- function(samples, dir_out, is_gtf)
     
     files_sub_dir <- paste0(dir_out,"/files")
     dir.create(files_sub_dir)
-    c = .counter()
+    cnt = .counter()
     #col_names <- .get_schema_names(samples)
     if(to_GTF)
     {
         #write region
         lapply(samples,function(x,dir){
-            sample_name = paste0(dir,"/S_",c(),".gtf")
+            sample_name = paste0(dir,"/S_",cnt(),".gtf")
             g <- rtracklayer::export(x,sample_name,format = "gtf")
         },files_sub_dir)
-        c = .counter(0)
+        cnt = .counter(0)
         meta <- metadata(samples)
 
         #write metadata
         lapply(meta,function(x,dir){
-            sample_name = paste0(dir,"/S_",c(),".gtf")
+            sample_name = paste0(dir,"/S_",cnt(),".gtf")
             .write_metadata(x,sample_name)
         },files_sub_dir)
     }
@@ -118,18 +118,18 @@ export_gmql <- function(samples, dir_out, is_gtf)
     {
         #write region
         lapply(samples,function(x,dir){
-            sample_name = paste0(dir,"/S_",c(),".gdm")
+            sample_name = paste0(dir,"/S_",cnt(),".gdm")
             region_frame <- data.frame(x)
             write.table(region_frame,sample_name,col.names = FALSE,
                             row.names = FALSE, sep = '\t',quote = FALSE)
         },files_sub_dir)
 
-        c = .counter(0)
+        cnt = .counter(0)
         meta <- metadata(samples)
 
         #write metadata
         lapply(meta,function(x,dir){
-            sample_name = paste0(dir,"/S_",c(),".gdm")
+            sample_name = paste0(dir,"/S_",cnt(),".gdm")
             .write_metadata(x,sample_name)
         },files_sub_dir)
     }

@@ -100,18 +100,6 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 #' regions_update = list(new_score = (score / 1000.0) + 100), 
 #' regions = c("score"), all_but_reg = TRUE)
 #' 
-#' 
-#' ## It produces an output dataset that contains the same samples 
-#' ## as the input dataset. 
-#' ## Each output sample only contains, as region attributes, 
-#' ## the four basic coordinates (chr, left, right, strand) and the specified 
-#' ## region attributes 'variant_classification' and 'variant_type', 
-#' ## and as metadata attributes only the specified ones, 
-#' ## i.e. manually_curated_tissue_status and manually_curated_tumor_tag.
-#' 
-#' DS_out = select(data, regions = c("variant_classification", 
-#' "variant_type"), metadata = c("manually_curated_tissue_status", 
-#' "manually_curated_tumor_tag"))
 #'
 #' 
 #' @name select

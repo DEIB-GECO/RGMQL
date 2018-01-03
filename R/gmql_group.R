@@ -3,7 +3,7 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = conds(),
 {
     ptr_data = value(.data)
     gmql_group(ptr_data, groupBy_meta, groupBy_regions, region_aggregates, 
-                meta_aggregates)
+                    meta_aggregates)
 }
 
 #' Method group_by
@@ -71,8 +71,8 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = conds(),
 #' test_path <- system.file("example","DATASET",package = "RGMQL")
 #' exp = read_GMQL(test_path)
 #' 
-#' ## This GMQL statement groups samples of the input 'exp' dataset according to 
-#' ## their value of the metadata attribute 'tumor_type' and computes the 
+#' ## This GMQL statement groups samples of the input 'exp' dataset according 
+#' ## to their value of the metadata attribute 'tumor_type' and computes the 
 #' ## maximum value that the metadata attribute size takes inside the samples 
 #' ## belonging to each group. The samples in the output GROUPS_T dataset 
 #' ## have a new _group metadata attribute which indicates which group they 
@@ -89,17 +89,17 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = conds(),
 #' ## grouping attribute 'cell', and adds the metadata aggregate attribute 
 #' ## 'n_samp', which counts the number of samples belonging to the respective 
 #' ## group. It has the following output GROUPS_C dataset samples 
-#' ## (note that now no sample has metadata attribute _group with value equal 0 
-#' ## since all input samples include the metadata attribute cell, 
+#' ## (note that now no sample has metadata attribute _group with value 
+#' ## equal 0 since all input samples include the metadata attribute cell, 
 #' ## with different values, on which the new grouping is based)
 #' 
 #' GROUPS_C = group_by(exp, conds("cell"),
-#' meta_aggregates = list(n_samp AS COUNTSAMP()))
+#' meta_aggregates = list(n_samp = COUNTSAMP()))
 #' 
 #' ## This GMQL statement groups the regions of each 'exp' dataset sample by 
 #' ## region coordinates chr, left, right, strand  (these are implicitly 
-#' ## considered) and the additional region attribute score (which is explicitly 
-#' ## specified), and keeps only one region for each group. 
+#' ## considered) and the additional region attribute score (which is 
+#' ## explicitly specified), and keeps only one region for each group. 
 #' ## In the output GROUPS dataset schema, the new region attributes 
 #' ## avg_pvalue and max_qvalue are added, respectively computed as the 
 #' ## average of the values taken by the pvalue and the maximum of the values 
@@ -108,7 +108,7 @@ group_by.GMQLDateset <- function(.data, groupBy_meta = conds(),
 #' ## Note that the region attributes which are not coordinates or score are 
 #' ## discarded.
 #' 
-#' GROUPS = group_by(exp, group_reg = "score", 
+#' GROUPS = group_by(exp, groupBy_regions = "score", 
 #' region_aggregates = list(avg_pvalue = AVG("pvalue"), 
 #' max_qvalue = MAX("qvalue")))
 #' 
@@ -149,8 +149,8 @@ gmql_group <- function(input_data, group_meta, group_reg, region_aggregates,
         
         if(!length(group_reg))
             group_reg <- .jnull("java/lang/String")
-        
-        group_reg <- .jarray(group_reg)
+        else
+            group_reg <- .jarray(group_reg,dispatch = TRUE)
     }
     else
         group_reg <- .jnull("java/lang/String")

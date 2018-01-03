@@ -39,7 +39,7 @@ login_gmql(remote_url)
 ## This statement retrieves regions data for sample "S_00000" from public 
 ## dataset "Example_Dataset1"
  
-sample_region(remote_url, "public.Example_Dataset1", "S_00000")
+sample_region(remote_url, "public.Example_Dataset_1", "S_00000")
 
 }
 

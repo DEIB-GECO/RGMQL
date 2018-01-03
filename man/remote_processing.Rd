@@ -22,8 +22,9 @@ After invoking collect() it is not possbile to switch the processing mode.
 }
 \examples{
 
-## These statements initializes GMQL with local processing with sample files 
-## output format as tab delimited and then change processing mode to remote
+## These statements initializes GMQL with local processing with sample 
+## files output format as tab delimited and then change processing mode 
+## to remote
 
 init_gmql("tab", remote_processing = FALSE)
 

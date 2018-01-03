@@ -40,12 +40,12 @@ If error occurs, a specific error is printed
 
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
-download_dataset(remote_url, "public.Example_Dataset1", path = getwd())
+download_dataset(remote_url, "public.Example_Dataset_1", path = getwd())
 
 ## Create GRangesList from public dataset Example_Dataset1 got 
 ## from repository
 
-download_as_GRangesList(remote_url, "public.Example_Dataset1")
+download_as_GRangesList(remote_url, "public.Example_Dataset_1")
 }
 
 }

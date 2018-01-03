@@ -39,6 +39,6 @@ login_gmql(remote_url)
 
 ## It show all sample present into public dataset 'Example_Dataset1'
 
-list <- show_samples_list(remote_url, "public.Example_Dataset1")
+list <- show_samples_list(remote_url, "public.Example_Dataset_1")
 
 }

@@ -1,5 +1,5 @@
 #' @importFrom rJava .jpackage .jinit
-#' @import RGMQLScalaLib
+#' @import RGMQLlib
 #' 
 .onLoad <- function(libname, pkgname) {
     .jpackage(pkgname, lib.loc = libname)
@@ -24,7 +24,7 @@ initGMQLscalaAPI <- function(libLoc, mem = "12G") {
     # Starting the java engine
     .jinit(force.init = TRUE)
     if (missing(libLoc)) {
-        libLoc = system.file("extdata", "java", package = "RGMQLScalaLib")
+        libLoc = system.file("extdata", "java", package = "RGMQLlib")
     }
     
     path = Sys.glob(paste0(libLoc, "/*.jar"))

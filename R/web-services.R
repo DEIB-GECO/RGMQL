@@ -664,7 +664,7 @@ show_datasets_list <- function(url)
 #' 
 #' ## It show all sample present into public dataset 'Example_Dataset1'
 #' 
-#' list <- show_samples_list(remote_url, "public.Example_Dataset1")
+#' list <- show_samples_list(remote_url, "public.Example_Dataset_1")
 #' 
 #' @name show_samples_list
 #' @rdname show_samples_list
@@ -712,7 +712,7 @@ show_samples_list <- function(url,datasetName)
 #' 
 #' ## show schema of public dataset 'Example_Dataset1'
 #' 
-#' list <- show_schema(remote_url, "public.Example_Dataset1")
+#' list <- show_schema(remote_url, "public.Example_Dataset_1")
 #' 
 #' @name show_schema
 #' @rdname show_schema
@@ -937,12 +937,12 @@ delete_dataset <- function(url,datasetName)
 #' 
 #' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 #' login_gmql(remote_url)
-#' download_dataset(remote_url, "public.Example_Dataset1", path = getwd())
+#' download_dataset(remote_url, "public.Example_Dataset_1", path = getwd())
 #' 
 #' ## Create GRangesList from public dataset Example_Dataset1 got 
 #' ## from repository
 #' 
-#' download_as_GRangesList(remote_url, "public.Example_Dataset1")
+#' download_as_GRangesList(remote_url, "public.Example_Dataset_1")
 #' }
 #' 
 #' @name download_dataset
@@ -1031,7 +1031,7 @@ download_as_GRangesList <- function(url,datasetName)
 #' ## This statement retrieves metadata for sample 'S_00000' from public 
 #' ## dataset 'Example_Dataset1'
 #' 
-#' sample_metadata(remote_url, "public.Example_Dataset1", "S_00000")
+#' sample_metadata(remote_url, "public.Example_Dataset_1", "S_00000")
 #' 
 #'
 #' @name sample_metadata
@@ -1095,7 +1095,7 @@ sample_metadata <- function(url, datasetName,sampleName)
 #' ## This statement retrieves regions data for sample "S_00000" from public 
 #' ## dataset "Example_Dataset1"
 #'  
-#' sample_region(remote_url, "public.Example_Dataset1", "S_00000")
+#' sample_region(remote_url, "public.Example_Dataset_1", "S_00000")
 #' 
 #' }
 #' 

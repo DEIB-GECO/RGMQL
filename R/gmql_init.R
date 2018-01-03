@@ -69,8 +69,8 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
 #'
 #' @examples
 #'
-#' ## These statements initializes GMQL with local processing with sample files 
-#' ## output format as tab delimited and then stop it
+#' ## These statements initializes GMQL with local processing with sample 
+#' ## files output format as tab delimited and then stop it
 #' 
 #' init_gmql("tab", FALSE)
 #' 
@@ -102,8 +102,9 @@ stop_gmql <- function()
 #' 
 #' @examples
 #' 
-#' ## These statements initializes GMQL with local processing with sample files 
-#' ## output format as tab delimited and then change processing mode to remote
+#' ## These statements initializes GMQL with local processing with sample 
+#' ## files output format as tab delimited and then change processing mode 
+#' ## to remote
 #' 
 #' init_gmql("tab", remote_processing = FALSE)
 #' 

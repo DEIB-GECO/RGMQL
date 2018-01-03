@@ -37,6 +37,6 @@ login_gmql(remote_url)
 
 ## show schema of public dataset 'Example_Dataset1'
 
-list <- show_schema(remote_url, "public.Example_Dataset1")
+list <- show_schema(remote_url, "public.Example_Dataset_1")
 
 }

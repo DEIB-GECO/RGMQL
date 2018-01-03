@@ -61,7 +61,7 @@
 #' 
 #' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' data1 = read_GMQL("public.Example_Dataset1",is_local = FALSE)
+#' data1 = read_GMQL("public.Example_Dataset_1",is_local = FALSE)
 #' 
 #' @name read_GMQL
 #' @rdname read-function
