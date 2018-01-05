@@ -1,48 +1,24 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 0.99.38
+Version: 0.99.40
 Author: Simone Pallotta, Marco Masseroli
 Maintainer: Simone Pallotta <simonepallotta@hotmail.com>
 Description: This package brings the GenoMetric Query Language (GMQL)
     functionalities into the R environment. GMQL is a high-level, declarative
-    language to query and compare multiple and heterogeneous genomic datasets
-    for biomedical knowledge discovery. It allows expressing easily queries and
-    processing over genomic regions and their metadata, to extract genomic regions 
-    of interest and compute their properties. GMQL adopts algorithms designed 
-    for big data and their efficient implementation using cloud-computing 
-    technologies, including Apache Hadoop framework and Spark engine; 
-    these make GMQL able to run on modern high performance computing
-    infrastructures, CPU clusters and network infrastructures, in order to achieve
-    scalability and performance on big data. This RGMQL package is built over 
-    a scalable data management engine written in Scala programming language, 
-    released as Scala API; it provides a set of functions to create, 
-    manipulate and extract genomic data from different data sources both 
-    from local and remote datasets. These RGMQL functions allow performing 
-    complex queries and processing without knowing the GMQL syntax,
-    but leveraging on R idiomatic paradigm and logic. RGMQL provides two different
-    approaches in writing GMQL queries and processing scripts: a) REST calls b)
-    standard R APIs The REST approach let users to log into a remote infrastructure
-    where a GMQL system is installed, and manage remote big genomic datasets hosted
-    in cluster-based repository. User can download an entire remote dataset into
-    local folder, upload local datasets into the remote repository or compiling
-    and running a textual query or processing script just invoking the right RGMQL
-    functions. Multiple REST invocations can be invoked and run concurrently on
-    remote infrastructure allowing user to monitor the progress status of every
-    call. Many other REST functionalities are available in order to allow a complete
-    interaction with remote infrastructure. The R APIs approach lets user work with
-    local or remote datasets using batch-like style where single invocations must
-    be invoked sequentially; with this approach all GMQL queries and processing
-    can be written as a sequence of RGMQL functions. Unlike other similar packages,
-    every RGMQL function simply builds a query, with no intermediate result shown
-    (except for a few functions that execute queries and for some utility functions
-    for interoperability with other packages) The RGMQL package also provides a rich
-    set of ancillary classes that allow sophisticated input/output management and
-    sorting, such as ASC, DESC, BAG, MIN, MAX, SUM, AVG, MEDIAN, STD, Q1, Q2, Q3,
-    and several others; these classes are used only to build predicates and complex
-    conditions taken as input by RGMQL functions; Note that many RGMQL functions are
-    not directly executed in R environment, but are deferred until real execution is
-    issued.
+    language to manage heterogeneous genomic datasets for biomedical purposes, 
+	using simple queries to process genomic regions and their metadata and properties.
+	GMQL adopts algorithms efficiently designed for big data using cloud-computing 
+    technologies (like Apache Hadoop and Spark) allowing GMQL to run on modern
+	infrastructures, in order to achieve scalability and high performance.
+	It allows to to create, manipulate and extract genomic data from different 
+	data sources both locally and remotely. Our RGMQL functions allow complex 
+	queries and processing leveraging on the R idiomatic paradigm. 
+	The RGMQL package also provides a rich set of ancillary classes that allow
+	sophisticated input/output management and sorting, such as:
+	ASC, DESC, BAG, MIN, MAX, SUM, AVG, MEDIAN, STD, Q1, Q2, Q3 (and many others).
+	Note that many RGMQL functions are not directly executed in R environment, 
+	but are deferred until real execution is issued.
 License: Artistic-2.0
 URL: http://www.bioinformatics.deib.polimi.it/genomic_computing/GMQL/
 Encoding: UTF-8
@@ -64,7 +40,7 @@ Imports:
     glue,
     BiocGenerics
 Depends:
-    R(<= 3.4.2), RGMQLlib
+    R(>= 3.4.2), RGMQLlib
 VignetteBuilder: knitr
 Suggests: 
     BiocStyle,

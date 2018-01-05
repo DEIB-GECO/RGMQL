@@ -76,8 +76,8 @@ filter_and_extract <- function(data, metadata = NULL,
 {
     datasetName <- sub("/*[/]$","",datasetName)
     if(basename(datasetName) !="files")
-        datasetName <- paste0(datasetName,"/files")
-    
+        datasetName <- file.path(datasetName,"files")
+
     if(!dir.exists(datasetName))
         stop("Directory does not exists")
     

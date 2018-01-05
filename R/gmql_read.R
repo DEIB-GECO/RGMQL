@@ -81,7 +81,7 @@ read_GMQL <- function(dataset, parser = "CustomParser", is_local = TRUE,
         
         dataset <- sub("/*[/]$","",dataset)
         if(basename(dataset) !="files")
-            dataset <- paste0(dataset,"/files")
+            dataset <- file.path(dataset,"files")
         
         schema_XML <- list.files(dataset, pattern = "*.schema$",
                                     full.names = TRUE)

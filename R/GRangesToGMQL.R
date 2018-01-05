@@ -94,7 +94,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
     if(!dir.exists(dir_out))
         dir.create(dir_out)
     
-    files_sub_dir <- paste0(dir_out,"/files")
+    files_sub_dir <- file.path(dir_out,"files")
     dir.create(files_sub_dir)
     cnt = .counter()
     #col_names <- .get_schema_names(samples)
@@ -102,7 +102,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
     {
         #write region
         lapply(samples,function(x,dir){
-            sample_name = paste0(dir,"/S_",cnt(),".gtf")
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
             g <- rtracklayer::export(x,sample_name,format = "gtf")
         },files_sub_dir)
         cnt = .counter(0)
@@ -110,7 +110,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
 
         #write metadata
         lapply(meta,function(x,dir){
-            sample_name = paste0(dir,"/S_",cnt(),".gtf")
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
             .write_metadata(x,sample_name)
         },files_sub_dir)
     }
@@ -118,7 +118,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
     {
         #write region
         lapply(samples,function(x,dir){
-            sample_name = paste0(dir,"/S_",cnt(),".gdm")
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
             region_frame <- data.frame(x)
             write.table(region_frame,sample_name,col.names = FALSE,
                             row.names = FALSE, sep = '\t',quote = FALSE)
@@ -129,7 +129,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
 
         #write metadata
         lapply(meta,function(x,dir){
-            sample_name = paste0(dir,"/S_",cnt(),".gdm")
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
             .write_metadata(x,sample_name)
         },files_sub_dir)
     }
@@ -177,7 +177,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
         node_list <- c(fixed_element, columns)
     }
 
-    schema <- paste0(directory,"/granges.schema")
+    schema <- file.path(directory,"granges.schema")
     root <- xml2::xml_new_root("gmqlSchemaCollection")
     xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
     xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"

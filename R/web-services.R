@@ -791,7 +791,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
                                     isGMQL = TRUE)
 {
     if(isGMQL)
-        folderPath <- paste0(folderPath,"/files")
+        folderPath <- file.path(folderPath,"files")
     
     files <- list.files(folderPath,full.names = TRUE)
     if(!length(files))
@@ -961,8 +961,8 @@ download_dataset <- function(url, datasetName, path = getwd())
         print(content)
     else
     {
-        zip_path <- paste0(path,"/",datasetName,".zip")
-        dir_out <- paste0(path,"/")
+        zip_path <- file.path(path,paste0(datasetName,".zip"))
+        dir_out <- file.path(path,"")
         writeBin(content, zip_path)
         unzip(zip_path,exdir = dir_out)
         print("Download Complete")

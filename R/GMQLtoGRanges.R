@@ -40,7 +40,7 @@ import_gmql <- function(dataset_path, is_gtf)
 {
     datasetName <- sub("/*[/]$","",datasetName)
     if(basename(datasetName) !="files")
-        datasetName <- paste0(datasetName,"/files")
+        datasetName <- file.path(datasetName,"files")
     
     if(!dir.exists(datasetName))
         stop("Directory does not exists")
@@ -78,8 +78,8 @@ import_gmql <- function(dataset_path, is_gtf)
 {
     datasetName <- sub("/*[/]$","",datasetName)
     if(basename(datasetName) !="files")
-        datasetName <- paste0(datasetName,"/files")
-
+        datasetName <- file.path(datasetName,"files")
+    
     if(!dir.exists(datasetName))
         stop("Directory does not exists")
 

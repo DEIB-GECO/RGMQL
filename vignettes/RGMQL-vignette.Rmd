@@ -63,9 +63,10 @@ This package is built over a GMQL scalable data management engine
 written in Scala programming language, released as Scala API [@githubrepo] 
 providing a set of functions to combine, manipulate, compare, and extract 
 genomic data from different data sources both from local and remote datasets.
-These functions, built extending functionalities available in the R/Bioconductor 
-framework, allow performing complex GMQL processing and queries without 
-knowledge of GMQL syntax, but leveraging on R idiomatic paradigm and logic.
+These functions, built extending functionalities available in the 
+R/Bioconductor framework, allow performing complex GMQL processing and queries 
+without knowledge of GMQL syntax, but leveraging on R idiomatic paradigm 
+and logic.
 
 
 # Genomic Data Model
@@ -140,7 +141,8 @@ types of files:
 1. genomic region tab-delimited text files with extension .gdm, or .gtf 
 if in standard GTF format
 2. metadata attribute-value tab-delimited text files with the same fullname 
-(name and extension) of the correspondent genomic region file and extension .meta
+(name and extension) of the correspondent genomic region file and extension 
+.meta
 3. schema XML file containing region attribute names and types
 
 All these files reside in a unique folder called $files$.
@@ -257,17 +259,17 @@ additional input parameter.
 
 2. GRangesList:\newline
 For better integration in the R environment and with other R packages, 
-we provide the *read_GRangesList()* function to read directly from R memory/environment
+we provide the *read_GRangesList()* function to read directly from R memory
 using GRangesList as input.
 
 ```{r, read GRangesList}
 library("GenomicRanges")
 gr1 <- GRanges(seqnames = "chr2",
-	ranges = IRanges(103, 106), strand = "+", score = 5L, GC = 0.45)
+    ranges = IRanges(103, 106), strand = "+", score = 5L, GC = 0.45)
 
 gr2 <- GRanges(seqnames = c("chr1", "chr1"),
-	ranges = IRanges(c(107, 113), width = 3), strand = c("+", "-"),
-	score = 3:4, GC = c(0.3, 0.5))
+    ranges = IRanges(c(107, 113), width = 3), strand = c("+", "-"),
+    score = 3:4, GC = c(0.3, 0.5))
 
 grl <- GRangesList("txA" = gr1, "txB" = gr2)
 data_out <- read_GRangesList(grl)
@@ -372,10 +374,10 @@ each sample.
 NOTE: GRangesList are contained in the R environment and are not saved on disk.
 
 With the *rows* parameter it is possible to specify how many rows, for each 
-sample inside the input dataset, are extracted; by default, the *rows* parameter 
-value is $0$, that means all rows are extracted.
-Note that, since we are working with big data, to extract all rows could be very 
-time and space consuming.
+sample inside the input dataset, are extracted; by default, the *rows* 
+parameter value is $0$, that means all rows are extracted.
+Note that, since we are working with big data, to extract all rows could be 
+very time and space consuming.
 
 ## Remote Processing
 
@@ -463,9 +465,10 @@ logout_gmql(test_url)
 ### Batch Execution
 
 This execution type is similar to local processing (syntax, functions, and 
-so on ...) except that materialized data are stored only on the remote repository, 
-from where they can be downloaded locally and imported in GRangesList 
-using the functions in this RGMQL package [(see Import/Export)](#utilities).
+so on ...) except that materialized data are stored only on the remote 
+repository, from where they can be downloaded locally and imported in 
+GRangesList using the functions in this RGMQL package 
+[(see Import/Export)](#utilities).
 
 Before starting with an example, note that we have to log into remote 
 infrastructure with login function:
@@ -533,7 +536,8 @@ The processing flavour can be switched using the function:
 ```{r, switch mode}
 remote_processing(TRUE)
 ```
-An user can switch processing mode until the first *collect()* has been performed.
+An user can switch processing mode until the first *collect()* has been 
+performed.
 
 This kind of processing comes from the fact that the *read_GMQL()* function can 
 accept either a local dataset or a remote repository dataset, 
@@ -592,23 +596,25 @@ collect(exon_res)
 execute()
 ```
 
-As we can see, the two *read_GMQL()* functions above read from different sources: 
-*mut_ds* from local dataset, *HG19_bed_ann* from remote repository.
+As we can see, the two *read_GMQL()* functions above read from different 
+sources: *mut_ds* from local dataset, *HG19_bed_ann* from remote repository.
 
 If we set remote processing to false (*remote_processing(FALSE)*), 
 the execution is performed locally downloading all needed datasets from remote 
-repositories, otherwise all local datasets are automatically uploaded to the remote 
-GMQL repository associated with the remote system where the processing is performed.
+repositories, otherwise all local datasets are automatically uploaded to the 
+remote GMQL repository associated with the remote system where the processing 
+is performed.
 
-NOTE: The public datasets cannot be downloaded from a remote GMQL repository by design.
+NOTE: The public datasets cannot be downloaded from a remote GMQL repository 
+by design.
 
 # Utilities
 
-The RGMQL package contains functions that allow the user to interface with other 
-packages available in R/Bioconductor repository, e.g., GenomicRanges, and TFARM.
-These functions return GRangesList or GRanges with metadata associated, 
-if present, as data structure suitable to further processing in other R/Bioconductor 
-packages.
+The RGMQL package contains functions that allow the user to interface with 
+other packages available in R/Bioconductor repository, e.g., GenomicRanges, 
+and TFARM. These functions return GRangesList or GRanges with metadata 
+associated, if present, as data structure suitable to further processing 
+in other R/Bioconductor packages.
 
 ## Import/Export
 
@@ -655,9 +661,9 @@ matrix
 
 ```
 *filter_and_extract()* filters the samples in the input dataset based on their 
-specified *metadata*, and then extracts as metadata columns of GRanges the vector 
-of region attributes you specify to retrieve from each filtered sample from the 
-input dataset.
+specified *metadata*, and then extracts as metadata columns of GRanges the 
+vector of region attributes you specify to retrieve from each filtered sample 
+from the input dataset.
 If the $metadata$ argument is NULL, all samples are taken.
 The number of obtained columns is equal to the number of samples left after 
 filtering, multiplied by the number of specified region attributes.

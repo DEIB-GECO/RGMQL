@@ -137,7 +137,7 @@ gmql_materialize <- function(input_data, dir_out, name)
     if(!remote_proc)
     {
         dir_out <- sub("/*[/]$","",dir_out)
-        res_dir_out <- paste0(dir_out,"/",name)
+        res_dir_out <- file.path(dir_out,name)
         if(!dir.exists(res_dir_out))
             dir.create(res_dir_out)
     }

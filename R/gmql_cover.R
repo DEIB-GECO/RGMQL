@@ -165,7 +165,7 @@ gmql_cover <- function(input_data, min_acc, max_acc, groupBy,aggregates,flag)
     }
     else
         metadata_matrix <- .jnull("java/lang/String")
-
+    
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- switch(flag,
         "COVER" = WrappeR$cover(min_acc, max_acc, join_matrix,
