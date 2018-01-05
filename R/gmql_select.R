@@ -140,7 +140,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' 
 #' @param .data GMQLDataset class object
 #' 
-#' @param not_in logical value: TRUE => for a given sample of input dataset
+#' @param is_in logical value: TRUE => for a given sample of input dataset
 #' ".data" in \code{\link{filter}} method if and only if there exists at 
 #' least one sample in dataset 'data' with metadata attributes defined 
 #' in groupBy and these attributes of 'data' have at least one value in 
@@ -182,7 +182,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' @return semijoin condition as list
 #' @export
 #' 
-semijoin <- function(.data, not_in = FALSE, groupBy)
+semijoin <- function(.data, is_in = TRUE, groupBy)
 {
     if(!is.null(groupBy))
     {
@@ -204,9 +204,9 @@ semijoin <- function(.data, not_in = FALSE, groupBy)
     if(!isClass("GMQLDataset", .data))
         stop("data: Must be a GMQLDataset object") 
     
-    .check_logical(not_in)
+    .check_logical(is_in)
     ptr_data <- value(.data)
-    data_cond <- cbind(ptr_data,not_in)
+    data_cond <- cbind(ptr_data,is_in)
     all_conds <- rbind(data_cond,cond)
     join_condition_matrix <- .jarray(all_conds, dispatch = TRUE)
     
