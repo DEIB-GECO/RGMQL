@@ -4,12 +4,12 @@
 \alias{semijoin}
 \title{Semijoin condtion}
 \usage{
-semijoin(.data, not_in = FALSE, groupBy)
+semijoin(.data, is_in = TRUE, groupBy)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
 
-\item{not_in}{logical value: TRUE => for a given sample of input dataset
+\item{is_in}{logical value: TRUE => for a given sample of input dataset
 ".data" in \code{\link{filter}} method if and only if there exists at 
 least one sample in dataset 'data' with metadata attributes defined 
 in groupBy and these attributes of 'data' have at least one value in 

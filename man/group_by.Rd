@@ -23,12 +23,12 @@ region attribute.
 All the element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+\code{\link{COUNTSAMP}}, \code{\link{MIN}}, \code{\link{MAX}}, 
 \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
 \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
 \code{\link{Q2}}, \code{\link{Q3}}.
-Every aggregate accepts a string value, execet for COUNT, which does not 
-have any value.
+Every aggregate accepts a string value, execet for COUNTSAMP, which does 
+not have any value.
 Argument of 'aggregate function' must exist in schema, i.e. among region 
 attributes. Two style are allowed:
 \itemize{
@@ -42,12 +42,12 @@ metadata attribute.
 All the element in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES
 The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
+\code{\link{COUNTSAMP}}, \code{\link{MIN}}, \code{\link{MAX}}, 
 \code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
 \code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
 \code{\link{Q2}}, \code{\link{Q3}}.
-Every aggregate accepts a string value, execet for COUNT, which does not 
-have any value.
+Every aggregate accepts a string value, execet for COUNTSAMP, which does 
+not have any value.
 Argument of 'aggregate function' must exist in schema, i.e. among region 
 attributes. Two style are allowed:
 \itemize{

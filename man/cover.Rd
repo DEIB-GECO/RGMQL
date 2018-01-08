@@ -115,7 +115,7 @@ are disregarded.
 init_gmql()
 test_path <- system.file("example","DATASET",package = "RGMQL")
 exp = read_GMQL(test_path)
-
+  
 ## the following statement produces an output dataset with a single output 
 ## sample. The COVER operation considers all areas defined by a minimum 
 ## of two overlapping regions in the input samples, up to any amount of 
