@@ -8,7 +8,7 @@ remote_processing(is_remote)
 }
 \arguments{
 \item{is_remote}{logical value used in order to set the processing mode.
-TRUE you set a remote query processing mode, otherwise it will be local,}
+TRUE: you set a remote query processing mode, otherwise it will be local}
 }
 \value{
 None
@@ -18,13 +18,14 @@ It allows to enable or disable remote processing
 }
 \details{
 The invocation of this function allows to change mode of processing.
-After invoking collect() it is not possbile to switch the processing mode.
+After invoking collect() function, it is not possbile to switch the 
+processing mode.
 }
 \examples{
 
-## These statements initializes GMQL with local processing with sample 
-## files output format as tab delimited and then change processing mode 
-## to remote
+## This statement initializes GMQL with local processing with sample 
+## files output format as tab-delimited, and then it changes processing 
+## mode to remote
 
 init_gmql("tab", remote_processing = FALSE)
 

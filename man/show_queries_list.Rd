@@ -2,7 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{show_queries_list}
 \alias{show_queries_list}
-\title{Shows all Queries}
+\title{Show all queries}
 \usage{
 show_queries_list(url)
 }
@@ -11,15 +11,15 @@ show_queries_list(url)
 and base url; service name is added automatically}
 }
 \value{
-list of queries. Every query in the list is identified by:
+List of queries. Every query in the list is described by:
 \itemize{
 \item{name: name of query}
 \item{text: text of GMQL query}
 }
 }
 \description{
-It shows all the GMQL queries saved on remote repository using the proper 
-GMQL web service available on a remote server
+It shows all the GMQL queries saved by the user on remote repository, 
+using the proper GMQL web service available on a remote server
 }
 \details{
 If error occurs, a specific error is printed

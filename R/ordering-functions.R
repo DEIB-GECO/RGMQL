@@ -5,8 +5,8 @@
 
 #' Ordering functions
 #'
-#' These functions is used to create a series of metadata as string
-#' that require ordering on value; is used only in arrange method
+#' These functions are used to create a series of metadata as string
+#' that require ordering on value; it is used only in arrange method
 #' (see example).
 #' 
 #' \itemize{
@@ -28,22 +28,22 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_GMQL(test_path)
+#' data = read_gmql(test_path)
 #' 
-#' ## It orders the samples according to the Region_Count metadata attribute 
-#' ## and takes the two samples that have the lowest count. 
+#' ## This statement orders the samples according to the Region_Count metadata 
+#' ## attribute and takes the two samples that have the lowest count. 
 #'
 #' asc = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
 #' num_fetch = 2)
 #' 
-#' ## It orders the samples according to the pvalue schema attribute 
-#' ## and takes the first five samples that have the lowest pvalue and the 
-#' ## first seven regions.
+#' ## This statement orders the regions of each samples according to their 
+#' ## pvalue attribute value and in each sample it takes the first seven
+#' ## regions with the highest pvalue
 #'  
-#' desc = arrange(data, list(DESC("pvalue")), fetch_opt = "mtop", 
-#' num_fetch = 5, reg_fetch_opt = "rtop", reg_num_fetch = 7)
+#' desc = arrange(data, regions_ordering = list(DESC("pvalue")), 
+#' reg_fetch_opt = "rtop", reg_num_fetch = 7)
 #' 
-#' @name Ordering-functions
+#' @name Ordering-Functions
 #' @aliases DESC
 #' @rdname ordering-class
 #' @export
@@ -65,7 +65,7 @@ DESC <- function(...)
     order_matrix
 }
 
-#' @name Ordering-functions
+#' @name Ordering-Functions
 #' @aliases ASC
 #' @rdname ordering-class
 #' @export

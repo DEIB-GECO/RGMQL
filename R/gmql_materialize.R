@@ -8,18 +8,19 @@
 #' @return None
 #'
 #' @examples
-#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## This statement initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
-#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## the path to the folder "DATASET" in the subdirectory "example" 
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 #' ## named "data"
 #' 
 #' init_gmql()
-#' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' data = read_GMQL(test_path)
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' data = read_gmql(test_path)
 #' 
-#' ## The following statement materialize the dataset, previoulsy read, at 
-#' ## th specific destination path into local folder "ds1" opportunely created
+#' ## The following statement materializes the dataset "data", previoulsy read, 
+#' ## at the specific destination test_path into local folder "ds1" opportunely 
+#' ## created
 #' 
 #' collect(data, dir_out = test_path)
 #' 
@@ -95,9 +96,9 @@ collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 #' @importFrom dplyr collect
 #' 
 #' @param x GMQLDataset class object
-#' @param dir_out destination folder path.
-#' by default it is the current working directory of the R process
-#' @param name name of the result dataset. by default it is the string "ds1"
+#' @param dir_out destination folder path. By default it is the current 
+#' working directory of the R process
+#' @param name name of the result dataset. By default it is the string "ds1"
 #' 
 #' @details 
 #' 
@@ -116,10 +117,11 @@ collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 #'
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_GMQL(test_path)
+#' data = read_gmql(test_path)
 #' 
-#' ## The following statement materialize the dataset, previoulsy read, at 
-#' ## th specific destination path into local folder "ds1" opportunely created
+#' ## The following statement materializes the dataset 'data', previoulsy read, 
+#' ## at the specific destination test_path into local folder "ds1" opportunely 
+#' ## created
 #' 
 #' collect(data, dir_out = test_path)
 #' 
@@ -170,9 +172,9 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' @importFrom GenomicRanges GRangesList
 #' 
 #' @param .data returned object from any GMQL function
-#' @param rows number of rows for each sample regions that you want to 
+#' @param rows number of regions rows for each sample that you want to 
 #' retrieve and store in memory.
-#' By default it is 0 that means take all rows for each sample
+#' By default it is 0, that means take all rows for each sample
 #' 
 #' @param ... Additional arguments for use in other specific methods of the 
 #' generic take function
@@ -188,9 +190,21 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' rd = read_GMQL(test_path)
+#' rd = read_gmql(test_path)
 #' 
-#' aggr = aggregate(rd, conds(c("antibody_target", "cell_karyotype")))
+#' ## This statement creates a dataset called merged which contains one 
+#' ## sample for each antibody_target and cell value found within the metadata 
+#' ## of the exp dataset sample; each created sample contains all regions 
+#' ## from all 'exp' samples with a specific value for their 
+#' ## antibody_target and cell metadata attributes.
+#'  
+#' aggr = aggregate(rd, conds(c("antibody_target", "cell")))
+#' 
+#' ## This statement performs the query and return the resulted dataset as 
+#' ## GRangesList named 'taken'. It returns only the first 45 regions of 
+#' ## each sample present into GRangesList and all the medatata associated to
+#' ## each sample
+#' 
 #' taken <- take(aggr, rows = 45)
 #' 
 #' @name take

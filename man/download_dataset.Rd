@@ -11,9 +11,9 @@ download_as_GRangesList(url, datasetName)
 }
 \arguments{
 \item{url}{string url of server: It must contain the server address 
-and base url; service name are added automatically}
+and base url; service name is added automatically}
 
-\item{datasetName}{string name of dataset we want to get}
+\item{datasetName}{string name of dataset to download}
 
 \item{path}{string local path folder where to store dataset,
 by default it is R working directory}
@@ -21,11 +21,11 @@ by default it is R working directory}
 \value{
 None
 
-GRangesList containing all GMQL sample in dataset
+GRangesList containing all GMQL samples in dataset
 }
 \description{
 It donwloads private dataset as zip file from remote repository to local 
-path, or donwloads and saves it into R environment as GRangesList using 
+path, or donwloads and saves it into R environment as GRangesList, using 
 the proper GMQL web service available on a remote server
 }
 \details{
@@ -33,12 +33,12 @@ If error occurs, a specific error is printed
 }
 \examples{
 
-## Download dataset in r working directory
-## in this case we try to download public dataset
+## Download dataset in R working directory
+## In this case we try to download a public dataset
 
 \dontrun{
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 download_dataset(remote_url, "public.Example_Dataset_1", path = getwd())
 

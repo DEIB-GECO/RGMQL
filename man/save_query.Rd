@@ -17,7 +17,7 @@ and base url; service name is added automatically}
 
 \item{queryTxt}{string text of GMQL query}
 
-\item{filePath}{string local file path of txt file containing a GMQL query}
+\item{filePath}{string local file path of a txt file containing a GMQL query}
 }
 \value{
 None
@@ -28,8 +28,8 @@ string, using the proper GMQL web service available on a remote server
 }
 \details{
 If you save a query with the same name of another query already stored 
-in repository you will overwrite it; if no error occurs prints, 
-"Saved" otherwise it prints the content error
+in repository, you will overwrite it; if no error occurs, prints: 
+"Saved", otherwise it prints the error
 }
 \examples{
 
@@ -40,8 +40,8 @@ login_gmql(remote_url)
 
 ## This statement saves query with name "dna_query" 
 
-save_query(remote_url, "dna_query", "DATASET = SELECT() HG19_TCGA_dnaseq; 
-MATERIALIZE DATASET INTO RESULT_DS;")
+save_query(remote_url, "example_query",
+"DATASET = SELECT() Example_Dataset_1; MATERIALIZE DATASET INTO RESULT_DS;")
 
 
 test_path <- system.file("example", package = "RGMQL")

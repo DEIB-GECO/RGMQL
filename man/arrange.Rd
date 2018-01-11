@@ -32,8 +32,7 @@ first k samples; it can assume the values:
 if NULL, \emph{num_fetch} is not considered}
 
 \item{num_fetch}{integer value identifying the number of samples to fetch;
-by default it is 0, that means all samples are fetched
-s}
+by default it is 0, that means all samples are fetched}
 
 \item{reg_fetch_opt}{string indicating the option used to fetch the 
 first k regions; it can assume the values:
@@ -44,8 +43,8 @@ first k regions; it can assume the values:
 }
 if NULL, \emph{reg_num_fetch} is not considered}
 
-\item{reg_num_fetch}{integer value identifying the number of region to fetch
-by default it is 0, that means all regions are fetched}
+\item{reg_num_fetch}{integer value identifying the number of regions to 
+fetch; by default it is 0, that means all regions are fetched}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -57,11 +56,11 @@ Wrapper to GMQL ORDER operator
 It is used to order either samples or sample regions or both, 
 according to a set of metadata and/or region attributes.
 Order can be specified as ascending / descending for every attribute. 
-The number of samples and their regions remain the same as well as 
-their attributes, (unless fetching options are specified) but a new 
-ordering metadata and/or region attribute is added.
-Sorted samples or regions have a new attribute "order", 
-added to either metadata, or regions, or both of them as specified in inputs
+The number of samples s well as their attributes and their regions remain 
+the same, (unless fetching options are specified), but a new ordering 
+metadata and/or region attribute is added. Sorted samples or regions have 
+a new attribute "_order", added to either metadata, or "order" added to 
+their regions, or both of them as specified in input.
 }
 \examples{
 
@@ -73,7 +72,7 @@ added to either metadata, or regions, or both of them as specified in inputs
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data = read_GMQL(test_path)
+data = read_gmql(test_path)
 
 ## The following statement orders the samples according to the Region_Count 
 ## metadata attribute and takes the two samples that have the highest count. 

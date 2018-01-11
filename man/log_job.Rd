@@ -23,11 +23,12 @@ Log or trace text
 It shows a job log or traces a specific job
 }
 \details{
-If error occurs a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
+## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
 ## List all jobs

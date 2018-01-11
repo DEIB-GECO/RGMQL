@@ -38,7 +38,7 @@
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data <- read_GMQL(test_path)
+#' data <- read_gmql(test_path)
 #' 
 #' ## This statement counts the regions in each sample and stores their number 
 #' ## as value of the new metadata attribute RegionCount of the sample.

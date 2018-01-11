@@ -25,7 +25,8 @@ schemaName available are:
 \item{BED}
 \item{BEDGRAPH}
 }
-if schemaName is NULL it's looking for a XML schema file to read}
+if schemaName is NULL it's looking for a XML schema file to read in the 
+folderPath}
 
 \item{isGMQL}{logical value indicating whether it is uploaded a GMQL 
 dataset or not}

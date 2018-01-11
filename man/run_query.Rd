@@ -14,7 +14,7 @@ run_query_fromfile(url, filePath, output_gtf = TRUE)
 \item{url}{string url of server: It must contain the server address 
 and base url; service name is added automatically}
 
-\item{queryName}{string name of the file}
+\item{queryName}{string name of the GMQL query file}
 
 \item{query}{string text of the GMQL query}
 
@@ -26,7 +26,7 @@ The possiblities are:
 \item{TAB}
 }}
 
-\item{filePath}{string path of txt files containing a GMQL query}
+\item{filePath}{string path of a txt file containing a GMQL query}
 }
 \value{
 None

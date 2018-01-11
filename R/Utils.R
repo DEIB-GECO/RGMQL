@@ -96,3 +96,25 @@
     if(length(value)>1)
         stop("no multiple string")
 }
+
+.is_login_expired <- function(url)
+{
+    if(exists("GMQL_credentials", envir = .GlobalEnv))
+    {
+        if(exists("authToken", where = GMQL_credentials))
+        {
+            authToken <- GMQL_credentials$authToken
+            url <- sub("/*[/]$","",url)
+            h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
+            URL <- paste0(url,"/user")
+            req <- httr::GET(URL,httr::add_headers(h))
+            if(req$status_code !=200)
+                return(TRUE)
+            else
+                return(FALSE)
+        }
+    }
+    return(TRUE)
+}
+
+

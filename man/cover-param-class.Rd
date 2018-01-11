@@ -35,7 +35,7 @@ considered.}
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_GMQL(test_path)
+exp = read_gmql(test_path)
 
 ## The following statement produces an output dataset with a single 
 ## output sample. The COVER operation considers all areas defined by 
@@ -54,8 +54,8 @@ res = cover(exp, 2, ANY())
 
 ## The following statement produces an output dataset with a single 
 ## output sample. The COVER operation considers all areas defined by 
-## a half of maximum amount of overlapping regions in the input samples, 
-## up to any amount of overlapping regions.
+## minimum of overlapping regions in the input samples equal to half of 
+## the number of input samples, up to any amount of overlapping regions.
 
 res = cover(exp, ALL()/2, ANY())
 

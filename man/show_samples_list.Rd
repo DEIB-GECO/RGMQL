@@ -10,12 +10,12 @@ show_samples_list(url, datasetName)
 \item{url}{string url of server: It must contain the server address 
 and base url; service name is added automatically}
 
-\item{datasetName}{name of dataset to get
-if the dataset is a public dataset, we have to add "public." as prefix, 
-as shown in the example below, otherwise no prefix is needed}
+\item{datasetName}{name of dataset containing the samples whose list we 
+like to get; if the dataset is a public dataset, we have to add "public." 
+as prefix, as shown in the example below, otherwise no prefix is needed}
 }
 \value{
-List of samples in dataset. Every sample in the list is identified 
+List of samples in dataset. Every sample in the list is described 
 by:
 \itemize{
 \item{id: id of sample}
@@ -24,8 +24,8 @@ by:
 }
 }
 \description{
-It show all sample from a specific GMQL dataset using the proper 
-GMQL web service available on a remote server
+It show all samples from a specific GMQL dataset on remote repository, 
+using the proper GMQL web service available on a remote server
 }
 \details{
 If error occurs, a specific error is printed
@@ -37,7 +37,8 @@ If error occurs, a specific error is printed
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
 login_gmql(remote_url)
 
-## It show all sample present into public dataset 'Example_Dataset1'
+## This statement show all sample present into public dataset 
+## 'Example_Dataset1'
 
 list <- show_samples_list(remote_url, "public.Example_Dataset_1")
 

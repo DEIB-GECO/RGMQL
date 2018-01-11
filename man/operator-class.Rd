@@ -19,7 +19,8 @@ SQRT(value)
 \item{value}{string identifying name of metadata attribute}
 
 \item{type}{string identifying the type of the attribute value;
-it must be: INTEGER, DOUBLE or STRING}
+it must be: INTEGER, DOUBLE or STRING
+For NIL() function, only INTEGER and DOUBLE are allowed}
 }
 \value{
 Operator object
@@ -39,36 +40,36 @@ null, performing all the type conversions needed}
 }
 }
 \examples{
-## Thi statement initializes and runs the GMQL server for local execution 
+## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
-## the path to the folders "DATASET" in the subdirectory "example" 
+## the path to the folder "DATASET" in the subdirectory "example" 
 ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 ## named "exp"
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-exp = read_GMQL(test_path)
+exp = read_gmql(test_path)
 
-## This statement allows to select, in all input sample, all those regions 
+## This statement allows to select, in all input samples, all those regions 
 ## for which the region attribute score has a value which is greater 
 ## than the metadata attribute value "avg_score" in their sample.
 
 data = filter(exp, r_predicate = score > META("avg_score"))
 
-## This statement defines a new numeric region attribute with "null" value. 
+## This statement defines new numeric region attributes with "null" value. 
 ## The syntax for creating a new attribute with null value is 
-## attribute_name = NULL(TYPE), where type may be INTEGER, DOUBLE or STRING.
+## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
 
 out = select(exp, regions_update = list(signal = NIL("INTEGER"), 
 pvalue = NIL("DOUBLE")))
 
-## This statement allows to build an output dataset out such that all 
-## the samples from the input dataset exp are conserved, 
+## This statement allows to build an output dataset named 'out' such that 
+## all the samples from the input dataset 'exp' are conserved, 
 ## as well as their region attributes (and their values) 
 ## and their metadata attributes (and their values). 
-## The new metadata attribute concSq is added to all output samples 
+## The new metadata attribute 'concSq' is added to all output samples 
 ## with value correspondent to the mathematical squared root 
-## of the pre-existing metadata attribute concentration.
+## of the pre-existing metadata attribute 'concentration'.
 
 out = select(exp, metadata_update = list(concSq = SQRT("concentration")))
 

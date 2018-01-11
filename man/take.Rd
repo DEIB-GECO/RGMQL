@@ -18,9 +18,9 @@ take(.data, ...)
 \item{...}{Additional arguments for use in other specific methods of the 
 generic take function}
 
-\item{rows}{number of rows for each sample regions that you want to 
+\item{rows}{number of regions rows for each sample that you want to 
 retrieve and store in memory.
-By default it is 0 that means take all rows for each sample}
+By default it is 0, that means take all rows for each sample}
 }
 \value{
 GRangesList with associated metadata
@@ -44,9 +44,21 @@ all those datasets are materialized as folders.
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-rd = read_GMQL(test_path)
+rd = read_gmql(test_path)
 
-aggr = aggregate(rd, conds(c("antibody_target", "cell_karyotype")))
+## This statement creates a dataset called merged which contains one 
+## sample for each antibody_target and cell value found within the metadata 
+## of the exp dataset sample; each created sample contains all regions 
+## from all 'exp' samples with a specific value for their 
+## antibody_target and cell metadata attributes.
+ 
+aggr = aggregate(rd, conds(c("antibody_target", "cell")))
+
+## This statement performs the query and return the resulted dataset as 
+## GRangesList named 'taken'. It returns only the first 45 regions of 
+## each sample present into GRangesList and all the medatata associated to
+## each sample
+
 taken <- take(aggr, rows = 45)
 
 }

@@ -2,17 +2,17 @@
 #' 
 #' @description Wrapper to GMQL UNION operator
 #' 
-#' @description It is used to integrate homogeneous or heterogeneous samples 
-#' of two datasets within a single dataset; for each sample of either input 
+#' @description It is used to integrate samples of two datasets homogeneous or 
+#' heterogeneous within a single dataset; for each sample of either input 
 #' dataset, a result sample is created as follows:
 #' \itemize{
 #' \item {Metadata are the same as in the original sample.}
-#' \item {Resulting schema is is the schema of the left input dataset. }
+#' \item {Resulting schema is the schema of the left input dataset. }
 #' \item {Regions are the same (in coordinates and attribute values) 
-#' as in the original sample if it is from the left input dataset; 
+#' as in the original sample, if it is from the left input dataset; 
 #' if it is from the right input dataset, its regions are the same in 
 #' coordinates, but only region attributes identical (in name and type) to 
-#' those of the first input dataset are retained, with the same values.
+#' those of the left  input dataset are retained, with the same values.
 #' Region attributes which are missing in an input dataset sample 
 #' w.r.t. the merged schema are set to null.}
 #' }
@@ -37,8 +37,8 @@
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data1 <- read_GMQL(test_path)
-#' data2 <- read_GMQL(test_path2)
+#' data1 <- read_gmql(test_path)
+#' data2 <- read_gmql(test_path2)
 #' 
 #' ## This statement creates a dataset called 'full' which contains all samples 
 #' ## from the datasets 'data1' and 'data2'

@@ -31,9 +31,9 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 #' 
 #' @description It creates, from an existing dataset, a new dataset with all 
 #' the samples from input dataset, but keeping for each sample in the input 
-#' dataset only those metadata and/or region attributes expressed.
-#' Region coordinates and values of the remaining metadata remain equal to 
-#' those in the input dataset. It allows to:
+#' dataset only those metadata and/or region attributes specified.
+#' Region coordinates and values of the remaining metadata and/or region 
+#' attributes remain equal to those in the input dataset. It allows to:
 #' \itemize{
 #' \item{Remove existing metadata and/or region attributes from a dataset}
 #' \item{Update or set new metadata and/or region attributes in the result}
@@ -44,33 +44,34 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 #' 
 #' @param .data GMQLDataset class object
 #' 
-#' @param metadata vector of string made up by metadata attributes
-#' @param regions vector of string made up by region attributes
+#' @param metadata vector of strings made up by metadata attributes
+#' @param regions vector of strings made up by region attributes
 #' @param all_but_reg logical value indicating which region attributes
-#' you want to exclude; if FALSE, only the regions you choose are kept 
-#' in the output of the operation; if TRUE the regions
-#' are all kept except those in region parameter.
-#' If regions is not defined, \emph{all_but_reg} is not considerd.
+#' you want to exclude; if FALSE, only the regions attributes specified in 
+#' regions argumentare kept in the output of the operation; if TRUE, 
+#' the regions attributes are all kept except those in regions argument.
+#' If \emph{regions} is not defined, \emph{all_but_reg} is not considerd.
 #' @param all_but_meta logical value indicating which metadata 
-#' you want to exclude; If FALSE only the metadata you choose are kept 
-#' in the output of the operation; if TRUE the metadata 
-#' are all kept except those in metadata.
-#' If metadata is not defined \emph{all_but_meta} is not considerd.
+#' you want to exclude; If FALSE, only the metadata attributes specified in 
+#' metadata argument are kept in the output of the operation; if TRUE, 
+#' the metadata are all kept except those in metadata argument.
+#' If \emph{metadata} input parameter is not defined \emph{all_but_meta} 
+#' is not considerd.
 #' @param regions_update list of updating rules in the form of 
-#' key = value generating new genomic region attributes and values.
-#' To specify the new values, the following options are available:
+#' key = value generating new genomic region attributes and/or values.
+#' The following options are available:
 #' \itemize{
 #' \item{All aggregation functions already defined by AGGREGATES object}
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
 #' \item{SQRT, META, NIL constructor objects defined by OPERATOR object}
 #' }
 #' @param metadata_update list of updating rules in the form of 
-#' key = value generating new metadata.
-#' To specify the new values, the following options are available:
+#' key = value generating new metadata attributes and/or attribute values.
+#' The following options are available:
 #' \itemize{
 #' \item{All aggregation functions already defined by AGGREGATES object}
 #' \item{All basic mathematical operations (+, -, *, /), including parenthesis}
-#' \item{SQRT, META, NIL constructor objects defined by OPERATOR object}
+#' \item{SQRT constructor object defined by OPERATOR object}
 #' }
 #'  
 #' @return GMQLDataset object. It contains the value to use as input 
@@ -85,12 +86,12 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_GMQL(test_path)
+#' data = read_gmql(test_path)
 #' 
-#' ## It creates a new dataset called CTCF_NORM_SCORE by preserving all 
-#' ## region attributes apart from score, and creating a new region attribute 
-#' ## called new_score by dividing the existing score value of each region 
-#' ## by 1000.0 and incrementing it by 100.
+#' ## This statement creates a new dataset called CTCF_NORM_SCORE by preserving 
+#' ## all region attributes apart from score, and creating a new region 
+#' ## attribute called new_score by dividing the existing score value of each 
+#' ## region by 1000.0 and incrementing it by 100.
 #' ## It also generates, for each sample of the new dataset, 
 #' ## a new metadata attribute called normalized with value 1, 
 #' ## which can be used in future selections.

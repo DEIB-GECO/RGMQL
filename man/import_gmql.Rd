@@ -22,7 +22,7 @@ It reads sample files in GTF or GDM/tab-delimited format.
 \examples{
 
 ## This statement defines the path to the subdirectory "example" of the 
-## package "RGMQL" and import as GRangesList the GMQL dataset
+## package "RGMQL" and imports as GRangesList the contained GMQL dataset
 
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 grl = import_gmql(test_path, TRUE)

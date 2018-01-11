@@ -1,7 +1,7 @@
 #' Method cover
 #'
 #' It takes as input a dataset containing one or more samples and returns 
-#' another dataset (with a single sample, if no \emph{groupby} option is 
+#' another dataset (with a single sample, if no \emph{groupBy} option is 
 #' specified) by “collapsing” the input dataset samples and their regions 
 #' according to certain rules specified by the input parameters.
 #' The attributes of the output genomic regions are only the region 
@@ -13,14 +13,14 @@
 #' of the intersection and of the union of the contributing regions; 
 #' the JaccardResult index is calculated as the ratio between the lengths 
 #' of the result and the union of the contributing regions.
-#' If aggregate functions are specified, a new attribute is added for 
+#' If aggregate functions are specified, a new region attribute is added for 
 #' each aggregate function specified.
 #' Output metadata are the union of the input ones.
-#' If \emph{groupby} clause is specified, the input samples are partitioned 
+#' If \emph{groupBy} clause is specified, the input samples are partitioned 
 #' in groups, each with distinct values of the grouping metadata attributes, 
 #' and the \emph{cover} operation is separately applied to each group, 
 #' yielding to one sample in the result for each group.
-#' Input samples that do not satisfy the \emph{groupby} condition 
+#' Input samples that do not satisfy the \emph{groupBy} condition 
 #' are disregarded.
 #' 
 #' @include AllClasses.R
@@ -61,7 +61,7 @@
 #' Every aggregate accepts a string value, except for COUNT, which does not 
 #' have any value.
 #' Argument of 'aggregate function' must exist in schema, i.e. among region 
-#' attributes. Two style are allowed:
+#' attributes. Two styles are allowed:
 #' \itemize{
 #' \item list of key-value pairs: e.g. sum = SUM("pvalue")
 #' \item list of values: e.g. SUM("pvalue")
@@ -83,7 +83,7 @@
 #' to the \emph{AccIndex} region attribute.}
 #' \item{COVER: default value.}
 #' }
-#' Can be all caps or lowercase
+#' It can be all caps or lowercase
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
@@ -97,10 +97,10 @@
 #' ## using customParser
 #' 
 #' init_gmql()
-#' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' exp = read_GMQL(test_path)
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' exp = read_gmql(test_path)
 #'   
-#' ## the following statement produces an output dataset with a single output 
+#' ## The following statement produces an output dataset with a single output 
 #' ## sample. The COVER operation considers all areas defined by a minimum 
 #' ## of two overlapping regions in the input samples, up to any amount of 
 #' ## overlapping regions.
@@ -109,7 +109,7 @@
 #'
 #' ## The following GMQL statement computes the result grouping the input 
 #' ## exp samples by the values of their cell metadata attribute, 
-#' ## thus one output res sample is generated for each cell type; 
+#' ## thus one output res sample is generated for each cell value; 
 #' ## output regions are produced where at least 2 and at most 3 regions 
 #' ## of grouped exp samples overlap, setting as attributes of the resulting 
 #' ## regions the minimum pvalue of the overlapping regions (min_pvalue) 

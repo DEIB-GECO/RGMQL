@@ -31,7 +31,7 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' 
 #' @description Wrapper to GMQL SELECT operator 
 #' @description It creates a new dataset from an existing one by extracting a 
-#' subset of samples and/or regions from the input dataset according to their 
+#' subset of samples and/or regions from the input dataset according to the 
 #' predicate. Each sample in the output dataset has the same region attributes, 
 #' values, and metadata as in the input dataset.
 #' When semijoin function is defined, it extracts those samples containing 
@@ -64,26 +64,26 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' 
 #' ## This statement initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
-#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## the path to the folder "DATASET" in the subdirectory "example" 
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 #' ## named "data"
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data <- read_GMQL(test_path) 
+#' data <- read_gmql(test_path) 
 #' 
-#' ## This statement selects from input data samples of patients younger 
+#' ## This statement selects from input the data samples of patients younger 
 #' ## than 70 years old, based on filtering on sample metadata attribute 
 #' ## 'patient_age'
 #' 
 #' filter_data <- filter(data, patient_age < 70)
 #' 
-#' ## This statement defines the path to the folders "DATASET_GDM" in the 
+#' ## This statement defines the path to the folder "DATASET_GDM" in the 
 #' ## subdirectory "example" of the package "RGMQL" and opens such folder 
 #' ## as a GMQL dataset named "join_data"
 #' 
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' join_data <- read_GMQL(test_path2) 
+#' join_data <- read_gmql(test_path2) 
 #' 
 #' ## This statement creates a new dataset called 'jun_tf' by selecting those 
 #' ## samples and their regions from the existing 'data' dataset such that:
@@ -98,7 +98,7 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' ## less than 0.01 are conserved in output
 #' 
 #' jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-#' semijoin(join_data, TRUE, conds("cell")))
+#' semijoin(join_data, FALSE, conds("cell")))
 #' 
 #' 
 #' @name filter
@@ -132,7 +132,7 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
         
 }
 
-#' Semijoin condtion
+#' Semijoin condition
 #' 
 #' This function is used as support to the filter method to define 
 #' semijoin conditions on metadata  
@@ -141,43 +141,43 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' @param .data GMQLDataset class object
 #' 
 #' @param is_in logical value: TRUE => for a given sample of input dataset
-#' ".data" in \code{\link{filter}} method if and only if there exists at 
+#' '.data' in \code{\link{filter}} method, if and only if there exists at 
 #' least one sample in dataset 'data' with metadata attributes defined 
 #' in groupBy and these attributes of 'data' have at least one value in 
-#' common with the same attributes defined in one sample of '.data'
-#' FALSE => semijoin condition is evaluated accordingly.
+#' common with the same attributes defined in at least one sample of '.data'
+#' in filter method, FALSE => semijoin condition is evaluated accordingly.
 #' 
 #' @param groupBy \code{\link{condition_evaluation}} function to support 
 #' methods with groupBy or JoinBy input paramter
 #' 
 #' @examples
 #' 
-#' ## These statements initializes and runs the GMQL server for local execution 
+#' ## This statements initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
-#' ## "example" of the package "RGMQL" and opens such folders as a GMQL dataset 
+#' ## "example" of the package "RGMQL" and opens such folders as GMQL datasets 
 #' ## named "data" and "join_data" respectively
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-#' data <- read_GMQL(test_path)
-#' join_data <-  read_GMQL(test_path2)
+#' data <- read_gmql(test_path)
+#' join_data <-  read_gmql(test_path2)
 #' 
-#' # It creates a new dataset called 'jun_tf' by selecting those samples and 
-#' # their regions from the existing 'data' dataset such that:
-#' # Each output sample has a metadata attribute called antibody_target 
-#' # with value JUN.
-#' # Each output sample also has not a metadata attribute called "cell" 
-#' # that has the same value of at least one of the values that a metadata 
-#' # attribute equally called cell has in at least one sample 
-#' # of the 'join_data' dataset.
-#' # For each sample satisfying previous conditions, only its regions that 
-#' # have a region attribute called pValue with the associated value 
-#' # less than 0.01 are conserved in output
+#' ## This statement creates a new dataset called 'jun_tf' by selecting those 
+#' ## samples and their regions from the existing 'data' dataset such that:
+#' ## Each output sample has a metadata attribute called antibody_target 
+#' ## with value JUN.
+#' ## Each output sample also has not a metadata attribute called "cell" 
+#' ## that has the same value of at least one of the values that a metadata 
+#' ## attribute equally called cell has in at least one sample 
+#' ## of the 'join_data' dataset.
+#' ## For each sample satisfying previous conditions, only its regions that 
+#' ## have a region attribute called pValue with the associated value 
+#' ## less than 0.01 are conserved in output
 #' 
 #' jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-#' semijoin(join_data, TRUE, conds("cell")))
+#' semijoin(join_data, FALSE, conds("cell")))
 #' 
 #' @return semijoin condition as list
 #' @export

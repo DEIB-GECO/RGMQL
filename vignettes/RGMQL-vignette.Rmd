@@ -5,6 +5,7 @@ author:
 - "Marco Masseroli"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
+csl: american-medical-association.csl
 output: BiocStyle::pdf_document
 vignette: >
     %\VignetteIndexEntry{RGMQL: GenoMetric Query Language for R/Bioconductor}
@@ -249,11 +250,11 @@ As data are already in the user computer, we simply execute:
 
 ```{r, read GMQL dataset}
 gmql_dataset_path <- system.file("example", "EXON", package = "RGMQL")
-data_out = read_GMQL(gmql_dataset_path)
+data_out = read_gmql(gmql_dataset_path)
 ```
 In this case we are reading a GMQL dataset specified by the path of 
 its folder "EXON" within the subdirectory "example" of the package "RGMQL".
-It does not matter what kind of format the data are, *read_GMQL()* reads 
+It does not matter what kind of format the data are, *read_gmql()* reads 
 many standard tab-delimited text formats without the need of specifying any  
 additional input parameter.
 
@@ -264,8 +265,16 @@ using GRangesList as input.
 
 ```{r, read GRangesList}
 library("GenomicRanges")
+
+# Granges Object with only one region: chr2 and two metadata column: score = 5 
+# and GC  = 0.45
+
 gr1 <- GRanges(seqnames = "chr2",
     ranges = IRanges(103, 106), strand = "+", score = 5L, GC = 0.45)
+
+# Granges Object with two regions both chr1 and two metadata column: score = 3
+# for the fist region and score = 4 for the second one, GC  = 0.3 and 0.5 
+# respectively
 
 gr2 <- GRanges(seqnames = c("chr1", "chr1"),
     ranges = IRanges(c(107, 113), width = 3), strand = c("+", "-"),
@@ -277,9 +286,13 @@ data_out <- read_GRangesList(grl)
 In this example we show how versatile the RGMQL package is.
 As specified above, we can directly read a list of GRanges previously created 
 starting from two GRanges.
-Both *read_GRangesList()* and *read_GMQL()* functions return a result object, 
+Both *read_GRangesList()* and *read_gmql()* functions return a result object, 
 in this case *data_out*: an instance of GMQLDataset class used as input 
-for executing the subsequent GMQL operation.
+for executing the subsequent GMQL operation.\newline
+NOTE: if *metadata(grl)* is empty, the function provides two default metadata:
+
+* "provider" = "PoliMi"
+* "application" = "RGMQL"
 
 ### Queries
 
@@ -308,8 +321,8 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 # sample with exon regions, and MUT folder as a GMQL dataset named "mut_ds" 
 # containing multiple samples with mutation regions
 
-exon_ds <- read_GMQL(exon_path)
-mut_ds <- read_GMQL(mut_path)
+exon_ds <- read_gmql(exon_path)
+mut_ds <- read_gmql(mut_path)
 
 # Filter out mut_ds based on predicate 
 
@@ -484,11 +497,11 @@ in this way login is automatically performed as specified above
 After initialization, we can start building our query:
 ```{r, remote query}
 
-## Read the remote dataset HG19_TCGA_dnaseq 
-## Read the remote dataset HG19_BED_ANNOTATION 
+## Read the remote dataset Example_Dataset_1 
+## Read the remote dataset Example_Dataset_2 
 
-TCGA_dnaseq <- read_GMQL("public.HG19_TCGA_dnaseq", is_local = FALSE)
-HG19_bed_ann <- read_GMQL("public.HG19_BED_ANNOTATION", is_local = FALSE)
+TCGA_dnaseq <- read_gmql("public.Example_Dataset_1", is_local = FALSE)
+HG19_bed_ann <- read_gmql("public.Example_Dataset_2", is_local = FALSE)
 
 ## Filter out TCGA_dnaseq based on predicate 
 
@@ -539,7 +552,7 @@ remote_processing(TRUE)
 An user can switch processing mode until the first *collect()* has been 
 performed.
 
-This kind of processing comes from the fact that the *read_GMQL()* function can 
+This kind of processing comes from the fact that the *read_gmql()* function can 
 accept either a local dataset or a remote repository dataset, 
 even in the same query as in the following example:
 ```{r, mixed query}
@@ -553,11 +566,11 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 # Read MUT folder as a GMQL dataset named "mut_ds" containing a single 
 # sample with mutation regions
 
-mut_ds <- read_GMQL(mut_path, is_local = TRUE)
+mut_ds <- read_gmql(mut_path, is_local = TRUE)
 
-# Read the remote dataset HG19_BED_ANNOTATION 
+# Read the remote dataset Example_Dataset_1 
 
-HG19_bed_ann <- read_GMQL("public.HG19_BED_ANNOTATION", is_local = FALSE)
+HG19_bed_ann <- read_gmql("public.Example_Dataset_1", is_local = FALSE)
 
 # Filter out based on predicate
 
@@ -596,8 +609,9 @@ collect(exon_res)
 execute()
 ```
 
-As we can see, the two *read_GMQL()* functions above read from different 
-sources: *mut_ds* from local dataset, *HG19_bed_ann* from remote repository.
+As we can see, the two *read_gmql()* functions above read from different 
+sources: *mut_ds* from local dataset, *HG19_bed_ann* from remote 
+repository.
 
 If we set remote processing to false (*remote_processing(FALSE)*), 
 the execution is performed locally downloading all needed datasets from remote 
@@ -627,8 +641,13 @@ dataset_path <- system.file("example", "EXON", package = "RGMQL")
 
 # Import the GMQL dataset as GRangesList
 
-data <- import_gmql(dataset_path, is_gtf = FALSE)
-data
+imported_data <- import_gmql(dataset_path, is_gtf = FALSE)
+imported_data
+
+# and its metadata
+
+metadata(imported_data)
+
 ```
 the second parameter *is_gtf* must specify the file format: .GTF or .GDM.
 
@@ -639,9 +658,9 @@ We can export a GRangesList as GMQL dataset as follows:
 
 dir_out <- system.file("example", package = "RGMQL")
 
-# Export the GRangesList as GMQL dataset at destination path
+# Export the GRangesList as GMQL dataset called 'example' at destination path
 
-export_gmql(data, dir_out, is_gtf = TRUE)
+export_gmql(imported_data, dir_out, is_gtf = TRUE)
 
 ```
 the second parameter *is_gtf* specifies the file format: .GTF or .GDM.
@@ -656,7 +675,7 @@ by filtering its content as follows:
 
 data_in <- system.file("example", "TEAD", package = "RGMQL")
 
-matrix <- filter_and_extract(data_in, metadata = NULL, regions = c("count"))
+matrix <- filter_and_extract(data_in, metadata = NULL, region_attributes = c("count"))
 matrix
 
 ```
@@ -667,10 +686,10 @@ from the input dataset.
 If the $metadata$ argument is NULL, all samples are taken.
 The number of obtained columns is equal to the number of samples left after 
 filtering, multiplied by the number of specified region attributes.
-If *regions* is not specified, only the fundamental elements of GRanges 
-are extracted, i.e., the genomic coordinates.
-Note that this function works only if every sample in dataset includes the same 
-number of regions with the same coordinates.
+If *region_attributes* is not specified, only the fundamental elements of 
+GRanges are extracted, i.e., the genomic coordinates.
+Note that this function works only if every sample in dataset includes the 
+same number of regions with the same coordinates.
 
 # References
 

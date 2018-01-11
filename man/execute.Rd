@@ -14,18 +14,19 @@ It executes GMQL query.
 The function works only after invoking at least one collect
 }
 \examples{
-## Thi statement initializes and runs the GMQL server for local execution 
+## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
-## the path to the folders "DATASET" in the subdirectory "example" 
+## the path to the folder "DATASET" in the subdirectory "example" 
 ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 ## named "data"
 
 init_gmql()
-test_path <- system.file("example","DATASET",package = "RGMQL")
-data = read_GMQL(test_path)
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+data = read_gmql(test_path)
 
-## The following statement materialize the dataset, previoulsy read, at 
-## th specific destination path into local folder "ds1" opportunely created
+## The following statement materializes the dataset "data", previoulsy read, 
+## at the specific destination test_path into local folder "ds1" opportunely 
+## created
 
 collect(data, dir_out = test_path)
 

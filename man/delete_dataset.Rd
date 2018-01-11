@@ -20,7 +20,7 @@ It deletes single private dataset specified by name from remote repository
 using the proper GMQL web service available on a remote server
 }
 \details{
-If no error occur, it prints "Deleted Dataset", otherwise a specific error 
+If no error occurs, it prints "Deleted Dataset", otherwise a specific error 
 is printed
 }
 \examples{

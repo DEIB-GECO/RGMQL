@@ -19,19 +19,20 @@ None
 It stops a specific current query job
 }
 \details{
-If error occurs a specific error is printed
+If error occurs, a specific error is printed
 }
 \examples{
 
 \dontrun{
 
-## login to GMQL REST services suite at remote url
+## Login to GMQL REST services suite at remote url
 
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## show all jobs at GMQL remote system and select one running job saving
-## into 'jobs_1' (in this case is the first of the list) and stop it
+## shows all jobs at GMQL remote system and selects one running job, saving
+## it into 'jobs_1' (in this case is the first of the list), and then 
+## stop it
 
 list_jobs <- show_jobs_list(remote_url)
 jobs_1 <- list_jobs$jobs[[1]]

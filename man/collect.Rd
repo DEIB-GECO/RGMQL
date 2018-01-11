@@ -11,10 +11,10 @@
 \arguments{
 \item{x}{GMQLDataset class object}
 
-\item{dir_out}{destination folder path.
-by default it is the current working directory of the R process}
+\item{dir_out}{destination folder path. By default it is the current 
+working directory of the R process}
 
-\item{name}{name of the result dataset. by default it is the string "ds1"}
+\item{name}{name of the result dataset. By default it is the string "ds1"}
 }
 \value{
 None
@@ -42,10 +42,11 @@ folder path
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data = read_GMQL(test_path)
+data = read_gmql(test_path)
 
-## The following statement materialize the dataset, previoulsy read, at 
-## th specific destination path into local folder "ds1" opportunely created
+## The following statement materializes the dataset 'data', previoulsy read, 
+## at the specific destination test_path into local folder "ds1" opportunely 
+## created
 
 collect(data, dir_out = test_path)
 

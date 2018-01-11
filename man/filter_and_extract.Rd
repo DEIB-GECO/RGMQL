@@ -5,7 +5,7 @@
 \title{Filter and extract function}
 \usage{
 filter_and_extract(data, metadata = NULL, metadata_prefix = NULL,
-  regions = NULL, suffix = "antibody_target")
+  region_attributes = NULL, suffix = "antibody_target")
 }
 \arguments{
 \item{data}{string GMQL dataset folder path or GRangesList
@@ -19,18 +19,19 @@ if NULL no filtering action occures
 (i.e every sample is taken for region filtering)}
 
 \item{metadata_prefix}{vector of strings that will support the metadata
-filtering. If defined, each 'metadata' are concatenated with the 
+filtering. If defined, each 'metadata' is concatenated with the 
 corresponding prefix.}
 
-\item{regions}{vector of strings that extracts only region attribute 
-specified; if NULL no regions attribute is taken and the output is only 
-GRanges made up by the region coordinate attributes 
+\item{region_attributes}{vector of strings that extracts only region 
+attributes  specified; if NULL no regions attribute is taken and the output 
+is only GRanges made up by the region coordinate attributes 
 (seqnames, start, end, strand)}
 
-\item{suffix}{name for each metadata column of GRanges. by default is the 
-"antibody_target". This string is taken from sample metadata file or from
-metadata() associated. If not present, the column name is the name of 
-selected regions}
+\item{suffix}{name for each metadata column of GRanges. By default it is the 
+value of the metadata attribute named "antibody_target". This string is 
+taken from sample metadata file or from metadata() associated. 
+If not present, the column name is the name of selected regions specified
+by 'regions' input parameter}
 }
 \value{
 GRanges with selected regions
@@ -44,26 +45,26 @@ with its prefix. The input regions are shown for each sample obtained
 from filtering.
 }
 \details{
-This function works only with datatset or GRangesList which samples or 
-Granges have the same regions coordinates (chr, ranges, strand)
+This function works only with datatset or GRangesList all whose samples or 
+Granges have the same region coordinates (chr, ranges, strand)
 
-In case of Grangeslist data input the function will search for metadata
-into metadata() function associated to Grangeslist.
+In case of GRangesList data input, the function searches for metadata
+into metadata() function associated to GRangesList.
 }
 \examples{
 
-## This statement defines the path to the folders "DATASET" in the 
-## subdirectory "example" of the package "RGMQL" and filter such folder 
-## dataset including at output only "pvalue" and "peak" regions
+## This statement defines the path to the folder "DATASET" in the 
+## subdirectory "example" of the package "RGMQL" and filters such folder 
+## dataset including at output only "pvalue" and "peak" region attributes
 
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-filter_and_extract(test_path, regions = c("pvalue", "peak"))
+filter_and_extract(test_path, region_attributes = c("pvalue", "peak"))
 
-## This statement import a GMQL dataset as GRangesList and filter it 
-## including at output only "pvalue" and "peak" regions
+## This statement imports a GMQL dataset as GRangesList and filters it 
+## including at output only "pvalue" and "peak" region attributes
 
 grl = import_gmql(test_path, TRUE)
-filter_and_extract(grl, regions = c("pvalue", "peak"))
+filter_and_extract(grl, region_attributes = c("pvalue", "peak"))
 
 
 }

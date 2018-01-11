@@ -8,12 +8,12 @@ init_gmql(output_format = "GTF", remote_processing = FALSE, url = NULL,
   username = NULL, password = NULL)
 }
 \arguments{
-\item{output_format}{string identifies the output format of sample files.
-It can be TAB, GTF or COLLECT:
+\item{output_format}{string that identifies the output format of allsample 
+files. It can be TAB, GTF or COLLECT:
 \itemize{
-\item{TAB: tab delimited file format}
-\item{GTF: tab-delimited text fstandard ormat based on the general 
-feature format}
+\item{TAB: tab-delimited file format}
+\item{GTF: tab-delimited text standard format based on the General 
+Feature Format}
 \item{COLLECT: used for storing output in memory}
 }}
 
@@ -40,11 +40,11 @@ It also performs a login to GMQL REST services suite, if needed
 \examples{
 
 ## This statement initializes GMQL with local processing with sample files 
-## output format as tab delimited
+## output format as tab-delimited
 
 init_gmql("tab", FALSE)
 
-## initializes GMQL with remote processing
+## This statement initializes GMQL with remote processing
 
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 init_gmql(remote_processing = TRUE, url = remote_url)

@@ -21,54 +21,55 @@
 #' if NULL no filtering action occures
 #' (i.e every sample is taken for region filtering)
 #' @param metadata_prefix vector of strings that will support the metadata
-#' filtering. If defined, each 'metadata' are concatenated with the 
+#' filtering. If defined, each 'metadata' is concatenated with the 
 #' corresponding prefix.
-#' @param regions vector of strings that extracts only region attribute 
-#' specified; if NULL no regions attribute is taken and the output is only 
-#' GRanges made up by the region coordinate attributes 
+#' @param region_attributes vector of strings that extracts only region 
+#' attributes  specified; if NULL no regions attribute is taken and the output 
+#' is only GRanges made up by the region coordinate attributes 
 #' (seqnames, start, end, strand)
-#' @param suffix name for each metadata column of GRanges. by default is the 
-#' "antibody_target". This string is taken from sample metadata file or from
-#' metadata() associated. If not present, the column name is the name of 
-#' selected regions
+#' @param suffix name for each metadata column of GRanges. By default it is the 
+#' value of the metadata attribute named "antibody_target". This string is 
+#' taken from sample metadata file or from metadata() associated. 
+#' If not present, the column name is the name of selected regions specified
+#' by 'regions' input parameter
 #'
 #' @details
-#' This function works only with datatset or GRangesList which samples or 
-#' Granges have the same regions coordinates (chr, ranges, strand)
+#' This function works only with datatset or GRangesList all whose samples or 
+#' Granges have the same region coordinates (chr, ranges, strand)
 #' 
-#' In case of Grangeslist data input the function will search for metadata
-#' into metadata() function associated to Grangeslist.
+#' In case of GRangesList data input, the function searches for metadata
+#' into metadata() function associated to GRangesList.
 #'
 #' @return GRanges with selected regions
 #'
 #' @examples
 #' 
-#' ## This statement defines the path to the folders "DATASET" in the 
-#' ## subdirectory "example" of the package "RGMQL" and filter such folder 
-#' ## dataset including at output only "pvalue" and "peak" regions
+#' ## This statement defines the path to the folder "DATASET" in the 
+#' ## subdirectory "example" of the package "RGMQL" and filters such folder 
+#' ## dataset including at output only "pvalue" and "peak" region attributes
 #' 
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' filter_and_extract(test_path, regions = c("pvalue", "peak"))
+#' filter_and_extract(test_path, region_attributes = c("pvalue", "peak"))
 #' 
-#' ## This statement import a GMQL dataset as GRangesList and filter it 
-#' ## including at output only "pvalue" and "peak" regions
+#' ## This statement imports a GMQL dataset as GRangesList and filters it 
+#' ## including at output only "pvalue" and "peak" region attributes
 #' 
 #' grl = import_gmql(test_path, TRUE)
-#' filter_and_extract(grl, regions = c("pvalue", "peak"))
+#' filter_and_extract(grl, region_attributes = c("pvalue", "peak"))
 #'
 #'
 #' @export
 #'
 filter_and_extract <- function(data, metadata = NULL,
-                                metadata_prefix = NULL, regions = NULL, 
-                                suffix = "antibody_target")
+                    metadata_prefix = NULL, region_attributes = NULL, 
+                    suffix = "antibody_target")
 {
     if(is(data,"GRangesList"))
-        .extract_from_GRangesList(data, metadata, metadata_prefix, regions, 
-                                    suffix)
+        .extract_from_GRangesList(data, metadata, metadata_prefix, 
+            region_attributes, suffix)
     else
-        .extract_from_dataset(data, metadata, metadata_prefix, regions, 
-                                    suffix)
+        .extract_from_dataset(data, metadata, metadata_prefix, 
+            region_attributes, suffix)
 }
 
 .extract_from_dataset <- function(datasetName, metadata, metadata_prefix, 
@@ -94,40 +95,43 @@ filter_and_extract <- function(data, metadata = NULL,
     
     vector_field <- .schema_header(datasetName)
     
+    
     if(length(gdm_meta_files))
     {
-        samples_with_suffix <- .check_metadata_files(metadata,metadata_prefix,
-                                                gdm_meta_files, suffix)
+        samples_file <- .check_metadata_files(metadata,metadata_prefix,
+                                                gdm_meta_files)
         
-        samples_file <- lapply(samples_with_suffix, function(x) x$sample)
-        suffix_vec <- lapply(samples_with_suffix, function(x) x$suffix)
-        suffixes <- unlist(suffix_vec)
-        samples_to_read <- unlist(samples_file)
+        samples_meta_to_read <- unlist(samples_file)
         
-        if(length(samples_to_read))
-            samples_to_read <- gsub(".meta$", "", samples_to_read)
+        if(length(samples_meta_to_read))
+            samples_to_read <- gsub(".meta$", "", samples_meta_to_read)
         else
+        {
             samples_to_read <- gsub(".meta$", "", gdm_meta_files)
+            samples_meta_to_read <- gtf_meta_files
+            
+        }
         
+        suffix_vec <- .get_suffix(suffix, FALSE, samples_meta_to_read)
         granges <- .parse_gdm_files(vector_field,samples_to_read,regions,
-                                                        suffixes)
+                                        suffix_vec)
     }
     else
     {
-        samples_with_suffix <- .check_metadata_files(metadata,metadata_prefix,
-                                                    gtf_meta_files, suffix)
+        samples_file <- .check_metadata_files(metadata,metadata_prefix,
+                                                    gtf_meta_files)
+        samples_meta_to_read <- unlist(samples_file)
         
-        samples_file <- lapply(samples_with_suffix, function(x) x$sample)
-        suffix_vec <- lapply(samples_with_suffix, function(x) x$suffix)
-        suffixes <- unlist(suffix_vec)
-        samples_to_read <- unlist(samples_file)
-        
-        if(length(samples_to_read))
-            samples_to_read <- gsub(".meta$", "", samples_to_read)
+        if(length(samples_meta_to_read))
+            samples_to_read <- gsub(".meta$", "", samples_meta_to_read)
         else
+        {
             samples_to_read <- gsub(".meta$", "", gtf_meta_files)
+            samples_meta_to_read <- gtf_meta_files
+        }
         
-        granges <- .parse_gtf_files(samples_to_read, regions, suffixes)
+        suffix_vec <- .get_suffix(suffix, FALSE, samples_meta_to_read)
+        granges <- .parse_gtf_files(samples_to_read, regions,suffix_vec)
     }
 }
 
@@ -141,8 +145,7 @@ filter_and_extract <- function(data, metadata = NULL,
         stop("rangesList empty")
     
     meta_list <- metadata(rangesList)
-    samples <- .check_metadata_list(metadata, metadata_prefix, meta_list, 
-                                        suffix)
+    samples <- .check_metadata_list(metadata, metadata_prefix, meta_list)
     if(!length(unlist(samples)))
         samples <- rangesList
     else
@@ -150,26 +153,73 @@ filter_and_extract <- function(data, metadata = NULL,
         index <- unlist(samples)
         samples <- rangesList[c(index)]
     }
-    granges <- .parse_Granges(samples,regions)
+    new_meta_list <- metadata(samples)
+    suffix_vec <- .get_suffix(suffix, TRUE, new_meta_list)
+    granges <- .parse_Granges(samples,regions,suffix_vec)
 }
 
-.parse_Granges <- function(region_list,regions)
+.parse_Granges <- function(region_list,regions,suffixes)
 {
+    if(is.null(suffixes))
+        suffixes = ""
+    
     g1 <- region_list[[1]]
     elementMetadata(g1) <- NULL
     if(!is.null(regions))
     {
-        DF_list <- lapply(region_list, function(g_x){
+        DF_list <- mapply(function(g_x,h){
             meta <- elementMetadata(g_x)[regions]
+            if(h!="")
+                names(meta) <- paste(regions,h,sep = ".")
             data.frame(meta)
-        })
+        },region_list, suffixes, SIMPLIFY = FALSE)
         DF_only_regions <- dplyr::bind_cols(DF_list)
         elementMetadata(g1) <- DF_only_regions
     }
     g1
 }
 
-.check_metadata_list <- function(metadata,metadata_prefix,meta_list,col_name)
+.get_suffix <- function(col_name, from_list, meta_fl)
+{
+    suffix <- paste0(col_name,"$")
+    
+    if(from_list)
+    {
+        meta_list <- mapply(function(x,index){
+            vec_names <- names(x)
+            s_index <- grep(suffix,vec_names)
+            first_index <- s_index[1]
+            suffix <- unlist(x[first_index]) # ne prendo solo uno
+            names(suffix) <- NULL
+        
+            #if found retrieve samples that has at least one choosen metadata
+            if(first_index && !is.na(first_index))
+                suffix
+            else
+                ""
+        }, meta_fl, seq_along(meta_fl)) 
+    }
+    else
+    {
+        meta_list <- vapply(meta_fl, function(x){
+            list <- .add_metadata(x)
+            vec_names <- names(list)
+            index <- grep(suffix,vec_names)
+            first_index <- index[1]
+            suffix <- unlist(list[first_index]) # ne prendo solo uno
+            names(suffix) <- NULL
+            #if found retrieve samples that has at least one choosen metadata
+            if(first_index && !is.na(first_index))
+                suffix
+            else
+                ""
+        },character(1))
+    }
+    names(meta_list) <- NULL
+    meta_list
+}
+
+.check_metadata_list <- function(metadata,metadata_prefix,meta_list)
 {
     vec_meta <- paste0(metadata_prefix,metadata)
     list <- mapply(function(x,index){
@@ -184,9 +234,8 @@ filter_and_extract <- function(data, metadata = NULL,
     }, meta_list, seq_along(meta_list))
 }
 
-.check_metadata_files <- function(metadata,metadata_prefix,meta_files,col_name)
+.check_metadata_files <- function(metadata,metadata_prefix,meta_files)
 {
-    suffix <- paste0(col_name,"$")
     vec_meta <- paste0(metadata_prefix,metadata)
     meta_list <- lapply(meta_files, function(x){
         list <- .add_metadata(x)
@@ -194,18 +243,10 @@ filter_and_extract <- function(data, metadata = NULL,
         a <- lapply(vec_meta, function(y)grep(y,vec_names))
         ## we would like that manage more index from grep
         found <- as.logical(length(unlist(a)))
-        index <- grep(suffix,vec_names)
-        suffix <- unlist(list[index])[1] # ne prendo solo uno
-        names(suffix) <- NULL
         #if found retrieve samples that has at least one choosen metadata
-        if(found)
-            list("sample" = x, "suffix" = suffix )
-        else
-            list("sample" = NULL, "suffix" = suffix )
-            
+        if(found){x}
     })
 }
-
 
 .parse_gtf_files <- function(gtf_region_files, regions, suffixes)
 {
@@ -229,7 +270,8 @@ filter_and_extract <- function(data, metadata = NULL,
     g1
 }
 
-.parse_gdm_files <- function(vector_field,gdm_region_files,regions,suffixes)
+.parse_gdm_files <- function(vector_field,gdm_region_files,regions,
+                                suffixes)
 {
     #read first sample cause chromosome regions are the same for all samples
     df <- data.table::fread(gdm_region_files[1],col.names = vector_field,

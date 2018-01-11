@@ -2,7 +2,7 @@
 % Please edit documentation in R/gmql_select.R
 \name{semijoin}
 \alias{semijoin}
-\title{Semijoin condtion}
+\title{Semijoin condition}
 \usage{
 semijoin(.data, is_in = TRUE, groupBy)
 }
@@ -10,11 +10,11 @@ semijoin(.data, is_in = TRUE, groupBy)
 \item{.data}{GMQLDataset class object}
 
 \item{is_in}{logical value: TRUE => for a given sample of input dataset
-".data" in \code{\link{filter}} method if and only if there exists at 
+'.data' in \code{\link{filter}} method, if and only if there exists at 
 least one sample in dataset 'data' with metadata attributes defined 
 in groupBy and these attributes of 'data' have at least one value in 
-common with the same attributes defined in one sample of '.data'
-FALSE => semijoin condition is evaluated accordingly.}
+common with the same attributes defined in at least one sample of '.data'
+in filter method, FALSE => semijoin condition is evaluated accordingly.}
 
 \item{groupBy}{\code{\link{condition_evaluation}} function to support 
 methods with groupBy or JoinBy input paramter}
@@ -28,31 +28,31 @@ semijoin conditions on metadata
 }
 \examples{
 
-## These statements initializes and runs the GMQL server for local execution 
+## This statements initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
-## "example" of the package "RGMQL" and opens such folders as a GMQL dataset 
+## "example" of the package "RGMQL" and opens such folders as GMQL datasets 
 ## named "data" and "join_data" respectively
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-data <- read_GMQL(test_path)
-join_data <-  read_GMQL(test_path2)
+data <- read_gmql(test_path)
+join_data <-  read_gmql(test_path2)
 
-# It creates a new dataset called 'jun_tf' by selecting those samples and 
-# their regions from the existing 'data' dataset such that:
-# Each output sample has a metadata attribute called antibody_target 
-# with value JUN.
-# Each output sample also has not a metadata attribute called "cell" 
-# that has the same value of at least one of the values that a metadata 
-# attribute equally called cell has in at least one sample 
-# of the 'join_data' dataset.
-# For each sample satisfying previous conditions, only its regions that 
-# have a region attribute called pValue with the associated value 
-# less than 0.01 are conserved in output
+## This statement creates a new dataset called 'jun_tf' by selecting those 
+## samples and their regions from the existing 'data' dataset such that:
+## Each output sample has a metadata attribute called antibody_target 
+## with value JUN.
+## Each output sample also has not a metadata attribute called "cell" 
+## that has the same value of at least one of the values that a metadata 
+## attribute equally called cell has in at least one sample 
+## of the 'join_data' dataset.
+## For each sample satisfying previous conditions, only its regions that 
+## have a region attribute called pValue with the associated value 
+## less than 0.01 are conserved in output
 
 jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-semijoin(join_data, TRUE, conds("cell")))
+semijoin(join_data, FALSE, conds("cell")))
 
 }

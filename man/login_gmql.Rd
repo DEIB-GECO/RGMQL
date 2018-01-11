@@ -23,13 +23,13 @@ and password, or as guest, using the proper GMQL web service available
 on a remote server
 }
 \details{
-If both username and password are missing you will be logged as guest.
+If both username and password are missing, you will be logged as guest.
 After login you will receive an authentication token.
-As token remains vaild on server (until the next login / registration) 
-a user can safely use a token for a previous session as a convenience;
-this token is saved in R Global environment to perform subsequent REST call 
-even on complete R restart (if the environment has been saved).
-If error occurs a specific error is printed
+As token remains valid on server (until the next login / registration or 
+logout), a user can safely use a token for a previous session as a 
+convenience; this token is saved in R Global environment to perform 
+subsequent REST call even on complete R restart (if the environment has 
+been saved). If error occurs, a specific error is printed
 }
 \examples{
 ## Login to GMQL REST services suite as guest

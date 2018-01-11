@@ -38,7 +38,7 @@ attributes. Two styles are allowed:
 groupBy or JoinBy input parameter}
 
 \item{count_name}{string defining the metadata count name; if it is 
-not specifying the name is "count_left_right"}
+not specified the name is "count_left_right"}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -49,18 +49,18 @@ Wrapper to GMQL MAP operator
 
 It computes, for each sample in the right dataset, aggregates over the 
 values of the right dataset regions that intersect with a region in a left 
-dataset sample, for each region of each sample in the left dataset;
+dataset sample, for each region of each sample in the left dataset.
 The number of generated output samples is the Cartesian product 
 of the samples in the two input datasets;
 each output sample has the same regions as the related input left dataset 
 sample, with their attributes and values, plus the attributes computed as 
 aggregates over right region values.
 Output sample metadata are the union of the related input sample metadata,
-whose attribute names are prefixed with "left" or "right" respectively.
+whose attribute names are prefixed with left or right respectively.
 }
 \details{
-When the joinby clause is present, only pairs of samples of left_input_data 
-and of right_input_data with metadata M1 and M2 respectively that satisfy 
+When the joinby clause is present, only pairs of samples of x dataset
+and of y dataset with metadata M1 and M2 respectively that satisfy 
 the joinby condition are considered.
 
 The clause consists of a list of metadata attribute names that must be
@@ -68,26 +68,26 @@ present with equal values in both M1 and  M2
 }
 \examples{
 
-## Thi statement initializes and runs the GMQL server for local execution 
+## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
-## "example" of the package "RGMQL" and opens such folder as a GMQL 
-## dataset named "exp" and "ref" respectively using customParser
+## "example" of the package "RGMQL", and opens such folders as a GMQL 
+## dataset named "exp" and "ref", respectively, using customParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-exp = read_GMQL(test_path)
-ref = read_GMQL(test_path2)
+exp = read_gmql(test_path)
+ref = read_gmql(test_path2)
 
-# It counts the number of regions in each sample from exp that overlap with 
-# a ref region, and for each ref region it computes the minimum score 
-# of all the regions in each exp sample that overlap with it. 
-# The MAP joinby option ensures that only the exp samples referring to 
-# the same 'cell_tissue' of a ref sample are mapped on such ref sample; 
-# exp samples with no cell_tissue metadata attribute, or with such metadata 
-# but with a different value from the one(s) of ref sample(s), 
-# are disregarded.
+## This statement it counts the number of regions in each sample from exp 
+## dataset that overlap with a ref dataset region, and for each ref region 
+## it computes the minimum score of all the regions in each exp sample that 
+## overlap with it. The MAP joinby option ensures that only the exp samples 
+## referring to the same 'cell_tissue' of a ref sample are mapped on such 
+## ref sample; exp samples with no cell_tissue metadata attribute, or with 
+## such metadata attribute, but with a different value from the one(s) 
+## of ref sample(s), are disregarded.
 
 out = map(ref, exp, minScore = MIN("score"), joinBy = conds("cell_tissue"))
 

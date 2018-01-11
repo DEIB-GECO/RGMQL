@@ -14,7 +14,7 @@ compile_query_fromfile(url, filePath)
 \item{url}{string url of server: It must contain the server address 
 and base url; service name is added automatically}
 
-\item{query}{string text of the query}
+\item{query}{string text of query}
 
 \item{filePath}{string path of txt file containing a GMQL query}
 }
@@ -38,11 +38,6 @@ login_gmql(remote_url)
 compile_query(remote_url, "DATASET = SELECT() Example_Dataset_1;
 MATERIALIZE DATASET INTO RESULT_DS;")
 
-## logout from GMQL REST services suite
-
-logout_gmql(remote_url)
-
-\dontrun{
 
 ## This statement defines the path to the file "query1.txt" in the 
 ## subdirectory "example" of the package "RGMQL" and run the compile 
@@ -51,6 +46,9 @@ logout_gmql(remote_url)
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")
 compile_query_fromfile(remote_url, test_query)
-}
+
+## logout from GMQL REST services suite
+
+logout_gmql(remote_url)
 
 }

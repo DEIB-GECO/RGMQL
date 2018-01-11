@@ -5,7 +5,7 @@
 #' @description It builds a dataset consisting of a single sample having as 
 #' many regions as the number of regions of all the input dataset samples
 #' and as many metadata as the union of the 'attribute-value' tuples of the 
-#' input samples. If \emph{groupBy} is specified: the samples are then 
+#' input samples. If \emph{groupBy} is specified, the samples are then 
 #' partitioned in groups, each with a distinct value of the grouping metadata 
 #' attributes. The operation is separately applied to each group, yielding 
 #' one sample in the result for each group. Samples whose metadata are 
@@ -30,17 +30,16 @@
 #' ## using customParser
 #'
 #' init_gmql()
-#' test_path <- system.file("example","DATASET",package = "RGMQL")
-#' exp = read_GMQL(test_path)
+#' test_path <- system.file("example", "DATASET", package = "RGMQL")
+#' exp = read_gmql(test_path)
 #'
 #' ## This statement creates a dataset called merged which contains one 
 #' ## sample for each antibody_target and cell value found within the metadata 
 #' ## of the exp dataset sample; each created sample contains all regions 
 #' ## from all 'exp' samples with a specific value for their 
-#' ## antibody_target and cell metadata
-#' ## attributes.
+#' ## antibody_target and cell metadata attributes.
 #'
-#' merged = aggregate(exp, conds(c("antibody_target","cell")))
+#' merged = aggregate(exp, conds(c("antibody_target", "cell")))
 #'
 #' @name aggregate
 #' @rdname aggregate

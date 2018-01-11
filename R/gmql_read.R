@@ -1,7 +1,7 @@
 #' Function read
 #'
-#' It reads a GMQL dataset, as a folder containig some homogenus samples on 
-#' disk or as a GrangesList; it saving in Scala memory in a way that can be 
+#' It reads a GMQL dataset, as a folder containing some homogenus samples on 
+#' disk or as a GRangesList, saving it in Scala memory in a way that can be 
 #' referenced in R. It is also used to read a repository dataset in case of
 #' remote processing.
 #' 
@@ -9,14 +9,13 @@
 #' @importFrom methods is
 #' 
 #' @param dataset folder path for GMQL dataset or dataset name on repository
-#' @param parser string used to parsing dataset files
-#' The Parser's available are:
+#' @param parser string used to parsing dataset files.
+#' The Parsers available are:
 #' \itemize{
-#' \item{ANNParser}
-#' \item{BroadProjParser}
+#' \item{BedParser}
+#' \item{BroadPeakParser}
 #' \item{NarrowPeakParser}
-#' \item{RnaSeqParser}
-#' \item{CustomParser.}
+#' \item{CustomParser}
 #' }
 #' Default is CustomParser.
 #' @param is_local logical value indicating local or remote dataset
@@ -26,14 +25,14 @@
 #' for the subsequent GMQLDataset method
 #' 
 #' @details
-#' Normally a GMQL dataset contains an XML schema file that contains
+#' Normally, a GMQL dataset contains an XML schema file that contains
 #' name of region attributes. (e.g chr, start, stop, strand)
 #' The CustomParser reads this XML schema; 
 #' if you already know what kind of schema your files have, use one of the 
 #' parsers defined, without reading any XML schema.
 #' 
 #' If GRangesList has no metadata: i.e. metadata() is empty, two metadata are
-#' generated.
+#' generated:
 #' \itemize{
 #' \item{"provider" = "PoliMi"}
 #' \item{"application" = "RGMQL"}
@@ -41,19 +40,19 @@
 #'
 #' @examples
 #' 
-#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## This statement initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
-#' ## the path to the folders "DATASET" in the subdirectory "example" 
+#' ## the path to the folder "DATASET" in the subdirectory "example" 
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
-#' ## named "data"
+#' ## named "data" using customParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
-#' data = read_GMQL(test_path)
+#' data = read_gmql(test_path)
 #' 
 #' ## This statement opens such folder as a GMQL dataset named "data" using 
 #' ## "NarrowPeakParser" 
-#' dataPeak = read_GMQL(test_path,"NarrowPeakParser")
+#' dataPeak = read_gmql(test_path,"NarrowPeakParser")
 #' 
 #' ## This statement reads a remote public dataset stored into GMQL system 
 #' ## repository. For a public dataset in a (remote) GMQL repository the 
@@ -61,13 +60,13 @@
 #' 
 #' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' login_gmql(remote_url)
-#' data1 = read_GMQL("public.Example_Dataset_1",is_local = FALSE)
+#' data1 = read_gmql("public.Example_Dataset_1", is_local = FALSE)
 #' 
-#' @name read_GMQL
+#' @name read_gmql
 #' @rdname read-function
 #' @export
 #'
-read_GMQL <- function(dataset, parser = "CustomParser", is_local = TRUE, 
+read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE, 
                             is_GMQL = TRUE)
 {
     .check_input(dataset)
@@ -97,7 +96,7 @@ read_GMQL <- function(dataset, parser = "CustomParser", is_local = TRUE,
         if(is.null(url))
             stop("You have to log on using login function")
         
-        if(!exists("authToken",envir = .GlobalEnv))
+        if(!exists("GMQL_credentials", envir = .GlobalEnv))
             stop("You have to log on using login function")
         
         list <- show_schema(url,dataset)
@@ -130,7 +129,7 @@ read_GMQL <- function(dataset, parser = "CustomParser", is_local = TRUE,
 #' 
 #' @param samples GRangesList
 #' 
-#' @name read_GMQL
+#' @name read_gmql
 #' @rdname read-function
 #' @export
 #'
@@ -202,8 +201,8 @@ read_GRangesList <- function(samples)
 .check_parser <- function(parser)
 {
     parser <- toupper(parser)
-    if(!parser %in% c("BEDPARSER","ANNPARSER","BROADPROJPARSER","BASICPARSER",
-                "NARROWPEAKPARSER","RNASEQPARSER","CUSTOMPARSER"))
+    if(!parser %in% c("BEDPARSER","BROADPEAKPARSER", "NARROWPEAKPARSER",
+                        "CUSTOMPARSER"))
         stop("parser not defined")
     
     parser

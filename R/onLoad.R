@@ -5,14 +5,28 @@
     .jpackage(pkgname, lib.loc = libname)
     # tools::vignetteEngine("knitr", pattern = "[.]Rmd$", package = "knitr")
     initGMQLscalaAPI()
+    if(exists("GMQL_credentials", envir = .GlobalEnv))
+    {
+        packageStartupMessage("Check if GMQL credentials are expired... \n")
+        if(exists("remote_url", where = GMQL_credentials))
+        {
+            user <- GMQL_credentials$username
+            psw <- GMQL_credentials$password
+            remote_url <- GMQL_credentials$remote_url
+            login_gmql(remote_url,user,psw)
+        }
+    }
 }
 
 .onAttach <- function(libname, pkgname) {
     packageStartupMessage("GMQL successfully loaded")
 }
 
+.onDetach <- function(libpath) {
+    
+} 
+
 .onUnload <- function(libpath) {
-    #.rscalaPackageUnload()
 }
 
 

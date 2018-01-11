@@ -31,7 +31,7 @@ for the subsequent GMQLDataset method
 Wrapper to GMQL SELECT operator
 
 It creates a new dataset from an existing one by extracting a 
-subset of samples and/or regions from the input dataset according to their 
+subset of samples and/or regions from the input dataset according to the 
 predicate. Each sample in the output dataset has the same region attributes, 
 values, and metadata as in the input dataset.
 When semijoin function is defined, it extracts those samples containing 
@@ -44,26 +44,26 @@ no sample is extracted.
 
 ## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
-## the path to the folders "DATASET" in the subdirectory "example" 
+## the path to the folder "DATASET" in the subdirectory "example" 
 ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 ## named "data"
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-data <- read_GMQL(test_path) 
+data <- read_gmql(test_path) 
 
-## This statement selects from input data samples of patients younger 
+## This statement selects from input the data samples of patients younger 
 ## than 70 years old, based on filtering on sample metadata attribute 
 ## 'patient_age'
 
 filter_data <- filter(data, patient_age < 70)
 
-## This statement defines the path to the folders "DATASET_GDM" in the 
+## This statement defines the path to the folder "DATASET_GDM" in the 
 ## subdirectory "example" of the package "RGMQL" and opens such folder 
 ## as a GMQL dataset named "join_data"
 
 test_path2 <- system.file("example", "DATASET_GDM", package = "RGMQL")
-join_data <- read_GMQL(test_path2) 
+join_data <- read_gmql(test_path2) 
 
 ## This statement creates a new dataset called 'jun_tf' by selecting those 
 ## samples and their regions from the existing 'data' dataset such that:
@@ -78,7 +78,7 @@ join_data <- read_GMQL(test_path2)
 ## less than 0.01 are conserved in output
 
 jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-semijoin(join_data, TRUE, conds("cell")))
+semijoin(join_data, FALSE, conds("cell")))
 
 
 }

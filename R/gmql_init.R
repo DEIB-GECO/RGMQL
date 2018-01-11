@@ -5,12 +5,12 @@
 #' 
 #' @importFrom rJava J
 #' 
-#' @param output_format string identifies the output format of sample files.
-#' It can be TAB, GTF or COLLECT:
+#' @param output_format string that identifies the output format of allsample 
+#' files. It can be TAB, GTF or COLLECT:
 #' \itemize{
-#' \item{TAB: tab delimited file format}
-#' \item{GTF: tab-delimited text fstandard ormat based on the general 
-#' feature format}
+#' \item{TAB: tab-delimited file format}
+#' \item{GTF: tab-delimited text standard format based on the General 
+#' Feature Format}
 #' \item{COLLECT: used for storing output in memory}
 #' }
 #' @param remote_processing logical value specifying the processing mode.
@@ -30,11 +30,11 @@
 #' @examples
 #'
 #' ## This statement initializes GMQL with local processing with sample files 
-#' ## output format as tab delimited
+#' ## output format as tab-delimited
 #' 
 #' init_gmql("tab", FALSE)
 #' 
-#' ## initializes GMQL with remote processing
+#' ## This statement initializes GMQL with remote processing
 #' 
 #' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 #' init_gmql(remote_processing = TRUE, url = remote_url)
@@ -52,7 +52,7 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
     
     # mettere attesa da input keyboard, controllare se token già esiste 
     # da sessione precedente
-    if(!is.null(url) && !exists("authToken",envir = .GlobalEnv))
+    if(!is.null(url) && !exists("GMQL_credentials", envir = .GlobalEnv))
         login_gmql(url,username,password)
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
@@ -61,7 +61,7 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
 
 #' Stop GMQL server
 #'
-#' Stop GMQL server
+#' it stops GMQL server processing
 #' 
 #' @importFrom rJava J
 #' 
@@ -69,8 +69,8 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
 #'
 #' @examples
 #'
-#' ## These statements initializes GMQL with local processing with sample 
-#' ## files output format as tab delimited and then stop it
+#' ## These statements first initializes GMQL with local processing and with 
+#' ## sample files output format as tab-delimited, and then stops it
 #' 
 #' init_gmql("tab", FALSE)
 #' 
@@ -91,20 +91,21 @@ stop_gmql <- function()
 #' 
 #' @details 
 #' The invocation of this function allows to change mode of processing.
-#' After invoking collect() it is not possbile to switch the processing mode. 
+#' After invoking collect() function, it is not possbile to switch the 
+#' processing mode. 
 #' 
 #' @importFrom rJava J
 #' 
 #' @param is_remote logical value used in order to set the processing mode.
-#' TRUE you set a remote query processing mode, otherwise it will be local,
+#' TRUE: you set a remote query processing mode, otherwise it will be local
 #' 
 #' @return None
 #' 
 #' @examples
 #' 
-#' ## These statements initializes GMQL with local processing with sample 
-#' ## files output format as tab delimited and then change processing mode 
-#' ## to remote
+#' ## This statement initializes GMQL with local processing with sample 
+#' ## files output format as tab-delimited, and then it changes processing 
+#' ## mode to remote
 #' 
 #' init_gmql("tab", remote_processing = FALSE)
 #' 

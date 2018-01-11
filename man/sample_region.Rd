@@ -7,22 +7,21 @@
 sample_region(url, datasetName, sampleName)
 }
 \arguments{
-\item{url}{string url of server: it must contain the server address
+\item{url}{string url of server. It must contain the server address
 and base url; service name is added automatically}
 
-\item{datasetName}{string name of dataset to get}
+\item{datasetName}{string name of dataset of interest}
 
-\item{sampleName}{string sample name to get}
+\item{sampleName}{string name of sample of interest}
 }
 \value{
 GRanges data containing regions of sample
 }
 \description{
-It retrieves regions data for a specific sample 
-(whose name is specified in the paramter "sampleName")
-in a specific dataset 
-(whose name is specified in the parameter "datasetName") 
-using the proper GMQL web service available on a remote server
+It retrieves regions data of a specific sample (whose name is specified in 
+the parameter "sampleName") in a specific dataset (whose name is specified 
+in the parameter "datasetName") using the proper GMQL web service 
+available on a remote server
 }
 \details{
 If error occurs, a specific error is printed
@@ -36,8 +35,8 @@ If error occurs, a specific error is printed
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## This statement retrieves regions data for sample "S_00000" from public 
-## dataset "Example_Dataset1"
+## This statement retrieves regions data of sample "S_00000" from public 
+## dataset "Example_Dataset_1"
  
 sample_region(remote_url, "public.Example_Dataset_1", "S_00000")
 

@@ -26,23 +26,23 @@ All samples are in GDM (tab-separated values) or GTF file format
 The GMQL dataset is made up by two different file types:
 
 \itemize{
-\item{metadata files: they contain metadata associated to corrisponding 
+\item{metadata files: they contain metadata associated with corrisponding 
 sample.}
-\item{region files: they contain many genomic regions data.}
-\item{region schema file: XML file that contains region attribute name 
+\item{region files: they contain genomic regions data.}
+\item{region schema file: XML file that contains region attribute names 
 (e.g. chr, start, end, pvalue)}
 }
-Region sample files and metadata files are associated through file name:
+Sample region files and metadata files are associated through file name:
 for example S_0001.gdm for region file and S_0001.gdm.meta for 
 its metadata file
 }
 \examples{
 
-## load and attach add-on GenomicRanges package
+## Load and attach add-on GenomicRanges package
 library(GenomicRanges)
 
-## These statemens create two GRanges with the region attribute: seqnames, 
-## ranges (region coordinates) and strand, plus two column element:  
+## These statemens create two GRanges with the region attributes: seqnames, 
+## ranges (region coordinates) and strand, plus two column elements:  
 ## score and GC
 
 gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
@@ -56,11 +56,11 @@ score = 3:4, GC = c(0.3, 0.5))
 grl = GRangesList(gr1, gr2)
 
 ## This statement defines the path to the subdirectory "example" of the 
-## package "RGMQL" and export the GRangesList as GMQL dataset using the 
+## package "RGMQL" and exports the GRangesList as GMQL datasets using the 
 ## last name of 'dir_out' path as dataset name
 
 test_out_path <- system.file("example", package = "RGMQL")
-export_gmql(grl, test_out_path,TRUE)
+export_gmql(grl, test_out_path, TRUE)
 
 
 }

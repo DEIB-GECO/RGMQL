@@ -2,7 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{sample_metadata}
 \alias{sample_metadata}
-\title{Shows metadata list from dataset sample}
+\title{Show metadata list from dataset sample}
 \usage{
 sample_metadata(url, datasetName, sampleName)
 }
@@ -10,15 +10,15 @@ sample_metadata(url, datasetName, sampleName)
 \item{url}{string url of server: It must contain the server address 
 and base url; service name is added automatically}
 
-\item{datasetName}{string name of dataset to get}
+\item{datasetName}{string name of dataset of interest}
 
-\item{sampleName}{string sample name to get}
+\item{sampleName}{string name of sample of interest}
 }
 \value{
 List of metadata in the form 'key = value'
 }
 \description{
-It retrieves metadata for a specific sample in dataset using the proper 
+It retrieves metadata of a specific sample in dataset using the proper 
 GMQL web service available on a remote server
 }
 \details{
@@ -27,11 +27,11 @@ If error occurs, a specific error is printed
 \examples{
 ## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## This statement retrieves metadata for sample 'S_00000' from public 
-## dataset 'Example_Dataset1'
+## This statement retrieves metadata of sample 'S_00000' from public 
+## dataset 'Example_Dataset_1'
 
 sample_metadata(remote_url, "public.Example_Dataset_1", "S_00000")
 
