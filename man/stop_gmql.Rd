@@ -10,12 +10,12 @@ stop_gmql()
 None
 }
 \description{
-it stops GMQL server processing
+It stops GMQL server processing
 }
 \examples{
 
-## These statements first initializes GMQL with local processing and with 
-## sample files output format as tab-delimited, and then stops it
+## This statement first initializes GMQL with local processing and with 
+## sample file output format as tab-delimited, and then stops it
 
 init_gmql("tab", FALSE)
 

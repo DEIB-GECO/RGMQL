@@ -9,10 +9,10 @@
 #' sample, with their attributes and values, plus the attributes computed as 
 #' aggregates over right region values.
 #' Output sample metadata are the union of the related input sample metadata,
-#' whose attribute names are prefixed with left or right respectively.
+#' whose attribute names are prefixed with 'left' or 'right' respectively.
 #'
 #' When the joinby clause is present, only pairs of samples of x dataset
-#' and of y dataset with metadata M1 and M2 respectively that satisfy 
+#' and of y dataset with metadata M1 and M2, respectively, that satisfy 
 #' the joinby condition are considered.
 #'
 #' The clause consists of a list of metadata attribute names that must be
@@ -53,7 +53,7 @@
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
 #' ## "example" of the package "RGMQL", and opens such folders as a GMQL 
-#' ## dataset named "exp" and "ref", respectively, using customParser
+#' ## dataset named "exp" and "ref", respectively, using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -61,10 +61,10 @@
 #' exp = read_gmql(test_path)
 #' ref = read_gmql(test_path2)
 #' 
-#' ## This statement it counts the number of regions in each sample from exp 
+#' ## This statement counts the number of regions in each sample from exp 
 #' ## dataset that overlap with a ref dataset region, and for each ref region 
 #' ## it computes the minimum score of all the regions in each exp sample that 
-#' ## overlap with it. The MAP joinby option ensures that only the exp samples 
+#' ## overlap with it. The MAP joinBy option ensures that only the exp samples 
 #' ## referring to the same 'cell_tissue' of a ref sample are mapped on such 
 #' ## ref sample; exp samples with no cell_tissue metadata attribute, or with 
 #' ## such metadata attribute, but with a different value from the one(s) 

@@ -38,7 +38,7 @@ folder path
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folder "DATASET" in the subdirectory "example"
 ## of the package "RGMQL" and opens such file as a GMQL dataset named 
-## "data" using customParser
+## "data" using CustomParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")

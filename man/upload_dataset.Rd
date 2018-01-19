@@ -25,7 +25,7 @@ schemaName available are:
 \item{BED}
 \item{BEDGRAPH}
 }
-if schemaName is NULL it's looking for a XML schema file to read in the 
+if schemaName is NULL, it looks for a XML schema file to read in the 
 folderPath}
 
 \item{isGMQL}{logical value indicating whether it is uploaded a GMQL 
@@ -52,12 +52,12 @@ is printed
 
 test_path <- system.file("example", "DATASET_GDM", package = "RGMQL")
 
-## login to GMQL REST services suite at remote url
+## Login to GMQL REST services suite at remote url
 
 remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## upload of GMQL dataset with "dataset1" as name without specifying any 
+## Upload of GMQL dataset with "dataset1" as name, without specifying any 
 ## schema 
 
 upload_dataset(remote_url, "dataset1", folderPath = test_path)

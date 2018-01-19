@@ -109,26 +109,26 @@ take_value.META_AGGREGATES <- function(obj){
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folder "DATASET" in the subdirectory "example"
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
-#' ## named "exp" using customParser
+#' ## named "exp" using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' exp = read_gmql(test_path)
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, and 
-#' ## then calculates new metadata attribute 'sum_score' for each of them: 
+#' ## then calculates new metadata attribute sum_score for each of them: 
 #' ## sum_score is the sum of score values of the sample regions.
 #' 
 #' res = extend(exp, sum_score = SUM("score"))
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, 
-#' ## and then calculates new metadata attribute 'min_pvalue' for each of them: 
+#' ## and then calculates new metadata attribute min_pvalue for each of them: 
 #' ## min_pvalue is the minimum pvalue of the sample regions.
 #' 
 #' res = extend(exp, min_pvalue = MIN("pvalue"))
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, 
-#' ## and then calculates new metadata attribute 'max_score' for each of them: 
+#' ## and then calculates new metadata attribute max_score for each of them: 
 #' ## max_score is the maximum score of the sample regions.
 #' 
 #' res = extend(exp, max_score = MAX("score"))
@@ -148,19 +148,19 @@ take_value.META_AGGREGATES <- function(obj){
 #' out = extend(exp, allScore = BAG("score"))
 #' 
 #' ## This statement counts the regions in each sample and stores their number 
-#' ## as value of the new metadata 'RegionCount' attribute of the sample.
+#' ## as value of the new metadata RegionCount attribute of the sample.
 #' 
 #' out = extend(exp, RegionCount = COUNT())
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, 
-#' ## and then calculates new metadata attribute 'std_score' for each of them: 
+#' ## and then calculates new metadata attribute std_score for each of them: 
 #' ## std_score is the standard deviation of the score values of the sample 
 #' ## regions.
 #' 
 #' res = extend(exp, std_score = STD("score"))
 #' 
 #' ## This statement copies all samples of exp dataset into res dataset, 
-#' ## and then calculates new metadata attribute 'm_score' for each of them: 
+#' ## and then calculates new metadata attribute m_score for each of them: 
 #' ## m_score is the median score of the sample regions.
 #' 
 #' res = extend(exp, m_score = MEDIAN("score"))

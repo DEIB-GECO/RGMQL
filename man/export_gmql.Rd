@@ -46,18 +46,19 @@ library(GenomicRanges)
 ## score and GC
 
 gr1 <- GRanges(seqnames = "chr2", ranges = IRanges(3, 6), strand = "+", 
-score = 5L, GC = 0.45)
+    score = 5L, GC = 0.45)
 gr2 <- GRanges(seqnames = c("chr1", "chr1"),
-ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
-score = 3:4, GC = c(0.3, 0.5))
+    ranges = IRanges(c(7,13), width = 3), strand = c("+", "-"), 
+    score = 3:4, GC = c(0.3, 0.5))
 
 ## This statement creates a GRangesList using the previous GRanges 
 
 grl = GRangesList(gr1, gr2)
 
 ## This statement defines the path to the subdirectory "example" of the 
-## package "RGMQL" and exports the GRangesList as GMQL datasets using the 
-## last name of 'dir_out' path as dataset name
+## package "RGMQL" and exports the GRangesList as GMQL datasets with sample 
+## files in GTF file format, using the last name of 'dir_out' path as 
+## dataset name
 
 test_out_path <- system.file("example", package = "RGMQL")
 export_gmql(grl, test_out_path, TRUE)

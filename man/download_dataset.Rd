@@ -34,18 +34,19 @@ If error occurs, a specific error is printed
 \examples{
 
 ## Download dataset in R working directory
-## In this case we try to download a public dataset
+## In this case we try to download a dataset of the user 
+## (public datasets from remote repository cannot be downloaded)
 
 \dontrun{
 
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
-download_dataset(remote_url, "public.Example_Dataset_1", path = getwd())
+download_dataset(remote_url, "Example_Dataset_1", path = getwd())
 
-## Create GRangesList from public dataset Example_Dataset1 got 
+## Create GRangesList from user dataset Example_Dataset1 got 
 ## from repository
 
-download_as_GRangesList(remote_url, "public.Example_Dataset_1")
+download_as_GRangesList(remote_url, "Example_Dataset_1")
 }
 
 }

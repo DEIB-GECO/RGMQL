@@ -34,7 +34,7 @@ that require ordering on value; it is used only in arrange method
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folder "DATASET" in the subdirectory "example"
 ## of the package "RGMQL" and opens such file as a GMQL dataset named 
-## "data" using customParser
+## "data" using CustomParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -44,13 +44,13 @@ data = read_gmql(test_path)
 ## attribute and takes the two samples that have the lowest count. 
 
 asc = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
-num_fetch = 2)
+    num_fetch = 2)
 
 ## This statement orders the regions of each samples according to their 
 ## pvalue attribute value and in each sample it takes the first seven
 ## regions with the highest pvalue
  
 desc = arrange(data, regions_ordering = list(DESC("pvalue")), 
-reg_fetch_opt = "rtop", reg_num_fetch = 7)
+    reg_fetch_opt = "rtop", reg_num_fetch = 7)
 
 }

@@ -1,11 +1,11 @@
 #' Init GMQL server
 #'
-#' It initializes and runs GMQL server for executing GMQL query
+#' It initializes and runs GMQL server for executing GMQL query.
 #' It also performs a login to GMQL REST services suite, if needed
 #' 
 #' @importFrom rJava J
 #' 
-#' @param output_format string that identifies the output format of allsample 
+#' @param output_format string that identifies the output format of all sample 
 #' files. It can be TAB, GTF or COLLECT:
 #' \itemize{
 #' \item{TAB: tab-delimited file format}
@@ -61,7 +61,7 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
 
 #' Stop GMQL server
 #'
-#' it stops GMQL server processing
+#' It stops GMQL server processing
 #' 
 #' @importFrom rJava J
 #' 
@@ -69,8 +69,8 @@ init_gmql <- function(output_format = "GTF", remote_processing = FALSE,
 #'
 #' @examples
 #'
-#' ## These statements first initializes GMQL with local processing and with 
-#' ## sample files output format as tab-delimited, and then stops it
+#' ## This statement first initializes GMQL with local processing and with 
+#' ## sample file output format as tab-delimited, and then stops it
 #' 
 #' init_gmql("tab", FALSE)
 #' 

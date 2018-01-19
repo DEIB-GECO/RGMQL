@@ -113,7 +113,7 @@ collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folder "DATASET" in the subdirectory "example"
 #' ## of the package "RGMQL" and opens such file as a GMQL dataset named 
-#' ## "data" using customParser
+#' ## "data" using CustomParser
 #'
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -159,10 +159,10 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' Method take
 #'
 #' It saves the content of a dataset that contains samples metadata 
-#' and samples regions as GRangesList.
+#' and regions as GRangesList.
 #' It is normally used to store in memory the content of any dataset 
 #' generated during a GMQL query. The operation can be very time-consuming.
-#' If you have invoked any materialization before take function, 
+#' If you invoked any materialization before take function, 
 #' all those datasets are materialized as folders.
 #'
 #' @importFrom GenomicRanges makeGRangesFromDataFrame
@@ -186,24 +186,24 @@ gmql_materialize <- function(input_data, dir_out, name)
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folder "DATASET" in the subdirectory "example"
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
-#' ## named "rd" using customParser
+#' ## named "rd" using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' rd = read_gmql(test_path)
 #' 
-#' ## This statement creates a dataset called merged which contains one 
+#' ## This statement creates a dataset called 'aggr' which contains one 
 #' ## sample for each antibody_target and cell value found within the metadata 
-#' ## of the exp dataset sample; each created sample contains all regions 
-#' ## from all 'exp' samples with a specific value for their 
+#' ## of the 'rd' dataset sample; each created sample contains all regions 
+#' ## from all 'rd' samples with a specific value for their 
 #' ## antibody_target and cell metadata attributes.
 #'  
 #' aggr = aggregate(rd, conds(c("antibody_target", "cell")))
 #' 
-#' ## This statement performs the query and return the resulted dataset as 
+#' ## This statement performs the query and returns the resulted dataset as 
 #' ## GRangesList named 'taken'. It returns only the first 45 regions of 
-#' ## each sample present into GRangesList and all the medatata associated to
-#' ## each sample
+#' ## each sample present into GRangesList and all the medatata associated 
+#' ## with each sample
 #' 
 #' taken <- take(aggr, rows = 45)
 #' 

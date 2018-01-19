@@ -37,10 +37,10 @@ list_jobs <- show_jobs_list(remote_url)
 \dontrun{
 jobs_1 <- list_jobs$jobs[[1]]
 
-## Show job log
+## Show jobs_1 log
 show_job_log(remote_url, jobs_1)
 
-## Trace job
+## Trace jobs_1
 trace_job(remote_url, jobs_1)
 
 }

@@ -14,7 +14,8 @@ semijoin(.data, is_in = TRUE, groupBy)
 least one sample in dataset 'data' with metadata attributes defined 
 in groupBy and these attributes of 'data' have at least one value in 
 common with the same attributes defined in at least one sample of '.data'
-in filter method, FALSE => semijoin condition is evaluated accordingly.}
+in \code{\link{filter}} method, FALSE => semijoin condition is evaluated 
+accordingly.}
 
 \item{groupBy}{\code{\link{condition_evaluation}} function to support 
 methods with groupBy or JoinBy input paramter}
@@ -28,11 +29,11 @@ semijoin conditions on metadata
 }
 \examples{
 
-## This statements initializes and runs the GMQL server for local execution 
+## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
 ## "example" of the package "RGMQL" and opens such folders as GMQL datasets 
-## named "data" and "join_data" respectively
+## named "data" and "join_data", respectively
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -44,7 +45,7 @@ join_data <-  read_gmql(test_path2)
 ## samples and their regions from the existing 'data' dataset such that:
 ## Each output sample has a metadata attribute called antibody_target 
 ## with value JUN.
-## Each output sample also has not a metadata attribute called "cell" 
+## Each output sample also has not a metadata attribute called cell
 ## that has the same value of at least one of the values that a metadata 
 ## attribute equally called cell has in at least one sample 
 ## of the 'join_data' dataset.
@@ -53,6 +54,6 @@ join_data <-  read_gmql(test_path2)
 ## less than 0.01 are conserved in output
 
 jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-semijoin(join_data, FALSE, conds("cell")))
+    semijoin(join_data, FALSE, conds("cell")))
 
 }

@@ -24,8 +24,12 @@ server using, the proper GMQL web service available on a remote server
 If error occurs, a specific error is printed
 }
 \examples{
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+## Login to GMQL REST services suite as guest
+
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
+
+## List all jobs
 list_jobs <- show_jobs_list(remote_url)
 
 }

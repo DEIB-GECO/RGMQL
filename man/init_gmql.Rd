@@ -8,7 +8,7 @@ init_gmql(output_format = "GTF", remote_processing = FALSE, url = NULL,
   username = NULL, password = NULL)
 }
 \arguments{
-\item{output_format}{string that identifies the output format of allsample 
+\item{output_format}{string that identifies the output format of all sample 
 files. It can be TAB, GTF or COLLECT:
 \itemize{
 \item{TAB: tab-delimited file format}
@@ -34,7 +34,7 @@ explicitly}
 None
 }
 \description{
-It initializes and runs GMQL server for executing GMQL query
+It initializes and runs GMQL server for executing GMQL query.
 It also performs a login to GMQL REST services suite, if needed
 }
 \examples{

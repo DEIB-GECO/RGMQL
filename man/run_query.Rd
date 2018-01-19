@@ -42,10 +42,20 @@ If error occurs, a specific error is printed
 
 \dontrun{
 
+## Login to GMQL REST services suite as guest
+
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
+
+## Run query as string input parameter
+## NOTE: not very suitable for long queries
+
 run_query(remote_url, "query_1", "DATASET = SELECT() Example_Dataset1;
-MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
+    MATERIALIZE DATASET INTO RESULT_DS;", output_gtf = FALSE)
+
+## With system.file() this statement defines the path to the folder 
+## "example" of the package "RGMQL", and then it executes the query 
+## written in the text file "query1.txt"
 
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")

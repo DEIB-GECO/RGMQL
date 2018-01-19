@@ -28,7 +28,7 @@ string, using the proper GMQL web service available on a remote server
 }
 \details{
 If you save a query with the same name of another query already stored 
-in repository, you will overwrite it; if no error occurs, prints: 
+in repository, you will overwrite it; if no error occurs, it prints: 
 "Saved", otherwise it prints the error
 }
 \examples{
@@ -38,11 +38,15 @@ in repository, you will overwrite it; if no error occurs, prints:
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## This statement saves query with name "dna_query" 
+## This statement saves query written directly as input string parameter 
+## with name "dna_query" 
 
 save_query(remote_url, "example_query",
 "DATASET = SELECT() Example_Dataset_1; MATERIALIZE DATASET INTO RESULT_DS;")
 
+## With system.file() this statement  defines the path to the folder 
+## "example" of the package "RGMQL", and then it saves the query written 
+## in the text file "query1.txt" into remote repository
 
 test_path <- system.file("example", package = "RGMQL")
 test_query <- file.path(test_path, "query1.txt")

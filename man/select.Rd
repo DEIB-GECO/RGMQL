@@ -26,8 +26,8 @@ The following options are available:
 
 \item{all_but_meta}{logical value indicating which metadata 
 you want to exclude; If FALSE, only the metadata attributes specified in 
-metadata argument are kept in the output of the operation; if TRUE, 
-the metadata are all kept except those in metadata argument.
+\emph{metadata} argument are kept in the output of the operation; if TRUE, 
+the metadata are all kept except those in \emph{metadata} argument.
 If \emph{metadata} input parameter is not defined \emph{all_but_meta} 
 is not considerd.}
 
@@ -44,8 +44,8 @@ The following options are available:
 
 \item{all_but_reg}{logical value indicating which region attributes
 you want to exclude; if FALSE, only the regions attributes specified in 
-regions argumentare kept in the output of the operation; if TRUE, 
-the regions attributes are all kept except those in regions argument.
+\emph{regions} argumentare kept in the output of the operation; if TRUE, 
+the regions attributes are all kept except those in \emph{regions} argument.
 If \emph{regions} is not defined, \emph{all_but_reg} is not considerd.}
 }
 \value{
@@ -68,7 +68,7 @@ attributes remain equal to those in the input dataset. It allows to:
 \examples{
 ## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
-## the path to the folders "DATASET" in the subdirectory "example" 
+## the path to the folder "DATASET" in the subdirectory "example" 
 ## of the package "RGMQL" and opens such folder as a GMQL dataset 
 ## named "data"
 
@@ -86,8 +86,8 @@ data = read_gmql(test_path)
 
 
 CTCF_NORM_SCORE = select(data, metadata_update = list(normalized = 1), 
-regions_update = list(new_score = (score / 1000.0) + 100), 
-regions = c("score"), all_but_reg = TRUE)
+    regions_update = list(new_score = (score / 1000.0) + 100), 
+    regions = c("score"), all_but_reg = TRUE)
 
 
 

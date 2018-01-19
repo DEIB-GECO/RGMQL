@@ -14,11 +14,11 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' @description It is used to order either samples or sample regions or both, 
 #' according to a set of metadata and/or region attributes.
 #' Order can be specified as ascending / descending for every attribute. 
-#' The number of samples s well as their attributes and their regions remain 
-#' the same, (unless fetching options are specified), but a new ordering 
-#' metadata and/or region attribute is added. Sorted samples or regions have 
-#' a new attribute "_order", added to either metadata, or "order" added to 
-#' their regions, or both of them as specified in input.
+#' The number of samples and their regions remain the same 
+#' (unless fetching options are specified), as well as their attributes, but 
+#' a new ordering metadata and/or region attribute is added. Sorted 
+#' samples or regions have a new attribute "_order", added to their metadata, 
+#' or "order" added to their regions, or to both of them as specified in input.
 #'
 #' @importFrom rJava J .jnull .jarray
 #' @importFrom dplyr arrange
@@ -26,8 +26,8 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' @param .data GMQLDataset class object
 #' @param metadata_ordering list of ordering functions containing name of 
 #' metadata attribute.
-#' The functions available are: \code{\link{ASC}}, \code{\link{DESC}}
-#' 
+#' The functions available are: \code{\link{ASC}}, \code{\link{DESC}}. 
+#' If NULL, fetch_opt and num_fetch are not considered
 #' @param fetch_opt string indicating the option used to fetch the 
 #' first k samples; it can assume the values:
 #' \itemize{
@@ -44,6 +44,7 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' @param regions_ordering list of ordering functions containing name of 
 #' region attribute.
 #' The functions available are: \code{\link{ASC}}, \code{\link{DESC}}.
+#' If NULL, reg_fetch_opt and reg_num_fetch are not considered
 #' 
 #' @param reg_fetch_opt string indicating the option used to fetch the 
 #' first k regions; it can assume the values:
@@ -66,7 +67,7 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folder "DATASET" in the subdirectory "example"
 #' ## of the package "RGMQL" and opens such file as a GMQL dataset named 
-#' ## "data" using customParser
+#' ## "data" using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -76,7 +77,7 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' ## metadata attribute and takes the two samples that have the highest count. 
 #'
 #' o = arrange(data, list(ASC("Region_Count")), fetch_opt = "mtop", 
-#' num_fetch = 2)
+#'     num_fetch = 2)
 #' 
 #' @name arrange
 #' @rdname arrange
@@ -114,7 +115,11 @@ gmql_order <- function(input_data, metadata_ordering, regions_ordering,
         meta_matrix <- .jarray(meta_matrix, dispatch = TRUE)
     }
     else
+    {
+        num_fetch <- 0L
+        fetch_opt <- .jnull("java/lang/String")
         meta_matrix <- .jnull("java/lang/String")
+    }
     
     if(!is.null(regions_ordering))
     {
@@ -122,7 +127,11 @@ gmql_order <- function(input_data, metadata_ordering, regions_ordering,
         region_matrix <- .jarray(region_matrix, dispatch = TRUE)
     }
     else
+    {
+        reg_num_fetch <- 0L
+        reg_fetch_opt <- .jnull("java/lang/String")
         region_matrix <- .jnull("java/lang/String")
+    }
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$order(meta_matrix, fetch_opt, as.integer(num_fetch), 

@@ -18,7 +18,7 @@ as shown in the example below, otherwise no prefix is needed}
 List of region schema fields. Every field in the list is described 
 by:
 \itemize{
-\item{name: name of field (e.g. chr, start, end, strand ...)}
+\item{name: name of field (e.g. chr, start, end, strand, ...)}
 \item{fieldType: (e.g. STRING, DOUBLE, ...)}
 }
 }

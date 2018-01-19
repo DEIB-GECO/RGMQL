@@ -34,11 +34,11 @@ If error occurs, a specific error is printed
 
 ## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## This statement show all sample present into public dataset 
-## 'Example_Dataset1'
+## This statement shows all samples present into public dataset 
+## 'Example_Dataset_1'
 
 list <- show_samples_list(remote_url, "public.Example_Dataset_1")
 

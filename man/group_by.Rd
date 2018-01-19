@@ -18,7 +18,7 @@ groupBy or JoinBy input parameter}
 
 \item{groupBy_regions}{vector of strings made up by region attribute names}
 
-\item{region_aggregates}{It acceptss a list of aggregate function on 
+\item{region_aggregates}{It accepts a list of aggregate functions on 
 region attribute. 
 All the elements in the form \emph{key} = \emph{aggregate}.
 The \emph{aggregate} is an object of class AGGREGATES.
@@ -63,21 +63,21 @@ for the subsequent GMQLDataset method
 \description{
 Wrapper to GMQL GROUP operator
 
-It performs the grouping of samples of the input dataset 
-based on one specified metadata and/or region attribute. If the metadata 
-attribute is multi-value, i.e., it assumes multiple values for sample 
-(e.g., both <disease, cancer> and <disease, diabetes>), the grouping 
-identifies different groups of samples for each attribute value combination 
-(e.g., group1 for samples that feature the combination <disease, cancer>, 
-group2 for samples that feature the combination <disease, diabetes>, 
-and group3 for samples that feature both combinations <disease, cancer> 
-and <disease, diabetes>). For each obtained group, it is possible to 
-request the evaluation of aggregate functions on metadata attributes; 
-these functions consider the metadata contained in all samples of the group. 
-The regions, their attributes and their values in output are the same 
-as the ones in input for each sample, and the total number of samples 
-does not change. All metadata in the input samples are conserved with 
-their values in the output samples, with the addition of the "_group" 
+It performs the grouping of samples and/or sample regions of 
+the input dataset based on one specified metadata and/or region attribute. 
+If the metadata attribute is multi-value, i.e., it assumes multiple values 
+for sample (e.g., both <disease, cancer> and <disease, diabetes>), 
+the grouping identifies different groups of samples for each attribute value 
+combination (e.g., group1 for samples that feature the combination 
+<disease, cancer>, group2 for samples that feature the combination 
+<disease, diabetes>, and group3 for samples that feature both combinations 
+<disease, cancer> and <disease, diabetes>). For each obtained group, it is 
+possible to request the evaluation of aggregate functions on metadata 
+attributes; these functions consider the metadata contained in all samples 
+of the group. The regions, their attributes and their values in output are 
+the same as the ones in input for each sample, and the total number of 
+samples does not change. All metadata in the input samples are conserved 
+with their values in the output samples, with the addition of the "_group" 
 attribute, whose value is the identifier of the group to which the specific 
 sample is assigned; other metadata attributes can be added as aggregate 
 functions computed on specified metadata. When used on region attributes, 
@@ -108,7 +108,7 @@ therefore they can be used in combination or independently.
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folder "DATASET" in the subdirectory "example"
 ## of the package "RGMQL" and opens such file as a GMQL dataset named "exp" 
-## using customParser
+## using CustomParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -125,7 +125,7 @@ exp = read_gmql(test_path)
 ## assigned to a single group with _group value equal 0
 
 GROUPS_T = group_by(exp, conds("tumor_type"), 
-meta_aggregates = list(max_size = MAX("size")))
+    meta_aggregates = list(max_size = MAX("size")))
 
 ## This GMQL statement takes as input dataset the same input dataset as 
 ## the previous example. Yet, it calculates new _group values based on the 
@@ -137,7 +137,7 @@ meta_aggregates = list(max_size = MAX("size")))
 ## with different values, on which the new grouping is based)
 
 GROUPS_C = group_by(exp, conds("cell"),
-meta_aggregates = list(n_samp = COUNTSAMP()))
+    meta_aggregates = list(n_samp = COUNTSAMP()))
 
 ## This GMQL statement groups the regions of each 'exp' dataset sample by 
 ## region coordinates chr, left, right, strand  (these are implicitly 
@@ -152,7 +152,7 @@ meta_aggregates = list(n_samp = COUNTSAMP()))
 ## discarded.
 
 GROUPS = group_by(exp, groupBy_regions = "score", 
-region_aggregates = list(avg_pvalue = AVG("pvalue"), 
-max_qvalue = MAX("qvalue")))
+    region_aggregates = list(avg_pvalue = AVG("pvalue"), 
+    max_qvalue = MAX("qvalue")))
 
 }

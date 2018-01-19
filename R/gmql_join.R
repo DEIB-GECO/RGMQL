@@ -5,7 +5,7 @@
 #' @description It takes in input two datasets, respectively known as anchor 
 #' (left) and experiment (right) and returns a dataset of samples consisting 
 #' of regions extracted from the operands according to the specified conditions
-#' (a.k.a \emph{genometric_predicate} and region_attribute_predicate).
+#' (a.k.a \emph{genometric_predicate} and \emph{region_attribute} predicate).
 #' The number of generated output samples is the Cartesian product 
 #' of the number of samples in the anchor and in the experiment dataset 
 #' (if \emph{joinBy} is not specified).
@@ -28,7 +28,8 @@
 #' methods with groupBy or JoinBy input paramter
 #' @param reg_attr vector of strings made up by region field attribute names, 
 #' whose values in the paired left and right dataset regions must be equal in 
-#' order to consider the two paired regions
+#' order to consider the two paired regions.
+#' If specified, \emph{region_output} cannot be INT or CAT.
 #' @param region_output single string that declares which region is given in 
 #' output for each input pair of left dataset and right dataset regions 
 #' satisfying the genometric predicate and/or the region attribute predicate:
@@ -71,7 +72,7 @@
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
 #' ## "example" of the package "RGMQL" and opens such folders as a GMQL 
-#' ## datasets named TSS and HM, respectively, using customParser
+#' ## datasets named TSS and HM, respectively, using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -87,7 +88,7 @@
 #' ## samples are obtained from the same provider (joinby clause).
 #' 
 #' join_data = merge(TSS, HM, genometric_predicate = list(MD(1), DLE(120000)), 
-#' conds("provider"), region_output = "RIGHT")
+#'     conds("provider"), region_output = "RIGHT")
 #' 
 #' 
 #' @name merge

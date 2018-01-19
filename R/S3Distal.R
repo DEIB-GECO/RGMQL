@@ -80,7 +80,7 @@ check.DISTAL <- function(value)
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
 #' ## "example" of the package "RGMQL", and opens such folders as a GMQL 
-#' ## datasets named "TSS" and "HM", respectively, using customParser
+#' ## datasets named "TSS" and "HM", respectively, using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -96,8 +96,8 @@ check.DISTAL <- function(value)
 #' ## samples are obtained from the same provider (joinby clause).
 #' 
 #' join_data = merge(TSS, HM, 
-#' genometric_predicate = list(MD(1), DL(1200)), conds("provider"), 
-#' region_output = "RIGHT")
+#'     genometric_predicate = list(MD(1), DL(1200)), conds("provider"), 
+#'     region_output = "RIGHT")
 #'
 #' ## Given a dataset HM and one called TSS with a sample including 
 #' ## Transcription Start Site annotations, this statement searches for those 
@@ -107,8 +107,8 @@ check.DISTAL <- function(value)
 #' ## TSS and HM samples are obtained from the same provider (joinby clause).
 #' 
 #' join_data = merge(TSS, HM, 
-#' genometric_predicate = list(MD(1), DGE(12000), DOWN()), conds("provider"), 
-#' region_output = "RIGHT")
+#'     genometric_predicate = list(MD(1), DGE(12000), DOWN()), 
+#'     conds("provider"), region_output = "RIGHT")
 #'
 #' @name DISTAL-Object
 #' @aliases DL

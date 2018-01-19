@@ -26,8 +26,11 @@ If error occurs, a specific error is printed
 }
 \examples{
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r"
+## Login to GMQL REST services suite
+remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
+
+## List all queries executed on remote GMQL system 
 list <- show_queries_list(remote_url)
 
 }

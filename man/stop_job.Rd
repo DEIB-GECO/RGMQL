@@ -30,9 +30,9 @@ If error occurs, a specific error is printed
 remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(remote_url)
 
-## shows all jobs at GMQL remote system and selects one running job, saving
-## it into 'jobs_1' (in this case is the first of the list), and then 
-## stop it
+## This statement shows all jobs at GMQL remote system and selects one 
+## running job, saving it into 'jobs_1' (in this case is the first of the 
+## list), and then stop it
 
 list_jobs <- show_jobs_list(remote_url)
 jobs_1 <- list_jobs$jobs[[1]]

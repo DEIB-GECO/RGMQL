@@ -2,7 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{sample_region}
 \alias{sample_region}
-\title{Shows regions data from a dataset sample}
+\title{Show regions data from a dataset sample}
 \usage{
 sample_region(url, datasetName, sampleName)
 }

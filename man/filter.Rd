@@ -78,7 +78,7 @@ join_data <- read_gmql(test_path2)
 ## less than 0.01 are conserved in output
 
 jun_tf <- filter(data, antibody_target == "JUN", pvalue < 0.01, 
-semijoin(join_data, FALSE, conds("cell")))
+    semijoin(join_data, FALSE, conds("cell")))
 
 
 }

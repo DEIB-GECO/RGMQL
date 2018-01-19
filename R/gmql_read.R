@@ -44,7 +44,7 @@
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folder "DATASET" in the subdirectory "example" 
 #' ## of the package "RGMQL" and opens such folder as a GMQL dataset 
-#' ## named "data" using customParser
+#' ## named "data" using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
@@ -73,6 +73,7 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
     .check_logical(is_local)
     .check_logical(is_GMQL)
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    parser_name <- .check_parser(parser)
     if(is_local)
     {
         if(!dir.exists(dataset))
@@ -99,20 +100,26 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
         if(!exists("GMQL_credentials", envir = .GlobalEnv))
             stop("You have to log on using login function")
         
-        list <- show_schema(url,dataset)
-        schema_names <- vapply(list$fields, function(x){x$name},character(1))
-        schema_type <- vapply(list$fields, function(x){x$type},character(1))
-        schema_matrix <- cbind(schema_type,schema_names)
-        #schema_type <- list$type
-        
-        if(is.null(schema_matrix) || !length(schema_matrix))
-            schema_matrix <- .jnull("java/lang/String")
+        if(identical(parser_name,"CUSTOMPARSER"))
+        {
+            list <- show_schema(url,dataset)
+            schema_names <- vapply(list$fields, function(x){x$name},
+                                        character(1))
+            schema_type <- vapply(list$fields, function(x){x$type},
+                                        character(1))
+            schema_matrix <- cbind(schema_names,schema_type)
+
+            if(is.null(schema_matrix) || !length(schema_matrix))
+                schema_matrix <- .jnull("java/lang/String")
+            else
+                schema_matrix <- .jarray(schema_matrix, dispatch = TRUE)
+        }
         else
-            schema_matrix <- .jarray(schema_matrix, dispatch = TRUE)
+            schema_matrix <- .jnull("java/lang/String")
+        
         schema_XML <- .jnull("java/lang/String")
     }
 
-    parser_name <- .check_parser(parser)
     response <- WrappeR$readDataset(dataset, parser_name, is_local, is_GMQL, 
                                         schema_matrix, schema_XML)
     error <- strtoi(response[1])

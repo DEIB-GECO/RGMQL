@@ -10,7 +10,7 @@ import_gmql(dataset_path, is_gtf)
 \item{dataset_path}{string with GMQL dataset folder path}
 
 \item{is_gtf}{logical value indicating if dataset samples are in GTF format;
-if TRUE and dataset does not contain GTF samples an error occurs}
+if TRUE and dataset does not contain GTF samples, an error occurs}
 }
 \value{
 GRangesList containing all GMQL samples in dataset

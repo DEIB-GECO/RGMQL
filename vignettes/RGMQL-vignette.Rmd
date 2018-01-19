@@ -5,7 +5,7 @@ author:
 - "Marco Masseroli"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
-csl: american-medical-association.csl
+csl: american-medical-association-no-et-al.csl
 output: BiocStyle::pdf_document
 vignette: >
     %\VignetteIndexEntry{RGMQL: GenoMetric Query Language for R/Bioconductor}
@@ -224,15 +224,22 @@ Load and attach the RGMQL package in a R session using library function:
 ```{r, initialization}
 library('RGMQL')
 ```
+RGMQL depends on another packaage *RGMQLlib* automatically installed and 
+loaded once install and loaded *RGMQL*; if not, you can install it from 
+Bioconductor and load it using:
+```{r, initialization_RGMQLlib}
+library('RGMQLlib')
+```
+
 Before starting using any GMQL operation we need to initialise the GMQL 
 context with the following code:
 ```{r, init}
 init_gmql()
 ```
 The function *init_gmql()* initializes the context of scalable data management 
-engine laid upon Spark and Hadoop.
-Details on this and all other functions are provided in the R documentation 
-for this package (i.e., help(RGMQL)).
+engine laid upon Spark and Hadoop, and the format of materialized result 
+datasets. Details on this and all other functions are provided in the R 
+documentation for this package (i.e., help(RGMQL)).
 
 ### Read Dataset
 
@@ -255,7 +262,7 @@ data_out = read_gmql(gmql_dataset_path)
 In this case we are reading a GMQL dataset specified by the path of 
 its folder "EXON" within the subdirectory "example" of the package "RGMQL".
 It does not matter what kind of format the data are, *read_gmql()* reads 
-many standard tab-delimited text formats without the need of specifying any  
+many standard tab-delimited text formats without the need of specifying any 
 additional input parameter.
 
 2. GRangesList:\newline
@@ -266,15 +273,15 @@ using GRangesList as input.
 ```{r, read GRangesList}
 library("GenomicRanges")
 
-# Granges Object with only one region: chr2 and two metadata column: score = 5 
+# Granges Object with one region: chr2 and two metadata columns: score = 5 
 # and GC  = 0.45
 
 gr1 <- GRanges(seqnames = "chr2",
     ranges = IRanges(103, 106), strand = "+", score = 5L, GC = 0.45)
 
-# Granges Object with two regions both chr1 and two metadata column: score = 3
+# Granges Object with two regions both chr1 and two metadata columns: score = 3
 # for the fist region and score = 4 for the second one, GC  = 0.3 and 0.5 
-# respectively
+# for the first and second region, respectively
 
 gr2 <- GRanges(seqnames = c("chr1", "chr1"),
     ranges = IRanges(c(107, 113), width = 3), strand = c("+", "-"),
@@ -360,8 +367,8 @@ specific path defined as input parameter.
 # Materialize the result dataset on disk
 collect(exon_res)
 ```
-by default *collect()* has R working directory as stored path and *ds1* as name 
-of resulted dataset folder
+By default *collect()* has R working directory as storing path and *ds1* as 
+name of resulted dataset folder.
 
 ### Execution
 
@@ -405,8 +412,8 @@ Remote processing exists in two flavour:
 
 - Batch execution: \newline
     Similar to local execution; user reads data and the system automatically 
-    uploads them on the remote system; once loaded, RGMQL functions can be 
-    issued to manage and process remote data.
+    uploads them on the remote system if they are not already there; once 
+    loaded, RGMQL functions can be issued to manage and process remote data.
 
 ### REST Web Services
 
@@ -419,19 +426,19 @@ GMQL REST services require login; so, the first step is to perform logon
 with user and password, or as guest.
 Upon successful logon, you get a request token that you must use 
 in every subsequent REST call.
-Login can be performed using the function:
+Login can be performed using the *login_gmql()* function:
 ```{r, init with login}
 test_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
 login_gmql(test_url)
 ```
-that saves the token in the Global R environment within the variable 
+It saves the token in the Global R environment within the variable 
 named *authToken*. With this token you can call all the functions 
 in the GMQL REST web services suite.
 
 #### Execution
 
 User can write a GMQL query as in the following example, and run it as 
-second parameter of the *run_query()* function.
+second parameter of the *run_query()* function:
 ```{r, run, eval = FALSE}
 
 job <- run_query(test_url, "query_1", "DNA = SELECT() Example_Dataset_1; 
@@ -439,8 +446,8 @@ MATERIALIZE DNA INTO RESULT_DS;", output_gtf = FALSE)
 
 ```
 
-or can execute a query reading directly from file (e.g., the "query1.txt" 
-file in the "example" subdirectory of the RGMQL package):
+Or the user can execute a query reading it directly from file (e.g., the 
+"query1.txt" file in the "example" subdirectory of the RGMQL package):
 ```{r, run_from_file, eval = FALSE}
 query_path <- system.file("example", "query1.txt", package = "RGMQL")
 job <- run_query_fromfile(test_url, "query1", query_path, output_gtf = FALSE)
@@ -463,17 +470,29 @@ in this RGMQL package [(see Import/Export)](#utilities).
 
 The returned *job* contains also the name of the created datasets, 
 one for each materialize in the GMQL query run, in the same order; 
-the first can be materialized with:   
+the first can be downloaded locally with:   
 ```{r, download, eval = FALSE}
 name_dataset <- job$datasets[[1]]$name
 download_dataset(test_url, name_dataset)
 ```
+By default *download_dataset()* has R working directory as local storing path.
 
 Once download is done, we can logout from remote repository using:
 ```{r, logout}
 logout_gmql(test_url)
 ```
 *logout_gmql()* deletes the $authToken$ from R environment.
+
+Downloaded result dataset can be then imported and used in the R environment 
+as GRangesList [(see Import/Export)](#utilities).
+Alternatively, the remote result dataset can be directly downloaded and 
+imported in the R environment as GRangesList using the function 
+*download_as_GRangesList()*:
+```{r, download_as_GRangesList, eval=FALSE}
+name_dataset <- job$datasets[[1]]$name
+grl = download_as_GRangesList(remote_url, name_dataset)
+
+```
 
 ### Batch Execution
 
@@ -492,9 +511,19 @@ Otherwise, we can initialize the data engine with a remote url:
 ```{r, initialize remote}
 init_gmql(url = test_url)
 ```
-in this way login is automatically performed as specified above
+In this way login is automatically performed as specified above.
 
-After initialization, we can start building our query:
+After initialization we have to change to remote processing:
+```{r, change processing mode}
+remote_processing(TRUE)
+```
+or alternatively, instead of switching mode, we can initilize the data engine 
+setting remote processing as TRUE:
+```{r, init remote processing }
+init_gmql(url = test_url, remote_processing = TRUE)
+```
+
+Once done, we can start building our query:
 ```{r, remote query}
 
 ## Read the remote dataset Example_Dataset_1 
@@ -540,12 +569,33 @@ collect(exon_res)
 ```{r, remote execute, eval = FALSE}
 execute()
 ```
+In this case R processing continues until remote processing ends.
 With remote processing, after the execution, the context of scalable 
 data management engine is not stopped, and can be used for further queries. 
+Materialized datasets are stored only remotely, from where they can be 
+downloaded and directly imported into the R environment as GRangesList using 
+the function *download_as_GRangesList()*:
+```{r, download_as_GRangesList_2, eval=FALSE}
+name_dataset <- job$datasets[[1]]$name
+grl = download_as_GRangesList(remote_url, name_dataset)
+```
 
+Alternatively, the remote materialized dataset can be first downloaded and 
+stored locally:
+```{r, download_2, eval = FALSE}
+name_dataset <- job$datasets[[1]]$name
+download_dataset(test_url, name_dataset)
+```
+and then imported in the R environment as GRangesList 
+[(see Import/Export)](#utilities).
+
+In any case, once download is done, we can logout from remote repository using:
+```{r, logout_2, eval=FALSE}
+logout_gmql(test_url)
+```
 ## Mixed Processing
 
-The processing flavour can be switched using the function:
+As said before, the processing flavour can be switched using the function:
 ```{r, switch mode}
 remote_processing(TRUE)
 ```
@@ -568,9 +618,9 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 
 mut_ds <- read_gmql(mut_path, is_local = TRUE)
 
-# Read the remote dataset Example_Dataset_1 
+# Read the remote dataset Example_Dataset_2 
 
-HG19_bed_ann <- read_gmql("public.Example_Dataset_1", is_local = FALSE)
+HG19_bed_ann <- read_gmql("public.Example_Dataset_2", is_local = FALSE)
 
 # Filter out based on predicate
 
@@ -601,10 +651,12 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 
 ```
 
+Materialize result:
 ```{r, mixed materialize, eval = FALSE}
 collect(exon_res)
 ```
 
+Execute processing: 
 ```{r, mixed execute, eval = FALSE}
 execute()
 ```
@@ -614,10 +666,13 @@ sources: *mut_ds* from local dataset, *HG19_bed_ann* from remote
 repository.
 
 If we set remote processing to false (*remote_processing(FALSE)*), 
-the execution is performed locally downloading all needed datasets from remote 
-repositories, otherwise all local datasets are automatically uploaded to the 
-remote GMQL repository associated with the remote system where the processing 
-is performed.
+the execution is performed locally first downloading all needed datasets from 
+remote repositories, otherwise all local datasets are automatically uploaded 
+to the remote GMQL repository associated with the remote system where the 
+processing is performed.
+In the latter case, materialized datasets are stored on remote repository, 
+from where they can be downloaded and imported into the R environment as in 
+the remote processing scenario [(see Remote Processing)](#remote-processing).
 
 NOTE: The public datasets cannot be downloaded from a remote GMQL repository 
 by design.
@@ -639,7 +694,7 @@ We can import a GMQL dataset into R environment as follows:
 
 dataset_path <- system.file("example", "EXON", package = "RGMQL")
 
-# Import the GMQL dataset as GRangesList
+# Import the GMQL dataset EXON as GRangesList
 
 imported_data <- import_gmql(dataset_path, is_gtf = FALSE)
 imported_data
@@ -649,7 +704,7 @@ imported_data
 metadata(imported_data)
 
 ```
-the second parameter *is_gtf* must specify the file format: .GTF or .GDM.
+The second parameter *is_gtf* must specify the file format: .GTF or .GDM.
 
 We can export a GRangesList as GMQL dataset as follows:
 ```{r, export}
@@ -658,12 +713,13 @@ We can export a GRangesList as GMQL dataset as follows:
 
 dir_out <- system.file("example", package = "RGMQL")
 
-# Export the GRangesList as GMQL dataset called 'example' at destination path
+# Export the GRangesList 'data' as GMQL dataset called 'example' at destination 
+# path
 
 export_gmql(imported_data, dir_out, is_gtf = TRUE)
 
 ```
-the second parameter *is_gtf* specifies the file format: .GTF or .GDM.
+The second parameter *is_gtf* must specify the file format: .GTF or .GDM.
 
 ## Filter and Extract
 
@@ -690,6 +746,9 @@ If *region_attributes* is not specified, only the fundamental elements of
 GRanges are extracted, i.e., the genomic coordinates.
 Note that this function works only if every sample in dataset includes the 
 same number of regions with the same coordinates.
+Each metadata column is named using *region_attributes* concatenated with 
+the function input parameter *suffix*.
+By default *suffix* correspond to a metadata: *antobody_target*.
 
 # References
 

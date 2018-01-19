@@ -31,7 +31,7 @@ is only GRanges made up by the region coordinate attributes
 value of the metadata attribute named "antibody_target". This string is 
 taken from sample metadata file or from metadata() associated. 
 If not present, the column name is the name of selected regions specified
-by 'regions' input parameter}
+by 'region_attributes' input parameter}
 }
 \value{
 GRanges with selected regions

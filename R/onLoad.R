@@ -13,7 +13,7 @@
             user <- GMQL_credentials$username
             psw <- GMQL_credentials$password
             remote_url <- GMQL_credentials$remote_url
-            login_gmql(remote_url,user,psw)
+            #login_gmql(remote_url,user,psw)
         }
     }
 }

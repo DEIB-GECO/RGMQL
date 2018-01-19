@@ -2,9 +2,9 @@
 #' 
 #' @description Wrapper to GMQL UNION operator
 #' 
-#' @description It is used to integrate samples of two datasets homogeneous or 
-#' heterogeneous within a single dataset; for each sample of either input 
-#' dataset, a result sample is created as follows:
+#' @description It is used to integrate samples of two homogeneous or 
+#' heterogeneous datasets within a single dataset; for each sample of either 
+#' input dataset, a result sample is created as follows:
 #' \itemize{
 #' \item {Metadata are the same as in the original sample.}
 #' \item {Resulting schema is the schema of the left input dataset. }
@@ -28,11 +28,11 @@
 #'
 #' @examples
 #' 
-#' ## Thi statement initializes and runs the GMQL server for local execution 
+#' ## This statement initializes and runs the GMQL server for local execution 
 #' ## and creation of results on disk. Then, with system.file() it defines 
 #' ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
-#' ## "example" of the package "RGMQL" and opens such folder as a GMQL 
-#' ## dataset named "data1" and "data2" respectively using customParser
+#' ## "example" of the package "RGMQL" and opens such folders as a GMQL 
+#' ## datasets named "data1" and "data2", respectively, using CustomParser
 #' 
 #' init_gmql()
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")

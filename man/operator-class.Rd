@@ -19,7 +19,7 @@ SQRT(value)
 \item{value}{string identifying name of metadata attribute}
 
 \item{type}{string identifying the type of the attribute value;
-it must be: INTEGER, DOUBLE or STRING
+it must be: INTEGER, DOUBLE or STRING. 
 For NIL() function, only INTEGER and DOUBLE are allowed}
 }
 \value{
@@ -61,7 +61,7 @@ data = filter(exp, r_predicate = score > META("avg_score"))
 ## attribute_name = NULL(TYPE), where type may be INTEGER or DOUBLE.
 
 out = select(exp, regions_update = list(signal = NIL("INTEGER"), 
-pvalue = NIL("DOUBLE")))
+    pvalue = NIL("DOUBLE")))
 
 ## This statement allows to build an output dataset named 'out' such that 
 ## all the samples from the input dataset 'exp' are conserved, 

@@ -21,8 +21,8 @@ groupBy or JoinBy input parameter}
 is executed only on regions in 'x' dataset with exactly the same 
 coordinates of at least one region present in 'y' dataset; 
 if is_exact = FALSE, the difference is executed on all regions in 
-left_input_data that overlap (even just one base) with at least one 
-region in 'y'}
+'x' dataset that overlap (even just one base) with at least one region in 
+'y' dataset}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -45,8 +45,8 @@ attribute are considered when performing the difference.
 ## This statement initializes and runs the GMQL server for local execution 
 ## and creation of results on disk. Then, with system.file() it defines 
 ## the path to the folders "DATASET" and "DATASET_GDM" in the subdirectory 
-## "example" of the package "RGMQL" and opens such folder as a GMQL 
-## dataset named "data1" and "data2" respectively using customParser
+## "example" of the package "RGMQL" and opens such folders as a GMQL 
+## datasets named "data1" and "data2", respectively, using CustomParser
 
 init_gmql()
 test_path <- system.file("example", "DATASET", package = "RGMQL")
