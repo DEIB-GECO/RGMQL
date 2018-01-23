@@ -103,6 +103,8 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
         if(identical(parser_name,"CUSTOMPARSER"))
         {
             list <- show_schema(url,dataset)
+            coords_sys <- list$coordinate_system
+            type <- list$type
             schema_names <- vapply(list$fields, function(x){x$name},
                                         character(1))
             schema_type <- vapply(list$fields, function(x){x$type},

@@ -142,7 +142,7 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
     else
         join_matrix <- .jnull("java/lang/String")
     
-    if(!is.null(reg_attributes))
+    if(!identical(reg_attributes,""))
     {
         if(!is.character(reg_attributes))
             stop("metadata: no valid input")
