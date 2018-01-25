@@ -450,7 +450,7 @@ Or the user can execute a query reading it directly from file (e.g., the
 "query1.txt" file in the "example" subdirectory of the RGMQL package):
 ```{r, run_from_file, eval = FALSE}
 query_path <- system.file("example", "query1.txt", package = "RGMQL")
-job <- run_query_fromfile(test_url, "query1", query_path, output_gtf = FALSE)
+job <- run_query_fromfile(test_url, query_path, output_gtf = FALSE)
 ```
 
 Once run, query continues on the remote server while *run_query()* 
@@ -749,6 +749,13 @@ same number of regions with the same coordinates.
 Each metadata column is named using *region_attributes* concatenated with 
 the function input parameter *suffix*.
 By default *suffix* correspond to a metadata: *antobody_target*.
+
+## Metadata
+
+A specific metadata attribute, associated to sample of GMQL dataset, can 
+contain mmultiple values, i.e more values for the same metadata-key attributes; 
+es:
+
 
 # References
 

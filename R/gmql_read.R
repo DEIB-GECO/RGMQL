@@ -123,7 +123,7 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
     }
 
     response <- WrappeR$readDataset(dataset, parser_name, is_local, is_GMQL, 
-                                        schema_matrix, schema_XML)
+                    schema_matrix, schema_XML, coords_sys, type)
     error <- strtoi(response[1])
     data <- response[2]
     if(error)
