@@ -90,6 +90,8 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
         
         schema_matrix <- .jnull("java/lang/String")
         url <- .jnull("java/lang/String")
+        coords_sys <- .jnull("java/lang/String")
+        type <- .jnull("java/lang/String")
     }
     else
     {
@@ -202,7 +204,8 @@ read_GRangesList <- function(samples)
     region_matrix <- .jarray(region_matrix,dispatch = TRUE)
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix)
+    response <- WrappeR$read(meta_matrix,region_matrix,schema_matrix,
+                                "default", "TAB")
     GMQLDataset(response)
 }
 

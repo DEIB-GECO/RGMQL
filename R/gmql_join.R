@@ -147,10 +147,6 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
         if(!is.character(reg_attributes))
             stop("metadata: no valid input")
         
-        ouput <- toupper(region_output)
-        if(ouput %in% c("CAT","INT"))
-            stop("reg_attributes is defined: output cannot be INT or CAT")
-        
         reg_attributes <- reg_attributes[!reg_attributes %in% ""]
         reg_attributes <- reg_attributes[!duplicated(reg_attributes)]
         
@@ -158,6 +154,10 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
             reg_attributes <- .jnull("java/lang/String")
         else
             reg_attributes <- .jarray(reg_attributes, dispatch = TRUE)
+        
+        ouput <- toupper(region_output)
+        if(ouput %in% c("CAT","INT"))
+            stop("reg_attributes is defined: output cannot be INT or CAT")
     }
     else
         reg_attributes <- .jnull("java/lang/String")

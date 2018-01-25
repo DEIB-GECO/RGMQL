@@ -153,6 +153,76 @@ logout_gmql <- function(url)
         print(content)
     }
 }
+#' Register into GMQL
+#' 
+#' Register to GMQL REST services suite
+#' using the proper GMQL web service available on a remote server
+#' 
+#' @import httr
+#' @importFrom rJava J
+#' 
+#' @param url string url of server: It must contains the server address 
+#' and base url; service name is added automatically
+#' 
+#' @param username string user name used to login in
+#' @param psw string password used to login in
+#' @param email string user email 
+#' @param first_name string user first name 
+#' @param last_name string user last name 
+#' 
+#' @details
+#' After registration you will receive an authentication token.
+#' As token remains valid on server (until the next login / registration or 
+#' logout), a user can safely use a token for a previous session as a 
+#' convenience; this token is saved in R Global environment to perform 
+#' subsequent REST call even on complete R restart (if the environment has 
+#' been saved). If error occurs, a specific error is printed
+#' 
+#' @examples
+#' 
+#' ## Register to GMQL REST services suite 
+#' 
+#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' \dontrun{
+#' register_gmql(remote_url,"foo","foo","foo@foo.com","foo","foo")
+#' }
+#' 
+#' @return None
+#'
+#' @name register_gmql
+#' @rdname register_gmql
+#' @export
+#'
+register_gmql <- function(url, username, psw, email, 
+                                first_name, last_name)
+{
+    req <- httr::GET(url)
+    real_URL <- req$url
+
+    URL <- paste0(real_URL,"register")
+    h <- c('Accept' = "Application/json")
+    reg_body <- list("firstName" = first_name, "lastName" = last_name,
+                    "username" = username, "email" = email, "password" = psw)
+    
+    req <- httr::POST(URL, body = reg_body, httr::add_headers(h),
+                            encode = "json")
+    
+    content <- httr::content(req,"parsed")
+    if(req$status_code !=200)
+        stop(content)
+    else
+    {
+        WrappeR <- J("it/polimi/genomics/r/Wrapper")
+        GMQL_remote <- list("remote_url" = url, 
+                            "authToken" = content$authToken,
+                            "username" = username,
+                            "password" = psw)
+        WrappeR$save_tokenAndUrl(GMQL_remote$authToken,url)
+        assign("GMQL_credentials",GMQL_remote,.GlobalEnv)
+        print(paste("your Token is",GMQL_remote$authToken))
+    }
+}
+
 
 #############################
 #       WEB BROWSING       #
