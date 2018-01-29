@@ -47,9 +47,14 @@ execute <- function()
     {
         if(remote_proc)
         {
+            isGTF <- FALSE
+            outformat <- WrappeR$outputMaterialize()
+            if(identical(outformat, "gtf"))
+                isGTF <- TRUE
+            
             url <- WrappeR$get_url()
             .download_or_upload()
-            res <- serialize_query(url,FALSE,val)
+            res <- serialize_query(url,isGTF,val)
         }
     }
 }
