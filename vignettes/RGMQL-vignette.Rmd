@@ -748,14 +748,64 @@ Note that this function works only if every sample in dataset includes the
 same number of regions with the same coordinates.
 Each metadata column is named using *region_attributes* concatenated with 
 the function input parameter *suffix*.
-By default *suffix* correspond to a metadata: *antobody_target*.
+By default *suffix* correspond to a metadata: *antibody_target*.
 
 ## Metadata
 
-A specific metadata attribute, associated to sample of GMQL dataset, can 
-contain mmultiple values, i.e more values for the same metadata-key attributes; 
-es:
+Eache sample of GMQL dataset has its own metadata associated and generally 
+every metadata has a single value. In case we got mutiple distinct values 
+for the same metadata-key attributes, as showed in the figure below:  
+\newline
+![metadata with multiple values](multi_metadata.png)
+\newline\newline
+In this case we have multiple values for metadata *disease*; GMQL auomcatically
+handle this 'issue'.
+In the import/export paragrapgh we showed that the GMQL dataset can be 
+imported and so its metadata too.
+
+```{r, metadata}
+# This statement defines the path to the folder "EXON" in the subdirectory 
+# "example" of the package "RGMQL"
+
+dataset_path <- system.file("example", "DATASET_META", package = "RGMQL")
+
+# Import the GMQL dataset DATASET_META as GRangesList
+
+grl_data <- import_gmql(dataset_path, is_gtf = FALSE)
+grl_data
+
+# and its metadata
+
+metadata(grl_data)
+
+```
+The metadata is stored as simple list in the form key-values and it doesn't
+matter if mutiple values for one metadata-key attribute are present; all values
+are stored and showed.
+The problem is raised once we need to get the metadata value; normally since 
+listis in the form key-value we can extract the metadata value using:
+
+```{r, retrieve_value}
+
+# stored metadata on variable a
+
+a = metadata(grl_data)
+
+# get disease value of sample S_00000
+
+a$S_00000$disease
+
+```
+In this case only the first value is showed. If we would retrieve all disease, 
+we should use:
+
+```{r, retrieve_values}
+
+# get all disease value of sample S_00000
+
+a$S_00000[which(names(a$S_00000) %in% "disease")]
+
+```
 
 
 # References
-
