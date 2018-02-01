@@ -47,9 +47,14 @@ execute <- function()
     {
         if(remote_proc)
         {
+            isGTF <- FALSE
+            outformat <- WrappeR$outputMaterialize()
+            if(identical(outformat, "gtf"))
+                isGTF <- TRUE
+            
             url <- WrappeR$get_url()
             .download_or_upload()
-            res <- serialize_query(url,FALSE,val)
+            res <- serialize_query(url,isGTF,val)
         }
     }
 }
@@ -145,6 +150,9 @@ gmql_materialize <- function(input_data, dir_out, name)
     }
     else
         res_dir_out <- dir_out
+    
+    if(grepl("\\.",name))
+        stop("name dataset cannot contains dot")
     
     response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])

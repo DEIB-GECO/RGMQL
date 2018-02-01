@@ -155,9 +155,10 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
         else
             reg_attributes <- .jarray(reg_attributes, dispatch = TRUE)
         
-        ouput <- toupper(region_output)
-        if(ouput %in% c("CAT","INT"))
-            stop("reg_attributes is defined: output cannot be INT or CAT")
+        if(is.null(genometric_predicate) && length(reg_attributes))
+            if(ouput %in% c("CAT","INT"))
+                stop("Both reg_attributes and genometric_predicate are defined: 
+                        output cannot be INT or CAT")
     }
     else
         reg_attributes <- .jnull("java/lang/String")
@@ -167,6 +168,7 @@ gmql_join <- function(left_data, right_data, genometric_predicate, joinBy,
                         "LEFT_DIST"))
         stop("region_output must be cat, left, right, right_dist, left_dist 
                 or int (intersection)")
+    
     
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     response <- WrappeR$join(genomatrix, join_matrix, ouput,reg_attributes,
