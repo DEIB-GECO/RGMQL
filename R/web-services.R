@@ -153,10 +153,10 @@ logout_gmql <- function(url)
         print(content)
     }
 }
-#' Register into GMQL
+#' Register into remote GMQL
 #' 
 #' Register to GMQL REST services suite
-#' using the proper GMQL web service available on a remote server
+#' using the proper GMQL web service available on a remote server.
 #' 
 #' @import httr
 #' @importFrom rJava J
@@ -175,8 +175,9 @@ logout_gmql <- function(url)
 #' As token remains valid on server (until the next login / registration or 
 #' logout), a user can safely use a token for a previous session as a 
 #' convenience; this token is saved in R Global environment to perform 
-#' subsequent REST call even on complete R restart (if the environment has 
-#' been saved). If error occurs, a specific error is printed
+#' subsequent REST calls or batch processing even on complete R restart 
+#' (if the environment has been saved). If error occurs, a specific error 
+#' is printed.
 #' 
 #' @examples
 #' 

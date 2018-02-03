@@ -2,7 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{register_gmql}
 \alias{register_gmql}
-\title{Register into GMQL}
+\title{Register into remote GMQL}
 \usage{
 register_gmql(url, username, psw, email, first_name, last_name)
 }
@@ -25,15 +25,16 @@ None
 }
 \description{
 Register to GMQL REST services suite
-using the proper GMQL web service available on a remote server
+using the proper GMQL web service available on a remote server.
 }
 \details{
 After registration you will receive an authentication token.
 As token remains valid on server (until the next login / registration or 
 logout), a user can safely use a token for a previous session as a 
 convenience; this token is saved in R Global environment to perform 
-subsequent REST call even on complete R restart (if the environment has 
-been saved). If error occurs, a specific error is printed
+subsequent REST calls or batch processing even on complete R restart 
+(if the environment has been saved). If error occurs, a specific error 
+is printed.
 }
 \examples{
 

@@ -752,20 +752,19 @@ By default *suffix* correspond to a metadata: *antibody_target*.
 
 ## Metadata
 
-Eache sample of GMQL dataset has its own metadata associated and generally 
-every metadata has a single value. In case we got mutiple distinct values 
-for the same metadata-key attributes, as showed in the figure below:  
-\newline
+Each sample of a GMQL dataset has its own metadata associated and generally 
+every metadata attribute has a single value.The case with distinct values 
+for the same metadata attribute, is showed in the figure below for the disease 
+metadata attribute 
+\newline\newline
 ![metadata with multiple values](multi_metadata.png)
 \newline\newline
-In this case we have multiple values for metadata *disease*; GMQL auomcatically
-handle this 'issue'.
-In the import/export paragrapgh we showed that the GMQL dataset can be 
-imported and so its metadata too.
+In this case GMQL automcatically handles this situation.
+Import/export paragraph we showed that a GMQL dataset can be imported into R environment as a GRangesList, and so its metadata too.
 
 ```{r, metadata}
-# This statement defines the path to the folder "EXON" in the subdirectory 
-# "example" of the package "RGMQL"
+# This statement defines the path to the folder "DATASET_META" in the 
+# subdirectory "example" of the package "RGMQL"
 
 dataset_path <- system.file("example", "DATASET_META", package = "RGMQL")
 
@@ -779,15 +778,15 @@ grl_data
 metadata(grl_data)
 
 ```
-The metadata is stored as simple list in the form key-values and it doesn't
-matter if mutiple values for one metadata-key attribute are present; all values
-are stored and showed.
-The problem is raised once we need to get the metadata value; normally since 
-listis in the form key-value we can extract the metadata value using:
+The metadata are stored as simple list in the form key-values and it does not 
+matter if mutiple values for the same metadata attribute are present; 
+all values are stored and shown.
+Difficulties can arise when we need to get all the metadata values; normally 
+since list is in the form key-value, we can extract the metadata values using:
 
 ```{r, retrieve_value}
 
-# stored metadata on variable a
+# store metadata on variable a
 
 a = metadata(grl_data)
 
@@ -796,8 +795,8 @@ a = metadata(grl_data)
 a$S_00000$disease
 
 ```
-In this case only the first value is showed. If we would retrieve all disease, 
-we should use:
+Yet, in this case only the first disease value is shown. If we want to retrieve 
+all disease values, we should use instead:
 
 ```{r, retrieve_values}
 

@@ -1,6 +1,6 @@
 ##gff-version 2
 ##source-version rtracklayer 1.36.6
-##date 2018-01-26
+##date 2018-02-03
 chr1	rtracklayer	sequence_feature	11873	12227	0	+	.	name "NR_046018"
 chr1	rtracklayer	sequence_feature	12612	12721	0	+	.	name "NR_046018"
 chr1	rtracklayer	sequence_feature	917444	917497	0	-	.	name "NM_001291366"
