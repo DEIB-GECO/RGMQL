@@ -121,6 +121,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
         lapply(samples,function(x,dir){
             sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
             region_frame <- data.frame(x)
+            region_frame$start = region_frame$start - 1
             write.table(region_frame,sample_name,col.names = FALSE,
                             row.names = FALSE, sep = '\t',quote = FALSE)
         },files_sub_dir)
@@ -183,6 +184,17 @@ export_gmql <- function(samples, dir_out, is_gtf)
     xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
     xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
     xml2::xml_add_child(root,"gmqlSchema")
+    if(to_GTF)
+    {
+        xml2::xml_attr(root,"type") <- "gtf"
+        xml2::xml_attr(root,"coordinate_system") <- "1-based"
+    }
+    else
+    {
+        xml2::xml_attr(root,"type") <- "tab"
+        xml2::xml_attr(root,"coordinate_system") <- "0-based"
+    }
+    
     gmqlSchema <- xml2::xml_child(root,1)
 
     names_node <- names(node_list)

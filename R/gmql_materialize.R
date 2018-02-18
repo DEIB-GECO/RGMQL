@@ -152,7 +152,7 @@ gmql_materialize <- function(input_data, dir_out, name)
         res_dir_out <- dir_out
     
     if(grepl("\\.",name))
-        stop("name dataset cannot contains dot")
+        stop("dataset name cannot contains dot")
     
     response <- WrappeR$materialize(input_data, res_dir_out)
     error <- strtoi(response[1])

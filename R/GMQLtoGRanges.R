@@ -92,15 +92,30 @@ import_gmql <- function(dataset_path, is_gtf)
         name_samples <- lapply(regions, function(x){
             gsub("*.gdm", "",basename(x))})
         vector_field <- .schema_header(datasetName)
-
+        type_and_coord <- .schema_type_coordinate(datasetName)
         names(vector_field) <- NULL
-        sampleList <- lapply(regions,function(x){
-            df <- read.delim(x,col.names = vector_field,header = FALSE)
-            g <- GenomicRanges::makeGRangesFromDataFrame(df,
-                                            keep.extra.columns = TRUE,
-                                            start.field = "left",
-                                            end.field = "right")
-        })
+        if(type_and_coord$coordinate_system %in% c("1-based"))
+        {
+            sampleList <- lapply(regions,function(x){
+                df <- read.delim(x,col.names = vector_field,header = FALSE)
+                g <- GenomicRanges::makeGRangesFromDataFrame(df,
+                        keep.extra.columns = TRUE,
+                        start.field = "left",
+                        end.field = "right")
+            })
+        }
+        else
+        {
+            sampleList <- lapply(regions,function(x){
+                df <- read.delim(x,col.names = vector_field,header = FALSE)
+                df$left = df$left +1
+                g <- GenomicRanges::makeGRangesFromDataFrame(df,
+                        keep.extra.columns = TRUE,
+                        start.field = "left",
+                        end.field = "right")
+            })
+        }
+       
         names(sampleList) <- name_samples
         gRange_list <- GenomicRanges::GRangesList(sampleList)
     }

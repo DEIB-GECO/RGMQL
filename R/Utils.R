@@ -36,6 +36,27 @@
     vector_field <- unlist(list_field)
 }
 
+.schema_type_coordinate <- function(datasetName)
+{
+    schema_name <- list.files(datasetName, pattern = "*.schema$",
+                              full.names = TRUE)
+    
+    schema_name_xml <- list.files(datasetName, pattern = "*.xml$",
+                                  full.names = TRUE)
+    
+    if(!length(schema_name) && !length(schema_name_xml))
+        stop("schema not present")
+    
+    if(!length(schema_name))
+        xml_schema <- xml2::read_xml(schema_name_xml)
+    else
+        xml_schema <- xml2::read_xml(schema_name)
+    
+    gmql_schema_tag <- xml2::xml_children(xml_schema)
+    all_attrs <- xml2::xml_attrs(gmql_schema_tag)
+    all_attrs_list <- as.list(all_attrs[[1]])
+}
+
 # aggregates factory
 .aggregates <- function(meta_data,class)
 {

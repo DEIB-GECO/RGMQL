@@ -753,14 +753,15 @@ By default *suffix* correspond to a metadata: *antibody_target*.
 ## Metadata
 
 Each sample of a GMQL dataset has its own metadata associated and generally 
-every metadata attribute has a single value.The case with distinct values 
-for the same metadata attribute, is showed in the figure below for the disease 
-metadata attribute 
+every metadata attribute has a single value. The case with distinct values 
+for the same metadata attribute is shown in the figure below for the 
+\emph{disease} metadata attribute.
 \newline\newline
 ![metadata with multiple values](multi_metadata.png)
 \newline\newline
-In this case GMQL automcatically handles this situation.
-Import/export paragraph we showed that a GMQL dataset can be imported into R environment as a GRangesList, and so its metadata too.
+In this case GMQL automatically handles this situation. In the Import/export 
+paragraph, we showed that a GMQL dataset can be imported into R environment 
+as a GRangesList, and so its metadata too.
 
 ```{r, metadata}
 # This statement defines the path to the folder "DATASET_META" in the 
@@ -781,8 +782,9 @@ metadata(grl_data)
 The metadata are stored as simple list in the form key-values and it does not 
 matter if mutiple values for the same metadata attribute are present; 
 all values are stored and shown.
-Difficulties can arise when we need to get all the metadata values; normally 
-since list is in the form key-value, we can extract the metadata values using:
+Difficulties can arise when we need to get all the metadata values; normally, 
+since the metadata list is in the form key-value, we can extract the metadata 
+values using:
 
 ```{r, retrieve_value}
 
@@ -800,7 +802,7 @@ all disease values, we should use instead:
 
 ```{r, retrieve_values}
 
-# get all disease value of sample S_00000
+# get all disease values of sample S_00000
 
 a$S_00000[which(names(a$S_00000) %in% "disease")]
 

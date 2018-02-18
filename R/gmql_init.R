@@ -11,7 +11,8 @@
 #' \item{TAB: tab-delimited file format}
 #' \item{GTF: tab-delimited text standard format based on the General 
 #' Feature Format}
-#' \item{COLLECT: used for storing output in memory}
+#' \item{COLLECT: used for storing output in memory (only in the case of local 
+#' processing, i.e., remote_processing = FALSE,)}
 #' }
 #' @param remote_processing logical value specifying the processing mode.
 #' True for processing on cluster (remote), false for local processing.
@@ -22,8 +23,8 @@
 #' You can always perform it by calling the function \code{\link{login_gmql}} 
 #' explicitly
 #' 
-#' @param username string name used during signup 
-#' @param password string password used during signup
+#' @param username string name used during remote server signup 
+#' @param password string password used during remote server signup
 #' 
 #' @return None
 #'
