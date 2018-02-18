@@ -174,9 +174,7 @@ read_GRangesList <- function(samples)
     df <- data.frame(samples)
     df <- df[-2] #delete group_name
     len_df <- dim(df)[1] # number of rows
-    region_matrix <- as.matrix(vapply(df, as.character,character(len_df)))
-    region_matrix[is.na(region_matrix)] <- "NA"
-    region_matrix <- region_matrix[,setdiff(colnames(region_matrix),"width")]
+
     col_types <- vapply(df,class,character(1))
     col_names <- names(col_types)
     #re order the schema?
@@ -193,9 +191,13 @@ read_GRangesList <- function(samples)
         col_names <- plyr::revalue(col_names,c(start = "left", 
                                         end = "right", seqnames = "chr"))
         schema_matrix <- cbind(col_names,toupper(col_types))
+        df$start = df$start - 1
         schema_matrix<- schema_matrix[setdiff(rownames(schema_matrix),
                                         c("group","width")),]
     }
+    region_matrix <- as.matrix(vapply(df, as.character,character(len_df)))
+    region_matrix[is.na(region_matrix)] <- "NA"
+    region_matrix <- region_matrix[,setdiff(colnames(region_matrix),"width")]
     rownames(schema_matrix) <- NULL
     colnames(schema_matrix) <- NULL
     
