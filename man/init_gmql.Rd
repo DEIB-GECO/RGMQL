@@ -14,7 +14,8 @@ files. It can be TAB, GTF or COLLECT:
 \item{TAB: tab-delimited file format}
 \item{GTF: tab-delimited text standard format based on the General 
 Feature Format}
-\item{COLLECT: used for storing output in memory}
+\item{COLLECT: used for storing output in memory (only in the case of local 
+processing, i.e., remote_processing = FALSE,)}
 }}
 
 \item{remote_processing}{logical value specifying the processing mode.
@@ -26,9 +27,9 @@ If NULL, no login is performed.
 You can always perform it by calling the function \code{\link{login_gmql}} 
 explicitly}
 
-\item{username}{string name used during signup}
+\item{username}{string name used during remote server signup}
 
-\item{password}{string password used during signup}
+\item{password}{string password used during remote server signup}
 }
 \value{
 None

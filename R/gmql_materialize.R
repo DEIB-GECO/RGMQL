@@ -256,7 +256,9 @@ gmql_take <- function(input_data, rows)
     sampleList <- lapply(list, function(x){
         x <- x[-1]
         names(x) <- seq_name
-        x$start = x$start +1
+        start_numeric = as.numeric(levels(x$start))[x$start]
+        start_numeric = start_numeric + 1
+        levels(x$start)[x$start] = start_numeric
         g <- GenomicRanges::makeGRangesFromDataFrame(x,
                                     keep.extra.columns = TRUE,
                                     start.field = "start",
