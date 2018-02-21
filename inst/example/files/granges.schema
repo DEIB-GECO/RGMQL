@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gmqlSchemaCollection xmlns="http://genomic.elet.polimi.it/entities" name="DatasetName_SCHEMAS">
+<gmqlSchemaCollection xmlns="http://genomic.elet.polimi.it/entities" name="DatasetName_SCHEMAS" type="gtf" coordinate_system="1-based">
   <gmqlSchema>
     <field type="STRING">seqname</field>
     <field type="STRING">source</field>

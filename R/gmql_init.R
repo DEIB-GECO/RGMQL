@@ -12,7 +12,7 @@
 #' \item{GTF: tab-delimited text standard format based on the General 
 #' Feature Format}
 #' \item{COLLECT: used for storing output in memory (only in the case of local 
-#' processing, i.e., remote_processing = FALSE,)}
+#' processing, i.e., remote_processing = FALSE)}
 #' }
 #' @param remote_processing logical value specifying the processing mode.
 #' True for processing on cluster (remote), false for local processing.

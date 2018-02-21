@@ -264,9 +264,12 @@ gmql_take <- function(input_data, rows)
                                     start.field = "start",
                                     end.field = "end")
         })
-    gRange_list <- GRangesList(sampleList)
-    meta_list <- .metadata_from_frame_to_list(meta)
     
+    gRange_list <- GRangesList(sampleList)
+    len = length(gRange_list)
+    names(gRange_list) <- paste0("S_",seq_len(len))
+    meta_list <- .metadata_from_frame_to_list(meta)
+    names(meta_list) <- paste0("S_",seq_len(len))
     S4Vectors::metadata(gRange_list) <- meta_list
     return(gRange_list)
 }

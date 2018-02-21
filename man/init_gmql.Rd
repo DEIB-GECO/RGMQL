@@ -15,7 +15,7 @@ files. It can be TAB, GTF or COLLECT:
 \item{GTF: tab-delimited text standard format based on the General 
 Feature Format}
 \item{COLLECT: used for storing output in memory (only in the case of local 
-processing, i.e., remote_processing = FALSE,)}
+processing, i.e., remote_processing = FALSE)}
 }}
 
 \item{remote_processing}{logical value specifying the processing mode.
