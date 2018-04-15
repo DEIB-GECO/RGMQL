@@ -385,7 +385,7 @@ After the execution, the context of scalable data management engine is stopped
 and a new invocation of *init_gmql()* is needed.
 
 Beside *execute()* we can use: 
-```{r, take}
+```{r, take,eval=FALSE}
 g <- take(exon_res, rows = 45)
 ```
 to execute all *collect()* commands in the RGMQL query and extract data 
@@ -563,7 +563,7 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
 
 ```{r, remote materialize, eval = FALSE}
-collect(exon_res)
+collect(exon_res,"exon_res")
 ```
 
 ```{r, remote execute, eval = FALSE}
@@ -653,7 +653,7 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 
 Materialize result:
 ```{r, mixed materialize, eval = FALSE}
-collect(exon_res)
+collect(exon_res,"exon_res")
 ```
 
 Execute processing: 

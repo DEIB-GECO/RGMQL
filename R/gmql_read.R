@@ -83,10 +83,20 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
         if(basename(dataset) !="files")
             dataset <- file.path(dataset,"files")
         
-        schema_XML <- list.files(dataset, pattern = "*.schema$",
-                                    full.names = TRUE)
-        if(!length(schema_XML))
-            stop("schema must be present")
+        schema_SCHEMA <- list.files(dataset, pattern = "*.schema$",
+                                        full.names = TRUE)
+        
+        xml_schema <- list.files(dataset, pattern = "*.xml$",
+                                        full.names = TRUE)
+        xml_schema = xml_schema[!basename(xml_schema) %in% c("web_profile.xml")]
+        
+        if(!length(schema_SCHEMA) && !length(xml_schema))
+            stop("schema not present")
+        
+        if(!length(schema_SCHEMA))
+            schema_XML <- xml_schema
+        else
+            schema_XML <- schema_SCHEMA
         
         schema_matrix <- .jnull("java/lang/String")
         url <- .jnull("java/lang/String")

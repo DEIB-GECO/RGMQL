@@ -250,6 +250,9 @@ gmql_take <- function(input_data, rows)
         stop("no schema defined")
     
     reg_data_frame <- as.data.frame(reg)
+    if (!length(reg_data_frame)){
+        return(GRangesList())
+    }
     list <- split(reg_data_frame, reg_data_frame[1])
     seq_name <- c("seqname","start","end","strand",schema)
     
