@@ -562,9 +562,16 @@ exon3 <- extend(exon2, exon_count = COUNT())
 exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
 
+N.B.
+in case of remote processing we have to specify the name of the output
+dataset (not necessary the same as imput) as the second parameter in order to 
+correctly process the qeury on the remote GMQL system. 
+Here is the R code we use:
+
 ```{r, remote materialize, eval = FALSE}
 collect(exon_res,"exon_res")
 ```
+
 
 ```{r, remote execute, eval = FALSE}
 execute()

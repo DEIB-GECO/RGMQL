@@ -103,8 +103,13 @@ export_gmql <- function(samples, dir_out, is_gtf)
     {
         #write region
         lapply(samples,function(x,dir){
+            anonymusFile <- file()
             sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
             g <- rtracklayer::export(x,sample_name,format = "gtf")
+            lines <- readLines(anonymusFile)
+            lines <- lines[-(1:3)] #delete first 3 lines
+            writeLines(lines,sample_name)
+            close(anonymusFile)
         },files_sub_dir)
         cnt = .counter(0)
         meta <- metadata(samples)
@@ -214,7 +219,6 @@ export_gmql <- function(samples, dir_out, is_gtf)
     },node_list,names_node)
     xml2::write_xml(root,schema)
 }
-
 
 
 
