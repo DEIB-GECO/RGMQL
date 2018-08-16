@@ -4,8 +4,8 @@
 \alias{init_gmql}
 \title{Init GMQL server}
 \usage{
-init_gmql(output_format = "GTF", remote_processing = FALSE, url = NULL,
-  username = NULL, password = NULL)
+init_gmql(output_format = "GTF", remote_processing = FALSE,
+  url = NULL, username = NULL, password = NULL)
 }
 \arguments{
 \item{output_format}{string that identifies the output format of all sample 
@@ -47,7 +47,7 @@ init_gmql("tab", FALSE)
 
 ## This statement initializes GMQL with remote processing
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url = "http://www.gmql.eu/gmql-rest/"
 init_gmql(remote_processing = TRUE, url = remote_url)
 
 }

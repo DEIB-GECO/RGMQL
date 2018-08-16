@@ -45,7 +45,7 @@ if(getRversion() >= "3.1.0")
 #' @examples
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' @name login_gmql
@@ -120,7 +120,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' 
 #' ## Login to GMQL REST services suite as guest, then logout
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/
 #' login_gmql(remote_url)
 #' logout_gmql(remote_url)
 #' 
@@ -183,7 +183,7 @@ logout_gmql <- function(url)
 #' 
 #' ## Register to GMQL REST services suite 
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' \dontrun{
 #' register_gmql(remote_url,"foo","foo","foo@foo.com","foo","foo")
 #' }
@@ -251,7 +251,7 @@ register_gmql <- function(url, username, psw, email,
 #' @examples
 #' 
 #' ## Login to GMQL REST services suite
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## List all queries executed on remote GMQL system 
@@ -300,7 +300,7 @@ show_queries_list <- function(url)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement saves query written directly as input string parameter 
@@ -388,7 +388,7 @@ save_query_fromfile <- function(url, queryName, filePath)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## Run query as string input parameter
@@ -468,7 +468,7 @@ run_query_fromfile <- function(url, filePath, output_gtf = TRUE)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement gets the query as text string and runs the compile 
@@ -544,7 +544,7 @@ compile_query_fromfile <- function(url ,filePath)
 #' 
 #' ## Login to GMQL REST services suite at remote url
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement shows all jobs at GMQL remote system and selects one 
@@ -591,7 +591,7 @@ stop_job <- function(url, job_id)
 #' @examples
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## List all jobs
@@ -670,7 +670,7 @@ trace_job <- function(url, job_id)
 #' @examples
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## List all jobs
@@ -721,7 +721,7 @@ show_jobs_list <- function(url)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## List all datasets
@@ -775,7 +775,7 @@ show_datasets_list <- function(url)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement shows all samples present into public dataset 
@@ -825,7 +825,7 @@ show_samples_list <- function(url,datasetName)
 #' @examples
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## Show schema of public dataset 'Example_Dataset_1'
@@ -894,7 +894,7 @@ show_schema <- function(url,datasetName)
 #' 
 #' ## Login to GMQL REST services suite at remote url
 #' 
-#' remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url <- "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## Upload of GMQL dataset with "dataset1" as name, without specifying any 
@@ -1005,7 +1005,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
 #' 
 #' ## This dataset does not exist
 #' 
-#' remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url <- "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' delete_dataset(remote_url, "test1_20170604_180908_RESULT_DS")
 #' 
@@ -1058,7 +1058,7 @@ delete_dataset <- function(url,datasetName)
 #' 
 #' \dontrun{
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' download_dataset(remote_url, "Example_Dataset_1", path = getwd())
 #' 
@@ -1149,7 +1149,7 @@ download_as_GRangesList <- function(url,datasetName)
 #' @examples
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement retrieves metadata of sample 'S_00000' from public 
@@ -1213,7 +1213,7 @@ sample_metadata <- function(url, datasetName,sampleName)
 #' 
 #' ## Login to GMQL REST services suite as guest
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' 
 #' ## This statement retrieves regions data of sample "S_00000" from public 

@@ -37,7 +37,7 @@
 #' 
 #' ## This statement initializes GMQL with remote processing
 #' 
-#' remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' init_gmql(remote_processing = TRUE, url = remote_url)
 #' 
 #' @export

@@ -35,7 +35,7 @@ in repository, you will overwrite it; if no error occurs, it prints:
 
 ## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url = "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 
 ## This statement saves query written directly as input string parameter 

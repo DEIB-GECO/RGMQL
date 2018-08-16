@@ -39,7 +39,7 @@ If error occurs, a specific error is printed
 
 \dontrun{
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url = "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 download_dataset(remote_url, "Example_Dataset_1", path = getwd())
 

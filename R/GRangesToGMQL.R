@@ -98,27 +98,21 @@ export_gmql <- function(samples, dir_out, is_gtf)
     files_sub_dir <- file.path(dir_out,"files")
     dir.create(files_sub_dir)
     cnt = .counter()
+    file_ext = ""
     #col_names <- .get_schema_names(samples)
     if(to_GTF)
     {
         #write region
         lapply(samples,function(x,dir){
-            anonymusFile <- file()
+            #anonymusFile <- file()
             sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
-            g <- rtracklayer::export(x,sample_name,format = "gtf")
-            lines <- readLines(anonymusFile)
-            lines <- lines[-(1:3)] #delete first 3 lines
+            g <- rtracklayer::export(x,format = "gtf",is.na)
+            #lines <- readLines(sample_name)
+            lines <- g[-(1:3)] #delete first 3 lines
             writeLines(lines,sample_name)
-            close(anonymusFile)
+            #close(anonymusFile)
         },files_sub_dir)
-        cnt = .counter(0)
-        meta <- metadata(samples)
-
-        #write metadata
-        lapply(meta,function(x,dir){
-            sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
-            .write_metadata(x,sample_name)
-        },files_sub_dir)
+        file_ext = ".gtf"
     }
     else
     {
@@ -126,27 +120,29 @@ export_gmql <- function(samples, dir_out, is_gtf)
         lapply(samples,function(x,dir){
             sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
             region_frame <- data.frame(x)
+            region_frame <- region_frame[-4] # delete width column
             region_frame$start = region_frame$start - 1
             write.table(region_frame,sample_name,col.names = FALSE,
                             row.names = FALSE, sep = '\t',quote = FALSE)
         },files_sub_dir)
-
-        cnt = .counter(0)
-        meta <- metadata(samples)
-
-        #write metadata
-        lapply(meta,function(x,dir){
-            sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
-            .write_metadata(x,sample_name)
-        },files_sub_dir)
+        file_ext = ".gdm"
     }
+    
+    cnt = .counter(0)
+    meta <- metadata(samples)
+    
+    #write metadata
+    lapply(meta,function(x,dir){
+        sample_name <- file.path(dir,paste0("S_",cnt(),file_ext))
+        .write_metadata(x,sample_name)
+    },files_sub_dir)
+    
     # first regions to get column names
     col_names <- vapply(elementMetadata(samples[[1]]),class,character(1)) 
     # write schema XML
     .write_schema(col_names,files_sub_dir,to_GTF)
     c = .counter(0)
 }
-
 
 
 .write_metadata <- function(meta_list,sample_name)
@@ -189,19 +185,18 @@ export_gmql <- function(samples, dir_out, is_gtf)
     xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
     xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
     xml2::xml_add_child(root,"gmqlSchema")
+    gmqlSchema <- xml2::xml_child(root,1) #gmqlSchema
     if(to_GTF)
     {
-        xml2::xml_attr(root,"type") <- "gtf"
-        xml2::xml_attr(root,"coordinate_system") <- "1-based"
+        xml2::xml_attr(gmqlSchema,"type") <- "gtf"
+        xml2::xml_attr(gmqlSchema,"coordinate_system") <- "1-based"
     }
     else
     {
-        xml2::xml_attr(root,"type") <- "tab"
-        xml2::xml_attr(root,"coordinate_system") <- "0-based"
+        xml2::xml_attr(gmqlSchema,"type") <- "tab"
+        xml2::xml_attr(gmqlSchema,"coordinate_system") <- "0-based"
     }
     
-    gmqlSchema <- xml2::xml_child(root,1)
-
     names_node <- names(node_list)
 
     mapply(function(type,text){

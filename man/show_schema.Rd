@@ -32,7 +32,7 @@ If error occurs, a specific error is printed
 \examples{
 ## Login to GMQL REST services suite as guest
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url = "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 
 ## Show schema of public dataset 'Example_Dataset_1'

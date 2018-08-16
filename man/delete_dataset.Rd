@@ -29,7 +29,7 @@ is printed
 
 ## This dataset does not exist
 
-remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url <- "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 delete_dataset(remote_url, "test1_20170604_180908_RESULT_DS")
 

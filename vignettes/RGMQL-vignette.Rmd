@@ -428,7 +428,7 @@ Upon successful logon, you get a request token that you must use
 in every subsequent REST call.
 Login can be performed using the *login_gmql()* function:
 ```{r, init with login}
-test_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+test_url = "http://www.gmql.eu/gmql-rest/"
 login_gmql(test_url)
 ```
 It saves the token in the Global R environment within the variable 

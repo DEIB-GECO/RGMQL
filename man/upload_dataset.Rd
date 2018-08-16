@@ -54,7 +54,7 @@ test_path <- system.file("example", "DATASET_GDM", package = "RGMQL")
 
 ## Login to GMQL REST services suite at remote url
 
-remote_url <- "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url <- "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 
 ## Upload of GMQL dataset with "dataset1" as name, without specifying any 

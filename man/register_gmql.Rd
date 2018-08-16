@@ -40,7 +40,7 @@ is printed.
 
 ## Register to GMQL REST services suite 
 
-remote_url = "http://genomic.deib.polimi.it/gmql-rest-r/"
+remote_url = "http://www.gmql.eu/gmql-rest/"
 \dontrun{
 register_gmql(remote_url,"foo","foo","foo@foo.com","foo","foo")
 }

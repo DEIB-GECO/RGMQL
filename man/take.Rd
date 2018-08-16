@@ -4,7 +4,6 @@
 \name{take}
 \alias{take}
 \alias{take,GMQLDataset-method}
-\alias{take}
 \alias{take-method}
 \title{Method take}
 \usage{
