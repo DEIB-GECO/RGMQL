@@ -4,6 +4,7 @@
 \name{extend}
 \alias{extend}
 \alias{extend,GMQLDataset-method}
+\alias{extend}
 \alias{extend-method}
 \title{Method extend}
 \usage{

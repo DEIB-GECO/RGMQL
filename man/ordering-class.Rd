@@ -3,6 +3,7 @@
 \name{Ordering-Functions}
 \alias{Ordering-Functions}
 \alias{DESC}
+\alias{Ordering-Functions}
 \alias{ASC}
 \title{Ordering functions}
 \usage{

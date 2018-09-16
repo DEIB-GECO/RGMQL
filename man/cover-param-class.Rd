@@ -3,6 +3,7 @@
 \name{Cover-Param}
 \alias{Cover-Param}
 \alias{ALL}
+\alias{Cover-Param}
 \alias{ANY}
 \title{PARAM object class constructor}
 \usage{

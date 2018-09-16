@@ -2,6 +2,7 @@
 % Please edit documentation in R/gmql_read.R
 \name{read_gmql}
 \alias{read_gmql}
+\alias{read_gmql}
 \alias{read_GRangesList}
 \title{Function read}
 \usage{

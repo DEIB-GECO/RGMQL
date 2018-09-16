@@ -4,10 +4,15 @@
 \alias{DISTAL-Object}
 \alias{DL}
 \alias{DG}
+\alias{DISTAL-Object}
 \alias{DLE}
+\alias{DISTAL-Object}
 \alias{DGE}
+\alias{DISTAL-Object}
 \alias{MD}
+\alias{DISTAL-Object}
 \alias{UP}
+\alias{DISTAL-Object}
 \alias{DOWN}
 \title{DISTAL object class constructor}
 \usage{
