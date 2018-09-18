@@ -2,6 +2,7 @@
 % Please edit documentation in R/web-services.R
 \name{run_query}
 \alias{run_query}
+\alias{run_query}
 \alias{run_query_fromfile}
 \title{Run a GMQL query}
 \usage{

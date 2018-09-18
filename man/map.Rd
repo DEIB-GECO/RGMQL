@@ -4,13 +4,13 @@
 \name{map}
 \alias{map}
 \alias{map,GMQLDataset-method}
+\alias{map}
 \alias{map-method}
 \title{Method map}
 \usage{
 map(x, y, ...)
 
-\S4method{map}{GMQLDataset}(x, y, ..., joinBy = conds(),
-  count_name = "")
+\S4method{map}{GMQLDataset}(x, y, ..., joinBy = conds(), count_name = "")
 }
 \arguments{
 \item{x}{GMQLDataset class object}
