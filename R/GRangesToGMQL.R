@@ -106,7 +106,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
         lapply(samples,function(x,dir){
             #anonymusFile <- file()
             sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
-            g <- rtracklayer::export(x,format = "gtf",is.na)
+            g <- rtracklayer::export(x,format = "gtf")
             #lines <- readLines(sample_name)
             lines <- g[-(1:3)] #delete first 3 lines
             writeLines(lines,sample_name)
