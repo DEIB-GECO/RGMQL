@@ -51,6 +51,7 @@ biocViews:
     Infrastructure,
     DataImport,
     Network,
+    ImmunoOncology,
     SingleCell
 Collate: 
     'AllClasses.R'
