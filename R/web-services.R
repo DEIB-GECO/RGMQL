@@ -120,7 +120,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
 #' 
 #' ## Login to GMQL REST services suite as guest, then logout
 #' 
-#' remote_url = "http://www.gmql.eu/gmql-rest/
+#' remote_url = "http://www.gmql.eu/gmql-rest/"
 #' login_gmql(remote_url)
 #' logout_gmql(remote_url)
 #' 
