@@ -49,6 +49,7 @@ import_gmql <- function(dataset_path, is_gtf)
         stop("no samples present in this dataset")
 
     regions <- list.files(datasetName, pattern = "*.gtf$",full.names = TRUE)
+    
     if(length(regions))
     {
         name_samples <- lapply(regions, function(x){
@@ -60,7 +61,7 @@ import_gmql <- function(dataset_path, is_gtf)
     }
     else
         stop("No GTF files present")
-
+    
     meta <- list.files(datasetName, pattern = "*.gtf.meta$",full.names = TRUE)
     if(length(meta))
     {
@@ -115,7 +116,7 @@ import_gmql <- function(dataset_path, is_gtf)
                         end.field = "right")
             })
         }
-       
+        
         names(sampleList) <- name_samples
         gRange_list <- GenomicRanges::GRangesList(sampleList)
     }

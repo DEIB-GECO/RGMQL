@@ -100,15 +100,24 @@ export_gmql <- function(samples, dir_out, is_gtf)
     cnt = .counter()
     file_ext = ""
     #col_names <- .get_schema_names(samples)
+    
+    first_sample <- samples[[1]]
+    converted_data  <- .convert_dataType(first_sample,to_GTF)
+    elementMetadata(first_sample) <- converted_data
+    # first regions to get column names 
+    col_names <- vapply(elementMetadata(first_sample),class,character(1)) 
+    
     if(to_GTF)
     {
         #write region
         lapply(samples,function(x,dir){
             #anonymusFile <- file()
+            no_na_data <- .handle_na(x,col_names)
+            elementMetadata(x) <- no_na_data
             sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
             g <- rtracklayer::export(x,format = "gtf")
             #lines <- readLines(sample_name)
-            lines <- g[-(1:3)] #delete first 3 lines
+            lines <- g[-seq_len(3)] #delete first 3 lines
             writeLines(lines,sample_name)
             #close(anonymusFile)
         },files_sub_dir)
@@ -119,6 +128,8 @@ export_gmql <- function(samples, dir_out, is_gtf)
         #write region
         lapply(samples,function(x,dir){
             sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
+            no_na_data <- .handle_na(x,col_names)
+            elementMetadata(x) <- no_na_data
             region_frame <- data.frame(x)
             region_frame <- region_frame[-4] # delete width column
             region_frame$start = region_frame$start - 1
@@ -137,13 +148,58 @@ export_gmql <- function(samples, dir_out, is_gtf)
         .write_metadata(x,sample_name)
     },files_sub_dir)
     
-    # first regions to get column names
-    col_names <- vapply(elementMetadata(samples[[1]]),class,character(1)) 
+
     # write schema XML
     .write_schema(col_names,files_sub_dir,to_GTF)
     c = .counter(0)
 }
 
+#TODO: missing NA
+.handle_na <- function(sample,col_names)
+{
+    frame_metadata <- elementMetadata(sample)
+    to_data_frame <- as.data.frame(frame_metadata)
+    to_data_frame <- type.convert(to_data_frame,as.is = TRUE)
+    
+    list <- mapply(function(x,col_names) {
+        if (identical(col_names,"character") || identical(col_names,"factor")) {
+            x[is.na(x)] <- ""
+        }
+        else if (identical(col_names,"numeric") || identical(col_names,"integer"))
+        {
+            x[is.na(x)] <- "NULL"
+        }
+        x
+    },to_data_frame,col_names,SIMPLIFY = TRUE)
+    new_frame <- data.frame(list)
+    len <- length(new_frame)
+    if (len == 1)
+    {
+        new_frame <- t(new_frame)
+    }
+    
+    frame_metadata <- S4Vectors::DataFrame(new_frame)
+    return(frame_metadata)
+    
+
+  
+}
+
+
+.convert_dataType <- function(samples,is_gtf)
+{
+    frame_metadata <- elementMetadata(samples)
+    if(is_gtf)
+    {
+        to_data_frame <- as.data.frame(frame_metadata)
+        frame_metadata <- S4Vectors::DataFrame(to_data_frame)
+    }
+    else
+    {
+    
+    }
+    return(frame_metadata)
+}
 
 .write_metadata <- function(meta_list,sample_name)
 {
@@ -201,7 +257,7 @@ export_gmql <- function(samples, dir_out, is_gtf)
 
     mapply(function(type,text){
         field <- xml2::xml_add_child(gmqlSchema,"field")
-        if(identical(type,"factor") || identical(type,"character"))
+        if(identical(type,"factor") || identical(type,"character") || identical(type,"logical"))
             xml2::xml_attr(field,"type") <- "STRING"
         else if(identical(type,"numeric") || identical(type,"integer"))
             xml2::xml_attr(field,"type") <- "DOUBLE"
