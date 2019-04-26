@@ -35,7 +35,8 @@
 #'
 #' @details
 #' This function works only with datatset or GRangesList all whose samples or 
-#' Granges have the same region coordinates (chr, ranges, strand)
+#' Granges have the same region coordinates (chr, ranges, strand) ordered in 
+#' the same way for each sample 
 #' 
 #' In case of GRangesList data input, the function searches for metadata
 #' into metadata() function associated to GRangesList.
@@ -52,10 +53,14 @@
 #' filter_and_extract(test_path, region_attributes = c("pvalue", "peak"))
 #' 
 #' ## This statement imports a GMQL dataset as GRangesList and filters it 
-#' ## including at output only "pvalue" and "peak" region attributes
+#' ## including at output only "pvalue" and "peak" region attributes, the sort
+#' ## function makes sure that the region coordinates (chr, ranges, strand) 
+#' ## of all samples are ordered correctly
+#' 
 #' 
 #' grl = import_gmql(test_path, TRUE)
-#' filter_and_extract(grl, region_attributes = c("pvalue", "peak"))
+#' sorted_grl = sort(grl)
+#' filter_and_extract(sorted_grl, region_attributes = c("pvalue", "peak"))
 #'
 #'
 #' @export
