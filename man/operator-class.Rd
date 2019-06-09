@@ -3,9 +3,7 @@
 \name{OPERATOR-Object}
 \alias{OPERATOR-Object}
 \alias{META}
-\alias{OPERATOR-Object}
 \alias{NIL}
-\alias{OPERATOR-Object}
 \alias{SQRT}
 \title{OPERATOR object class constructor}
 \usage{

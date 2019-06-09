@@ -3,7 +3,6 @@
 \docType{methods}
 \name{cover}
 \alias{cover}
-\alias{cover}
 \alias{cover,GMQLDataset-method}
 \title{Method cover}
 \usage{

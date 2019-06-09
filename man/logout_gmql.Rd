@@ -22,3 +22,12 @@ After logout the authentication token will be invalidated.
 The authentication token is removed from R Global environment.
 If error occurs, a specific error is printed
 }
+\examples{
+
+## Login to GMQL REST services suite as guest, then logout
+
+remote_url = "http://www.gmql.eu/gmql-rest/"
+login_gmql(remote_url)
+logout_gmql(remote_url)
+
+}

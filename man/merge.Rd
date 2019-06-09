@@ -6,8 +6,9 @@
 \alias{merge,GMQLDataset,GMQLDataset-method}
 \title{Method merge}
 \usage{
-\S4method{merge}{GMQLDataset,GMQLDataset}(x, y, genometric_predicate = NULL,
-  region_output = "CAT", joinBy = conds(), reg_attr = c(""))
+\S4method{merge}{GMQLDataset,GMQLDataset}(x, y,
+  genometric_predicate = NULL, region_output = "CAT",
+  joinBy = conds(), reg_attr = c(""))
 }
 \arguments{
 \item{x}{GMQLDataset class object}

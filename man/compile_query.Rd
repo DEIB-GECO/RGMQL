@@ -2,7 +2,6 @@
 % Please edit documentation in R/web-services.R
 \name{compile_query}
 \alias{compile_query}
-\alias{compile_query}
 \alias{compile_query_fromfile}
 \title{Compile GMQL query}
 \usage{
