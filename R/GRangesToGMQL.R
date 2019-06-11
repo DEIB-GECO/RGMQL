@@ -158,20 +158,26 @@ export_gmql <- function(samples, dir_out, is_gtf)
 .handle_na <- function(sample,col_names)
 {
     frame_metadata <- elementMetadata(sample)
+    #names_to_not_consider <- c("type","source","name","score","phase")
+    #to_consider <- frame_metadata[ !names(col_names) %in% names_to_not_consider]
+    #a_names <- vapply(to_consider,class,character(1))
+    #gtf_data <- frame_metadata[ names(col_names) %in% names_to_not_consider]
+    
     to_data_frame <- as.data.frame(frame_metadata)
     to_data_frame <- type.convert(to_data_frame,as.is = TRUE)
+    #names_attr <- names(col_names)
     
     list <- mapply(function(x,col_names) {
-        if (identical(col_names,"character") || identical(col_names,"factor")) {
+        if (identical(col_names,"character") || identical(col_names,"factor") || identical(col_names,"logical")) {
             x[is.na(x)] <- ""
         }
-        else if (identical(col_names,"numeric") || identical(col_names,"integer"))
-        {
+        else if (identical(col_names,"numeric") || identical(col_names,"integer")) {
             x[is.na(x)] <- "NULL"
         }
         x
     },to_data_frame,col_names,SIMPLIFY = TRUE)
     new_frame <- data.frame(list)
+    #if we have only one metadata, transpose..
     len <- length(new_frame)
     if (len == 1)
     {
@@ -180,9 +186,6 @@ export_gmql <- function(samples, dir_out, is_gtf)
     
     frame_metadata <- S4Vectors::DataFrame(new_frame)
     return(frame_metadata)
-    
-
-  
 }
 
 
@@ -192,6 +195,8 @@ export_gmql <- function(samples, dir_out, is_gtf)
     if(is_gtf)
     {
         to_data_frame <- as.data.frame(frame_metadata)
+        #covert to update
+        to_data_frame <- type.convert(to_data_frame)
         frame_metadata <- S4Vectors::DataFrame(to_data_frame)
     }
     else
