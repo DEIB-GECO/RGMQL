@@ -2,7 +2,6 @@
 #' 
 #' Abstract class representing GMQL dataset
 #'
-#' @importClassesFrom S4Vectors DataTable
 #' @slot value value associated to GMQL dataset
 #' @name GMQLDataset-class
 #' @rdname GMQLDataset-class
@@ -10,7 +9,6 @@
 #' @return instance of GMQL dataset
 #' 
 setClass("GMQLDataset",
-            contains = c("DataTable"),
             representation(value = "character"))
 
 #' GMQLDataset alloc Function
