@@ -815,5 +815,24 @@ a$S_00000[which(names(a$S_00000) %in% "disease")]
 
 ```
 
+# Windows OS Issues
+
+Be aware that during a [local processing](#local-processing) execution an error message
+```{
+Error in .jcall("RJavaTools", "Ljava/lang/Object;", "invokeMethod", cl, 
+: org.apache.spark.SparkException: Job aborted due to stage failure: 
+Task 0 in stage 7.0 failed 1 times, most recent failure: 
+Lost task 0.0 in stage 7.0 (TID 59, localhost, executor driver): 
+java.io.IOException: (null) entry in command string: null chmod 0644
+```
+may arise.
+
+This happens because some Hadoop binary files are missing in Windows 64Bits.
+In this case we need to:
+
+* Go to [https://github.com/steveloughran/winutils](https://github.com/steveloughran/winutils), download the repository
+* Create a directory (for example at ```C:\Program Files\hadoop\bin```. Use a path you wish
+* Copy the files from the repository folder **hadoop-2.8.1** into the folder earlier created.
+* Create environment variable HADOOP_HOME with value equal to the folder path you copied the binaries.
 
 # References
