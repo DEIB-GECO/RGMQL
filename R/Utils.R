@@ -1,6 +1,5 @@
 
-.counter <- function(zero = 0)
-{
+.counter <- function(zero = 0) {
     i <- zero
     function() {
         i <<- i + 1
@@ -8,16 +7,14 @@
     }
 }
 
-.add_metadata <- function(files)
-{
+.add_metadata <- function(files) {
     x <- scan(files, what="", sep="\n")
     y <- strsplit(x, "\t")
     names(y) <- vapply(y, `[[`,character(1), 1)
     listMeta <- lapply(y, `[`, -1)
 }
 
-.schema_header <- function(datasetName)
-{
+.schema_header <- function(datasetName) {
     schema_name <- list.files(datasetName, pattern = "*.schema$",
                                 full.names = TRUE)
     
@@ -36,8 +33,7 @@
     vector_field <- unlist(list_field)
 }
 
-.schema_type_coordinate <- function(datasetName)
-{
+.schema_type_coordinate <- function(datasetName) {
     schema_name <- list.files(datasetName, pattern = "*.schema$",
                               full.names = TRUE)
     
@@ -58,8 +54,7 @@
 }
 
 # aggregates factory
-.aggregates <- function(meta_data,class)
-{
+.aggregates <- function(meta_data,class) {
     if(!is.list(meta_data))
         stop("meta_data: invalid input")
     
@@ -88,8 +83,7 @@
 
 
 # meta join condition
-.join_condition <- function(cond)
-{
+.join_condition <- function(cond) {
     cond_matrix <- NULL
     def <- cond$condition$def
     if(!is.null(def))
@@ -105,8 +99,7 @@
     cond_matrix
 }
 
-.check_input <- function(value)
-{
+.check_input <- function(value) {
     if(!is.character(value))
         stop("no valid data")
     
@@ -114,8 +107,7 @@
         stop("no multiple string")
 }
 
-.check_logical <- function(value)
-{
+.check_logical <- function(value) {
     if(!is.logical(value))
         stop("no valid data")
     
@@ -123,18 +115,15 @@
         stop("no multiple string")
 }
 
-.is_login_expired <- function(url)
-{
-    if(exists("GMQL_credentials", envir = .GlobalEnv))
-    {
-        if(exists("authToken", where = GMQL_credentials))
-        {
+.is_login_expired <- function(url) {
+    if(exists("GMQL_credentials", envir = .GlobalEnv)) {
+        if(exists("authToken", where = GMQL_credentials)) {
             authToken <- GMQL_credentials$authToken
             url <- sub("/*[/]$","",url)
             h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
             URL <- paste0(url,"/user")
             req <- httr::GET(URL,httr::add_headers(h))
-            if(req$status_code !=200)
+            if(req$status_code != 200)
                 return(TRUE)
             else
                 return(FALSE)
@@ -142,5 +131,3 @@
     }
     return(TRUE)
 }
-
-

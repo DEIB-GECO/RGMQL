@@ -4,8 +4,13 @@
 \alias{filter_and_extract}
 \title{Filter and extract function}
 \usage{
-filter_and_extract(data, metadata = NULL, metadata_prefix = NULL,
-  region_attributes = NULL, suffix = "antibody_target")
+filter_and_extract(
+  data,
+  metadata = NULL,
+  metadata_prefix = NULL,
+  region_attributes = NULL,
+  suffix = "antibody_target"
+)
 }
 \arguments{
 \item{data}{string GMQL dataset folder path or GRangesList

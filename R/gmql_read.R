@@ -96,7 +96,7 @@ read_gmql <- function(dataset, parser = "CustomParser", is_local = TRUE,
         if(!length(schema_SCHEMA))
             schema_XML <- xml_schema
         else
-            schema_XML <- schema_SCHEMA
+            schema_XML <- dataset
         
         schema_matrix <- .jnull("java/lang/String")
         url <- .jnull("java/lang/String")

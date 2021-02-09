@@ -43,10 +43,8 @@ execute <- function()
     val <- response[2]
     if(error)
         stop(val)
-    else
-    {
-        if(remote_proc)
-        {
+    else {
+        if(remote_proc) {
             isGTF <- FALSE
             outformat <- WrappeR$outputMaterialize()
             if(identical(outformat, "gtf"))
@@ -59,29 +57,24 @@ execute <- function()
     }
 }
 
-.download_or_upload <- function()
-{
+.download_or_upload <- function() {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     datasets <- .jevalArray(WrappeR$get_dataset_list(),simplify = TRUE)
     data_list <- apply(datasets, 1, as.list)
     url <- WrappeR$get_url()
     remote <- WrappeR$is_remote_processing()
-    if(remote)
-    {
+    if(remote) {
         lapply(data_list,function(x){
             if(!is.null(x[[1]]) && !is.na(x[[1]]))
                 upload_dataset(url,x[[2]],x[[1]],x[[3]],FALSE)})
-    }
-    else
-    {
+    } else {
         lapply(data_list,function(x){
             if(!is.null(x[[2]]) && !is.na(x[[2]]))
                 download_dataset(url,x[[2]],x[[1]])})
     }
 }
 
-collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
-{
+collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1") {
     ptr_data <- value(x)
     gmql_materialize(ptr_data, dir_out, name)
 }
@@ -137,12 +130,10 @@ collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1")
 #' @export
 setMethod("collect", "GMQLDataset",collect.GMQLDataset)
 
-gmql_materialize <- function(input_data, dir_out, name)
-{
+gmql_materialize <- function(input_data, dir_out, name) {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     remote_proc <- WrappeR$is_remote_processing()
-    if(!remote_proc)
-    {
+    if(!remote_proc) {
         dir_out <- sub("/*[/]$","",dir_out)
         res_dir_out <- file.path(dir_out,name)
         if(!dir.exists(res_dir_out))
@@ -226,8 +217,7 @@ setMethod("take", "GMQLDataset",
                 gmql_take(ptr_data, rows)
             })
 
-gmql_take <- function(input_data, rows)
-{
+gmql_take <- function(input_data, rows) {
     rows <- as.integer(rows[1])
     if(rows<0)
         stop("rows cannot be negative")
@@ -259,9 +249,11 @@ gmql_take <- function(input_data, rows)
     sampleList <- lapply(list, function(x){
         x <- x[-1]
         names(x) <- seq_name
-        start_numeric = as.numeric(levels(x$start))[x$start]
+    #    start_numeric = as.numeric(levels(x$start))[x$start]
+        start_numeric = as.numeric(x$start)
         start_numeric = start_numeric + 1
-        levels(x$start)[x$start] = start_numeric
+        x$start =  start_numeric
+        #levels(x$start)[x$start] = start_numeric
         g <- GenomicRanges::makeGRangesFromDataFrame(x,
                                     keep.extra.columns = TRUE,
                                     start.field = "start",
@@ -277,8 +269,7 @@ gmql_take <- function(input_data, rows)
     return(gRange_list)
 }
 
-.metadata_from_frame_to_list <- function(metadata_frame)
-{
+.metadata_from_frame_to_list <- function(metadata_frame) {
     meta_frame <- as.data.frame(metadata_frame)
     list <- split(meta_frame, meta_frame[1])
     name_value_list <- lapply(list, function(x){x <- x[-1]})

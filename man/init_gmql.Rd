@@ -4,8 +4,13 @@
 \alias{init_gmql}
 \title{Init GMQL server}
 \usage{
-init_gmql(output_format = "GTF", remote_processing = FALSE,
-  url = NULL, username = NULL, password = NULL)
+init_gmql(
+  output_format = "GTF",
+  remote_processing = FALSE,
+  url = NULL,
+  username = NULL,
+  password = NULL
+)
 }
 \arguments{
 \item{output_format}{string that identifies the output format of all sample 
