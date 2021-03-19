@@ -18,7 +18,6 @@ setGeneric("cover", function(.data, ...) standardGeneric("cover"))
 #' 
 setGeneric("map", function(x, y, ...) standardGeneric("map"))
 
-
 #' Method take
 #' 
 #' Wrapper to TAKE operation
@@ -28,7 +27,6 @@ setGeneric("map", function(x, y, ...) standardGeneric("map"))
 #' @aliases take,GMQLDataset-method
 #' 
 setGeneric("take", function(.data, ...) standardGeneric("take"))
-
 
 #' Method extend
 #' 

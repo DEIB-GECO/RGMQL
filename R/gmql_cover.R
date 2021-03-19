@@ -122,90 +122,87 @@
 #' @aliases cover,GMQLDataset-method
 #' @aliases cover-method
 #' @export
-setMethod("cover", "GMQLDataset",
-            function(.data, min_acc, max_acc, groupBy = conds(), 
-                    variation = "cover", ...)
-            {
-                val <- value(.data)
-                s_min <- substitute(min_acc)
-                s_min <- .trasform_cover(deparse(s_min))                
-                s_max <- substitute(max_acc)
-                s_max <- .trasform_cover(deparse(s_max))
-                
-                q_max <- .check_cover_param(s_max,FALSE)
-                q_min <- .check_cover_param(s_min,TRUE)
-                
-                flag = toupper(variation)
-                aggregates = list(...)
-                gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
-            })
-
-gmql_cover <- function(input_data, min_acc, max_acc, groupBy,aggregates,flag)
+setMethod("cover", "GMQLDataset", function(
+  .data, min_acc, max_acc, groupBy = conds(), variation = "cover", ...)
 {
-    if(!is.null(groupBy))
-    {
-        if("condition" %in% names(groupBy))
-        {
-            cond <- .join_condition(groupBy)
-            if(is.null(cond))
-                join_matrix <- .jnull("java/lang/String")
-            else
-                join_matrix <- .jarray(cond, dispatch = TRUE)
-        }
-        else
-            stop("use function conds()")
-    }
-    else
+  val <- value(.data)
+  s_min <- substitute(min_acc)
+  s_min <- .trasform_cover(deparse(s_min))                
+  s_max <- substitute(max_acc)
+  s_max <- .trasform_cover(deparse(s_max))
+  
+  q_max <- .check_cover_param(s_max,FALSE)
+  q_min <- .check_cover_param(s_min,TRUE)
+  
+  flag = toupper(variation)
+  aggregates = list(...)
+  gmql_cover(val, q_min, q_max, groupBy, aggregates, flag)
+})
+
+gmql_cover <- function(
+  input_data, 
+  min_acc, 
+  max_acc, 
+  groupBy,
+  aggregates,
+  flag
+) {
+  if(!is.null(groupBy)) {
+    if("condition" %in% names(groupBy)) {
+      cond <- .join_condition(groupBy)
+      if(is.null(cond))
         join_matrix <- .jnull("java/lang/String")
-
-    if(!is.null(aggregates) && length(aggregates))
-    {
-        aggr <- .aggregates(aggregates,"AGGREGATES")
-        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+      else
+        join_matrix <- .jarray(cond, dispatch = TRUE)
     }
     else
-        metadata_matrix <- .jnull("java/lang/String")
-    
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- switch(flag,
-        "COVER" = WrappeR$cover(min_acc, max_acc, join_matrix,
-                                    metadata_matrix, input_data),
-        "FLAT" = WrappeR$flat(min_acc, max_acc, join_matrix,
-                                    metadata_matrix, input_data),
-        "SUMMIT" = WrappeR$summit(min_acc,max_acc, join_matrix,
-                                    metadata_matrix, input_data),
-        "HISTOGRAM" = WrappeR$histogram(min_acc, max_acc, join_matrix, 
-                                    metadata_matrix, input_data))
-    if(is.null(response))
-        stop("no admissible variation: cover, flat, summit, histogram")
-    
-    error <- strtoi(response[1])
-    val <- response[2]
-    if(error)
-        stop(val)
-    else
-        GMQLDataset(val)
+      stop("use function conds()")
+  } else
+    join_matrix <- .jnull("java/lang/String")
+  
+  if(!is.null(aggregates) && length(aggregates)) {
+    aggr <- .aggregates(aggregates,"AGGREGATES")
+    metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+  } else
+    metadata_matrix <- .jnull("java/lang/String")
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
+  response <- switch(
+    flag,
+    "COVER" = WrappeR$cover(
+      min_acc, max_acc, join_matrix, metadata_matrix, input_data),
+    "FLAT" = WrappeR$flat(
+      min_acc, max_acc, join_matrix,metadata_matrix, input_data),
+    "SUMMIT" = WrappeR$summit(
+      min_acc,max_acc, join_matrix, metadata_matrix, input_data),
+    "HISTOGRAM" = WrappeR$histogram(
+      min_acc, max_acc, join_matrix, metadata_matrix, input_data)
+  )
+  if(is.null(response))
+    stop("no admissible variation: cover, flat, summit, histogram")
+  
+  error <- strtoi(response[1])
+  val <- response[2]
+  if(error)
+    stop(val)
+  else
+    GMQLDataset(val)
 }
 
-.check_cover_param <- function(param, is_min)
-{
-    if(length(param) > 1)
-        stop("length > 1")
-
-    if(is.character(param))
-    {
-        if(is_min && identical(param,"ANY"))
-            stop("min cannot assume ANY as value")
-        
-        return(param)
-    }
-    else
-        stop("invalid input data")
+.check_cover_param <- function(param, is_min) {
+  if(length(param) > 1)
+    stop("length > 1")
+  
+  if(is.character(param)) {
+    if(is_min && identical(param,"ANY"))
+      stop("min cannot assume ANY as value")
     
+    return(param)
+  } else
+    stop("invalid input data")
 }
 
-.trasform_cover <- function(predicate)
-{
+.trasform_cover <- function(predicate) {
     predicate <- gsub("\\(\\)","",predicate)
 }
 

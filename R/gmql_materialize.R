@@ -35,8 +35,10 @@ execute <- function()
 {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
     remote_proc <- WrappeR$is_remote_processing()
+    datasets <- .jevalArray(WrappeR$get_dataset_list(),simplify = TRUE)
+    
     if(!remote_proc)
-        .download_or_upload()
+        .download_or_upload(datasets)
     
     response <- WrappeR$execute()
     error <- strtoi(response[1])
@@ -51,15 +53,14 @@ execute <- function()
                 isGTF <- TRUE
             
             url <- WrappeR$get_url()
-            .download_or_upload()
+            .download_or_upload(datasets)
             res <- serialize_query(url,isGTF,val)
         }
     }
 }
 
-.download_or_upload <- function() {
+.download_or_upload <- function(datasets) {
     WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    datasets <- .jevalArray(WrappeR$get_dataset_list(),simplify = TRUE)
     data_list <- apply(datasets, 1, as.list)
     url <- WrappeR$get_url()
     remote <- WrappeR$is_remote_processing()

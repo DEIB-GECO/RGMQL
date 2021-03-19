@@ -61,36 +61,34 @@
 #' @aliases setdiff,GMQLDataset,GMQLDataset-method
 #' @aliases setdiff-method
 #' @export
-setMethod("setdiff", c("GMQLDataset","GMQLDataset"),
-            function(x, y, joinBy = conds(), is_exact = FALSE)
-            {
-                ptr_data_x = value(x)
-                ptr_data_y = value(y)
-                gmql_difference(ptr_data_x, ptr_data_y, is_exact, joinBy)
-            })
+setMethod("setdiff", c("GMQLDataset","GMQLDataset"), 
+  function(x, y, joinBy = conds(), is_exact = FALSE) {
+    ptr_data_x = value(x)
+    ptr_data_y = value(y)
+    gmql_difference(ptr_data_x, ptr_data_y, is_exact, joinBy)
+  })
 
-gmql_difference <- function(left_data, right_data, is_exact, joinBy)
-{
-    if(!is.null(joinBy))
-    {
-        cond <- .join_condition(joinBy)
-        if(is.null(cond))
-            join_matrix <- .jnull("java/lang/String")
-        else
-            join_matrix <- .jarray(cond, dispatch = TRUE)
-    }
+gmql_difference <- function(left_data, right_data, is_exact, joinBy) {
+  if(!is.null(joinBy)) {
+    cond <- .join_condition(joinBy)
+    if(is.null(cond))
+      join_matrix <- .jnull("java/lang/String")
     else
-        join_matrix <- .jnull("java/lang/String")
-    
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$difference(join_matrix, left_data, right_data, 
-                                        is_exact)
-    error <- strtoi(response[1])
-    val <- response[2]
-    if(error)
-        stop(val)
-    else
-        GMQLDataset(val)
+      join_matrix <- .jarray(cond, dispatch = TRUE)
+  }
+  else
+    join_matrix <- .jnull("java/lang/String")
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
+  response <- WrappeR$difference(
+    join_matrix, left_data, right_data, is_exact
+  )
+  error <- strtoi(response[1])
+  val <- response[2]
+  if(error)
+    stop(val)
+  else
+    GMQLDataset(val)
 }
 
 

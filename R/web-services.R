@@ -1,15 +1,12 @@
-if(getRversion() >= "2.15.1")
-{
-    utils::globalVariables("GMQL_credentials")
-    utils::globalVariables("remote_url")
+if(getRversion() >= "2.15.1") {
+  utils::globalVariables("GMQL_credentials")
+  utils::globalVariables("remote_url")
 }
 
-if(getRversion() >= "3.1.0")
-{
-    utils::suppressForeignCheck("GMQL_credentials")
-    utils::suppressForeignCheck("remote_url")
+if(getRversion() >= "3.1.0") {
+  utils::suppressForeignCheck("GMQL_credentials")
+  utils::suppressForeignCheck("remote_url")
 }
-
 
 
 #############################
@@ -52,10 +49,8 @@ if(getRversion() >= "3.1.0")
 #' @rdname login_gmql
 #' @export
 #' 
-login_gmql <- function(url, username = NULL, password = NULL)
-{
-    if(!.is_login_expired(url))
-    {
+login_gmql <- function(url, username = NULL, password = NULL) {
+    if(!.is_login_expired(url)) {
         print("Login still valid")
         return(invisible(NULL))
     }
@@ -65,8 +60,7 @@ login_gmql <- function(url, username = NULL, password = NULL)
     if(!is.null(username) || !is.null(password))
         as_guest <- FALSE
     
-    if(as_guest)
-    {
+    if(as_guest) {
         url <- sub("/*[/]$","",url)
         h <- c('Accept' = "Application/json")
         URL <- paste0(url,"/guest")
@@ -836,8 +830,7 @@ show_samples_list <- function(url,datasetName)
 #' @rdname show_schema
 #' @export
 #'
-show_schema <- function(url,datasetName)
-{
+show_schema <- function(url,datasetName) {
     url <- sub("/*[/]$","",url)
     URL <- paste0(url,"/datasets/",datasetName,"/schema")
     authToken = GMQL_credentials$authToken
@@ -977,7 +970,7 @@ upload_dataset <- function(url, datasetName, folderPath, schemaName = NULL,
     req <- httr::POST(URL, body = list_files ,httr::add_headers(h))
     content <- httr::content(req)
     if(req$status_code !=200)
-        print(content)
+        stop(content)
     else
         print("upload Complete")
 }
@@ -1082,7 +1075,7 @@ download_dataset <- function(url, datasetName, path = getwd())
     
     content <- httr::content(req)
     if(req$status_code !=200)
-        print(content)
+        stop(content)
     else
     {
         zip_path <- file.path(path,paste0(datasetName,".zip"))

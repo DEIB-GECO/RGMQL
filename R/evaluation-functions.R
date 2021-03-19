@@ -32,23 +32,23 @@
 #' @rdname condition_eval_func
 #' @export
 conds <- function(default = c(""), full = c(""), exact = c("")) {
-    df <- .condition("DEF",default)
-    fn <- .condition("FULL",full)
-    ex <- .condition("EXACT",exact)
-    list("condition" = list("def" = df, "full" = fn, "exact" = ex))
+  df <- .condition("DEF",default)
+  fn <- .condition("FULL",full)
+  ex <- .condition("EXACT",exact)
+  list("condition" = list("def" = df, "full" = fn, "exact" = ex))
 }
 
 .condition <- function(cond, array) {
-    array = array[!array %in% ""]
-    array = array[!duplicated(array)]
-    
-    if(!length(array))
-        join_condition_matrix <- NULL
-    else {
-        join_condition_matrix <- t(vapply(array, function(x) {
-            new_value = c(cond, x)
-            matrix <- matrix(new_value)
-        },character(2)))
-    }
-    join_condition_matrix
+  array = array[!array %in% ""]
+  array = array[!duplicated(array)]
+  
+  if(!length(array))
+    join_condition_matrix <- NULL
+  else {
+    join_condition_matrix <- t(vapply(array, function(x) {
+      new_value = c(cond, x)
+      matrix <- matrix(new_value)
+    },character(2)))
+  }
+  join_condition_matrix
 }
