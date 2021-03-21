@@ -37,4 +37,3 @@ setGeneric("take", function(.data, ...) standardGeneric("take"))
 #' @aliases extend,GMQLDataset-method
 #' 
 setGeneric("extend", function(.data, ...) standardGeneric("extend"))
-

@@ -42,9 +42,9 @@ conds <- function(default = c(""), full = c(""), exact = c("")) {
   array = array[!array %in% ""]
   array = array[!duplicated(array)]
   
-  if(!length(array))
+  if(!length(array)) {
     join_condition_matrix <- NULL
-  else {
+  } else {
     join_condition_matrix <- t(vapply(array, function(x) {
       new_value = c(cond, x)
       matrix <- matrix(new_value)

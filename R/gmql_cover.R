@@ -122,9 +122,9 @@
 #' @aliases cover,GMQLDataset-method
 #' @aliases cover-method
 #' @export
-setMethod("cover", "GMQLDataset", function(
-  .data, min_acc, max_acc, groupBy = conds(), variation = "cover", ...)
-{
+setMethod("cover","GMQLDataset", function(
+  .data, min_acc, max_acc, groupBy = conds(), variation = "cover", ...
+  ) {
   val <- value(.data)
   s_min <- substitute(min_acc)
   s_min <- .trasform_cover(deparse(s_min))                
@@ -150,13 +150,15 @@ gmql_cover <- function(
   if(!is.null(groupBy)) {
     if("condition" %in% names(groupBy)) {
       cond <- .join_condition(groupBy)
+      
       if(is.null(cond))
         join_matrix <- .jnull("java/lang/String")
       else
         join_matrix <- .jarray(cond, dispatch = TRUE)
-    }
-    else
+      
+    } else
       stop("use function conds()")
+    
   } else
     join_matrix <- .jnull("java/lang/String")
   
@@ -198,6 +200,7 @@ gmql_cover <- function(
       stop("min cannot assume ANY as value")
     
     return(param)
+    
   } else
     stop("invalid input data")
 }
@@ -205,4 +208,3 @@ gmql_cover <- function(
 .trasform_cover <- function(predicate) {
     predicate <- gsub("\\(\\)","",predicate)
 }
-

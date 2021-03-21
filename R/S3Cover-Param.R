@@ -2,20 +2,19 @@
 #       PARAMETER          #
 ############################
 
-PARAMETER <- function()
-{
-    op_list <- list()
-    ## Set the name for the class
-    class(op_list) <- "PARAMETER"
-    return(op_list)
+PARAMETER <- function() {
+  op_list <- list()
+  ## Set the name for the class
+  class(op_list) <- "PARAMETER"
+  return(op_list)
 }
 
 as.character.PARAMETER <- function(obj) {
-    class <- class(obj)[1]
+  class <- class(obj)[1]
 }
 
 print.PARAMETER <- function(obj){
-    print(as.character.PARAMETER(obj))
+  print(as.character.PARAMETER(obj))
 }
 
 
@@ -71,12 +70,11 @@ print.PARAMETER <- function(obj){
 #' @rdname cover-param-class
 #' @export
 #'
-ALL <- function()
-{
-    list <- list()
-    ## Set the name for the class
-    class(list) <- c("ALL","PARAMETER")
-    return(list)
+ALL <- function() {
+  list <- list()
+  ## Set the name for the class
+  class(list) <- c("ALL","PARAMETER")
+  return(list)
 }
 
 #' @name Cover-Param
@@ -84,10 +82,37 @@ ALL <- function()
 #' @rdname cover-param-class
 #' @export
 #'
-ANY <- function()
-{
-    list <- list()
-    ## Set the name for the class
-    class(list) <- c("ANY","PARAMETER")
-    return(list)
+ANY <- function() {
+  list <- list()
+  ## Set the name for the class
+  class(list) <- c("ANY","PARAMETER")
+  return(list)
+}
+
+
+#' PARAM object class constructor
+#'
+#' This class constructor is used to create instances of PARAM object
+#' to be used in filter and extract function.
+#' 
+#' It is used to encompasses all the region parameters already present 
+#' into the dataset or GrangesList
+#' 
+#' \itemize{
+#' \item{FULL: It consider all the region paramter}
+#' }
+#' @param except The list of attribute to not consider
+#' 
+#' @return Param object
+#'
+#' @name filter-extract
+#' @aliases FULL
+#' @rdname filter-extract-param-class
+#' @export
+#'
+FULL <- function(except = NULL) {
+  value <- list(values = c(except))
+  ## Set the name for the class
+  class(value) <- c("FULL", "PARAMETER")
+  return(value)
 }

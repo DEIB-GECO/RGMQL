@@ -1,10 +1,22 @@
-arrange.GMQLDataset <- function(.data, metadata_ordering = NULL, 
-        regions_ordering = NULL, fetch_opt = "", num_fetch = 0L, 
-        reg_fetch_opt = "", reg_num_fetch = 0L)
-{
-    ptr_data <- value(.data)
-    gmql_order(ptr_data, metadata_ordering, regions_ordering, 
-                fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
+arrange.GMQLDataset <- function(
+  .data, 
+  metadata_ordering = NULL, 
+  regions_ordering = NULL, 
+  fetch_opt = "", 
+  num_fetch = 0L, 
+  reg_fetch_opt = "", 
+  reg_num_fetch = 0L
+) {
+  ptr_data <- value(.data)
+  gmql_order(
+    ptr_data, 
+    metadata_ordering, 
+    regions_ordering, 
+    fetch_opt, 
+    num_fetch, 
+    reg_fetch_opt, 
+    reg_num_fetch
+  )
 }
 
 #' Method arrange
@@ -86,84 +98,87 @@ arrange.GMQLDataset <- function(.data, metadata_ordering = NULL,
 #' @export
 setMethod("arrange", "GMQLDataset", arrange.GMQLDataset)
 
-gmql_order <- function(input_data, metadata_ordering, regions_ordering,
-                    fetch_opt, num_fetch, reg_fetch_opt, reg_num_fetch)
-{
-    if(!is.null(fetch_opt) && !identical(fetch_opt,""))
-        fetch_opt <- .check_option(fetch_opt)
-    else
-        fetch_opt <- .jnull("java/lang/String")
-    
-    if(!is.null(num_fetch))
-        .check_opt_value(num_fetch)
-    else
-        num_fetch <- 0L
-    
-    if(!is.null(reg_num_fetch))
-        .check_opt_value(reg_num_fetch)
-    else
-        reg_num_fetch <- 0L
-    
-    if(!is.null(reg_fetch_opt) && !identical(reg_fetch_opt,""))
-        reg_fetch_opt <- .check_option(reg_fetch_opt)
-    else
-        reg_fetch_opt <- .jnull("java/lang/String")
-    
-    if(!is.null(metadata_ordering))
-    {
-        meta_matrix <- .ordering_meta(metadata_ordering)
-        meta_matrix <- .jarray(meta_matrix, dispatch = TRUE)
-    }
-    else
-    {
-        num_fetch <- 0L
-        fetch_opt <- .jnull("java/lang/String")
-        meta_matrix <- .jnull("java/lang/String")
-    }
-    
-    if(!is.null(regions_ordering))
-    {
-        region_matrix <- .ordering_meta(regions_ordering)
-        region_matrix <- .jarray(region_matrix, dispatch = TRUE)
-    }
-    else
-    {
-        reg_num_fetch <- 0L
-        reg_fetch_opt <- .jnull("java/lang/String")
-        region_matrix <- .jnull("java/lang/String")
-    }
-    
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$order(meta_matrix, fetch_opt, as.integer(num_fetch), 
-                        reg_fetch_opt, as.integer(reg_num_fetch), 
-                        region_matrix, input_data)
-    error <- strtoi(response[1])
-    val <- response[2]
-    if(error)
-        stop(val)
-    else
-        GMQLDataset(val)
+gmql_order <- function(
+  input_data, 
+  metadata_ordering, 
+  regions_ordering,
+  fetch_opt, 
+  num_fetch, 
+  reg_fetch_opt, 
+  reg_num_fetch
+) {
+  if(!is.null(fetch_opt) && !identical(fetch_opt,""))
+    fetch_opt <- .check_option(fetch_opt)
+  else
+    fetch_opt <- .jnull("java/lang/String")
+  
+  if(!is.null(num_fetch))
+    .check_opt_value(num_fetch)
+  else
+    num_fetch <- 0L
+  
+  if(!is.null(reg_num_fetch))
+    .check_opt_value(reg_num_fetch)
+  else
+    reg_num_fetch <- 0L
+  
+  if(!is.null(reg_fetch_opt) && !identical(reg_fetch_opt,""))
+    reg_fetch_opt <- .check_option(reg_fetch_opt)
+  else
+    reg_fetch_opt <- .jnull("java/lang/String")
+  
+  if(!is.null(metadata_ordering)) {
+    meta_matrix <- .ordering_meta(metadata_ordering)
+    meta_matrix <- .jarray(meta_matrix, dispatch = TRUE)
+  } else {
+    num_fetch <- 0L
+    fetch_opt <- .jnull("java/lang/String")
+    meta_matrix <- .jnull("java/lang/String")
+  }
+  
+  if(!is.null(regions_ordering)) {
+    region_matrix <- .ordering_meta(regions_ordering)
+    region_matrix <- .jarray(region_matrix, dispatch = TRUE)
+  } else {
+    reg_num_fetch <- 0L
+    reg_fetch_opt <- .jnull("java/lang/String")
+    region_matrix <- .jnull("java/lang/String")
+  }
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
+  response <- WrappeR$order(
+    meta_matrix, 
+    fetch_opt, 
+    as.integer(num_fetch), 
+    reg_fetch_opt, 
+    as.integer(reg_num_fetch), 
+    region_matrix, 
+    input_data
+  )
+  error <- strtoi(response[1])
+  val <- response[2]
+  if(error)
+    stop(val)
+  else
+    GMQLDataset(val)
 }
 
-.ordering_meta <- function(ordering)
-{
-    order_matrix <- do.call(rbind, ordering)
-    order_matrix
+.ordering_meta <- function(ordering) {
+  order_matrix <- do.call(rbind, ordering)
+  order_matrix
 }
 
-.check_option <- function(opt)
-{
-    opt <- tolower(opt)
-    if(!opt %in% c("mtop", "mtopp", "mtopg", "rtop", "rtopp", "rtopg"))
-        stop("option not admissable")
-    opt
+.check_option <- function(opt) {
+  opt <- tolower(opt)
+  if(!opt %in% c("mtop", "mtopp", "mtopg", "rtop", "rtopp", "rtopg"))
+    stop("option not admissable")
+  opt
 }
 
-.check_opt_value <- function(opt_value)
-{
-    if(!is.numeric(opt_value))
-        stop("no valid data")
-    
-    if(length(opt_value)>1)
-        stop("no multiple value")
+.check_opt_value <- function(opt_value) {
+  if(!is.numeric(opt_value))
+    stop("no valid data")
+  
+  if(length(opt_value)>1)
+    stop("no multiple value")
 }

@@ -1,30 +1,29 @@
-filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL, 
-                                    semijoin = NULL)
-{
-    val <- value(.data)
-    meta_pred <- substitute(m_predicate)
-    if(!is.null(meta_pred))
-    {
-        predicate <- .trasform(deparse(meta_pred))
-        predicate <- paste(predicate,collapse = "")
-        predicate <- as.character(glue::glue(predicate))
-        
-    }
-    else
-        predicate <- .jnull("java/lang/String")
+filter.GMQLDateset <- function(
+  .data, 
+  m_predicate = NULL, 
+  r_predicate = NULL, 
+  semijoin = NULL
+) {
+  val <- value(.data)
+  meta_pred <- substitute(m_predicate)
+  if(!is.null(meta_pred)) {
+    predicate <- .trasform(deparse(meta_pred))
+    predicate <- paste(predicate,collapse = "")
+    predicate <- as.character(glue::glue(predicate))
     
-    reg_pred <- substitute(r_predicate)
-    if(!is.null(reg_pred))
-    {
-        region_predicate <- .trasform(deparse(reg_pred))
-        region_predicate <- paste(region_predicate,collapse = "")
-        region_predicate <- as.character(glue::glue(region_predicate))
-        
-    }
-    else
-        region_predicate <- .jnull("java/lang/String")
+  } else
+    predicate <- .jnull("java/lang/String")
+  
+  reg_pred <- substitute(r_predicate)
+  if(!is.null(reg_pred)) {
+    region_predicate <- .trasform(deparse(reg_pred))
+    region_predicate <- paste(region_predicate,collapse = "")
+    region_predicate <- as.character(glue::glue(region_predicate))
     
-    gmql_select(val, predicate, region_predicate, semijoin)
+  } else
+    region_predicate <- .jnull("java/lang/String")
+  
+  gmql_select(val, predicate, region_predicate, semijoin)
 }
 
 #' Method filter
@@ -108,28 +107,29 @@ filter.GMQLDateset <- function(.data, m_predicate = NULL, r_predicate = NULL,
 #' @export
 setMethod("filter", "GMQLDataset", filter.GMQLDateset)
 
-gmql_select <- function(input_data, predicate, region_predicate, s_join)
-{
-    if(!is.null(s_join))
-    {
-        if("semijoin" %in% names(s_join))
-            semijoin_data <- s_join$semijoin
-        else
-            stop("use function semijoin()")
-    }
+gmql_select <- function(input_data, predicate, region_predicate, s_join) {
+  if(!is.null(s_join)) {
+    if("semijoin" %in% names(s_join))
+      semijoin_data <- s_join$semijoin
     else
-        semijoin_data <- .jnull("java/lang/String")
+      stop("use function semijoin()")
     
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response <- WrappeR$select(predicate,region_predicate, semijoin_data, 
-                                    input_data)
-    error <- strtoi(response[1])
-    data <- response[2]
-    if(error)
-        stop(data)
-    else
-        GMQLDataset(data)
-        
+  } else
+    semijoin_data <- .jnull("java/lang/String")
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
+  response <- WrappeR$select(
+    predicate,
+    region_predicate, 
+    semijoin_data, 
+    input_data
+  )
+  error <- strtoi(response[1])
+  data <- response[2]
+  if(error)
+    stop(data)
+  else
+    GMQLDataset(data)
 }
 
 #' Semijoin condition
@@ -183,41 +183,36 @@ gmql_select <- function(input_data, predicate, region_predicate, s_join)
 #' @return semijoin condition as list
 #' @export
 #' 
-semijoin <- function(.data, is_in = TRUE, groupBy)
-{
-    if(!is.null(groupBy))
-    {
-        if("condition" %in% names(groupBy))
-        {
-            cond <- .join_condition(groupBy)
-            if(is.null(cond))
-                stop("groupBy cannot be NULL")
-        }
-        else
-            stop("use function conds()")
-    }
-    else
+semijoin <- function(.data, is_in = TRUE, groupBy) {
+  if(!is.null(groupBy)) {
+    if("condition" %in% names(groupBy)) {
+      cond <- .join_condition(groupBy)
+      if(is.null(cond))
         stop("groupBy cannot be NULL")
+      
+    } else
+      stop("use function conds()")
     
-    if(is.null(.data))
-        stop(".data cannot be NULL")
-    
-    if(!isClass("GMQLDataset", .data))
-        stop("data: Must be a GMQLDataset object") 
-    
-    .check_logical(is_in)
-    ptr_data <- value(.data)
-    data_cond <- cbind(ptr_data,is_in)
-    all_conds <- rbind(data_cond,cond)
-    join_condition_matrix <- .jarray(all_conds, dispatch = TRUE)
-    
-    semijoin <- list("semijoin" = join_condition_matrix)
+  } else
+    stop("groupBy cannot be NULL")
+  
+  if(is.null(.data))
+    stop(".data cannot be NULL")
+  
+  if(!isClass("GMQLDataset", .data))
+    stop("data: Must be a GMQLDataset object") 
+  
+  .check_logical(is_in)
+  ptr_data <- value(.data)
+  data_cond <- cbind(ptr_data,is_in)
+  all_conds <- rbind(data_cond,cond)
+  join_condition_matrix <- .jarray(all_conds, dispatch = TRUE)
+  
+  semijoin <- list("semijoin" = join_condition_matrix)
 }
 
-
-.trasform <- function(predicate)
-{
-    predicate <- gsub("&|&&","AND",predicate)
-    predicate <- gsub("\\||\\|\\|","OR",predicate)
-    #predicate <- gsub("![\\(]+","NOT(",predicate)
+.trasform <- function(predicate) {
+  predicate <- gsub("&|&&","AND",predicate)
+  predicate <- gsub("\\||\\|\\|","OR",predicate)
+  #predicate <- gsub("![\\(]+","NOT(",predicate)
 }

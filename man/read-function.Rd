@@ -5,7 +5,7 @@
 \alias{read_GRangesList}
 \title{Function read}
 \usage{
-read_gmql(dataset, parser = "CustomParser", is_local = TRUE, is_GMQL = TRUE)
+read_gmql(dataset, parser = "CustomParser", is_local = TRUE)
 
 read_GRangesList(samples)
 }
@@ -24,8 +24,6 @@ Default is CustomParser.}
 
 \item{is_local}{logical value indicating local or remote dataset}
 
-\item{is_GMQL}{logical value indicating GMQL dataset or not}
-
 \item{samples}{GRangesList}
 }
 \value{
@@ -40,7 +38,7 @@ remote processing.
 }
 \details{
 Normally, a GMQL dataset contains an XML schema file that contains
-name of region attributes. (e.g chr, start, stop, strand)"
+name of region attributes. (e.g chr, start, stop, strand)
 The CustomParser reads this XML schema; 
 if you already know what kind of schema your files have, use one of the 
 parsers defined, without reading any XML schema.

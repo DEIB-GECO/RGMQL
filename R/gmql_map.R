@@ -77,54 +77,53 @@
 #' @aliases map-method
 #' @export
 setMethod("map", "GMQLDataset",
-            function(x, y, ..., joinBy = conds(), count_name = "")
-            {
-                left_data <- value(x)
-                right_data <- value(y)
-                aggregates = list(...)
-                gmql_map(left_data, right_data,aggregates, joinBy, count_name)
-            })
+          function(x, y, ..., joinBy = conds(), count_name = "")
+          {
+            left_data <- value(x)
+            right_data <- value(y)
+            aggregates = list(...)
+            gmql_map(left_data, right_data,aggregates, joinBy, count_name)
+          })
 
 
-gmql_map <- function(left_data, right_data, aggregates, joinBy, count_name)
-{
-    if(!is.null(aggregates) && length(aggregates))
-    {
-        aggr <- .aggregates(aggregates, "META_AGGREGATES")
-        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
-    }
+gmql_map <- function(left_data, right_data, aggregates, joinBy, count_name) {
+  if(!is.null(aggregates) && length(aggregates)) {
+    aggr <- .aggregates(aggregates, "META_AGGREGATES")
+    metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+  } else
+    metadata_matrix <- .jnull("java/lang/String")
+  
+  if(!is.null(joinBy)) {
+    cond <- .join_condition(joinBy)
+    if(is.null(cond))
+      join_matrix <- .jnull("java/lang/String")
     else
-        metadata_matrix <- .jnull("java/lang/String")
+      join_matrix <- .jarray(cond, dispatch = TRUE)
+  } else
+    join_matrix <- .jnull("java/lang/String")
+  
+  if(!is.null(count_name)) {
+    if(!is.character(count_name))
+      stop("count_name: must be string")
     
-    if(!is.null(joinBy))
-    {
-        cond <- .join_condition(joinBy)
-        if(is.null(cond))
-            join_matrix <- .jnull("java/lang/String")
-        else
-            join_matrix <- .jarray(cond, dispatch = TRUE)
-    }
-    else
-        join_matrix <- .jnull("java/lang/String")
+    if(identical(count_name,""))
+      count_name <- .jnull("java/lang/String")
     
-    if(!is.null(count_name))
-    {
-        if(!is.character(count_name))
-            stop("count_name: must be string")
-        
-        if(identical(count_name,""))
-            count_name <- .jnull("java/lang/String")
-    }
-    else
-        count_name <- .jnull("java/lang/String")
-    
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    response<-WrappeR$map(join_matrix, metadata_matrix, count_name, left_data, 
-                            right_data)
-    error <- strtoi(response[1])
-    val <- response[2]
-    if(error)
-        stop(val)
-    else
-        GMQLDataset(val)
+  } else
+    count_name <- .jnull("java/lang/String")
+  
+  WrappeR <- J("it/polimi/genomics/r/Wrapper")
+  response<-WrappeR$map(
+    join_matrix, 
+    metadata_matrix,
+    count_name, 
+    left_data, 
+    right_data
+  )
+  error <- strtoi(response[1])
+  val <- response[2]
+  if(error)
+    stop(val)
+  else
+    GMQLDataset(val)
 }
