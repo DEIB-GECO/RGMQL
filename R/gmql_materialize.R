@@ -66,7 +66,7 @@ execute <- function() {
   if(remote) {
     lapply(data_list,function(x){
       if(!is.null(x[[1]]) && !is.na(x[[1]]))
-        upload_dataset(url,x[[2]],x[[1]],x[[3]],FALSE)})
+        upload_dataset(url,x[[2]],x[[1]],x[[3]])})
   } else {
     lapply(data_list,function(x){
       if(!is.null(x[[2]]) && !is.na(x[[2]]))
