@@ -58,7 +58,7 @@ init_gmql <- function(
   # mettere attesa da input keyboard, controllare se token già esiste 
   # da sessione precedente
   if(!is.null(url) && !exists("GMQL_credentials", envir = .GlobalEnv))
-    login_gmql(url,username,password)
+    login_gmql(url, username, password)
   
   WrappeR <- J("it/polimi/genomics/r/Wrapper")
   WrappeR$initGMQL(out_format,remote_processing)

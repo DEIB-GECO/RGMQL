@@ -60,8 +60,9 @@ login_gmql <- function(url, username = NULL, password = NULL) {
   if(!is.null(username) || !is.null(password))
     as_guest <- FALSE
   
+  url <- sub("/*[/]$","",url)
+  
   if(as_guest) {
-    url <- sub("/*[/]$","",url)
     h <- c('Accept' = "Application/json")
     URL <- paste0(url,"/guest")
     req <- httr::GET(URL,httr::add_headers(h))
@@ -69,7 +70,7 @@ login_gmql <- function(url, username = NULL, password = NULL) {
     req <- httr::GET(url)
     real_URL <- req$url
     h <- c('Accept'="Application/json",'Content-Type'='Application/json')
-    URL <- paste0(real_URL,"login")
+    URL <- paste0(real_URL,"/login")
     body <- list('username' = username,'password' = password)
     req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
   }
@@ -79,7 +80,6 @@ login_gmql <- function(url, username = NULL, password = NULL) {
   if(req$status_code != 200)
     stop(content$errorString)
   else {
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
     url <- paste0(url,"/")
     GMQL_remote <- list(
       "remote_url" = url, 
@@ -88,7 +88,6 @@ login_gmql <- function(url, username = NULL, password = NULL) {
       "password" = password
     )
     
-    WrappeR$save_tokenAndUrl(GMQL_remote$authToken,url)
     assign("GMQL_credentials",GMQL_remote,.GlobalEnv)
     print(paste("your Token is",GMQL_remote$authToken))
   }
@@ -124,8 +123,7 @@ login_gmql <- function(url, username = NULL, password = NULL) {
 #' @rdname logout_gmql
 #' @export
 #'
-logout_gmql <- function(url)
-{
+logout_gmql <- function(url) {
   authToken = GMQL_credentials$authToken
   url <- sub("/*[/]$","",url)
   
@@ -136,11 +134,8 @@ logout_gmql <- function(url)
   
   if(req$status_code !=200)
     stop(content$error)
-  else
-  {
+  else {
     #delete token from environment
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
-    WrappeR$delete_token()
     if(exists("authToken", where = GMQL_credentials))
       rm(GMQL_credentials, envir = .GlobalEnv)
     
@@ -220,16 +215,14 @@ register_gmql <- function(
   if(req$status_code != 200) {
     stop(content)
   } else {
-    WrappeR <- J("it/polimi/genomics/r/Wrapper")
     GMQL_remote <- list(
       "remote_url" = url, 
       "authToken" = content$authToken,
       "username" = username,
       "password" = psw
     )
-    WrappeR$save_tokenAndUrl(GMQL_remote$authToken,url)
-    assign("GMQL_credentials",GMQL_remote,.GlobalEnv)
-    print(paste("your Token is",GMQL_remote$authToken))
+    assign("GMQL_credentials", GMQL_remote,.GlobalEnv)
+    print(paste("your Token is", GMQL_remote$authToken))
   }
 }
 
@@ -903,7 +896,22 @@ show_schema <- function(url, datasetName) {
 #' @details
 #' If no error occurs, it prints "Upload Complete", otherwise a specific error 
 #' is printed
-#'
+#' 
+#' NOTE: 
+#' The folder layout must obey the following rules and adopt 
+#' the following layout:
+#' The dataset folder can have any name, but must contains the 
+#' sub-folders named: "files".
+#' The sub-folder "files" contains the dataset files and 
+#' the schema xml file.
+#' The schema files adopt the following the naming conventions:
+#' 
+#' - "schema.xml"
+#' - "test.schema"
+#' 
+#' The names must be in LOWERCASE. Any other schema file 
+#' will not be conisdered, if both are present, "test.schema" will be used. 
+#' 
 #' @examples
 #'
 #' \dontrun{
@@ -935,16 +943,17 @@ upload_dataset <- function(
   schemaName = NULL
 ) {
   
-  folderPath <- sub("/*[/]$","",dataset)
+  folderPath <- sub("/*[/]$","",folderPath)
   if(basename(folderPath) !="files")
     folderPath <- file.path(folderPath,"files")
   
-  files <- list.files(folderPath, full.names = TRUE)
+  files <- list.files(folderPath, pattern = "*(.gtf|.gdm)", full.names = TRUE)
   if (!length(files)) {
     stop("no files present")
   }
   
   count = .counter(0)
+  
   list_files <- lapply(files, function(x) {
     file <- httr::upload_file(x)
   })
@@ -962,7 +971,7 @@ upload_dataset <- function(
   
   schema_name <- tolower(schemaName)
   
-  if (is.null(schemaName)) {
+  if (is.null(schemaName) || identical(schema_name, "customparser")) {
     schema <- .retrieve_schema(folderPath)
     
     list_files <- list(
@@ -972,37 +981,24 @@ upload_dataset <- function(
     list_files <- unlist(list_files, recursive = FALSE)
     URL <- paste0(real_URL, "datasets/", datasetName, "/uploadSample")
   } else {
-    schema_name <- tolower(schemaName)
-    if (identical(schema_name, "customparser")) {
-      schema <- .retrieve_schema(folderPath)
-      
-      list_files <- list(
-        list("schema" = httr::upload_file(schema)),
-        list_files
-      )
-      list_files <- unlist(list_files, recursive = FALSE)
-      
-      URL <- paste0(real_URL, "datasets/", datasetName, "/uploadSample")
-    }else {
-      schemaList <- c(
-        "narrowpeak",
-        "vcf",
-        "broadpeak",
-        "bed",
-        "bedgraph"
-      )
-      if (!schema_name %in% schemaList) {
-        stop("schema not admissable")
-      }
-      
-      URL <- paste0(
-        real_URL,
-        "datasets/",
-        datasetName,
-        "/uploadSample?schemaName=",
-        schema_name
-      )
+    schemaList <- c(
+      "narrowpeak",
+      "vcf",
+      "broadpeak",
+      "bed",
+      "bedgraph"
+    )
+    if (!schema_name %in% schemaList) {
+      stop("schema not admissable")
     }
+    
+    URL <- paste0(
+      real_URL,
+      "datasets/",
+      datasetName,
+      "/uploadSample?schemaName=",
+      schema_name
+    )
   }
   
   req <- httr::POST(URL, body = list_files , httr::add_headers(h))
@@ -1328,8 +1324,7 @@ serialize_query <- function(url,output_gtf,base64) {
 }
 
 
-
-.retrieve_schema <- function(folderPath) {
+.retrieve_schema <- function(folderPath, duringReading = F) {
   schema_SCHEMA <- list.files(
     folderPath, pattern = "test.schema$", full.names = TRUE
   )
@@ -1344,7 +1339,11 @@ serialize_query <- function(url,output_gtf,base64) {
   schema <- if(!length(schema_SCHEMA)) 
     xml_schema 
   else
-    schema_SCHEMA
+    if(!duringReading) {
+      schema_SCHEMA
+    } else {
+      folderPath
+    }
   
   schema
 }

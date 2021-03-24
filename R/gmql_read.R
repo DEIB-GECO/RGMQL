@@ -37,6 +37,21 @@
 #' \item{"application" = "RGMQL"}
 #' }
 #'
+#' NOTE: 
+#' The folder layout must obey the following rules and adopt 
+#' the following layout:
+#' The dataset folder can have any name, but must contains the 
+#' sub-folders named: "files".
+#' The sub-folder "files" contains the dataset files and 
+#' the schema xml file.
+#' The schema files adopt the following the naming conventions:
+#' 
+#' - "schema.xml"
+#' - "test.schema"
+#' 
+#' The names must be in LOWERCASE. Any other schema file 
+#' will not be conisdered, if both are present, "test.schema" will be used. 
+#'
 #' @examples
 #' 
 #' ## This statement initializes and runs the GMQL server for local execution 
@@ -61,6 +76,7 @@
 #' login_gmql(remote_url)
 #' data1 = read_gmql("public.Example_Dataset_1", is_local = FALSE)
 #' 
+#' 
 #' @name read_gmql
 #' @rdname read-function
 #' @export
@@ -82,22 +98,24 @@ read_gmql <- function(
     if(basename(dataset) !="files")
       dataset <- file.path(dataset,"files")
     
-    schema_XML <- .retrieve_schema(dataset)
+    schema_XML <- .retrieve_schema(dataset, T)
     
     schema_matrix <- .jnull("java/lang/String")
     url <- .jnull("java/lang/String")
     coords_sys <- .jnull("java/lang/String")
     type <- .jnull("java/lang/String")
   } else {
-    url <- WrappeR$get_url()
-    if(is.null(url))
-      stop("You have to log on using login function")
     
     if(!exists("GMQL_credentials", envir = .GlobalEnv))
       stop("You have to log on using login function")
     
+    credential <- get("GMQL_credentials", envir = .GlobalEnv)
+    url <- credential$remote_url
+    if(is.null(url))
+      stop("You have to log on using login function")
+    
     if(identical(parser_name,"CUSTOMPARSER")) {
-      list <- show_schema(url,dataset)
+      list <- show_schema(url, dataset)
       coords_sys <- list$coordinate_system
       type <- list$type
       schema_names <- vapply(

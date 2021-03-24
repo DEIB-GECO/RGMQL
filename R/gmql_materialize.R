@@ -51,7 +51,12 @@ execute <- function() {
       if(identical(outformat, "gtf"))
         isGTF <- TRUE
       
-      url <- WrappeR$get_url()
+      credential <- get("GMQL_credentials", envir = .GlobalEnv)
+      url <- credential$remote_url
+      
+      if(is.null(url))
+        stop("url from GMQL_credentials is missing")
+      
       .download_or_upload(datasets)
       res <- serialize_query(url,isGTF,val)
     }
@@ -61,7 +66,13 @@ execute <- function() {
 .download_or_upload <- function(datasets) {
   WrappeR <- J("it/polimi/genomics/r/Wrapper")
   data_list <- apply(datasets, 1, as.list)
-  url <- WrappeR$get_url()
+  
+  credential <- get("GMQL_credentials", envir = .GlobalEnv)
+  url <- credential$remote_url
+  
+  if(is.null(url))
+    stop("url from GMQL_credentials is missing")
+  
   remote <- WrappeR$is_remote_processing()
   if(remote) {
     lapply(data_list,function(x){
@@ -74,9 +85,9 @@ execute <- function() {
   }
 }
 
-collect.GMQLDataset <- function(x, dir_out = getwd(), name = "ds1") {
+collect.GMQLDataset <- function(x,  name = "ds1", dir_out = getwd()) {
   ptr_data <- value(x)
-  gmql_materialize(ptr_data, dir_out, name)
+  gmql_materialize(ptr_data, name, dir_out)
 }
 
 

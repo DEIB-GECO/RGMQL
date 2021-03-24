@@ -6,15 +6,15 @@
 \alias{collect-method}
 \title{Method collect}
 \usage{
-\S4method{collect}{GMQLDataset}(x, dir_out = getwd(), name = "ds1")
+\S4method{collect}{GMQLDataset}(x, name = "ds1", dir_out = getwd())
 }
 \arguments{
 \item{x}{GMQLDataset class object}
 
+\item{name}{name of the result dataset. By default it is the string "ds1"}
+
 \item{dir_out}{destination folder path. By default it is the current 
 working directory of the R process}
-
-\item{name}{name of the result dataset. By default it is the string "ds1"}
 }
 \value{
 None
