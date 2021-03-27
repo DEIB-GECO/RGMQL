@@ -71,8 +71,28 @@ filter_and_extract(test_path, region_attributes = c("pvalue", "peak"))
 ## function makes sure that the region coordinates (chr, ranges, strand)
 ## of all samples are ordered correctly
 
-
 grl <- import_gmql(test_path, TRUE)
 sorted_grl <- sort(grl)
 filter_and_extract(sorted_grl, region_attributes = c("pvalue", "peak"))
+
+## It is also possible to define the region attributes, using the FULL() 
+## function parameter, in order to includes every region 
+## attributes present into the schema file
+
+sorted_grl_full <- sort(grl)
+filter_and_extract(sorted_grl, region_attributes = FULL())
+
+grl <- import_gmql(test_path, TRUE)
+sorted_grl <- sort(grl)
+filter_and_extract(sorted_grl, region_attributes = FULL())
+
+## Also, we can inlcude a list of region attribute inside the FULL() 
+## function to exlucde that regions
+
+sorted_grl_full_except <- sort(grl)
+filter_and_extract(
+ sorted_grl_full_except, 
+ region_attributes = FULL("jaccard", "score")
+)
+
 }

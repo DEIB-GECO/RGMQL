@@ -49,6 +49,21 @@ generated:
 \item{"provider" = "PoliMi"}
 \item{"application" = "RGMQL"}
 }
+
+NOTE: 
+The folder layout must obey the following rules and adopt 
+the following layout:
+The dataset folder can have any name, but must contains the 
+sub-folders named: "files".
+The sub-folder "files" contains the dataset files and 
+the schema xml file.
+The schema files adopt the following the naming conventions:
+
+- "schema.xml"
+- "test.schema"
+
+The names must be in LOWERCASE. Any other schema file 
+will not be conisdered, if both are present, "test.schema" will be used.
 }
 \examples{
 
@@ -73,5 +88,6 @@ dataPeak = read_gmql(test_path,"NarrowPeakParser")
 remote_url = "http://www.gmql.eu/gmql-rest/"
 login_gmql(remote_url)
 data1 = read_gmql("public.Example_Dataset_1", is_local = FALSE)
+
 
 }
