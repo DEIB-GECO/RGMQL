@@ -68,6 +68,10 @@
 #' sorted_grl_full <- sort(grl)
 #' filter_and_extract(sorted_grl, region_attributes = FULL())
 #' 
+#' grl <- import_gmql(test_path, TRUE)
+#' sorted_grl <- sort(grl)
+#' filter_and_extract(sorted_grl, region_attributes = FULL())
+#' 
 #' ## Also, we can inlcude a list of region attribute inside the FULL() 
 #' ## function to exlucde that regions
 #' 
@@ -225,6 +229,21 @@ filter_and_extract <- function(
   }
   
   g1 <- region_list[[1]]
+
+  if(is.object(regions) && ("FULL" %in% class(regions))) {
+    all_values <- names(elementMetadata(g1))
+    except_values <- regions$values
+    regions <- if (is.null(except_values))
+      all_values
+    else
+      all_values[!all_values %in% except_values]
+    names(regions) <- NULL
+    # since import convert this value from GMQL schema to GTF format
+    # we need to convert it back
+    regions <- replace(regions, regions == "feature", "type")
+    regions <- replace(regions, regions == "frame", "phase")
+  }
+  
   elementMetadata(g1) <- NULL
   if (!is.null(regions)) {
     DF_list <- mapply(function(g_x, h) {
