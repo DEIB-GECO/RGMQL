@@ -57,10 +57,26 @@
 #' ## function makes sure that the region coordinates (chr, ranges, strand)
 #' ## of all samples are ordered correctly
 #'
-#'
 #' grl <- import_gmql(test_path, TRUE)
 #' sorted_grl <- sort(grl)
 #' filter_and_extract(sorted_grl, region_attributes = c("pvalue", "peak"))
+#' 
+#' ## It is also possible to define the region attributes, using the FULL() 
+#' ## function parameter, in order to includes every region 
+#' ## attributes present into the schema file
+#' 
+#' sorted_grl_full <- sort(grl)
+#' filter_and_extract(sorted_grl, region_attributes = FULL())
+#' 
+#' ## Also, we can inlcude a list of region attribute inside the FULL() 
+#' ## function to exlucde that regions
+#' 
+#' sorted_grl_full_except <- sort(grl)
+#' filter_and_extract(
+#'  sorted_grl_full_except, 
+#'  region_attributes = FULL("jaccard", "score")
+#' )
+#' 
 #' @export
 #'
 filter_and_extract <- function(
@@ -147,8 +163,7 @@ filter_and_extract <- function(
       vector_field, 
       samples_to_read, 
       regions,
-      suffix_vec,
-      vector_field
+      suffix_vec
     )
     
   } else {
@@ -361,6 +376,24 @@ filter_and_extract <- function(
   )
   col_names <- names(df)
   df <- subset(df, TRUE, c("chr", "left", "right", "strand"))
+  
+  # check if we used a FULL parameter instead of char array containing
+  # the region parameters
+  if(is.object(regions) && ("FULL" %in% class(regions))) {
+    all_values <- vector_field[!vector_field %in% c(
+      "chr", 
+      "left", 
+      "right",
+      "strand"
+      )
+    ]
+    except_values <- regions$values
+    regions <- if (is.null(except_values))
+      all_values
+    else
+      all_values[!all_values %in% except_values]
+    names(regions) <- NULL
+  }
   
   if (!is.null(regions)) {
     df_list <- lapply(gdm_region_files, function(x, regions, vector_field) {

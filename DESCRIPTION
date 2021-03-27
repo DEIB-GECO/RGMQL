@@ -61,6 +61,7 @@ Collate:
     'S3Aggregates.R'
     'S3Cover-Param.R'
     'S3Distal.R'
+    'S3filter_extract_param.R'
     'S3Operator.R'
     'Utils.R'
     'evaluation-functions.R'

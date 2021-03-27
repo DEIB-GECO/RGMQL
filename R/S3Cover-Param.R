@@ -89,30 +89,3 @@ ANY <- function() {
   return(list)
 }
 
-
-#' PARAM object class constructor
-#'
-#' This class constructor is used to create instances of PARAM object
-#' to be used in filter and extract function.
-#' 
-#' It is used to encompasses all the region parameters already present 
-#' into the dataset or GrangesList
-#' 
-#' \itemize{
-#' \item{FULL: It consider all the region paramter}
-#' }
-#' @param except The list of attribute to not consider
-#' 
-#' @return Param object
-#'
-#' @name filter-extract
-#' @aliases FULL
-#' @rdname filter-extract-param-class
-#' @export
-#'
-FULL <- function(except = NULL) {
-  value <- list(values = c(except))
-  ## Set the name for the class
-  class(value) <- c("FULL", "PARAMETER")
-  return(value)
-}
