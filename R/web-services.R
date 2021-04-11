@@ -68,11 +68,11 @@ login_gmql <- function(url, username = NULL, password = NULL) {
     req <- httr::GET(URL,httr::add_headers(h))
   } else {
     req <- httr::GET(url)
-    real_URL <- req$url
+    real_URL <- sub("/*[/]$","",req$url)
     h <- c('Accept'="Application/json",'Content-Type'='Application/json')
     URL <- paste0(real_URL,"/login")
     body <- list('username' = username,'password' = password)
-    req <- httr::POST(URL,httr::add_headers(h),body = body,encode = "json")
+    req <- httr::POST(URL, httr::add_headers(h), body = body, encode = "json")
   }
   
   content <- httr::content(req)
@@ -87,9 +87,9 @@ login_gmql <- function(url, username = NULL, password = NULL) {
       "username" = username,
       "password" = password
     )
-    
-    assign("GMQL_credentials",GMQL_remote,.GlobalEnv)
-    print(paste("your Token is",GMQL_remote$authToken))
+  
+    assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
+    print(paste("your Token is", GMQL_remote$authToken))
   }
 }
 
@@ -124,11 +124,12 @@ login_gmql <- function(url, username = NULL, password = NULL) {
 #' @export
 #'
 logout_gmql <- function(url) {
-  authToken = GMQL_credentials$authToken
   url <- sub("/*[/]$","",url)
-  
   URL <- paste0(url,"/logout")
+  
+  authToken = GMQL_credentials$authToken
   h <- c('X-Auth-Token' = authToken)
+  
   req <- httr::GET(URL, httr::add_headers(h))
   content <- httr::content(req)
   
@@ -192,9 +193,9 @@ register_gmql <- function(
   last_name
 ) {
   req <- httr::GET(url)
-  real_URL <- req$url
+  url <- sub("/*[/]$","",req$url)
   
-  URL <- paste0(real_URL,"register")
+  URL <- paste0(url,"/register")
   h <- c('Accept' = "Application/json")
   reg_body <- list(
     "firstName" = first_name, 
@@ -221,7 +222,7 @@ register_gmql <- function(
       "username" = username,
       "password" = psw
     )
-    assign("GMQL_credentials", GMQL_remote,.GlobalEnv)
+    assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
     print(paste("your Token is", GMQL_remote$authToken))
   }
 }
@@ -323,8 +324,8 @@ show_queries_list <- function(url) {
 #'
 save_query <- function(url, queryName, queryTxt) {
   req <- httr::GET(url)
-  real_URL <- req$url
-  URL <- paste0(real_URL,"query/",queryName,"/save")
+  url <- sub("/*[/]$","",req$url)
+  URL <- paste0(url,"/query/",queryName,"/save")
   authToken = GMQL_credentials$authToken
   h <- c(
     'Accept' = 'text/plain',
@@ -420,8 +421,8 @@ run_query <- function(url, queryName, query, output_gtf = TRUE) {
     out <- "TAB"
   
   req <- httr::GET(url)
-  real_URL <- req$url
-  URL <- paste0(real_URL,"queries/run/",queryName,"/",out)
+  url <- sub("/*[/]$","",req$url)
+  URL <- paste0(url,"/queries/run/",queryName,"/",out)
   authToken = GMQL_credentials$authToken
   h <- c(
     'Accept' = "Application/json",
@@ -507,8 +508,8 @@ compile_query <- function(url, query) {
     'X-Auth-Token' = authToken
   )
   req <- httr::GET(url)
-  real_URL <- req$url
-  URL <- paste0(real_URL, "queries/compile")
+  url <- sub("/*[/]$","",req$url)
+  URL <- paste0(url, "/queries/compile")
   req <- httr::POST(
     URL, 
     body = query ,
@@ -964,8 +965,8 @@ upload_dataset <- function(
   
   names(list_files) <- list_files_names
   req <- httr::GET(url)
-  real_URL <- req$url
-  URL <- paste0(real_URL, "datasets/", datasetName, "/uploadSample")
+  real_URL <- sub("/*[/]$","",req$url)
+  URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
   authToken = GMQL_credentials$authToken
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
   
@@ -979,7 +980,7 @@ upload_dataset <- function(
       list_files
     )
     list_files <- unlist(list_files, recursive = FALSE)
-    URL <- paste0(real_URL, "datasets/", datasetName, "/uploadSample")
+    URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
   } else {
     schemaList <- c(
       "narrowpeak",
@@ -994,7 +995,7 @@ upload_dataset <- function(
     
     URL <- paste0(
       real_URL,
-      "datasets/",
+      "/datasets/",
       datasetName,
       "/uploadSample?schemaName=",
       schema_name
@@ -1044,8 +1045,8 @@ upload_dataset <- function(
 #'
 delete_dataset <- function(url, datasetName) {
   req <- httr::GET(url)
-  real_URL <- req$url
-  URL <- paste0(real_URL, "datasets/", datasetName)
+  real_URL <- sub("/*[/]$","",req$url)
+  URL <- paste0(real_URL, "/datasets/", datasetName)
   authToken = GMQL_credentials$authToken
   h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
   req <- httr::DELETE(URL, httr::add_headers(h))
@@ -1305,9 +1306,9 @@ serialize_query <- function(url,output_gtf,base64) {
   }
   url <- sub("/*[/]$","",url)
   req <- httr::GET(url)
-  real_URL <- req$url
+  real_URL <- sub("/*[/]$","",req$url)
   authToken = GMQL_credentials$authToken
-  URL <- paste0(real_URL,"queries/dag/",out)
+  URL <- paste0(real_URL,"/queries/dag/",out)
   h <- c(
     'Accept' = "Application/json",
     'Content-Type' = 'text/plain',

@@ -75,13 +75,21 @@ execute <- function() {
   
   remote <- WrappeR$is_remote_processing()
   if(remote) {
-    lapply(data_list,function(x){
+    lapply(data_list,function(x) {
       if(!is.null(x[[1]]) && !is.na(x[[1]]))
-        upload_dataset(url,x[[2]],x[[1]],x[[3]])})
+        upload_dataset(url,x[[2]],x[[1]],x[[3]]) 
+    })
   } else {
-    lapply(data_list,function(x){
-      if(!is.null(x[[2]]) && !is.na(x[[2]]))
-        download_dataset(url,x[[2]],x[[1]])})
+    lapply(data_list,function(x) {
+      if(!is.null(x[[2]]) && !is.na(x[[2]])) {
+        path <- x[[1]]
+        # create downloads folder where putting all the downloading dataset
+        if(!dir.exists(path))
+          dir.create(path)
+        
+        download_dataset(url,x[[2]], path) 
+      }
+    })
   }
 }
 
@@ -150,7 +158,7 @@ gmql_materialize <- function(input_data, name, dir_out) {
   
   if(!remote_proc) {
     dir_out <- sub("/*[/]$","",dir_out)
-    res_dir_out <- file.path(dir_out,name)
+    res_dir_out <- file.path(dir_out, name)
     if(!dir.exists(res_dir_out))
       dir.create(res_dir_out)
   }
