@@ -30,7 +30,11 @@ corresponding prefix.}
 \item{region_attributes}{vector of strings that extracts only region
 attributes  specified; if NULL no regions attribute is taken and the output
 is only GRanges made up by the region coordinate attributes
-(seqnames, start, end, strand)}
+(seqnames, start, end, strand);
+It is also possible to assign the \code{\link{FULL}} with or without 
+its input parameter; in case was without the `except` parameter, 
+all the region attributes are taken, otherwise all the region attributes 
+are taken except the input attribute defined by except.}
 
 \item{suffix}{name for each metadata column of GRanges. By default it is the
 value of the metadata attribute named "antibody_target". This string is
@@ -75,19 +79,14 @@ grl <- import_gmql(test_path, TRUE)
 sorted_grl <- sort(grl)
 filter_and_extract(sorted_grl, region_attributes = c("pvalue", "peak"))
 
-## It is also possible to define the region attributes, using the FULL() 
-## function parameter, in order to includes every region 
-## attributes present into the schema file
+## This statement imports a GMQL dataset as GRangesList and filters it
+## including all the region attributes
 
 sorted_grl_full <- sort(grl)
-filter_and_extract(sorted_grl, region_attributes = FULL())
+filter_and_extract(sorted_grl_full, region_attributes = FULL())
 
-grl <- import_gmql(test_path, TRUE)
-sorted_grl <- sort(grl)
-filter_and_extract(sorted_grl, region_attributes = FULL())
-
-## Also, we can inlcude a list of region attribute inside the FULL() 
-## function to exlucde that regions
+## This statement imports a GMQL dataset as GRangesList and filters it
+## including all the region attributes except "jaccard" and "score"
 
 sorted_grl_full_except <- sort(grl)
 filter_and_extract(

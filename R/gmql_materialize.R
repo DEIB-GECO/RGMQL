@@ -35,8 +35,9 @@ execute <- function() {
   WrappeR <- J("it/polimi/genomics/r/Wrapper")
   remote_proc <- WrappeR$is_remote_processing()
   datasets <- .jevalArray(WrappeR$get_dataset_list(), simplify = TRUE)
+  exists_credential <- exists("GMQL_credentials", envir = .GlobalEnv)
   
-  if(!remote_proc)
+  if(!remote_proc && exists_credential)
     .download_or_upload(datasets)
   
   response <- WrappeR$execute()
