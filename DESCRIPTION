@@ -82,4 +82,5 @@ Collate:
     'gmql_union.R'
     'onLoad.R'
     'ordering-functions.R'
+    'show_all_metadata.R'
     'web-services.R'
