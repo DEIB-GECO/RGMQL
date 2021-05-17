@@ -3,18 +3,18 @@
 ############################
 
 PARAMETER <- function() {
-  op_list <- list()
-  ## Set the name for the class
-  class(op_list) <- "PARAMETER"
-  return(op_list)
+    op_list <- list()
+    ## Set the name for the class
+    class(op_list) <- "PARAMETER"
+    return(op_list)
 }
 
 as.character.PARAMETER <- function(obj) {
-  class <- class(obj)[1]
+    class <- class(obj)[1]
 }
 
 print.PARAMETER <- function(obj){
-  print(as.character.PARAMETER(obj))
+    print(as.character.PARAMETER(obj))
 }
 
 
@@ -71,10 +71,10 @@ print.PARAMETER <- function(obj){
 #' @export
 #'
 ALL <- function() {
-  list <- list()
-  ## Set the name for the class
-  class(list) <- c("ALL","PARAMETER")
-  return(list)
+    list <- list()
+    ## Set the name for the class
+    class(list) <- c("ALL","PARAMETER")
+    return(list)
 }
 
 #' @name Cover-Param
@@ -83,9 +83,9 @@ ALL <- function() {
 #' @export
 #'
 ANY <- function() {
-  list <- list()
-  ## Set the name for the class
-  class(list) <- c("ANY","PARAMETER")
-  return(list)
+    list <- list()
+    ## Set the name for the class
+    class(list) <- c("ANY","PARAMETER")
+    return(list)
 }
 

@@ -43,25 +43,25 @@
 #' @export
 #'
 init_gmql <- function(
-  output_format = "GTF", 
-  remote_processing = FALSE, 
-  url = NULL, 
-  username = NULL, 
-  password = NULL
+    output_format = "GTF", 
+    remote_processing = FALSE, 
+    url = NULL, 
+    username = NULL, 
+    password = NULL
 ) {
-  out_format <- toupper(output_format)
-  if(!out_format %in% c("TAB", "GTF", "COLLECT"))
-    stop("output_format: must be TAB, GTF or COLLECT")
-  
-  .check_logical(remote_processing)
-  
-  # mettere attesa da input keyboard, controllare se token già esiste 
-  # da sessione precedente
-  if(!is.null(url) && !exists("GMQL_credentials", envir = .GlobalEnv))
-    login_gmql(url, username, password)
-  
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  WrappeR$initGMQL(out_format,remote_processing)
+    out_format <- toupper(output_format)
+    if(!out_format %in% c("TAB", "GTF", "COLLECT"))
+        stop("output_format: must be TAB, GTF or COLLECT")
+    
+    .check_logical(remote_processing)
+    
+    # mettere attesa da input keyboard, controllare se token già esiste 
+    # da sessione precedente
+    if(!is.null(url) && !exists("GMQL_credentials", envir = .GlobalEnv))
+        login_gmql(url, username, password)
+    
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    WrappeR$initGMQL(out_format,remote_processing)
 }
 
 #' Stop GMQL server
@@ -84,8 +84,8 @@ init_gmql <- function(
 #' @export
 #'
 stop_gmql <- function() {
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  WrappeR$stopGMQL()
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    WrappeR$stopGMQL()
 }
 
 #' Disable or Enable remote processing
@@ -117,9 +117,9 @@ stop_gmql <- function() {
 #' @export
 #' 
 remote_processing <- function(is_remote) {
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  .check_logical(is_remote)
-  response <- WrappeR$remote_processing(is_remote)
-  print(response)
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    .check_logical(is_remote)
+    response <- WrappeR$remote_processing(is_remote)
+    print(response)
 }
 

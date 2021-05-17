@@ -1,28 +1,36 @@
-select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL, 
-                               all_but_meta = FALSE, regions = NULL, 
-                               regions_update = NULL, all_but_reg = FALSE) 
-{
-  data = value(.data)
-  r_update <- substitute(regions_update)
-  if(!is.null(r_update))
-  {
-    reg_update <- .trasform_update(deparse(r_update))
-    reg_update <- paste(reg_update,collapse = "")
-  }
-  else
-    reg_update <- .jnull("java/lang/String")
-  
-  m_update <- substitute(metadata_update)
-  if(!is.null(m_update))
-  {
-    meta_update <- .trasform_update(deparse(m_update))
-    meta_update <- paste(meta_update,collapse = "")
-  }
-  else
-    meta_update <- .jnull("java/lang/String")
-  
-  gmql_project(data, metadata, meta_update, all_but_meta, regions, 
-               reg_update, all_but_reg)
+select.GMQLDataset <- function(
+    .data, metadata = NULL,
+    metadata_update = NULL, 
+    all_but_meta = FALSE, 
+    regions = NULL, 
+    regions_update = NULL, 
+    all_but_reg = FALSE
+) {
+    data = value(.data)
+    r_update <- substitute(regions_update)
+    if(!is.null(r_update)) {
+        reg_update <- .trasform_update(deparse(r_update))
+        reg_update <- paste(reg_update,collapse = "")
+    }
+    else
+        reg_update <- .jnull("java/lang/String")
+    
+    m_update <- substitute(metadata_update)
+    if(!is.null(m_update)) {
+        meta_update <- .trasform_update(deparse(m_update))
+        meta_update <- paste(meta_update,collapse = "")
+    }
+    else
+        meta_update <- .jnull("java/lang/String")
+    
+    gmql_project(
+        data, 
+        metadata, 
+        meta_update,
+        all_but_meta, 
+        regions, 
+        reg_update, 
+        all_but_reg)
 }
 
 #' Method select
@@ -101,8 +109,6 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 #'     regions_update = list(new_score = (score / 1000.0) + 100), 
 #'     regions = c("score"), all_but_reg = TRUE)
 #' 
-#'
-#' 
 #' @name select
 #' @rdname select
 #' @aliases select,GMQLDataset-method
@@ -111,76 +117,76 @@ select.GMQLDataset <- function(.data, metadata = NULL, metadata_update = NULL,
 setMethod("select", "GMQLDataset",select.GMQLDataset)
 
 gmql_project <-function(
-  input_data, 
-  metadata, 
-  metadata_update, 
-  all_but_meta, 
-  regions,
-  regions_update, 
-  all_but_reg
-) {
-  if(!is.null(metadata)) {
-    if(!is.character(metadata))
-      stop("metadata: no valid input")
-    
-    metadata <- metadata[!metadata %in% ""]
-    metadata <- metadata[!duplicated(metadata)]
-    
-    if(!length(metadata))
-      metadata <- .jnull("java/lang/String")
-    
-    metadata <- .jarray(metadata)
-    
-  } else
-    metadata <- .jnull("java/lang/String")
-  
-  if(!is.null(regions)) {
-    if(!is.character(regions))
-      stop("regions: no valid input")
-    
-    regions = regions[!regions %in% ""]
-    regions = regions[!duplicated(regions)]
-    
-    if(!length(regions))
-      regions <- .jnull("java/lang/String")
-    
-    regions <- .jarray(regions)
-    
-  } else
-    regions <- .jnull("java/lang/String")
-  
-  if(length(all_but_meta)>1)
-    warning("all_but_meta: no multiple values")
-  
-  if(length(all_but_reg)>1)
-    warning("all_but_reg: no multiple values")
-  
-  all_but_reg <- all_but_reg[1]
-  all_but_meta <- all_but_meta[1]
-  
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  response <- WrappeR$project(
+    input_data, 
     metadata, 
     metadata_update, 
     all_but_meta, 
-    regions, 
-    regions_update,
-    all_but_reg, 
-    input_data
-  )
-  error <- strtoi(response[1])
-  val <- response[2]
-  
-  if(error)
-    stop(val)
-  else
-    GMQLDataset(val)
+    regions,
+    regions_update, 
+    all_but_reg
+) {
+    if(!is.null(metadata)) {
+        if(!is.character(metadata))
+            stop("metadata: no valid input")
+        
+        metadata <- metadata[!metadata %in% ""]
+        metadata <- metadata[!duplicated(metadata)]
+        
+        if(!length(metadata))
+            metadata <- .jnull("java/lang/String")
+        
+        metadata <- .jarray(metadata)
+        
+    } else
+        metadata <- .jnull("java/lang/String")
+    
+    if(!is.null(regions)) {
+        if(!is.character(regions))
+            stop("regions: no valid input")
+        
+        regions = regions[!regions %in% ""]
+        regions = regions[!duplicated(regions)]
+        
+        if(!length(regions))
+            regions <- .jnull("java/lang/String")
+        
+        regions <- .jarray(regions)
+        
+    } else
+        regions <- .jnull("java/lang/String")
+    
+    if(length(all_but_meta)>1)
+        warning("all_but_meta: no multiple values")
+    
+    if(length(all_but_reg)>1)
+        warning("all_but_reg: no multiple values")
+    
+    all_but_reg <- all_but_reg[1]
+    all_but_meta <- all_but_meta[1]
+    
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    response <- WrappeR$project(
+        metadata, 
+        metadata_update, 
+        all_but_meta, 
+        regions, 
+        regions_update,
+        all_but_reg, 
+        input_data
+    )
+    error <- strtoi(response[1])
+    val <- response[2]
+    
+    if(error)
+        stop(val)
+    else
+        GMQLDataset(val)
 }
 
 .trasform_update <- function(predicate) {
-  predicate <- gsub("list\\(","",predicate)
-  predicate <- gsub("\\)$","",predicate)
-  predicate <- gsub("=","AS",predicate)
-  predicate <- gsub("NIL","NULL",predicate)
-  predicate <- gsub("\"","",predicate)
+    predicate <- gsub("list\\(","",predicate)
+    predicate <- gsub("\\)$","",predicate)
+    predicate <- gsub("=","AS",predicate)
+    predicate <- gsub("NIL","NULL",predicate)
+    predicate <- gsub("\"","",predicate)
 }

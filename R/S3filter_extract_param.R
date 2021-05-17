@@ -3,18 +3,18 @@
 #########################################
 
 PARAMETER_FILTER_EXTRACT <- function() {
-  op_list <- list()
-  ## Set the name for the class
-  class(op_list) <- "PARAMETER_FILTER_EXTRACT"
-  return(op_list)
+    op_list <- list()
+    ## Set the name for the class
+    class(op_list) <- "PARAMETER_FILTER_EXTRACT"
+    return(op_list)
 }
 
 as.character.PARAMETER_FILTER_EXTRACT <- function(obj) {
-  class <- class(obj)[1]
+    class <- class(obj)[1]
 }
 
 print.PARAMETER_FILTER_EXTRACT <- function(obj){
-  print(as.character.PARAMETER_FILTER_EXTRACT(obj))
+    print(as.character.PARAMETER_FILTER_EXTRACT(obj))
 }
 
 
@@ -39,8 +39,8 @@ print.PARAMETER_FILTER_EXTRACT <- function(obj){
 #' @export
 #'
 FULL <- function(except = NULL) {
-  value <- list(values = c(except))
-  ## Set the name for the class
-  class(value) <- c("FULL", "PARAMETER_FILTER_EXTRACT")
-  return(value)
+    value <- list(values = c(except))
+    ## Set the name for the class
+    class(value) <- c("FULL", "PARAMETER_FILTER_EXTRACT")
+    return(value)
 }

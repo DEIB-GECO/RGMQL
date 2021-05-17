@@ -57,28 +57,27 @@
 #' @rdname extend
 #' @aliases extend-method
 #' @export
-setMethod("extend", "GMQLDataset", function(.data, ...)
-{
-  ptr_data = value(.data)
-  meta <- list(...)
-  gmql_extend(ptr_data, meta)
+setMethod("extend", "GMQLDataset", function(.data, ...) {
+    ptr_data = value(.data)
+    meta <- list(...)
+    gmql_extend(ptr_data, meta)
 })
 
 gmql_extend <-function(input_data, meta){
-  if(!is.null(meta) && length(meta)) {
-    aggr <- .aggregates(meta, "META_AGGREGATES")
-    metadata_matrix <- .jarray(aggr, dispatch = TRUE)
-  }
-  else
-    metadata_matrix <- .jnull("java/lang/String")
-  
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  response <- WrappeR$extend(metadata_matrix, input_data)
-  error <- strtoi(response[1])
-  val <- response[2]
-  
-  if(error)
-    stop(val)
-  else
-    GMQLDataset(val)
+    if(!is.null(meta) && length(meta)) {
+        aggr <- .aggregates(meta, "META_AGGREGATES")
+        metadata_matrix <- .jarray(aggr, dispatch = TRUE)
+    }
+    else
+        metadata_matrix <- .jnull("java/lang/String")
+    
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    response <- WrappeR$extend(metadata_matrix, input_data)
+    error <- strtoi(response[1])
+    val <- response[2]
+    
+    if(error)
+        stop(val)
+    else
+        GMQLDataset(val)
 }

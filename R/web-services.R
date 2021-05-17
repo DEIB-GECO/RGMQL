@@ -1,11 +1,11 @@
 if(getRversion() >= "2.15.1") {
-  utils::globalVariables("GMQL_credentials")
-  utils::globalVariables("remote_url")
+    utils::globalVariables("GMQL_credentials")
+    utils::globalVariables("remote_url")
 }
 
 if(getRversion() >= "3.1.0") {
-  utils::suppressForeignCheck("GMQL_credentials")
-  utils::suppressForeignCheck("remote_url")
+    utils::suppressForeignCheck("GMQL_credentials")
+    utils::suppressForeignCheck("remote_url")
 }
 
 
@@ -50,47 +50,51 @@ if(getRversion() >= "3.1.0") {
 #' @export
 #' 
 login_gmql <- function(url, username = NULL, password = NULL) {
-  if(!.is_login_expired(url)) {
-    print("Login still valid")
-    return(invisible(NULL))
-  }
-  
-  as_guest <- TRUE
-  
-  if(!is.null(username) || !is.null(password))
-    as_guest <- FALSE
-  
-  url <- sub("/*[/]$","",url)
-  
-  if(as_guest) {
-    h <- c('Accept' = "Application/json")
-    URL <- paste0(url,"/guest")
-    req <- httr::GET(URL,httr::add_headers(h))
-  } else {
-    req <- httr::GET(url)
-    real_URL <- sub("/*[/]$","",req$url)
-    h <- c('Accept'="Application/json",'Content-Type'='Application/json')
-    URL <- paste0(real_URL,"/login")
-    body <- list('username' = username,'password' = password)
-    req <- httr::POST(URL, httr::add_headers(h), body = body, encode = "json")
-  }
-  
-  content <- httr::content(req)
-  
-  if(req$status_code != 200)
-    stop(content$errorString)
-  else {
-    url <- paste0(url,"/")
-    GMQL_remote <- list(
-      "remote_url" = url, 
-      "authToken" = content$authToken,
-      "username" = username,
-      "password" = password
-    )
-  
-    assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
-    print(paste("your Token is", GMQL_remote$authToken))
-  }
+    if(!.is_login_expired(url)) {
+        print("Login still valid")
+        return(invisible(NULL))
+    }
+    
+    as_guest <- TRUE
+    
+    if(!is.null(username) || !is.null(password))
+        as_guest <- FALSE
+    
+    url <- sub("/*[/]$","",url)
+    
+    if(as_guest) {
+        h <- c('Accept' = "Application/json")
+        URL <- paste0(url,"/guest")
+        req <- httr::GET(URL,httr::add_headers(h))
+    } else {
+        req <- httr::GET(url)
+        real_URL <- sub("/*[/]$","",req$url)
+        h <- c('Accept'="Application/json",'Content-Type'='Application/json')
+        URL <- paste0(real_URL,"/login")
+        body <- list('username' = username,'password' = password)
+        req <- httr::POST(
+            URL, 
+            httr::add_headers(h), 
+            body = body, 
+            encode = "json")
+    }
+    
+    content <- httr::content(req)
+    
+    if(req$status_code != 200)
+        stop(content$errorString)
+    else {
+        url <- paste0(url,"/")
+        GMQL_remote <- list(
+            "remote_url" = url, 
+            "authToken" = content$authToken,
+            "username" = username,
+            "password" = password
+        )
+        
+        assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
+        print(paste("your Token is", GMQL_remote$authToken))
+    }
 }
 
 #' Logout from GMQL
@@ -124,24 +128,24 @@ login_gmql <- function(url, username = NULL, password = NULL) {
 #' @export
 #'
 logout_gmql <- function(url) {
-  url <- sub("/*[/]$","",url)
-  URL <- paste0(url,"/logout")
-  
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken)
-  
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req)
-  
-  if(req$status_code !=200)
-    stop(content$error)
-  else {
-    #delete token from environment
-    if(exists("authToken", where = GMQL_credentials))
-      rm(GMQL_credentials, envir = .GlobalEnv)
+    url <- sub("/*[/]$","",url)
+    URL <- paste0(url,"/logout")
     
-    print(content)
-  }
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken)
+    
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req)
+    
+    if(req$status_code !=200)
+        stop(content$error)
+    else {
+        #delete token from environment
+        if(exists("authToken", where = GMQL_credentials))
+            rm(GMQL_credentials, envir = .GlobalEnv)
+        
+        print(content)
+    }
 }
 #' Register into remote GMQL
 #' 
@@ -185,46 +189,46 @@ logout_gmql <- function(url) {
 #' @export
 #'
 register_gmql <- function(
-  url, 
-  username, 
-  psw, 
-  email, 
-  first_name, 
-  last_name
+    url, 
+    username, 
+    psw, 
+    email, 
+    first_name, 
+    last_name
 ) {
-  req <- httr::GET(url)
-  url <- sub("/*[/]$","",req$url)
-  
-  URL <- paste0(url,"/register")
-  h <- c('Accept' = "Application/json")
-  reg_body <- list(
-    "firstName" = first_name, 
-    "lastName" = last_name,
-    "username" = username, 
-    "email" = email, 
-    "password" = psw
-  )
-  
-  req <- httr::POST(
-    URL, 
-    body = reg_body, 
-    httr::add_headers(h), 
-    encode = "json"
-  )
-  
-  content <- httr::content(req,"parsed")
-  if(req$status_code != 200) {
-    stop(content)
-  } else {
-    GMQL_remote <- list(
-      "remote_url" = url, 
-      "authToken" = content$authToken,
-      "username" = username,
-      "password" = psw
+    req <- httr::GET(url)
+    url <- sub("/*[/]$","",req$url)
+    
+    URL <- paste0(url,"/register")
+    h <- c('Accept' = "Application/json")
+    reg_body <- list(
+        "firstName" = first_name, 
+        "lastName" = last_name,
+        "username" = username, 
+        "email" = email, 
+        "password" = psw
     )
-    assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
-    print(paste("your Token is", GMQL_remote$authToken))
-  }
+    
+    req <- httr::POST(
+        URL, 
+        body = reg_body, 
+        httr::add_headers(h), 
+        encode = "json"
+    )
+    
+    content <- httr::content(req,"parsed")
+    if(req$status_code != 200) {
+        stop(content)
+    } else {
+        GMQL_remote <- list(
+            "remote_url" = url, 
+            "authToken" = content$authToken,
+            "username" = username,
+            "password" = psw
+        )
+        assign("GMQL_credentials", GMQL_remote, .GlobalEnv)
+        print(paste("your Token is", GMQL_remote$authToken))
+    }
 }
 
 
@@ -265,17 +269,17 @@ register_gmql <- function(
 #' @export
 #'
 show_queries_list <- function(url) {
-  url <- sub("/*[/]$","",url)
-  URL <- paste0(url,"/query")
-  authToken = GMQL_credentials$authToken
-  h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req,"parsed")
-  if(req$status_code == 200) {
-    return(content)
-  } else {
-    stop(content$error)
-  }
+    url <- sub("/*[/]$","",url)
+    URL <- paste0(url,"/query")
+    authToken = GMQL_credentials$authToken
+    h <- c('Accept' = 'Application/json', 'X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req,"parsed")
+    if(req$status_code == 200) {
+        return(content)
+    } else {
+        stop(content$error)
+    }
 }
 
 #' Save GMQL query
@@ -323,24 +327,24 @@ show_queries_list <- function(url) {
 #' @export
 #'
 save_query <- function(url, queryName, queryTxt) {
-  req <- httr::GET(url)
-  url <- sub("/*[/]$","",req$url)
-  URL <- paste0(url,"/query/",queryName,"/save")
-  authToken = GMQL_credentials$authToken
-  h <- c(
-    'Accept' = 'text/plain',
-    'X-Auth-Token' = authToken,
-    'Content-Type' = 'text/plain'
-  )
-  req <- httr::POST(URL, httr::add_headers(h),body = queryTxt)
-  content <- httr::content(req)
-  
-  if(req$status_code == 200) {
-    # print Saved
-    print(content) 
-  } else {
-    stop(content$error)
-  }
+    req <- httr::GET(url)
+    url <- sub("/*[/]$","",req$url)
+    URL <- paste0(url,"/query/",queryName,"/save")
+    authToken = GMQL_credentials$authToken
+    h <- c(
+        'Accept' = 'text/plain',
+        'X-Auth-Token' = authToken,
+        'Content-Type' = 'text/plain'
+    )
+    req <- httr::POST(URL, httr::add_headers(h),body = queryTxt)
+    content <- httr::content(req)
+    
+    if(req$status_code == 200) {
+        # print Saved
+        print(content) 
+    } else {
+        stop(content$error)
+    }
 }
 
 #' @param filePath string local file path of a txt file containing a GMQL query
@@ -350,12 +354,12 @@ save_query <- function(url, queryName, queryTxt) {
 #' @export
 #' 
 save_query_fromfile <- function(url, queryName, filePath) {
-  if(!file.exists(filePath)) {
-    stop("file does not exist")
-  }
-  
-  queryTxt <- readLines(filePath)
-  save_query(url,queryName,queryTxt)
+    if(!file.exists(filePath)) {
+        stop("file does not exist")
+    }
+    
+    queryTxt <- readLines(filePath)
+    save_query(url,queryName,queryTxt)
 }
 
 #############################
@@ -415,28 +419,28 @@ save_query_fromfile <- function(url, queryName, filePath) {
 #' @export
 #'
 run_query <- function(url, queryName, query, output_gtf = TRUE) {
-  if(output_gtf)
-    out <- "GTF"
-  else
-    out <- "TAB"
-  
-  req <- httr::GET(url)
-  url <- sub("/*[/]$","",req$url)
-  URL <- paste0(url,"/queries/run/",queryName,"/",out)
-  authToken = GMQL_credentials$authToken
-  h <- c(
-    'Accept' = "Application/json",
-    'Content-Type' = 'text/plain',
-    'X-Auth-Token' = authToken
-  )
-  
-  req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
-  content <- httr::content(req,"parsed")
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    if(output_gtf)
+        out <- "GTF"
+    else
+        out <- "TAB"
+    
+    req <- httr::GET(url)
+    url <- sub("/*[/]$","",req$url)
+    URL <- paste0(url,"/queries/run/",queryName,"/",out)
+    authToken = GMQL_credentials$authToken
+    h <- c(
+        'Accept' = "Application/json",
+        'Content-Type' = 'text/plain',
+        'X-Auth-Token' = authToken
+    )
+    
+    req <- httr::POST(URL,body = query ,httr::add_headers(h),encode = "json")
+    content <- httr::content(req,"parsed")
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #' @import httr
@@ -447,13 +451,13 @@ run_query <- function(url, queryName, query, output_gtf = TRUE) {
 #' @export
 #' 
 run_query_fromfile <- function(url, filePath, output_gtf = TRUE) {
-  if (!file.exists(filePath)) {
-    stop("file does not exist")
-  }
-  
-  query <- readLines(filePath)
-  queryName <- sub('\\..*$', '', basename(filePath))
-  run_query(url, queryName, query, output_gtf)
+    if (!file.exists(filePath)) {
+        stop("file does not exist")
+    }
+    
+    query <- readLines(filePath)
+    queryName <- sub('\\..*$', '', basename(filePath))
+    run_query(url, queryName, query, output_gtf)
 }
 
 #' Compile GMQL query
@@ -501,27 +505,27 @@ run_query_fromfile <- function(url, filePath, output_gtf = TRUE) {
 #' @export
 #'
 compile_query <- function(url, query) {
-  authToken = GMQL_credentials$authToken
-  h <- c(
-    'Accept' = "Application/json",
-    'Content-Type' = 'text/plain',
-    'X-Auth-Token' = authToken
-  )
-  req <- httr::GET(url)
-  url <- sub("/*[/]$","",req$url)
-  URL <- paste0(url, "/queries/compile")
-  req <- httr::POST(
-    URL, 
-    body = query ,
-    httr::add_headers(h), 
-    encode = "json"
-  )
-  content <- httr::content(req, "parsed")
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    authToken = GMQL_credentials$authToken
+    h <- c(
+        'Accept' = "Application/json",
+        'Content-Type' = 'text/plain',
+        'X-Auth-Token' = authToken
+    )
+    req <- httr::GET(url)
+    url <- sub("/*[/]$","",req$url)
+    URL <- paste0(url, "/queries/compile")
+    req <- httr::POST(
+        URL, 
+        body = query ,
+        httr::add_headers(h), 
+        encode = "json"
+    )
+    content <- httr::content(req, "parsed")
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #' @name compile_query
@@ -529,12 +533,12 @@ compile_query <- function(url, query) {
 #' @export
 #'
 compile_query_fromfile <- function(url ,filePath) {
-  if (!file.exists(filePath)) {
-    stop("file does not exist")
-  }
-  
-  query <- readLines(filePath)
-  compile_query(url, query)
+    if (!file.exists(filePath)) {
+        stop("file does not exist")
+    }
+    
+    query <- readLines(filePath)
+    compile_query(url, query)
 }
 
 #' Stop a job
@@ -574,17 +578,17 @@ compile_query_fromfile <- function(url ,filePath) {
 #' @export
 #'
 stop_job <- function(url, job_id) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/jobs/", job_id, "/stop")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept' = 'text/plain')
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
-  if (req$status_code != 200) {
-    stop(content)
-  } else {
-    print(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/jobs/", job_id, "/stop")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept' = 'text/plain')
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    if (req$status_code != 200) {
+        stop(content)
+    } else {
+        print(content)
+    }
 }
 
 #' Show a job log or trace
@@ -626,18 +630,18 @@ stop_job <- function(url, job_id) {
 #' @export
 #'
 show_job_log <- function(url, job_id) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/jobs/", job_id, "/log")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept' = 'Application/json')
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    print(unlist(content, use.names = FALSE))
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/jobs/", job_id, "/log")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept' = 'Application/json')
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        print(unlist(content, use.names = FALSE))
+    }
 }
 
 
@@ -649,18 +653,18 @@ show_job_log <- function(url, job_id) {
 #' @export
 #'
 trace_job <- function(url, job_id) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/jobs/", job_id, "/trace")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept' = 'Application/json')
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
- 
-   if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/jobs/", job_id, "/trace")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept' = 'Application/json')
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #' Show all jobs
@@ -694,18 +698,18 @@ trace_job <- function(url, job_id) {
 #' @export
 #' 
 show_jobs_list <- function(url) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/jobs")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/jobs")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #############################
@@ -746,18 +750,18 @@ show_jobs_list <- function(url) {
 #' @export
 #'
 show_datasets_list <- function(url) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/datasets")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed") #JSON
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/datasets")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed") #JSON
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 
@@ -801,18 +805,18 @@ show_datasets_list <- function(url) {
 #' @rdname show_samples_list
 #' @export
 show_samples_list <- function(url, datasetName) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/datasets/", datasetName)
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/datasets/", datasetName)
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #' Show dataset schema
@@ -852,18 +856,18 @@ show_samples_list <- function(url, datasetName) {
 #' @export
 #'
 show_schema <- function(url, datasetName) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/datasets/", datasetName, "/schema")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken)
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed")
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/datasets/", datasetName, "/schema")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken)
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed")
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 #' Upload dataset
@@ -938,76 +942,75 @@ show_schema <- function(url, datasetName) {
 #' @export
 #'
 upload_dataset <- function(
-  url,
-  datasetName,
-  folderPath,
-  schemaName = NULL
+    url,
+    datasetName,
+    folderPath,
+    schemaName = NULL
 ) {
-  
-  folderPath <- sub("/*[/]$","",folderPath)
-  if(basename(folderPath) !="files")
-    folderPath <- file.path(folderPath,"files")
-  
-  files <- list.files(folderPath, pattern = "*(.gtf|.gdm)", full.names = TRUE)
-  if (!length(files)) {
-    stop("no files present")
-  }
-  
-  count = .counter(0)
-  
-  list_files <- lapply(files, function(x) {
-    file <- httr::upload_file(x)
-  })
-  
-  list_files_names <- vapply(list_files, function(x) {
-    paste0("file", count())
-  }, character(1))
-  
-  names(list_files) <- list_files_names
-  req <- httr::GET(url)
-  real_URL <- sub("/*[/]$","",req$url)
-  URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
-  
-  schema_name <- tolower(schemaName)
-  
-  if (is.null(schemaName) || identical(schema_name, "customparser")) {
-    schema <- .retrieve_schema(folderPath)
+    folderPath <- sub("/*[/]$","",folderPath)
+    if(basename(folderPath) !="files")
+        folderPath <- file.path(folderPath,"files")
     
-    list_files <- list(
-      list("schema" = httr::upload_file(schema)),
-      list_files
-    )
-    list_files <- unlist(list_files, recursive = FALSE)
-    URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
-  } else {
-    schemaList <- c(
-      "narrowpeak",
-      "vcf",
-      "broadpeak",
-      "bed",
-      "bedgraph"
-    )
-    if (!schema_name %in% schemaList) {
-      stop("schema not admissable")
+    files <- list.files(folderPath, pattern = "*(.gtf|.gdm)", full.names = TRUE)
+    if (!length(files)) {
+        stop("no files present")
     }
     
-    URL <- paste0(
-      real_URL,
-      "/datasets/",
-      datasetName,
-      "/uploadSample?schemaName=",
-      schema_name
-    )
-  }
-  
-  req <- httr::POST(URL, body = list_files , httr::add_headers(h))
-  content <- httr::content(req)
-  if (req$status_code != 200)
-    stop(content)
-  else
-    print("upload Complete")
+    count = .counter(0)
+    
+    list_files <- lapply(files, function(x) {
+        file <- httr::upload_file(x)
+    })
+    
+    list_files_names <- vapply(list_files, function(x) {
+        paste0("file", count())
+    }, character(1))
+    
+    names(list_files) <- list_files_names
+    req <- httr::GET(url)
+    real_URL <- sub("/*[/]$","",req$url)
+    URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept:' = 'Application/json')
+    
+    schema_name <- tolower(schemaName)
+    
+    if (is.null(schemaName) || identical(schema_name, "customparser")) {
+        schema <- .retrieve_schema(folderPath)
+        
+        list_files <- list(
+            list("schema" = httr::upload_file(schema)),
+            list_files
+        )
+        list_files <- unlist(list_files, recursive = FALSE)
+        URL <- paste0(real_URL, "/datasets/", datasetName, "/uploadSample")
+    } else {
+        schemaList <- c(
+            "narrowpeak",
+            "vcf",
+            "broadpeak",
+            "bed",
+            "bedgraph"
+        )
+        if (!schema_name %in% schemaList) {
+            stop("schema not admissable")
+        }
+        
+        URL <- paste0(
+            real_URL,
+            "/datasets/",
+            datasetName,
+            "/uploadSample?schemaName=",
+            schema_name
+        )
+    }
+    
+    req <- httr::POST(URL, body = list_files , httr::add_headers(h))
+    content <- httr::content(req)
+    if (req$status_code != 200)
+        stop(content)
+    else
+        print("upload Complete")
 }
 
 #' Delete dataset
@@ -1044,19 +1047,19 @@ upload_dataset <- function(
 #' @export
 #'
 delete_dataset <- function(url, datasetName) {
-  req <- httr::GET(url)
-  real_URL <- sub("/*[/]$","",req$url)
-  URL <- paste0(real_URL, "/datasets/", datasetName)
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
-  req <- httr::DELETE(URL, httr::add_headers(h))
-  content <- httr::content(req, "parsed") #JSON
-  
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    print(content$result)
-  }
+    req <- httr::GET(url)
+    real_URL <- sub("/*[/]$","",req$url)
+    URL <- paste0(real_URL, "/datasets/", datasetName)
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept:' = 'application/json')
+    req <- httr::DELETE(URL, httr::add_headers(h))
+    content <- httr::content(req, "parsed") #JSON
+    
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        print(content$result)
+    }
 }
 
 #' Download Dataset
@@ -1101,22 +1104,22 @@ delete_dataset <- function(url, datasetName) {
 #' @export
 #'
 download_dataset <- function(url, datasetName, path = getwd()) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/datasets/", datasetName, "/zip")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accept' = 'application/zip')
-  req <- httr::GET(URL, httr::add_headers(h))
-  
-  content <- httr::content(req)
-  if (req$status_code != 200) {
-    stop(content)
-  } else {
-    zip_path <- file.path(path, paste0(datasetName, ".zip"))
-    dir_out <- file.path(path, "")
-    writeBin(content, zip_path)
-    unzip(zip_path, exdir = dir_out)
-    print("Download Complete")
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/datasets/", datasetName, "/zip")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accept' = 'application/zip')
+    req <- httr::GET(URL, httr::add_headers(h))
+    
+    content <- httr::content(req)
+    if (req$status_code != 200) {
+        stop(content)
+    } else {
+        zip_path <- file.path(path, paste0(datasetName, ".zip"))
+        dir_out <- file.path(path, "")
+        writeBin(content, zip_path)
+        unzip(zip_path, exdir = dir_out)
+        print("Download Complete")
+    }
 }
 
 #' @import httr
@@ -1130,25 +1133,25 @@ download_dataset <- function(url, datasetName, path = getwd()) {
 #' @export
 #'
 download_as_GRangesList <- function(url,datasetName) {
-  list <- show_samples_list(url, datasetName)
-  samples <- list$samples
-  sample_list_name <- vapply(samples, function(x) x$name, character(1))
-  
-  sampleList <- lapply(samples, function(x) {
-    name <- x$name
-    range <- sample_region(url, datasetName, name)
-  })
-  
-  names(sampleList) <- sample_list_name
-  gRange_list <- GenomicRanges::GRangesList(sampleList)
-  
-  meta_list <- lapply(samples, function(x) {
-    name <- x$name
-    meta <- sample_metadata(url, datasetName, name)
-  })
-  names(meta_list) <- sample_list_name
-  S4Vectors::metadata(gRange_list) <- meta_list
-  return(gRange_list)
+    list <- show_samples_list(url, datasetName)
+    samples <- list$samples
+    sample_list_name <- vapply(samples, function(x) x$name, character(1))
+    
+    sampleList <- lapply(samples, function(x) {
+        name <- x$name
+        range <- sample_region(url, datasetName, name)
+    })
+    
+    names(sampleList) <- sample_list_name
+    gRange_list <- GenomicRanges::GRangesList(sampleList)
+    
+    meta_list <- lapply(samples, function(x) {
+        name <- x$name
+        meta <- sample_metadata(url, datasetName, name)
+    })
+    names(meta_list) <- sample_list_name
+    S4Vectors::metadata(gRange_list) <- meta_list
+    return(gRange_list)
 }
 
 #' Show metadata list from dataset sample
@@ -1185,24 +1188,24 @@ download_as_GRangesList <- function(url,datasetName) {
 #' @export
 #'
 sample_metadata <- function(url, datasetName,sampleName) {
-  url <- sub("/*[/]$", "", url)
-  URL <- paste0(url, "/datasets/", datasetName, "/", sampleName, "/metadata")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, 'text', encoding = "UTF-8")
-  
-  #trasform text to list
-  metadata <- strsplit(content, "\n")
-  metadata <- strsplit(unlist(metadata), "\t")
-  names(metadata) <- vapply(metadata, `[[`, character(1), 1)
-  listMeta <- lapply(metadata, `[`,-1)
-  
-  if (req$status_code != 200) {
-    stop(content)
-  } else {
-    return(listMeta)
-  }
+    url <- sub("/*[/]$", "", url)
+    URL <- paste0(url, "/datasets/", datasetName, "/", sampleName, "/metadata")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, 'text', encoding = "UTF-8")
+    
+    #trasform text to list
+    metadata <- strsplit(content, "\n")
+    metadata <- strsplit(unlist(metadata), "\t")
+    names(metadata) <- vapply(metadata, `[[`, character(1), 1)
+    listMeta <- lapply(metadata, `[`,-1)
+    
+    if (req$status_code != 200) {
+        stop(content)
+    } else {
+        return(listMeta)
+    }
 }
 
 #' Show regions data from a dataset sample
@@ -1249,48 +1252,50 @@ sample_metadata <- function(url, datasetName,sampleName) {
 #' @export
 #'
 sample_region <- function(url, datasetName,sampleName) {
-  url <- sub("/*[/]$","",url)
-  URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
-  authToken = GMQL_credentials$authToken
-  h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
-  req <- httr::GET(URL, httr::add_headers(h))
-  content <- httr::content(req, 'parsed',encoding = "UTF-8")
-  
-  if(req$status_code != 200) {
-    stop(content)
-  } else {
-    list <- show_schema(url,datasetName)
-    schema_type <- list$type
+    url <- sub("/*[/]$","",url)
+    URL <- paste0(url,"/datasets/",datasetName,"/",sampleName,"/region")
+    authToken = GMQL_credentials$authToken
+    h <- c('X-Auth-Token' = authToken, 'Accpet' = 'text/plain')
+    req <- httr::GET(URL, httr::add_headers(h))
+    content <- httr::content(req, 'parsed',encoding = "UTF-8")
     
-    temp <- tempfile("temp") #use temporary files
-    write.table(
-      content,
-      temp,
-      quote = FALSE,
-      sep = '\t',
-      col.names = FALSE,
-      row.names = FALSE
-    )
-    if (identical(schema_type, "gtf")) {
-      samples <- rtracklayer::import(temp, format = "gtf")
+    if(req$status_code != 200) {
+        stop(content)
     } else {
-      vector_field <- vapply(list$fields, function(x) x$name, character(1))
-      df <- data.table::fread(temp, header = FALSE, sep = "\t")
-      a <- df[1, 2]
-      if(is.na(as.numeric(a)))
-        df <- df[-1]
-      data.table::setnames(df,vector_field)
-      samples <- GenomicRanges::makeGRangesFromDataFrame(
-        df,
-        keep.extra.columns = TRUE,
-        start.field = "left",
-        end.field = "right",
-        strand.field="strand"
-      )
+        list <- show_schema(url,datasetName)
+        schema_type <- list$type
+        
+        temp <- tempfile("temp") #use temporary files
+        write.table(
+            content,
+            temp,
+            quote = FALSE,
+            sep = '\t',
+            col.names = FALSE,
+            row.names = FALSE
+        )
+        if (identical(schema_type, "gtf")) {
+            samples <- rtracklayer::import(temp, format = "gtf")
+        } else {
+            vector_field <- vapply(
+                list$fields, function(x) x$name, character(1)
+            )
+            df <- data.table::fread(temp, header = FALSE, sep = "\t")
+            a <- df[1, 2]
+            if(is.na(as.numeric(a)))
+                df <- df[-1]
+            data.table::setnames(df,vector_field)
+            samples <- GenomicRanges::makeGRangesFromDataFrame(
+                df,
+                keep.extra.columns = TRUE,
+                start.field = "left",
+                end.field = "right",
+                strand.field="strand"
+            )
+        }
+        unlink(temp)
+        return(samples)
     }
-    unlink(temp)
-    return(samples)
-  }
 }
 
 #############################
@@ -1299,53 +1304,53 @@ sample_region <- function(url, datasetName,sampleName) {
 
 # no export
 serialize_query <- function(url,output_gtf,base64) {
-  if(output_gtf) {
-    out <- "gtf"
-  } else {
-    out <- "tab"
-  }
-  url <- sub("/*[/]$","",url)
-  req <- httr::GET(url)
-  real_URL <- sub("/*[/]$","",req$url)
-  authToken = GMQL_credentials$authToken
-  URL <- paste0(real_URL,"/queries/dag/",out)
-  h <- c(
-    'Accept' = "Application/json",
-    'Content-Type' = 'text/plain',
-    'X-Auth-Token' = authToken
-  )
-  
-  req <- httr::POST(URL,body = base64 ,httr::add_headers(h),encode = "json")
-  content <- httr::content(req,"parsed")
-  if (req$status_code != 200) {
-    stop(content$error)
-  } else {
-    return(content)
-  }
+    if(output_gtf) {
+        out <- "gtf"
+    } else {
+        out <- "tab"
+    }
+    url <- sub("/*[/]$","",url)
+    req <- httr::GET(url)
+    real_URL <- sub("/*[/]$","",req$url)
+    authToken = GMQL_credentials$authToken
+    URL <- paste0(real_URL,"/queries/dag/",out)
+    h <- c(
+        'Accept' = "Application/json",
+        'Content-Type' = 'text/plain',
+        'X-Auth-Token' = authToken
+    )
+    
+    req <- httr::POST(URL,body = base64 ,httr::add_headers(h),encode = "json")
+    content <- httr::content(req,"parsed")
+    if (req$status_code != 200) {
+        stop(content$error)
+    } else {
+        return(content)
+    }
 }
 
 
-.retrieve_schema <- function(folderPath, duringReading = F) {
-  schema_SCHEMA <- list.files(
-    folderPath, pattern = "test.schema$", full.names = TRUE
-  )
-  
-  xml_schema <- list.files(
-    folderPath, pattern = "schema.xml$", full.names = TRUE
-  )
-  
-  if(!length(schema_SCHEMA) && !length(xml_schema))
-    stop("schema not present")
-  
-  schema <- if(!length(schema_SCHEMA)) 
-    xml_schema 
-  else
-    if(!duringReading) {
-      schema_SCHEMA
-    } else {
-      folderPath
-    }
-  
-  schema
+.retrieve_schema <- function(folderPath, duringReading = FALSE) {
+    schema_SCHEMA <- list.files(
+        folderPath, pattern = "test.schema$", full.names = TRUE
+    )
+    
+    xml_schema <- list.files(
+        folderPath, pattern = "schema.xml$", full.names = TRUE
+    )
+    
+    if(!length(schema_SCHEMA) && !length(xml_schema))
+        stop("schema not present")
+    
+    schema <- if(!length(schema_SCHEMA)) 
+        xml_schema 
+    else
+        if(!duringReading) {
+            schema_SCHEMA
+        } else {
+            folderPath
+        }
+    
+    schema
 }
 

@@ -21,13 +21,13 @@ setClass("GMQLDataset", representation(value = "character"))
 #' @rdname GMQLDataset-class
 #' @noRd
 GMQLDataset <- function(value) {
-  dataset <- new("GMQLDataset",value = value)
-  return(dataset)
+    dataset <- new("GMQLDataset",value = value)
+    return(dataset)
 }
 
 setMethod("show", "GMQLDataset", function(object) {
-  cat("GMQL Dataset \n")
-  cat(" value :",paste(object@value))
+    cat("GMQL Dataset \n")
+    cat(" value :",paste(object@value))
 })
 
 setGeneric("value", function(.dataset) standardGeneric("value"))

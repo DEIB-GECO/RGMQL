@@ -4,30 +4,30 @@
 
 
 OPERATOR <- function(value) {
-  op_list <- list(value = value)
-  ## Set the name for the class
-  class(op_list) <- "OPERATOR"
-  return(op_list)
+    op_list <- list(value = value)
+    ## Set the name for the class
+    class(op_list) <- "OPERATOR"
+    return(op_list)
 }
 
 check.OPERATOR <- function(value) {
-  if(!is.null(value)) {
-    if(is.character(value) && length(value)>1)
-      stop("value: no multiple string")
-    
-    if(!is.character(value))
-      stop("value: is not a string")
-  }
+    if(!is.null(value)) {
+        if(is.character(value) && length(value)>1)
+            stop("value: no multiple string")
+        
+        if(!is.character(value))
+            stop("value: is not a string")
+    }
 }
 
 print.OPERATOR <- function(obj) {
-  as.character(obj)
+    as.character(obj)
 }
 
 as.character.OPERATOR <- function(obj) {
-  class <- class(obj)[1]
-  val <- obj$value
-  c(class,val)
+    class <- class(obj)[1]
+    val <- obj$value
+    c(class,val)
 }
 
 #' OPERATOR object class constructor
@@ -92,34 +92,34 @@ as.character.OPERATOR <- function(obj) {
 #' @export
 #'
 META <- function(value, type = NULL) {
-  check.OPERATOR(value)
-  
-  if(!is.null(type))
-    check.OPERATOR(type)
-  
-  list <- list(value = value,type = type)
-  ## Set the name for the class
-  class(list) <- c("META","OPERATOR")
-  return(list)
+    check.OPERATOR(value)
+    
+    if(!is.null(type))
+        check.OPERATOR(type)
+    
+    list <- list(value = value,type = type)
+    ## Set the name for the class
+    class(list) <- c("META","OPERATOR")
+    return(list)
 }
 
 print.META <- function(obj) {
-  as.character(obj)
+    as.character(obj)
 }
 
 as.character.META <- function(obj) {
-  class <- class(obj)[1]
-  val <- obj$value
-  type <- obj$type
-  c(class,val,type)
+    class <- class(obj)[1]
+    val <- obj$value
+    type <- obj$type
+    c(class,val,type)
 }
 
 check.META <- function(type) {
-  check.OPERATOR(value)
-  
-  value <- toupper(value)
-  if(!value %in% c("DOUBLE","INTEGER","STRING"))
-    stop("only DOUBLE or INTEGER or STRING")
+    check.OPERATOR(value)
+    
+    value <- toupper(value)
+    if(!value %in% c("DOUBLE","INTEGER","STRING"))
+        stop("only DOUBLE or INTEGER or STRING")
 }
 
 #' @name OPERATOR-Object
@@ -128,20 +128,20 @@ check.META <- function(type) {
 #' @export
 #'
 NIL <- function(type) {
-  check.NIL(type)
-  
-  list <- list(value = type)
-  ## Set the name for the class
-  class(list) <- c("NIL","OPERATOR")
-  return(list)
+    check.NIL(type)
+    
+    list <- list(value = type)
+    ## Set the name for the class
+    class(list) <- c("NIL","OPERATOR")
+    return(list)
 }
 
 check.NIL <- function(value) {
-  check.OPERATOR(value)
-  
-  value <- toupper(value)
-  if(!value %in% c("DOUBLE","INTEGER"))
-    stop("only DOUBLE or INTEGER")
+    check.OPERATOR(value)
+    
+    value <- toupper(value)
+    if(!value %in% c("DOUBLE","INTEGER"))
+        stop("only DOUBLE or INTEGER")
 }
 
 #' @name OPERATOR-Object
@@ -150,10 +150,10 @@ check.NIL <- function(value) {
 #' @export
 #'
 SQRT <- function(value) {
-  check.OPERATOR(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("SQRT","OPERATOR")
-  return(list)
+    check.OPERATOR(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("SQRT","OPERATOR")
+    return(list)
 }

@@ -47,31 +47,31 @@
 #' @aliases aggregate-method
 #' @export
 #' 
-setMethod("aggregate", "GMQLDataset",
-          function(x, groupBy = conds())
-          {
-            ptr_data = value(x)
-            gmql_merge(ptr_data, groupBy)
-          })
+setMethod(
+    "aggregate", 
+    "GMQLDataset",
+    function(x, groupBy = conds()) {
+        ptr_data = value(x)
+        gmql_merge(ptr_data, groupBy)
+})
 
 gmql_merge <- function(input_data, groupBy) {
-  if(!is.null(groupBy)) {
-    cond <- .join_condition(groupBy)
-    if(is.null(cond))
-      join_matrix <- .jnull("java/lang/String")
-    else
-      join_matrix <- .jarray(cond, dispatch = TRUE)
+    if(!is.null(groupBy)) {
+        cond <- .join_condition(groupBy)
+        if(is.null(cond))
+            join_matrix <- .jnull("java/lang/String")
+        else
+            join_matrix <- .jarray(cond, dispatch = TRUE)
+    } else
+        join_matrix <- .jnull("java/lang/String")
     
-  } else
-    join_matrix <- .jnull("java/lang/String")
-  
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  response <- WrappeR$merge(join_matrix, input_data)
-  error <- strtoi(response[1])
-  val <- response[2]
-  if(error)
-    stop(val)
-  else
-    GMQLDataset(val)
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    response <- WrappeR$merge(join_matrix, input_data)
+    error <- strtoi(response[1])
+    val <- response[2]
+    if(error)
+        stop(val)
+    else
+        GMQLDataset(val)
 }
 

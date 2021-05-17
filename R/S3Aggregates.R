@@ -4,57 +4,57 @@
 
 
 AGGREGATES <- function(value) {
-  op_list <- list(value = value)
-  ## Set the name for the class
-  class(op_list) <- "AGGREGATES"
-  return(op_list)
+    op_list <- list(value = value)
+    ## Set the name for the class
+    class(op_list) <- "AGGREGATES"
+    return(op_list)
 }
 
 check.META_AGGREGATES <- function(value) {
-  if(is.character(value) && length(value)>1)
-    stop("value: no multiple string")
-  
-  if(!is.character(value))
-    stop("value: is not a string")
+    if(is.character(value) && length(value)>1)
+        stop("value: no multiple string")
+    
+    if(!is.character(value))
+        stop("value: is not a string")
 }
 
 META_AGGREGATES <- function(value) {
-  op_list <- list(value = value)
-  ## Set the name for the class
-  class(op_list) <- "META_AGGREGATES"
-  return(op_list)
+    op_list <- list(value = value)
+    ## Set the name for the class
+    class(op_list) <- "META_AGGREGATES"
+    return(op_list)
 }
 
 print.META_AGGREGATES <- function(obj) {
-  res <- as.character(obj)
-  cat(res)
+    res <- as.character(obj)
+    cat(res)
 }
 
 as.character.META_AGGREGATES <- function(obj) {
-  class <- class(obj)[1]
-  val <- obj$value
-  c(class,val)
+    class <- class(obj)[1]
+    val <- obj$value
+    c(class,val)
 }
 
 take_value.META_AGGREGATES <- function(obj){
-  class <- class(obj)[1]
-  val <- obj$value
-  text <- switch(
-    class,
-    "SUM" = paste0("sum_",val),
-    "MIN" = paste0("min_",val),
-    "MAX" = paste0("max_",val),
-    "COUNT" = paste0("count"),
-    "BAG" = paste0("bag_",val),
-    "BAGD" = paste0("bagd_",val),
-    "AVG" = paste0("avg_",val),
-    "STD" = paste0("std_"),
-    "MEDIAN" = paste0("median_",val),
-    "Q1" = paste0("q1_",val),
-    "Q2" = paste0("q2_"),
-    "Q3" = paste0("q3_",val)
-  )
-  text
+    class <- class(obj)[1]
+    val <- obj$value
+    text <- switch(
+        class,
+        "SUM" = paste0("sum_",val),
+        "MIN" = paste0("min_",val),
+        "MAX" = paste0("max_",val),
+        "COUNT" = paste0("count"),
+        "BAG" = paste0("bag_",val),
+        "BAGD" = paste0("bagd_",val),
+        "AVG" = paste0("avg_",val),
+        "STD" = paste0("std_"),
+        "MEDIAN" = paste0("median_",val),
+        "Q1" = paste0("q1_",val),
+        "Q2" = paste0("q2_"),
+        "Q3" = paste0("q3_",val)
+    )
+    text
 }
 
 
@@ -169,12 +169,12 @@ take_value.META_AGGREGATES <- function(obj){
 #' @export
 #'
 SUM <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("SUM","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("SUM","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -183,14 +183,14 @@ SUM <- function(value) {
 #' @export
 #'
 COUNT <- function() {
-  list <- list()
-  ## Set the name for the class
-  class(list) <- c("COUNT","AGGREGATES","META_AGGREGATES")
-  return(list)
+    list <- list()
+    ## Set the name for the class
+    class(list) <- c("COUNT","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 as.character.COUNT <- function(obj) {
-  class <- class(obj)[1]
-  c(class,"")
+    class <- class(obj)[1]
+    c(class,"")
 }
 check.COUNT <- function(obj){}
 
@@ -201,14 +201,14 @@ check.COUNT <- function(obj){}
 #' @export
 #'
 COUNTSAMP <- function() {
-  list <- list()
-  ## Set the name for the class
-  class(list) <- c("COUNTSAMP","AGGREGATES","META_AGGREGATES")
-  return(list)
+    list <- list()
+    ## Set the name for the class
+    class(list) <- c("COUNTSAMP","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 as.character.COUNTSAMP <- function(obj) {
-  class <- class(obj)[1]
-  c(class,"")
+    class <- class(obj)[1]
+    c(class,"")
 }
 check.COUNTSAMP <- function(obj){}
 
@@ -219,12 +219,12 @@ check.COUNTSAMP <- function(obj){}
 #' @export
 #'
 MIN <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("MIN","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("MIN","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -233,12 +233,12 @@ MIN <- function(value) {
 #' @export
 #'
 MAX <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("MAX","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("MAX","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -247,12 +247,12 @@ MAX <- function(value) {
 #' @export
 #'
 AVG <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("AVG","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("AVG","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -261,12 +261,12 @@ AVG <- function(value) {
 #' @export
 #'
 MEDIAN <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("MEDIAN","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("MEDIAN","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 
@@ -276,12 +276,12 @@ MEDIAN <- function(value) {
 #' @export
 #'
 STD <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("STD","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("STD","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -290,12 +290,12 @@ STD <- function(value) {
 #' @export
 #'
 BAG <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("BAG","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("BAG","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -304,12 +304,12 @@ BAG <- function(value) {
 #' @export
 #'
 BAGD <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("BAGD","AGGREGATES","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("BAGD","AGGREGATES","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -318,12 +318,12 @@ BAGD <- function(value) {
 #' @export
 #'
 Q1 <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("Q1","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("Q1","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -332,11 +332,11 @@ Q1 <- function(value) {
 #' @export
 #'
 Q2 <- function(value) {
-  check.META_AGGREGATES(value)
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("Q2","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("Q2","META_AGGREGATES")
+    return(list)
 }
 
 #' @name AGGREGATES-Object
@@ -345,10 +345,10 @@ Q2 <- function(value) {
 #' @export
 #'
 Q3 <- function(value) {
-  check.META_AGGREGATES(value)
-  
-  list <- list(value = value)
-  ## Set the name for the class
-  class(list) <- c("Q3","META_AGGREGATES")
-  return(list)
+    check.META_AGGREGATES(value)
+    
+    list <- list(value = value)
+    ## Set the name for the class
+    class(list) <- c("Q3","META_AGGREGATES")
+    return(list)
 }

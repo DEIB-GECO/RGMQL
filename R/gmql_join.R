@@ -95,95 +95,107 @@
 #' @aliases merge,GMQLDataset,GMQLDataset-method
 #' @aliases merge-method
 #' @export
-setMethod("merge", c("GMQLDataset","GMQLDataset"),
-          function(x, y, genometric_predicate = NULL, 
-                   region_output = "CAT", joinBy = conds(), reg_attr = c(""))
-          {
-            ptr_data_x <- value(x)
-            ptr_data_y <- value(y)
-            gmql_join(ptr_data_x, ptr_data_y, 
-                      genometric_predicate, joinBy, region_output, reg_attr)
-          })
+setMethod(
+    "merge", 
+    c("GMQLDataset","GMQLDataset"),
+    function(
+        x, 
+        y, 
+        genometric_predicate = NULL, 
+        region_output = "CAT", 
+        joinBy = conds(), 
+        reg_attr = c("")
+    ) {
+        ptr_data_x <- value(x)
+        ptr_data_y <- value(y)
+        gmql_join(
+            ptr_data_x, 
+            ptr_data_y, 
+            genometric_predicate, 
+            joinBy, 
+            region_output, 
+            reg_attr)
+})
 
 
 gmql_join <- function(
-  left_data, 
-  right_data, 
-  genometric_predicate, 
-  joinBy, 
-  region_output,
-  reg_attributes
-) {
-  if(!is.null(genometric_predicate)) {
-    if(length(genometric_predicate) > 4)
-      stop("genometric_predicate: only 4 DISTAL condition")
-    
-    if(!is.list(genometric_predicate))
-      stop("genometric_predicate must be a list")
-    
-    if(!all(vapply(genometric_predicate, function(x) { is(x,"DISTAL") },
-      logical(1))))
-      stop("All elements should be DISTAL object")
-    
-    genomatrix <- t(vapply(genometric_predicate, function(x) {
-      new_value = as.character(x)
-      array <- c(new_value)
-    },character(2)))
-    
-    genomatrix <- .jarray(genomatrix, dispatch = TRUE)
-    
-  } else
-    genomatrix <- .jnull("java/lang/String")
-  
-  if(!is.null(joinBy)) {
-    cond <- .join_condition(joinBy)
-    if(is.null(cond))
-      join_matrix <- .jnull("java/lang/String")
-    else
-      join_matrix <- .jarray(cond, dispatch = TRUE)
-    
-  } else
-    join_matrix <- .jnull("java/lang/String")
-  
-  if(!identical(reg_attributes,"")) {
-    if(!is.character(reg_attributes))
-      stop("metadata: no valid input")
-    
-    reg_attributes <- reg_attributes[!reg_attributes %in% ""]
-    reg_attributes <- reg_attributes[!duplicated(reg_attributes)]
-    
-    if(!length(reg_attributes))
-      reg_attributes <- .jnull("java/lang/String")
-    else
-      reg_attributes <- .jarray(reg_attributes, dispatch = TRUE)
-    
-    if(is.null(genometric_predicate) && length(reg_attributes))
-      if(ouput %in% c("CAT","INT"))
-        stop("Both reg_attributes and genometric_predicate are defined: 
-                        output cannot be INT or CAT")
-    
-  } else
-    reg_attributes <- .jnull("java/lang/String")
-  
-  ouput <- toupper(region_output)
-  if(!ouput %in% c("CAT", "LEFT", "RIGHT", "INT", "BOTH", "RIGHT_DIST", 
-                   "LEFT_DIST"))
-    stop("region_output must be cat, left, right, right_dist, left_dist 
-                or int (intersection)")
-  
-  
-  WrappeR <- J("it/polimi/genomics/r/Wrapper")
-  response <- WrappeR$join(
-    genomatrix, 
-    join_matrix, 
-    ouput,reg_attributes,
     left_data, 
-    right_data
-  )
-  error <- strtoi(response[1])
-  val <- response[2]
-  if(error)
-    stop(val)
-  else
-    GMQLDataset(val)
+    right_data, 
+    genometric_predicate, 
+    joinBy, 
+    region_output,
+    reg_attributes
+) {
+    if(!is.null(genometric_predicate)) {
+        if(length(genometric_predicate) > 4)
+            stop("genometric_predicate: only 4 DISTAL condition")
+        
+        if(!is.list(genometric_predicate))
+            stop("genometric_predicate must be a list")
+        
+        distal_predicate <- vapply(genometric_predicate, function(x) { 
+            is(x,"DISTAL") 
+        }, logical(1))
+        if(!all(distal_predicate))
+            stop("All elements should be DISTAL object")
+        
+        genomatrix <- t(vapply(genometric_predicate, function(x) {
+            new_value = as.character(x)
+            array <- c(new_value)
+        },character(2)))
+        
+        genomatrix <- .jarray(genomatrix, dispatch = TRUE)
+        
+    } else
+        genomatrix <- .jnull("java/lang/String")
+    
+    if(!is.null(joinBy)) {
+        cond <- .join_condition(joinBy)
+        if(is.null(cond))
+            join_matrix <- .jnull("java/lang/String")
+        else
+            join_matrix <- .jarray(cond, dispatch = TRUE)
+    } else
+        join_matrix <- .jnull("java/lang/String")
+    
+    if(!identical(reg_attributes,"")) {
+        if(!is.character(reg_attributes))
+            stop("metadata: no valid input")
+        
+        reg_attributes <- reg_attributes[!reg_attributes %in% ""]
+        reg_attributes <- reg_attributes[!duplicated(reg_attributes)]
+        
+        if(!length(reg_attributes))
+            reg_attributes <- .jnull("java/lang/String")
+        else
+            reg_attributes <- .jarray(reg_attributes, dispatch = TRUE)
+        
+        if(is.null(genometric_predicate) && length(reg_attributes))
+            if(ouput %in% c("CAT","INT"))
+                stop("Both reg_attributes and genometric_predicate are defined: 
+                        output cannot be INT or CAT")
+    } else
+        reg_attributes <- .jnull("java/lang/String")
+    
+    ouput <- toupper(region_output)
+    if(!ouput %in% c("CAT", "LEFT", "RIGHT", "INT", "BOTH", "RIGHT_DIST", 
+                        "LEFT_DIST"))
+        stop("region_output must be cat, left, right, right_dist, left_dist 
+                or int (intersection)")
+    
+    
+    WrappeR <- J("it/polimi/genomics/r/Wrapper")
+    response <- WrappeR$join(
+        genomatrix, 
+        join_matrix, 
+        ouput,reg_attributes,
+        left_data, 
+        right_data
+    )
+    error <- strtoi(response[1])
+    val <- response[2]
+    if(error)
+        stop(val)
+    else
+        GMQLDataset(val)
 }

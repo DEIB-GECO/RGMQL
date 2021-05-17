@@ -2,28 +2,49 @@
 % Please edit documentation in R/show_all_metadata.R
 \name{show_all_metadata}
 \alias{show_all_metadata}
-\title{Create a metadata logical map}
+\title{Show a metadata cartesian product of all metadata present into the 
+dataset and the region sets}
 \usage{
-show_all_metadata(dataset_path)
+show_all_metadata(dataset, show_value = FALSE)
 }
 \arguments{
-\item{dataset_path}{string with GMQL dataset folder path}
+\item{dataset}{string with GMQL dataset folder path or remote dataset.
+In case of remote dataset to distinguish among private or public repository
+each name must be prefixed with "private." or "public." respectively.}
+
+\item{show_value}{whether or not show the value associated to metadata,
+otherwise only logical value (TRUE or FALSE) are shown.}
 }
 \value{
-Dataframe
+A Dataframe containing the mapping between metadata and 
+the regions set
 }
 \description{
-It creates a GRangesList from GMQL samples in dataset. 
-It reads sample files in GTF or GDM/tab-delimited format.
+It show the presence of the metadata keys in that specific regions set, 
+showing its value or just the logical value TRUE.
 }
 \examples{
 
-## This statement defines the path to the subdirectory "example" of the 
-## package "RGMQL" and imports as GRangesList the contained GMQL dataset
+## This statement defines the path to the sub-directory "example" of the 
+## package "RGMQL" and show all the metadata inside the GMQL dataset among
+## all the meta files and return a data-frame, viewing as logical value 
+## representing its presence or not for each region set.
 
 test_path <- system.file("example", "DATASET", package = "RGMQL")
-grl = import_gmql(test_path, TRUE)
+show_all_metadata(test_path)
 
+## This statement defines the path to the sub-directory "example" of the 
+## package "RGMQL" and show all the metadata inside the GMQL dataset among
+## all the meta files and return a data-frame, viewing also its value.
+
+test_path <- system.file("example", "DATASET", package = "RGMQL")
+show_all_metadata(test_path, show_value = TRUE)
+
+## This statement the remote dataset called "Example_Dataset_1" on public
+## repository and show all the metadata inside the GMQL dataset among
+## all the meta files and return a data-frame, viewing also its value.
+
+show_all_metadata("public.Example_Dataset_1", show_value = TRUE)
 
 }
 \seealso{

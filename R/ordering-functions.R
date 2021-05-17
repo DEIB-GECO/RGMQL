@@ -49,18 +49,18 @@
 #' @export
 #'
 DESC <- function(...) {
-  ords <- c(...)
-  ords = ords[!ords %in% ""]
-  ords = ords[!duplicated(ords)]
-  if(!length(ords))
-    order_matrix <- .jnull("java/lang/String")
-  else {
-    order_matrix <- t(vapply(ords, function(x) {
-      new_value = c("DESC",x)
-      matrix <- matrix(new_value)
-    },character(2)))
-  }
-  order_matrix
+    ords <- c(...)
+    ords = ords[!ords %in% ""]
+    ords = ords[!duplicated(ords)]
+    if(!length(ords))
+        order_matrix <- .jnull("java/lang/String")
+    else {
+        order_matrix <- t(vapply(ords, function(x) {
+            new_value = c("DESC",x)
+            matrix <- matrix(new_value)
+        },character(2)))
+    }
+    order_matrix
 }
 
 #' @name Ordering-Functions
@@ -69,16 +69,16 @@ DESC <- function(...) {
 #' @export
 #'
 ASC <- function(...) {
-  ords <- c(...)
-  ords = ords[!ords %in% ""]
-  ords = ords[!duplicated(ords)]
-  if(!length(ords))
-    order_matrix <- .jnull("java/lang/String")
-  else {
-    order_matrix <- t(vapply(ords, function(x) {
-      new_value = c("ASC",x)
-      matrix <- matrix(new_value)
-    },character(2)))
-  }
-  order_matrix
+    ords <- c(...)
+    ords = ords[!ords %in% ""]
+    ords = ords[!duplicated(ords)]
+    if(!length(ords))
+        order_matrix <- .jnull("java/lang/String")
+    else {
+        order_matrix <- t(vapply(ords, function(x) {
+            new_value = c("ASC",x)
+            matrix <- matrix(new_value)
+        },character(2)))
+    }
+    order_matrix
 }

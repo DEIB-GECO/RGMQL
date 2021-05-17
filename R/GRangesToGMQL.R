@@ -67,144 +67,150 @@
 #' @export
 #'
 export_gmql <- function(samples, dir_out, is_gtf) {
-  if(is_gtf)
-    .exportGMQL.gtf(samples,dir_out,is_gtf)
-  else
-    .exportGMQL.gdm(samples,dir_out,is_gtf)
+    if(is_gtf)
+        .exportGMQL.gtf(samples,dir_out,is_gtf)
+    else
+        .exportGMQL.gdm(samples,dir_out,is_gtf)
 }
 
 .exportGMQL.gdm <- function(samples, dir_out, to_GTF) {
-  .exportGMQL(samples,dir_out,to_GTF)
-  print("Export to GDM complete")
+    .exportGMQL(samples,dir_out,to_GTF)
+    print("Export to GDM complete")
 }
 
 .exportGMQL.gtf <- function(samples, dir_out,to_GTF) {
-  .exportGMQL(samples, dir_out, to_GTF)
-  print("Export to GTF complete")
+    .exportGMQL(samples, dir_out, to_GTF)
+    print("Export to GTF complete")
 }
 
 .exportGMQL <- function(samples, dir_out, to_GTF) {
-  if(!is(samples,"GRangesList"))
-    stop("samples must be a GrangesList")
-  
-  if(!dir.exists(dir_out))
-    dir.create(dir_out)
-  
-  files_sub_dir <- file.path(dir_out,"files")
-  dir.create(files_sub_dir)
-  cnt = .counter()
-  file_ext = ""
-  #col_names <- .get_schema_names(samples)
-  if(to_GTF) {
-    #write region
-    lapply(samples,function(x,dir){
-      #anonymusFile <- file()
-      sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
-      g <- rtracklayer::export(x,format = "gtf")
-      #lines <- readLines(sample_name)
-      lines <- g[-(1:3)] #delete first 3 lines
-      writeLines(lines,sample_name)
-      #close(anonymusFile)
-    },files_sub_dir)
-    file_ext = ".gtf"
+    if(!is(samples,"GRangesList"))
+        stop("samples must be a GrangesList")
     
-  } else {
-    #write region
-    lapply(samples,function(x,dir){
-      sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
-      region_frame <- data.frame(x)
-      region_frame <- region_frame[-4] # delete width column
-      region_frame$start = region_frame$start - 1
-      write.table(region_frame,sample_name,col.names = FALSE,
-                  row.names = FALSE, sep = '\t',quote = FALSE)
+    if(!dir.exists(dir_out))
+        dir.create(dir_out)
+    
+    files_sub_dir <- file.path(dir_out,"files")
+    dir.create(files_sub_dir)
+    cnt = .counter()
+    file_ext = ""
+    #col_names <- .get_schema_names(samples)
+    if(to_GTF) {
+        #write region
+        lapply(samples,function(x,dir){
+            #anonymusFile <- file()
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gtf"))
+            g <- rtracklayer::export(x,format = "gtf")
+            #lines <- readLines(sample_name)
+            lines <- g[-(1:3)] #delete first 3 lines
+            writeLines(lines,sample_name)
+            #close(anonymusFile)
+        },files_sub_dir)
+        file_ext = ".gtf"
+    } else {
+        #write region
+        lapply(samples,function(x,dir){
+            sample_name <- file.path(dir,paste0("S_",cnt(),".gdm"))
+            region_frame <- data.frame(x)
+            region_frame <- region_frame[-4] # delete width column
+            region_frame$start = region_frame$start - 1
+            write.table(
+                region_frame,
+                sample_name,
+                col.names = FALSE,
+                row.names = FALSE, 
+                sep = '\t',
+                quote = FALSE)
+        },files_sub_dir)
+        file_ext = ".gdm"
+    }
+    
+    cnt = .counter(0)
+    meta <- metadata(samples)
+    
+    #write metadata
+    lapply(meta,function(x,dir){
+        sample_name <- file.path(dir,paste0("S_",cnt(),file_ext))
+        .write_metadata(x,sample_name)
     },files_sub_dir)
-    file_ext = ".gdm"
-  }
-  
-  cnt = .counter(0)
-  meta <- metadata(samples)
-  
-  #write metadata
-  lapply(meta,function(x,dir){
-    sample_name <- file.path(dir,paste0("S_",cnt(),file_ext))
-    .write_metadata(x,sample_name)
-  },files_sub_dir)
-  
-  # first regions to get column names
-  col_names <- vapply(elementMetadata(samples[[1]]),class,character(1)) 
-  # write schema XML
-  .write_schema(col_names,files_sub_dir,to_GTF)
-  c = .counter(0)
+    
+    # first regions to get column names
+    col_names <- vapply(elementMetadata(samples[[1]]),class,character(1)) 
+    # write schema XML
+    .write_schema(col_names,files_sub_dir,to_GTF)
+    c = .counter(0)
 }
 
 .write_metadata <- function(meta_list,sample_name) {
-  #create my own list if metadata empty
-  if(!length(meta_list))
-    meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
-  
-  names_list <- names(meta_list)
-  value_list <- unlist(meta_list)
-  file_meta_name = paste0(sample_name,".meta")
-  data <- data.frame(names_list,value_list)
-  names(data) <- NULL
-  write.table(data,file_meta_name,row.names = FALSE,
-              col.names = FALSE, quote = FALSE,sep = '\t')
+    #create my own list if metadata empty
+    if(!length(meta_list))
+        meta_list <- list(Provider = "Polimi", Application = "R-GMQL")
+    
+    names_list <- names(meta_list)
+    value_list <- unlist(meta_list)
+    file_meta_name = paste0(sample_name,".meta")
+    data <- data.frame(names_list,value_list)
+    names(data) <- NULL
+    write.table(
+        data,
+        file_meta_name,
+        row.names = FALSE,
+        col.names = FALSE, 
+        quote = FALSE,
+        sep = '\t')
 }
 
 .write_schema <- function(columns,directory,to_GTF) {
-  if(to_GTF) {
-    names(columns) <- plyr::revalue(
-      names(columns),
-      c(type = "feature", phase = "frame")
-    )
-    fixed_element = c(
-      seqname = "character", source = "character", 
-      feature = "character",start = "long", end = "long", 
-      score = "numeric", strand = "character",
-      frame = "character")
-    node_list <- c(fixed_element, columns)
-    node_list <- node_list[!duplicated(names(node_list))]
+    if(to_GTF) {
+        names(columns) <- plyr::revalue(
+            names(columns),
+            c(type = "feature", phase = "frame")
+        )
+        fixed_element = c(
+            seqname = "character", source = "character", 
+            feature = "character",start = "long", end = "long", 
+            score = "numeric", strand = "character",
+            frame = "character")
+        node_list <- c(fixed_element, columns)
+        node_list <- node_list[!duplicated(names(node_list))]
+    } else {
+        fixed_element = c(
+            chr = "factor", 
+            left = "long", 
+            right = "long", 
+            strand = "character"
+        )
+        node_list <- c(fixed_element, columns)
+    }
     
-  } else {
-    fixed_element = c(
-      chr = "factor", 
-      left = "long", 
-      right = "long", 
-      strand = "character"
-    )
-    node_list <- c(fixed_element, columns)
-  }
-  
-  schema <- file.path(directory,"granges.xml")
-  root <- xml2::xml_new_root("gmqlSchemaCollection")
-  xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
-  xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
-  xml2::xml_add_child(root,"gmqlSchema")
-  gmqlSchema <- xml2::xml_child(root,1) #gmqlSchema
-  if(to_GTF) {
-    xml2::xml_attr(gmqlSchema,"type") <- "gtf"
-    xml2::xml_attr(gmqlSchema,"coordinate_system") <- "1-based"
+    schema <- file.path(directory,"granges.xml")
+    root <- xml2::xml_new_root("gmqlSchemaCollection")
+    xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
+    xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"
+    xml2::xml_add_child(root,"gmqlSchema")
+    gmqlSchema <- xml2::xml_child(root,1) #gmqlSchema
+    if(to_GTF) {
+        xml2::xml_attr(gmqlSchema,"type") <- "gtf"
+        xml2::xml_attr(gmqlSchema,"coordinate_system") <- "1-based"
+    } else {
+        xml2::xml_attr(gmqlSchema,"type") <- "tab"
+        xml2::xml_attr(gmqlSchema,"coordinate_system") <- "0-based"
+    }
     
-  } else {
-    xml2::xml_attr(gmqlSchema,"type") <- "tab"
-    xml2::xml_attr(gmqlSchema,"coordinate_system") <- "0-based"
-  }
-  
-  names_node <- names(node_list)
-  
-  mapply(function(type,text){
-    field <- xml2::xml_add_child(gmqlSchema,"field")
-    if(identical(type,"factor") || identical(type,"character"))
-      xml2::xml_attr(field,"type") <- "STRING"
-    else if(identical(type,"numeric") || identical(type,"integer"))
-      xml2::xml_attr(field,"type") <- "DOUBLE"
-    else if(identical(type,"long"))
-      xml2::xml_attr(field,"type") <- "LONG"
-    else
-      xml2::xml_attr(field,"type") <- "NULL"
-    xml2::xml_text(field) <- text
+    names_node <- names(node_list)
     
-  },node_list,names_node)
-  xml2::write_xml(root,schema)
+    mapply(function(type,text){
+        field <- xml2::xml_add_child(gmqlSchema,"field")
+        if(identical(type,"factor") || identical(type,"character"))
+            xml2::xml_attr(field,"type") <- "STRING"
+        else if(identical(type,"numeric") || identical(type,"integer"))
+            xml2::xml_attr(field,"type") <- "DOUBLE"
+        else if(identical(type,"long"))
+            xml2::xml_attr(field,"type") <- "LONG"
+        else
+            xml2::xml_attr(field,"type") <- "NULL"
+        xml2::xml_text(field) <- text
+        
+    },node_list,names_node)
+    xml2::write_xml(root,schema)
 }
-

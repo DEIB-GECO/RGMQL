@@ -95,6 +95,4 @@ CTCF_NORM_SCORE = select(data, metadata_update = list(normalized = 1),
     regions_update = list(new_score = (score / 1000.0) + 100), 
     regions = c("score"), all_but_reg = TRUE)
 
-
-
 }
