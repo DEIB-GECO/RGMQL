@@ -1,0 +1,2 @@
+DATA_SET_VAR = SELECT(biospecimen__admin__disease_code == "ACC") GRCh38_TCGA_gene_expression_2019_10;
+MATERIALIZE DATA_SET_VAR INTO RESULTS_ACC;

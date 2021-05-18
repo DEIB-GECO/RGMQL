@@ -9,3 +9,5 @@ doc
 .RData
 .*.zip
 *.Rproj
+/doc/
+/Meta/

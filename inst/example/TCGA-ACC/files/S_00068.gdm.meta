@@ -1,0 +1,247 @@
+biospecimen__admin__batch_number	304.64.0
+biospecimen__admin__bcr	Nationwide Children's Hospital
+biospecimen__admin__day_of_dcc_upload	1
+biospecimen__admin__disease_code	ACC
+biospecimen__admin__file_uuid	BA9E8278-E7C8-4F3E-ABA3-F7FE3E00657E
+biospecimen__admin__month_of_dcc_upload	7
+biospecimen__admin__year_of_dcc_upload	2016
+biospecimen__bio__bcr_analyte_barcode	TCGA-OR-A5JQ-01A-11R
+biospecimen__bio__bcr_portion_barcode	TCGA-OR-A5JQ-01A-11
+biospecimen__bio__bcr_sample_barcode	TCGA-OR-A5JQ-01A
+biospecimen__bio__biospecimen_barcode_bottom	0145632237
+biospecimen__bio__day_of_creation	28
+biospecimen__bio__day_of_shipment	08
+biospecimen__bio__days_to_index	0
+biospecimen__bio__gel_image_file	https://sharedoc.nchri.org/tcga-bcr/default.aspx
+biospecimen__bio__is_derived_from_ffpe	NO
+biospecimen__bio__month_of_creation	01
+biospecimen__bio__month_of_shipment	05
+biospecimen__bio__pathology_report_file_name	TCGA-OR-A5JQ.3AE0E638-5907-4B56-9C55-E58D97B27AFF.pdf
+biospecimen__bio__plate_column	3
+biospecimen__bio__plate_id	A29S
+biospecimen__bio__plate_row	E
+biospecimen__bio__portion_sequence	1
+biospecimen__bio__quantity	2.08
+biospecimen__bio__subportion_sequence	1
+biospecimen__bio__vial_number	A
+biospecimen__bio__volume	13.00
+biospecimen__bio__year_of_creation	2013
+biospecimen__bio__year_of_shipment	2013
+biospecimen__shared__bcr_patient_barcode	TCGA-OR-A5JQ
+biospecimen__shared__patient_id	A5JQ
+clinical__acc_shared__atypical_mitotic_figures	Atypical Mitotic Figures Absent
+clinical__acc_shared__cytoplasm_presence_less_than_equal_25_percent	Cytoplasm presence <= 25% Present
+clinical__acc_shared__diffuse_architecture	Diffuse Architecture Present
+clinical__acc_shared__excess_adrenal_hormone_history_type	None
+clinical__acc_shared__invasion_of_tumor_capsule	Invasion of Tumor Capsule Absent
+clinical__acc_shared__mitoses_count	3
+clinical__acc_shared__mitotane_therapy	NO
+clinical__acc_shared__mitotic_rate	Mitotic Rate > 5/50 HPF Absent
+clinical__acc_shared__necrosis	Necrosis Absent
+clinical__acc_shared__nuclear_grade_iii_iv	Nuclear Grade III or IV Present
+clinical__acc_shared__sinusoid_invasion	Sinusoid Invasion Present
+clinical__acc_shared__weiss_score	4
+clinical__acc_shared__weiss_venous_invasion	Venous Invasion Absent
+clinical__admin__day_of_dcc_upload	22
+clinical__admin__file_uuid	E34CCD32-21AB-4BB1-A2D0-489BB842F26F
+clinical__admin__month_of_dcc_upload	12
+clinical__admin__withdrawn	false
+clinical__clin_shared__age_at_initial_pathologic_diagnosis	26
+clinical__clin_shared__bcr_followup_barcode	TCGA-OR-A5JQ-F60580
+clinical__clin_shared__bcr_followup_uuid	9286CFC5-A483-4CB6-BFA3-BF6AB913294E
+clinical__clin_shared__ct_scan	YES
+clinical__clin_shared__ct_scan_findings	Normal
+clinical__clin_shared__day_of_form_completion	11
+clinical__clin_shared__days_to_initial_pathologic_diagnosis	0
+clinical__clin_shared__informed_consent_verified	YES
+clinical__clin_shared__laterality	Right
+clinical__clin_shared__lost_follow_up	NO
+clinical__clin_shared__month_of_form_completion	6
+clinical__clin_shared__person_neoplasm_cancer_status	TUMOR FREE
+clinical__clin_shared__post_surgical_procedure_assessment_thyroid_gland_carcinoma_status	No imaging evidence of disease
+clinical__clin_shared__postoperative_rx_tx	NO
+clinical__clin_shared__primary_lymph_node_presentation_assessment	NO
+clinical__clin_shared__primary_therapy_outcome_success	Complete Remission/Response
+clinical__clin_shared__radiation_therapy	NO
+clinical__clin_shared__residual_tumor	R0
+clinical__clin_shared__tissue_prospective_collection_indicator	NO
+clinical__clin_shared__tissue_retrospective_collection_indicator	YES
+clinical__clin_shared__tumor_tissue_site	Adrenal
+clinical__clin_shared__year_of_form_completion	2013
+clinical__clin_shared__year_of_initial_pathologic_diagnosis	2006
+clinical__nte__new_tumor_event_after_initial_treatment	NO
+clinical__shared__germline_testing_performed	NO
+clinical__shared__histological_type	Adrenocortical Carcinoma- Myxoid Type
+clinical__shared__history_of_neoadjuvant_treatment	No
+clinical__shared__other_dx	No
+clinical__shared_stage__clinical_m	M0
+clinical__shared_stage__pathologic_n	N0
+clinical__shared_stage__pathologic_t	T2
+gcm_curated__age	9667
+gcm_curated__alt_biosample_source_id	TCGA-OR-A5JQ-01A
+gcm_curated__alt_donor_source_id	TCGA-OR-A5JQ
+gcm_curated__alt_item_source_id	TCGA-OR-A5JQ-01A-11R-A29S-07
+gcm_curated__assembly	GRCh38
+gcm_curated__biological_replicate_count	1
+gcm_curated__biological_replicate_number	1
+gcm_curated__biosample_source_id	98650d6c-1eae-4a75-9afc-7785229e1d99
+gcm_curated__biosample_type	tissue
+gcm_curated__case_source_id	199560cb-15e5-4276-865a-7d44d47c856c
+gcm_curated__checksum	62c6e798745329419e9d0975594a6eb9
+gcm_curated__data_type	Gene Expression Quantification
+gcm_curated__dataset_name	GRCh38_TCGA_gene_expression_2019_10
+gcm_curated__date	2019-09-12T10:51:30.000000+02:00
+gcm_curated__disease	Adrenocortical Carcinoma
+gcm_curated__donor_source_id	199560cb-15e5-4276-865a-7d44d47c856c
+gcm_curated__ethnicity	white
+gcm_curated__external_reference	https://portal.gdc.cancer.gov/cases/199560cb-15e5-4276-865a-7d44d47c856c
+gcm_curated__feature	gene expression
+gcm_curated__file_format	BED
+gcm_curated__file_name	f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq.bed
+gcm_curated__gender	female
+gcm_curated__is_annotation	false
+gcm_curated__is_healthy	false
+gcm_curated__item_source_id	f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq
+gcm_curated__local_url	http://www.gmql.eu/gmql-rest/datasets/public.GRCh38_TCGA_gene_expression_2019_10/f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq/region
+gcm_curated__pipeline	HTSeq - Counts, HTSeq - FPKM, HTSeq - FPKM-UQ
+gcm_curated__project_name	TCGA-ACC
+gcm_curated__replicate_source_id	98650d6c-1eae-4a75-9afc-7785229e1d99
+gcm_curated__size	5085269
+gcm_curated__source	TCGA
+gcm_curated__source_page	https://portal.gdc.cancer.gov/files/65dd3f04-2344-497a-abb3-274d34ba0089,https://portal.gdc.cancer.gov/files/5161959f-f949-4c6e-bbf6-438af0b5ecf6,https://portal.gdc.cancer.gov/files/d3e4d75e-6d22-40fb-b25c-1fbac066bf63
+gcm_curated__source_site	University of Michigan
+gcm_curated__source_url	ftp://geco.deib.polimi.it/opengdc/bed/tcga/tcga-acc/gene_expression_quantification/f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq.bed
+gcm_curated__species	Homo sapiens
+gcm_curated__technical_replicate_count	1
+gcm_curated__technical_replicate_number	1_1
+gcm_curated__technique	RNA-Seq
+gcm_curated__tissue	Adrenal gland
+gdc__access	open
+gdc__acl	open
+gdc__aliquots__aliquot_id	f0461f9a-e85e-42c6-8f4b-e5974a0e78f8
+gdc__aliquots__concentration	0.16
+gdc__aliquots__source_center	23
+gdc__aliquots__submitter_id	TCGA-OR-A5JQ-01A-11R-A29S-07
+gdc__aliquots__updated_datetime	2018-11-27T11:28:33.071816-06:00
+gdc__analysis__analysis_id	85189111-144f-4d58-948e-47293ee8aa85,ed2b8554-9466-4abf-900a-f9b72bbb02e0,3cfe6274-8810-4673-b16d-29be4bcdd993
+gdc__analysis__workflow_link	https://github.com/NCI-GDC/htseq-cwl
+gdc__analysis__workflow_type	HTSeq - FPKM,HTSeq - Counts,HTSeq - FPKM-UQ
+gdc__analysis__workflow_version	v1
+gdc__analytes__a260_a280_ratio	1.79
+gdc__analytes__analyte_id	7a2c4515-f160-42ea-ab81-8673fc3e241f
+gdc__analytes__analyte_type	RNA
+gdc__analytes__analyte_type_id	R
+gdc__analytes__concentration	0.16
+gdc__analytes__spectrophotometer_method	UV Spec
+gdc__case_id	199560cb-15e5-4276-865a-7d44d47c856c
+gdc__center__center_id	ee7a85b3-8177-5d60-a10c-51180eb9009c
+gdc__center__center_type	CGCC
+gdc__center__code	07
+gdc__center__name	University of North Carolina
+gdc__center__namespace	unc.edu
+gdc__center__short_name	UNC
+gdc__created_datetime	2016-05-26T21:17:51.180169-05:00,2016-05-26T21:17:50.753249-05:00,2016-05-26T21:17:50.977363-05:00
+gdc__data_category	Transcriptome Profiling
+gdc__data_format	TXT
+gdc__data_type	Gene Expression Quantification
+gdc__demographic__age_at_index	26
+gdc__demographic__days_to_birth	-9667
+gdc__demographic__demographic_id	9dbe780a-9c93-53b7-9ebb-97b8144b5021
+gdc__demographic__ethnicity	not reported
+gdc__demographic__gender	female
+gdc__demographic__race	white
+gdc__demographic__vital_status	Alive
+gdc__demographic__year_of_birth	1980
+gdc__diagnoses__age_at_diagnosis	9667
+gdc__diagnoses__ajcc_clinical_m	M0
+gdc__diagnoses__ajcc_pathologic_n	N0
+gdc__diagnoses__ajcc_pathologic_t	T2
+gdc__diagnoses__classification_of_tumor	not reported
+gdc__diagnoses__days_to_diagnosis	0
+gdc__diagnoses__days_to_last_follow_up	1103
+gdc__diagnoses__diagnosis_id	c2eb1f50-1144-5b70-a71c-d3d19524f7db
+gdc__diagnoses__last_known_disease_status	not reported
+gdc__diagnoses__morphology	8370/3
+gdc__diagnoses__primary_diagnosis	Adrenal cortical carcinoma
+gdc__diagnoses__prior_malignancy	no
+gdc__diagnoses__prior_treatment	No
+gdc__diagnoses__progression_or_recurrence	not reported
+gdc__diagnoses__site_of_resection_or_biopsy	Cortex of adrenal gland
+gdc__diagnoses__tissue_or_organ_of_origin	Cortex of adrenal gland
+gdc__diagnoses__tumor_grade	not reported
+gdc__diagnoses__tumor_stage	stage ii
+gdc__diagnoses__year_of_diagnosis	2006
+gdc__disease_type	Adenomas and Adenocarcinomas
+gdc__experimental_strategy	RNA-Seq
+gdc__exposures__alcohol_history	Not Reported
+gdc__exposures__exposure_id	68e8bc24-39a5-591e-8e08-839a00350e56
+gdc__file_id	65dd3f04-2344-497a-abb3-274d34ba0089,5161959f-f949-4c6e-bbf6-438af0b5ecf6,d3e4d75e-6d22-40fb-b25c-1fbac066bf63
+gdc__file_name	0f0d217b-a02f-4742-a28c-723e3ede643f.FPKM.txt.gz,0f0d217b-a02f-4742-a28c-723e3ede643f.htseq.counts.gz,0f0d217b-a02f-4742-a28c-723e3ede643f.FPKM-UQ.txt.gz
+gdc__file_size	501568,251022,503054
+gdc__input_files__access	controlled
+gdc__input_files__data_category	Sequencing Reads
+gdc__input_files__data_format	BAM
+gdc__input_files__data_type	Aligned Reads
+gdc__input_files__experimental_strategy	RNA-Seq
+gdc__input_files__file_id	bc224791-fbdc-43b6-860f-0d5ae42a03a0
+gdc__input_files__file_name	97da8db7-a1e9-40bb-b1c6-183682cc32c5_gdc_realn_rehead.bam
+gdc__input_files__file_size	9003239527
+gdc__input_files__md5sum	34ed9ed313c63a2ea82e6e9d0b50ffec
+gdc__input_files__platform	Illumina
+gdc__md5sum	8b35f068fb9f0798c0b19a578621d5cc,93c9ba8b6f74c4f531a3139929695cef,e1f0811b2fb9c84a150c326b275c52ab
+gdc__portions__is_ffpe	false
+gdc__portions__portion_id	3e026aba-9f55-4e5f-a324-b6a3df958ee2
+gdc__portions__portion_number	11
+gdc__portions__weight	30.0
+gdc__primary_site	Adrenal gland
+gdc__program__dbgap_accession_number	phs000178
+gdc__program__name	TCGA
+gdc__program__program_id	b80aa962-9650-5110-b3eb-bd087da808db
+gdc__project__disease_type	Adrenocortical Carcinoma
+gdc__project__project_id	TCGA-ACC
+gdc__project__releasable	false
+gdc__project__released	true
+gdc__samples__days_to_collection	2520
+gdc__samples__initial_weight	40.0
+gdc__samples__is_ffpe	false
+gdc__samples__oct_embedded	true
+gdc__samples__pathology_report_uuid	3AE0E638-5907-4B56-9C55-E58D97B27AFF
+gdc__samples__sample_id	98650d6c-1eae-4a75-9afc-7785229e1d99
+gdc__samples__sample_type	Primary Tumor
+gdc__samples__sample_type_id	01
+gdc__samples__tissue_type	Not Reported
+gdc__slides__percent_lymphocyte_infiltration	0.0
+gdc__slides__percent_monocyte_infiltration	0.0
+gdc__slides__percent_necrosis	0.0
+gdc__slides__percent_neutrophil_infiltration	0.0
+gdc__slides__percent_normal_cells	0.0
+gdc__slides__percent_stromal_cells	0.0
+gdc__slides__percent_tumor_cells	100.0
+gdc__slides__percent_tumor_nuclei	95.0
+gdc__slides__section_location	TOP
+gdc__slides__slide_id	31e41b6f-330d-4cce-8151-d91459b1e38a
+gdc__submitter_id	0f0d217b-a02f-4742-a28c-723e3ede643f_fpkm,0f0d217b-a02f-4742-a28c-723e3ede643f_count,0f0d217b-a02f-4742-a28c-723e3ede643f_uqfpkm
+gdc__tissue_source_site__bcr_id	NCH
+gdc__tissue_source_site__code	OR
+gdc__tissue_source_site__name	University of Michigan
+gdc__tissue_source_site__tissue_source_site_id	2ff9cebf-b83f-5ec2-aae4-3aa1bf1bb02d
+gdc__treatments__treatment_id	934383f8-2f84-5619-8abe-80d1cd7778fa
+gdc__treatments__treatment_or_therapy	no
+gdc__treatments__treatment_type	Pharmaceutical Therapy, NOS,Pharmaceutical Therapy, NOS
+gdc__type	gene_expression
+gdc__updated_datetime	2019-09-18T14:38:42.659845+00:00
+manually_curated__data_format	BED
+manually_curated__download_date	2019-11-05T21:20:41.406+01:00
+manually_curated__exp_data_bed_url	ftp://geco.deib.polimi.it/opengdc/bed/tcga/tcga-acc/gene_expression_quantification/f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq.bed
+manually_curated__exp_metadata_url	ftp://geco.deib.polimi.it/opengdc/bed/tcga/tcga-acc/gene_expression_quantification/f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq.bed.meta
+manually_curated__genome_built	GRCh38
+manually_curated__local_file_size	5085270
+manually_curated__local_md5	76dadb6959d125b800df9f387f228053
+manually_curated__opengdc_download_date	2019-09-12T10:51:30.000000+02:00
+manually_curated__opengdc_file_md5	62c6e798745329419e9d0975594a6eb9
+manually_curated__opengdc_file_size	5085269
+manually_curated__opengdc_id	f0461f9a-e85e-42c6-8f4b-e5974a0e78f8-geq
+manually_curated__origin_file_size	5085269
+manually_curated__origin_last_modified_date	Mon Sep 30 16:52:00 CEST 2019
+manually_curated__origin_md5	62c6e798745329419e9d0975594a6eb9
+manually_curated__tissue_status	tumoral

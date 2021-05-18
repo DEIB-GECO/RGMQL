@@ -1,13 +1,12 @@
 ---
 title: "RGMQL: GenoMetric Query Language for R/Bioconductor"
 author: 
-- "Simone Pallotta"
+- "Simone Pallotta" 
 - "Marco Masseroli"
 date: "`r Sys.Date()`"
 bibliography: bibliography.bib
 csl: american-medical-association-no-et-al.csl
-output: 
-  BiocStyle::pdf_document:
+output: BiocStyle::html_document
 vignette: >
     %\VignetteEncoding{UTF-8}
     %\VignetteIndexEntry{RGMQL: GenoMetric Query Language for R/Bioconductor}
@@ -16,6 +15,7 @@ link-citations: true
 editor_options: 
   markdown: 
     wrap: 72
+  chunk_output_type: console
 ---
 
 # Introduction
@@ -64,11 +64,15 @@ programming languages, but used to the R/Bioconductor environment. This
 package is built over a GMQL scalable data management engine written in
 Scala programming language, released as Scala API [@githubrepo]
 providing a set of functions to combine, manipulate, compare, and
-extract genomic data from different data sources both from local and
-remote datasets. These functions, built extending functionalities
-available in the R/Bioconductor framework, allow performing complex GMQL
-processing and queries without knowledge of GMQL syntax, but leveraging
-on R idiomatic paradigm and logic.
+extract heterogenous genomic data collected both on local and remote
+datasets and thus coming from different data sources. These functions,
+built extending functionalities available in the R/Bioconductor
+framework, allow performing complex GMQL processing and queries without
+knowledge of GMQL syntax, but leveraging on R idiomatic paradigm and
+logic. Additionally, RGMQL allows to use indistinctly local processing
+on the user machine and remote query outsourcing (i.e. assign the
+computations to a remote GMQL service), in both cases working seamlessly
+on local or remote data.
 
 # Genomic Data Model
 
@@ -81,20 +85,19 @@ models, it clearly divides, and comprehensively manages, observations
 about genomic regions and metadata. GDM provides a flat attribute based
 organization, just requiring that each dataset is associated with a
 given data schema, which specifies the attributes and their type of
-region data. The first attributes of such schema are fixed (chr, left,
-right, strand); they represent the genomic region identifying
-coordinates. In addition, metadata have free attribute-value pair
-format.
+region data. The first attributes of such schema are fixed (chr, start,
+stop strand); they represent the genomic region identifying coordinates.
+In addition, metadata have free attribute-value pair format.
 
 ## Genomic Region
 
 Genomic region data describe a broad variety of biomolecular aspects and
 are very valuable for biomolecular investigation. A genomic region is a
 portion of a genome, qualified by a quadruple of values called region
-coordinates: $$< chr, left, right, strand >$$ Regions can have
-associated an arbitrary number of attributes with their value, according
-to the processing of DNA, RNA or epigenomic sequencing reads that
-determined the region.
+coordinates: $$< chr, start, stop, strand >$$Regions can have associated
+an arbitrary number of attributes with their value, according to the
+processing of DNA, RNA or epigenomic sequencing reads that determined
+the region.
 
 ## Metadata
 
@@ -226,9 +229,9 @@ Load and attach the RGMQL package in a R session using library function:
 library('RGMQL')
 ```
 
-RGMQL depends on another packaage *RGMQLlib* automatically installed and
-loaded once install and loaded *RGMQL*; if not, you can install it from
-Bioconductor and load it using:
+RGMQL depends on another package called *RGMQLlib* automatically
+installed when installing *RGMQL* and loaded each time *RGMQL* is loaded
+; if not, you can install it from Bioconductor and load it using:
 
 ```{r, initialization_RGMQLlib}
 library('RGMQLlib')
@@ -250,9 +253,17 @@ help(RGMQL)).
 ### Read Dataset
 
 After initialization, we need to read datasets. We already defined above
-the formal definition of dataset and the power of GMQL to deal with data
-in a variety of standard tab-delimited text formats. In the following,
-we show how to get data from different sources.
+the formal definition of dataset and the power of GMQL and its Genomic
+Data Model to deal with data in a variety of common tab-delimited text
+formats, among which SAM (Sequence Alignment/Map), VCF (Variant Call
+Format), NARROWPEAK (for called peaks produced by NGS ChIP-seq or
+DNase-seq methods) and BED (Browser Extensible Data) formats, as well
+all the formats describing experimental datasets (e.g., copy number
+variations, DNA somatic mutations, or gene expressions) and annotations
+(e.g., about transcription start sites, genes, enhancers or CpG
+islands).
+
+In the following, we show how to get data from different sources.
 
 We distinguish two different cases:
 
@@ -283,7 +294,7 @@ library("GenomicRanges")
 # and GC  = 0.45
 
 gr1 <- GRanges(seqnames = "chr2",
-    ranges = IRanges(103, 106), strand = "+", score = 5L, GC = 0.45)
+    ranges = IRanges(103, 106), strand = "+", score = 5, GC = 0.45)
 
 # Granges Object with two regions both chr1 and two metadata columns: score = 3
 # for the fist region and score = 4 for the second one, GC  = 0.3 and 0.5 
@@ -302,7 +313,7 @@ above, we can directly read a list of GRanges previously created
 starting from two GRanges. Both *read_GRangesList()* and *read_gmql()*
 functions return a result object, in this case *data_out*: an instance
 of GMQLDataset class used as input for executing the subsequent GMQL
-operation.\newline NOTE: if *metadata(grl)* is empty, the function
+operation.\newline NOTE: if grl\@*metadata* is empty, the function
 provides two default metadata:
 
 -   "provider" = "PoliMi"
@@ -317,10 +328,10 @@ of select, union, project, difference (and so on ...) commands.
 
 Let us see a short example:
 
-Find somatic mutations in exons. Consider mutation data samples of human
-breast cancer cases. For each sample, quantify the mutations in each
-exon and select the exons with at least one mutation. Return the list of
-samples ordered by the number of such exons.
+Find somatic mutations in exon regions. Consider mutation data samples
+of human breast cancer cases. For each sample, quantify the mutations in
+each exon and select the exons with at least one mutation. Return the
+list of samples ordered by the number of such exons.
 
 ```{r, query}
 
@@ -332,23 +343,24 @@ mut_path <- system.file("example", "MUT", package = "RGMQL")
 
 # Read EXON folder as a GMQL dataset named "exon_ds" containing a single 
 # sample with exon regions, and MUT folder as a GMQL dataset named "mut_ds" 
-# containing multiple samples with mutation regions
 
 exon_ds <- read_gmql(exon_path)
 mut_ds <- read_gmql(mut_path)
 
-# Filter out mut_ds based on predicate 
+# Filter out mut_ds based on a metadata predicate to keep breast cancer 
+# mutations only
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-# Filter out exon_ds based on predicate 
+# Filter out exon_ds based on a metadata predicate to keep Refseq exons only
 
 exon = filter(exon_ds, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-# For each mutation sample, count mutations within each exon while 
-# mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, map the mutations to the exon regions using 
+# the map() function and count mutations within each exon storing the value
+# in the default region attribute 'count_left_right'
 
 exon1 <- map(exon, mut)
 
@@ -368,7 +380,7 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
 
 If you want to store persistently the result, you can materialize it
-into specific path defined as input parameter.
+into a specific path defined as input parameter.
 
 ```{r, materialize}
 # Materialize the result dataset on disk
@@ -376,7 +388,13 @@ collect(exon_res)
 ```
 
 By default *collect()* has R working directory as storing path and *ds1*
-as name of resulted dataset folder.
+as name of resulted dataset folder. Alternatively, we can specificy a
+different storing path and folder name as follows.+
+
+```{r, materializeElsewhere}
+# Materialize the result dataset into a specific folder on disk
+collect(exon_res, dir_out = "./WD_R", name = "dataset") #, 
+```
 
 ### Execution
 
@@ -394,22 +412,26 @@ present in the query. After the execution, the context of scalable data
 management engine is stopped and a new invocation of *init_gmql()* is
 needed.
 
-Beside *execute()* we can use:
+Alternatively to or before *execute()* we can use:
 
 ```{r, take,eval=FALSE}
 g <- take(exon_res, rows = 45)
 ```
 
-to execute all *collect()* commands in the RGMQL query and extract data
-as GRangesList format, a GRangesList for each *collect()* and a GRanges
-for each sample. NOTE: GRangesList are contained in the R environment
-and are not saved on disk.
+to execute all the RGMQL coomands and extract data as GRangesList format
+in main memory. Specifically a GRangesList for each dataset and a
+GRanges for each sample is obtained.
+
+NOTE: take() function works in local processing only and does not
+require a previous collect() function. Yet, GRangesList are contained in
+the R environment and are not saved on disk: *collect()* and *execute()*
+functions are needed to save data in mass memory
 
 With the *rows* parameter it is possible to specify how many rows, for
 each sample inside the input dataset, are extracted; by default, the
 *rows* parameter value is $0$, that means all rows are extracted. Note
-that, since we are working with big data, to extract all rows could be
-very time and space consuming.
+that, when dealing with big data, extracting all rows could be time
+demanding and very space consuming in main memory.
 
 ## Remote Processing {#remote-processing}
 
@@ -422,32 +444,41 @@ Remote processing exists in two flavour:
     original GMQL syntax) to be executed remotely on remote data (or
     local data previously uploaded).
 
--   Batch execution: \newline Similar to local execution; user reads
-    data and the system automatically uploads them on the remote system
-    if they are not already there; once loaded, RGMQL functions can be
-    issued to manage and process remote data.
+-   Sequential execution: \newline Similar to local execution; user
+    reads data and the system automatically uploads them on the remote
+    system if they are not already there; once loaded, RGMQL functions
+    can be issued to manage and process remote data.
 
 ### REST Web Services
 
 This RGMQL package allows invoking REST services that implement the
-commands specified at
-[link](http://genomic.deib.polimi.it/gmql-rest/swagger/).
+commands specified at [link](http://www.gmql.eu/gmql-rest/swagger).
 
 #### Initialization
 
-GMQL REST services require login; so, the first step is to perform logon
+GMQL REST services require login; so, the first step is to perform login
 with user and password, or as guest. Upon successful logon, you get a
 request token that you must use in every subsequent REST call. Login can
-be performed using the *login_gmql()* function:
+be performed using the *login_gmql()* function as a guest:
 
-```{r, init with login}
-test_url = "http://www.gmql.eu/gmql-rest/"
+```{r, init with guest login}
+test_url = "http://www.gmql.eu/gmql-rest"
 login_gmql(test_url)
 ```
 
-It saves the token in the Global R environment within the variable named
-*authToken*. With this token you can call all the functions in the GMQL
-REST web services suite.
+Alternatively, login can be performed specifying previously defined user
+name and password, as to access each time the same private space on the
+GMQL remote repository. To create a new user registration, it is enough
+to use *register_gmql()*, specyfing all the needed parameters.
+
+```{r, init with login}
+test_url = "http://www.gmql.eu/gmql-rest"
+login_gmql(test_url, username = 'myname', password = 'mypassword')
+```
+
+Login saves a token in the Global R environment within the variable
+named *authToken*. With this token you can call all the functions in the
+GMQL REST Web services suite.
 
 #### Execution
 
@@ -476,11 +507,11 @@ invoke log and trace calls, both in this RGMQL package, to check for job
 completed status.
 
 ```{r, trace, eval = FALSE}
-jod_id <- job$id
-trace_job(test_url, jod_id)
+job_id <- job$id
+trace_job(test_url, job_id)
 ```
 
-Then, results materialized on the remote repository can by downloaded
+Then, results materialized on the remote repository can be downloaded
 locally and imported in GRangesList using the functions in this RGMQL
 package [(see Import/Export)](#utilities).
 
@@ -491,18 +522,11 @@ can be downloaded locally with:
 ```{r, download, eval = FALSE}
 name_dataset <- job$datasets[[1]]$name
 download_dataset(test_url, name_dataset)
+
 ```
 
 By default *download_dataset()* has R working directory as local storing
 path.
-
-Once download is done, we can logout from remote repository using:
-
-```{r, logout}
-logout_gmql(test_url)
-```
-
-*logout_gmql()* deletes the $authToken$ from R environment.
 
 Downloaded result dataset can be then imported and used in the R
 environment as GRangesList [(see Import/Export)](#utilities).
@@ -512,11 +536,18 @@ imported in the R environment as GRangesList using the function
 
 ```{r, download_as_GRangesList, eval=FALSE}
 name_dataset <- job$datasets[[1]]$name
-grl = download_as_GRangesList(remote_url, name_dataset)
-
+grl = download_as_GRangesList(test_url, name_dataset)
 ```
 
-### Batch Execution
+Once download is done, we can logout from remote repository using:
+
+```{r, logout}
+logout_gmql(test_url)
+```
+
+*logout_gmql()* deletes the $authToken$ from R environment.
+
+### Sequential Execution
 
 This execution type is similar to local processing (syntax, functions,
 and so on ...) except that materialized data are stored only on the
@@ -525,9 +556,10 @@ imported in GRangesList using the functions in this RGMQL package [(see
 Import/Export)](#utilities).
 
 Before starting with an example, note that we have to log into remote
-infrastructure with login function:
+infrastructure with *login_gmql()* function:
 
 ```{r, login remote, eval = FALSE}
+test_url = "http://www.gmql.eu/gmql-rest"
 login_gmql(test_url)
 ```
 
@@ -537,49 +569,54 @@ Otherwise, we can initialize the data engine with a remote url:
 init_gmql(url = test_url)
 ```
 
-In this way login is automatically performed as specified above.
-
-After initialization we have to change to remote processing:
+In this way login is automatically performed as specified above while,
+by default, remote processing mode is set to FALSE. Thus, to proceed
+with query outsourcing we have to change to remote processing after
+initialization:
 
 ```{r, change processing mode}
 remote_processing(TRUE)
 ```
 
-or alternatively, instead of switching mode, we can initilize the data
-engine setting remote processing as TRUE:
+Alternatively, instead of switching mode, we can initialize the data
+engine by setting remote processing as TRUE, in the corresponding
+*init_gmql* parameter:
 
 ```{r, init remote processing }
 init_gmql(url = test_url, remote_processing = TRUE)
 ```
 
-Once done, we can start building our query:
+Once done, we can start building the query that will be processed
+remotely:
 
 ```{r, remote query}
 
-## Read the remote dataset Example_Dataset_1 
-## Read the remote dataset Example_Dataset_2 
+## Read the remote dataset HG19_TCGA_dnaseq
+## Read the remote dataset HG19_BED_ANNOTATION
 
-TCGA_dnaseq <- read_gmql("public.Example_Dataset_1", is_local = FALSE)
-HG19_bed_ann <- read_gmql("public.Example_Dataset_2", is_local = FALSE)
+TCGA_dnaseq <- read_gmql("public.HG19_TCGA_dnaseq", is_local = FALSE)
+HG19_bed_ann <- read_gmql("public.HG19_BED_ANNOTATION", is_local = FALSE)
 
-## Filter out TCGA_dnaseq based on predicate 
+# Filter out mut_ds based on a metadata predicate to keep breast cancer 
+# mutations only
 
 mut = filter(TCGA_dnaseq, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
-# Filter out HG19_bed_ann based on predicate 
+# Filter out exon_ds based on a metadata predicate to keep Refseq exons only 
 
 exon = filter(HG19_bed_ann, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-# For each mutation sample, count mutations within each exon while 
-# mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, map the mutations to the exon regions using 
+# the map() function and count mutations within each exon storing the value
+# in the default region attribute 'count_left_right'
 
 exon1 <- map(exon, mut)
 
 # Remove exons in each sample that do not contain mutations
 
-exon2 <- filter(exon1, count_left_right >= 1)
+exon2 <- filter(exon1, r_predicate = count_left_right >= 1)
 
 # Using the extend() function, count how many exons remain in each sample and
 # store the result in the sample metadata as a new attribute-value pair, 
@@ -592,40 +629,40 @@ exon3 <- extend(exon2, exon_count = COUNT())
 exon_res = arrange(exon3, list(DESC("exon_count")))
 ```
 
-N.B. in case of remote processing we have to specify the name of the
-output dataset (not necessary the same as imput) as the second parameter
-in order to correctly process the qeury on the remote GMQL system. Here
-is the R code we use:
+N.B. In case of remote processing, for *collect()* function we have to
+specify the name of the output dataset (not necessarily the same as
+input) as the second parameter in order to correctly process the query
+on the remote GMQL system. Here it is the needed R code:
 
 ```{r, remote materialize, eval = FALSE}
-collect(exon_res,"exon_res")
+collect(exon_res, name="exon_res_folder")
 ```
 
 ```{r, remote execute, eval = FALSE}
-execute()
+job<-execute()
 ```
 
-In this case R processing continues until remote processing ends. With
-remote processing, after the execution, the context of scalable data
-management engine is not stopped, and can be used for further queries.
-Materialized datasets are stored only remotely, from where they can be
-downloaded and directly imported into the R environment as GRangesList
-using the function *download_as_GRangesList()*:
-
-```{r, download_as_GRangesList_2, eval=FALSE}
-name_dataset <- job$datasets[[1]]$name
-grl = download_as_GRangesList(remote_url, name_dataset)
-```
-
-Alternatively, the remote materialized dataset can be first downloaded
-and stored locally:
+In this case R processing continues until the remote processing ends.
+With remote processing, after the execution, the context of the scalable
+data management engine is not stopped, and can be used for further
+queries. Materialized datasets are stored only remotely, from where they
+can be downloaded and stored on local disk:
 
 ```{r, download_2, eval = FALSE}
 name_dataset <- job$datasets[[1]]$name
 download_dataset(test_url, name_dataset)
 ```
 
-and then imported in the R environment as GRangesList [(see
+and/or directly imported into the R environment as GRangesList using the
+function *download_as_GRangesList()*:
+
+```{r, download_as_GRangesList_2, eval=FALSE}
+name_dataset <- job$datasets[[1]]$name
+grl = download_as_GRangesList(test_url, name_dataset)
+```
+
+Additionally, any dataset previously downloaded and stored locally can
+be then imported in the R environment as GRangesList [(see
 Import/Export)](#utilities).
 
 In any case, once download is done, we can logout from remote repository
@@ -637,10 +674,11 @@ logout_gmql(test_url)
 
 ## Mixed Processing
 
-As said before, the processing flavour can be switched using the
-function:
+As said before, the processing mode can be switched using the function:
 
 ```{r, switch mode}
+test_url = "http://www.gmql.eu/gmql-rest"
+init_gmql(url = test_url)
 remote_processing(TRUE)
 ```
 
@@ -659,31 +697,34 @@ dataset, even in the same query as in the following example:
 
 mut_path <- system.file("example", "MUT", package = "RGMQL")
 
-# Read MUT folder as a GMQL dataset named "mut_ds" containing a single 
-# sample with mutation regions
+# Read MUT folder as a GMQL dataset named "mut_ds" 
 
 mut_ds <- read_gmql(mut_path, is_local = TRUE)
 
-# Read the remote dataset Example_Dataset_2 
+# Read the remote dataset HG19_BED_ANNOTATION
 
-HG19_bed_ann <- read_gmql("public.Example_Dataset_2", is_local = FALSE)
+HG19_bed_ann <- read_gmql("public.HG19_BED_ANNOTATION", is_local = FALSE)
 
-# Filter out based on predicate
+# Filter out mut_ds based on a metadata predicate to keep breast cancer 
+# mutations only
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
                 clinical_patient__tumor_tissue_site == 'breast')
 
+# Filter out exon_ds based on a metadata predicate to keep Refseq exons only 
+
 exon = filter(HG19_bed_ann, annotation_type == 'exons' & 
                     original_provider == 'RefSeq')
 
-# For each mutation sample, count mutations within each exon while 
-# mapping the mutations to the exon regions using the map() function 
+# For each mutation sample, map the mutations to the exon regions using 
+# the map() function and count mutations within each exon storing the value
+# in the default region attribute 'count_left_right'
 
 exon1 <- map(exon, mut)
 
 # Remove exons in each sample that do not contain mutations
 
-exon2 <- filter(exon1, count_left_right >= 1)
+exon2 <- filter(exon1, r_predicate = count_left_right >= 1)
 
 # Using the extend() function, count how many exons remain in each sample and
 # store the result in the sample metadata as a new attribute-value pair, 
@@ -700,38 +741,44 @@ exon_res = arrange(exon3, list(DESC("exon_count")))
 Materialize result:
 
 ```{r, mixed materialize, eval = FALSE}
-collect(exon_res,"exon_res")
+collect(exon_res,"exon_result_dataset")
 ```
 
 Execute processing:
 
 ```{r, mixed execute, eval = FALSE}
-execute()
+job<-execute()
 ```
 
 As we can see, the two *read_gmql()* functions above read from different
-sources: *mut_ds* from local dataset, *HG19_bed_ann* from remote
+sources: *mut_ds* from local dataset, *HG19_BED_ANNOTATION* from remote
 repository.
 
 If we set remote processing to false (*remote_processing(FALSE)*), the
-execution is performed locally first downloading all needed datasets
-from remote repositories, otherwise all local datasets are automatically
-uploaded to the remote GMQL repository associated with the remote system
-where the processing is performed. In the latter case, materialized
-datasets are stored on remote repository, from where they can be
-downloaded and imported into the R environment as in the remote
-processing scenario [(see Remote Processing)](#remote-processing).
+execution is performed locally downloading first all needed datasets
+from the GMQL remote repository; otherwise, all local datasets are
+automatically uploaded to the remote GMQL repository associated with the
+remote system where the processing is performed. In this latter case,
+materialized datasets are stored on the remote repository, from where
+they can be downloaded and imported into the R environment like in the
+two previous remote processing scenarios [(see Remote
+Processing)](#remote-processing).
 
-NOTE: The public datasets cannot be downloaded from a remote GMQL
-repository by design.
+NOTE: The public datasets cannot be downloaded entirely from the remote
+GMQL repository by design.
 
 # Utilities {#utilities}
 
 The RGMQL package contains functions that allow the user to interface
 with other packages available in R/Bioconductor repository, e.g.,
-GenomicRanges, and TFARM. These functions return GRangesList or GRanges
-with metadata associated, if present, as data structure suitable to
-further processing in other R/Bioconductor packages.
+GenomicRanges, cBioPortalData, TFHAZ, TFARM. Some of RGQML functions are
+developed to directly provide extensibility over core data structures
+and processing functions commonly used in the R/Bioconductor
+environment, such as most of the manipulation functions provided by
+dyplr package. Some other functions can return or read GRangesList or
+GRanges objects with associated metadata (if present), and such data
+structures are suitable to further processing by a variety of other
+R/Bioconductor packages.
 
 ## Import/Export
 
@@ -750,14 +797,14 @@ imported_data
 
 # and its metadata
 
-metadata(imported_data)
+imported_data@metadata
 
 ```
 
 The second parameter *is_gtf* must specify the file format: .GTF or
 .GDM.
 
-We can export a GRangesList as GMQL dataset as follows:
+We can export a GRangesList as a GMQL dataset as follows:
 
 ```{r, export}
 # This statement defines the path to the subdirectory "example" of the 
@@ -765,11 +812,10 @@ We can export a GRangesList as GMQL dataset as follows:
 
 dir_out <- system.file("example", package = "RGMQL")
 
-# Export the GRangesList 'data' as GMQL dataset called 'example' at destination 
-# path
+# Export the GRangesList 'imported_data' as GMQL dataset called 'example' 
+# at destination path
 
 export_gmql(imported_data, dir_out, is_gtf = TRUE)
-
 ```
 
 The second parameter *is_gtf* must specify the file format: .GTF or
@@ -778,43 +824,59 @@ The second parameter *is_gtf* must specify the file format: .GTF or
 ## Filter and Extract
 
 We can also import only a part of a GMQL dataset into R environment, by
-filtering its content as follows:
+filtering its content based on metadata and/or region attributes.
+Following, we extract from a gene expression dataset of adrenocortical
+carcinoma patients, all the sample profiles, but focusing only on the
+raw count expression values.
 
 ```{r, filter_extract}
 # This statement defines the path to the folder "TEAD" in the subdirectory 
 # "example" of the package "RGMQL"
 
-data_in <- system.file("example", "TEAD", package = "RGMQL")
+data_in <- system.file("example", "TCGA-ACC", package = "RGMQL")
 
-matrix <- filter_and_extract(data_in, metadata = NULL, region_attributes = c("count"))
+matrix <- filter_and_extract(data_in, metadata = NULL, region_attributes = FULL(except = c('fpkm_uq','fpkm')))
 matrix
 
 ```
 
 *filter_and_extract()* filters the samples in the input dataset based on
-their specified *metadata*, and then extracts as metadata columns of
-GRanges the vector of region attributes you specify to retrieve from
-each filtered sample from the input dataset. If the $metadata$ argument
-is NULL, all samples are taken. The number of obtained columns is equal
-to the number of samples left after filtering, multiplied by the number
-of specified region attributes. If *region_attributes* is not specified,
-only the fundamental elements of GRanges are extracted, i.e., the
-genomic coordinates. Note that this function works only if every sample
-in dataset includes the same number of regions with the same
-coordinates. Each metadata column is named using *region_attributes*
-concatenated with the function input parameter *suffix*. By default
-*suffix* correspond to a metadata: *antibody_target*.
+the specified *metadata* attributes of interest and then, for each
+filtered sample, extracts the GRanges coordinate attributes (seqnames,
+start, stop, strand) together with other *region_attributes* specified
+to be retrieved and kept from the input dataset (possibly all if
+$region\_attributes$ = FULL(except = NULL)). If the $metadata$ argument
+is NULL, all samples are taken without filtering. If
+$region\_attributes$ is not specified, only the fundamental elements of
+GRanges are extracted, i.e., the genomic coordinates.
+
+Any additional region attribute from $region\_attributes$ is a metadata
+column of the GRanges obtained for each filtered sample. The total
+number of obtained columns is equal to the number of samples left after
+filtering, multiplied by the number of specified region attributes.
+
+NOTE: *filter_and_extract()* works only if every sample in the dataset
+includes the same number of regions with the same coordinates.
+
+Each metadata column is named using *region_attributes* concatenated
+with the function input parameter *suffix*. By default *suffix*
+correspond to a metadata: *antibody_target*.
 
 ## Metadata
 
 Each sample of a GMQL dataset has its own metadata associated and
-generally every metadata attribute has a single value. The case with
+generally every metadata attribute has a single value. An example of
 distinct values for the same metadata attribute is shown in the figure
-below for the \emph{disease} metadata attribute. \newline\newline
+below for the \emph{disease} metadata attribute. We suppose that more
+than one disease is associated to each sample, for which annotations to
+indicate over-expressed genes are provided.
+
+\newline\newline
+
 ![metadata with multiple values](multi_metadata.png) \newline\newline In
 this case GMQL automatically handles this situation. In the
 Import/export paragraph, we showed that a GMQL dataset can be imported
-into R environment as a GRangesList, and so its metadata too.
+into R environment as a GRangesList, together with its metadata.
 
 ```{r, metadata}
 # This statement defines the path to the folder "DATASET_META" in the 
@@ -829,7 +891,7 @@ grl_data
 
 # and its metadata
 
-metadata(grl_data)
+grl_data@metadata
 
 ```
 
@@ -843,7 +905,7 @@ is in the form key-value, we can extract the metadata values using:
 
 # store metadata on variable a
 
-a = metadata(grl_data)
+a = grl_data@metadata
 
 # get disease value of sample S_00000
 
@@ -872,7 +934,7 @@ Error in .jcall("RJavaTools", "Ljava/lang/Object;", "invokeMethod", cl,
 : org.apache.spark.SparkException: Job aborted due to stage failure: 
 Task 0 in stage 7.0 failed 1 times, most recent failure: 
 Lost task 0.0 in stage 7.0 (TID 59, localhost, executor driver): 
-java.io.IOException: (null) entry in command string: null chmod 0644
+java.io.IOException: (null) entry in command string: null chmod 0644 
 ```
 
 may arise.
@@ -882,11 +944,11 @@ This happens because some Hadoop binary files are missing in Windows
 
 -   Go to <https://github.com/steveloughran/winutils>, download the
     repository
--   Create a directory (for example at `C:\Program Files\hadoop\bin`.
-    Use a path you wish
+-   Create a directory 'hadoop' with a sub-directory 'bin' in a path of
+    your choice (for example at `C:\Program Files\hadoop\bin`).
 -   Copy the files from the repository folder **hadoop-2.8.1** into the
-    folder earlier created.
--   Create environment variable HADOOP_HOME with value equal to the
-    folder path you copied the binaries.
+    'bin' sub-directory earlier created.
+-   Create an environment variable HADOOP_HOME with value equals to the
+    path reaching the 'bin' directory where you just copied the files.
 
 # References

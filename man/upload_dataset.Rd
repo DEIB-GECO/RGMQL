@@ -26,9 +26,6 @@ schemaName available are:
 }
 if schemaName is NULL, it looks for a XML schema file to read in the 
 folderPath}
-
-\item{isGMQL}{logical value indicating whether it is uploaded a GMQL 
-dataset or not}
 }
 \value{
 None

@@ -32,12 +32,6 @@
 #' test_path <- system.file("example", "DATASET", package = "RGMQL")
 #' show_all_metadata(test_path, show_value = TRUE)
 #' 
-#' ## This statement the remote dataset called "Example_Dataset_1" on public
-#' ## repository and show all the metadata inside the GMQL dataset among
-#' ## all the meta files and return a data-frame, viewing also its value.
-#' 
-#' show_all_metadata("public.Example_Dataset_1", show_value = TRUE)
-#'
 #' @export
 #' 
 show_all_metadata <- function(dataset, show_value = FALSE) {
@@ -66,7 +60,7 @@ show_all_metadata <- function(dataset, show_value = FALSE) {
         sample_metadata(url, dataset, x$name)
     })  
     
-    name_samples <- vapply(region_list$samples, function(x) {
+    name_samples <- sapply(region_list$samples, function(x) {
         x$name
     })  
     
@@ -114,7 +108,7 @@ show_all_metadata <- function(dataset, show_value = FALSE) {
     
     set_meta <- unique(
         unlist(
-            vapply(meta_list, names)
+            sapply(meta_list, names)
         )
     )
     

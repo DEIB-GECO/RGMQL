@@ -6,6 +6,6 @@
 		<field type="LONG">right</field>
 		<field type="CHAR">strand</field>
 		<field type="STRING">name</field>
-		<field type="DOUBLE">score</field>
+		<field type="DOUBLE">overexpression_score</field>
 	</gmqlSchema>
 </gmqlSchemaCollection>

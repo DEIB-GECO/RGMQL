@@ -86,12 +86,12 @@ sorted_grl_full <- sort(grl)
 filter_and_extract(sorted_grl_full, region_attributes = FULL())
 
 ## This statement imports a GMQL dataset as GRangesList and filters it
-## including all the region attributes except "jaccard" and "score"
+## including all the region attributes except "jaccard"
 
 sorted_grl_full_except <- sort(grl)
 filter_and_extract(
  sorted_grl_full_except, 
- region_attributes = FULL("jaccard", "score")
+ region_attributes = FULL("jaccard")
 )
 
 }

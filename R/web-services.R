@@ -893,8 +893,6 @@ show_schema <- function(url, datasetName) {
 #' }
 #' if schemaName is NULL, it looks for a XML schema file to read in the 
 #' folderPath
-#' @param isGMQL logical value indicating whether it is uploaded a GMQL 
-#' dataset or not
 #'
 #' @return None
 #'

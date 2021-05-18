@@ -1,9 +1,9 @@
-annotation_type	exons
+sample_id	000112
 assembly	hg19
 disease	cancer
 disease	pulmonary fibrosis
 disease	Tuberous sclerosis
 disease	neurofibromatosis type 1
-name	RefSeqGeneExons
-original_provider	RefSeq
+name	over-expressed gene annotations
+original_provider	Memorial Hospital
 provider	POLIMI

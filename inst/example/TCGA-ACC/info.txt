@@ -1,0 +1,8 @@
+Average region length	29006.37
+Created by	SilviaC7
+Creation date	2021/03/11 18:47:20
+Execution time	00:02:36
+Number of regions	4778157
+Number of samples	79
+Query name	queryname
+Size	382.84 MB
