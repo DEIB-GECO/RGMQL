@@ -1,9 +1,11 @@
-sample_id	000112
-assembly	hg19
-disease	cancer
-disease	pulmonary fibrosis
-disease	Tuberous sclerosis
-disease	neurofibromatosis type 1
-name	over-expressed gene annotations
+sample_id		000112
+assembly		hg19
+disease			cancer
+disease			pulmonary fibrosis
+disease			Tuberous sclerosis
+disease			neurofibromatosis type 1
+name			over-expressed gene annotations
 original_provider	Memorial Hospital
-provider	POLIMI
+provider		POLIMI
+
+

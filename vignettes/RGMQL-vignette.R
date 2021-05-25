@@ -1,3 +1,7 @@
+## ---- include=FALSE-----------------------------------------------------------
+options(tinytex.verbose = TRUE)
+
+
 ## ---- initialization----------------------------------------------------------
 library('RGMQL')
 
@@ -177,7 +181,7 @@ exon3 <- extend(exon2, exon_count = COUNT())
 exon_res = arrange(exon3, list(DESC("exon_count")))
 
 ## ---- remote materialize, eval = FALSE----------------------------------------
-#  collect(exon_res, name="exon_res_folder")
+#  collect(exon_res, name="exon_res_data")
 
 ## ---- remote execute, eval = FALSE--------------------------------------------
 #  job<-execute()
@@ -269,10 +273,10 @@ imported_data@metadata
 
 
 ## ---- export------------------------------------------------------------------
-# This statement defines the path to the subdirectory "example" of the 
+# This statement defines the path to the subdirectory "exp" of the 
 # package "RGMQL"
 
-dir_out <- system.file("example", package = "RGMQL")
+dir_out <- paste(system.file("example", package = "RGMQL"), 'exp', sep='/')
 
 # Export the GRangesList 'imported_data' as GMQL dataset called 'example' 
 # at destination path
@@ -280,12 +284,14 @@ dir_out <- system.file("example", package = "RGMQL")
 export_gmql(imported_data, dir_out, is_gtf = TRUE)
 
 ## ---- filter_extract----------------------------------------------------------
-# This statement defines the path to the folder "TEAD" in the subdirectory 
+# This statement defines the path to the folder "TCGA-ACC" in the subdirectory 
 # "example" of the package "RGMQL"
 
 data_in <- system.file("example", "TCGA-ACC", package = "RGMQL")
 
-matrix <- filter_and_extract(data_in, metadata = NULL, region_attributes = FULL(except = c('fpkm_uq','fpkm')))
+matrix <- filter_and_extract(data_in, metadata= NULL,
+                             region_attributes = 
+                               FULL(except = c('fpkm_uq','fpkm')))
 matrix
 
 

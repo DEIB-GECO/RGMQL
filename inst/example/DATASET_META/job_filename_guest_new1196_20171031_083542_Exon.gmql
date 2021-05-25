@@ -1,0 +1,2 @@
+Exon = SELECT(annotation_type == 'exons' AND original_provider == 'RefSeq') HG19_BED_ANNOTATION;
+MATERIALIZE Exon INTO Exon;

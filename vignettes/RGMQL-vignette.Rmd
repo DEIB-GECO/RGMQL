@@ -1,22 +1,28 @@
 ---
-title: "RGMQL: GenoMetric Query Language for R/Bioconductor"
-author: 
-- "Simone Pallotta" 
-- "Marco Masseroli"
+title: 'RGMQL: GenoMetric Query Language for R/Bioconductor'
+author:
+- Simone Pallotta
+- Marco Masseroli
 date: "`r Sys.Date()`"
-bibliography: bibliography.bib
+output:
+  BiocStyle: html_document
 csl: american-medical-association-no-et-al.csl
-output: BiocStyle::html_document
-vignette: >
-    %\VignetteEncoding{UTF-8}
-    %\VignetteIndexEntry{RGMQL: GenoMetric Query Language for R/Bioconductor}
-    %\VignetteEngine{knitr::rmarkdown}
-link-citations: true
-editor_options: 
-  markdown: 
+bibliography: bibliography.bib
+vignette: |
+  %\VignetteEncoding{UTF-8} 
+  %\VignetteIndexEntry{RGMQL: GenoMetric Query Language for R/Bioconductor} 
+  %\VignetteEngine{knitr::rmarkdown}
+link-citations: yes
+editor_options:
+  markdown:
     wrap: 72
   chunk_output_type: console
 ---
+
+```{r, include=FALSE}
+options(tinytex.verbose = TRUE)
+
+```
 
 # Introduction
 
@@ -635,7 +641,7 @@ input) as the second parameter in order to correctly process the query
 on the remote GMQL system. Here it is the needed R code:
 
 ```{r, remote materialize, eval = FALSE}
-collect(exon_res, name="exon_res_folder")
+collect(exon_res, name="exon_res_data")
 ```
 
 ```{r, remote execute, eval = FALSE}
@@ -807,10 +813,10 @@ The second parameter *is_gtf* must specify the file format: .GTF or
 We can export a GRangesList as a GMQL dataset as follows:
 
 ```{r, export}
-# This statement defines the path to the subdirectory "example" of the 
+# This statement defines the path to the subdirectory "exp" of the 
 # package "RGMQL"
 
-dir_out <- system.file("example", package = "RGMQL")
+dir_out <- paste(system.file("example", package = "RGMQL"), 'exp', sep='/')
 
 # Export the GRangesList 'imported_data' as GMQL dataset called 'example' 
 # at destination path
@@ -826,16 +832,18 @@ The second parameter *is_gtf* must specify the file format: .GTF or
 We can also import only a part of a GMQL dataset into R environment, by
 filtering its content based on metadata and/or region attributes.
 Following, we extract from a gene expression dataset of adrenocortical
-carcinoma patients, all the sample profiles, but focusing only on the
+carcinoma patients all the sample profiles, but focusing only on the
 raw count expression values.
 
 ```{r, filter_extract}
-# This statement defines the path to the folder "TEAD" in the subdirectory 
+# This statement defines the path to the folder "TCGA-ACC" in the subdirectory 
 # "example" of the package "RGMQL"
 
 data_in <- system.file("example", "TCGA-ACC", package = "RGMQL")
 
-matrix <- filter_and_extract(data_in, metadata = NULL, region_attributes = FULL(except = c('fpkm_uq','fpkm')))
+matrix <- filter_and_extract(data_in, metadata= NULL,
+                             region_attributes = 
+                               FULL(except = c('fpkm_uq','fpkm')))
 matrix
 
 ```
@@ -872,9 +880,10 @@ than one disease is associated to each sample, for which annotations to
 indicate over-expressed genes are provided.
 
 \newline\newline
+![metadata with multiple values](multi_metadata.png) 
+\newline\newline 
 
-![metadata with multiple values](multi_metadata.png) \newline\newline In
-this case GMQL automatically handles this situation. In the
+In this case GMQL automatically handles this situation. In the
 Import/export paragraph, we showed that a GMQL dataset can be imported
 into R environment as a GRangesList, together with its metadata.
 
@@ -929,7 +938,7 @@ a$S_00000[which(names(a$S_00000) %in% "disease")]
 Be aware that during a [local processing](#local-processing) execution
 an error message
 
-``` {.{}
+``` {{}
 Error in .jcall("RJavaTools", "Ljava/lang/Object;", "invokeMethod", cl, 
 : org.apache.spark.SparkException: Job aborted due to stage failure: 
 Task 0 in stage 7.0 failed 1 times, most recent failure: 
@@ -950,5 +959,6 @@ This happens because some Hadoop binary files are missing in Windows
     'bin' sub-directory earlier created.
 -   Create an environment variable HADOOP_HOME with value equals to the
     path reaching the 'bin' directory where you just copied the files.
+    
 
 # References

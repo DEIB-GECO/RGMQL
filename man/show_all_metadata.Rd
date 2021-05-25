@@ -44,6 +44,8 @@ show_all_metadata(test_path, show_value = TRUE)
 ## repository and show all the metadata inside the GMQL dataset among
 ## all the meta files and return a data-frame, viewing also its value.
 
+test_url = "http://www.gmql.eu/gmql-rest"
+login_gmql(test_url)
 show_all_metadata("public.Example_Dataset_1", show_value = TRUE)
 
 }
