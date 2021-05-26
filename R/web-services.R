@@ -1352,3 +1352,25 @@ serialize_query <- function(url,output_gtf,base64) {
     schema
 }
 
+.metadata_matrix <- function(url, datasetName) {
+  url <- sub("/*[/]$", "", url)
+  URL <- paste0(url, "/metadata/", datasetName, "/", "dataset/matrix")
+  authToken = GMQL_credentials$authToken
+  h <- c(
+      'X-Auth-Token' = authToken, 
+      'Accpet' = 'application/json',
+      'Content-Type' = 'application/json')
+  req <- httr::POST(
+      URL, 
+      body = '{"attributes": []}' ,
+      httr::add_headers(h), 
+      encode = "json"
+  )
+  content <- httr::content(req,"parsed")
+
+  if (req$status_code != 200) {
+    stop(content)
+  } else {
+    return(content)
+  }
+}

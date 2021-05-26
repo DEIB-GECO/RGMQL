@@ -61,18 +61,34 @@ show_all_metadata <- function(dataset, show_value = FALSE) {
 .show_all_metadata_remote_dataset <- function(dataset, show_value) {
     url <- GMQL_credentials$remote_url
     
-    #first we download all the region file name and its ID
-    region_list <- show_samples_list(url, dataset)
+    metdata_matrix_list <- .metadata_matrix(url, dataset)
     
-    metadata_list <-lapply(region_list$samples, function(x) {
-        sample_metadata(url, dataset, x$name)
-    })  
+    #first we get all the region file name
+    name_samples <- vapply(
+        metdata_matrix_list$samples, 
+        function(x) { x$name }, 
+        character(1))
+
+    #first we get all the attributes name
+    metadata_list <- vapply(
+        metdata_matrix_list$attributes, 
+        function(x) { x$key }, 
+        character(1))
     
-    name_samples <- sapply(region_list$samples, function(x) {
-        x$name
-    })  
+    list_array <- sapply(metdata_matrix_list$matrix, function(x) {
+        x[sapply(x, is.null)] <- NA
+        unlist(x)
+    })
+
+    data_frame <- as.data.frame(t(list_array))
+    row.names(data_frame) <- metadata_list
+    colnames(data_frame) <- name_samples
     
-    .create_dataFrame(metadata_list, name_samples, show_value)
+    if(!show_value) {
+        data_frame <- as.data.frame(!is.na(data_frame))
+    }
+    
+    return(data_frame)
 }
 
 .show_all_metadata_downloaded_dataset <- function(dataset, show_value) {
@@ -113,7 +129,7 @@ show_all_metadata <- function(dataset, show_value = FALSE) {
 
 .create_dataFrame <- function(meta_list, name_samples, show_value) {
     names(meta_list) <- name_samples
-    
+  
     set_meta <- unique(
         unlist(
             sapply(meta_list, names)
