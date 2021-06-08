@@ -183,7 +183,7 @@ export_gmql <- function(samples, dir_out, is_gtf) {
         node_list <- c(fixed_element, columns)
     }
     
-    schema <- file.path(directory,"granges.xml")
+    schema <- file.path(directory,"schema.xml")
     root <- xml2::xml_new_root("gmqlSchemaCollection")
     xml2::xml_attr(root,"name") <- "DatasetName_SCHEMAS"
     xml2::xml_attr(root,"xmlns") <- "http://genomic.elet.polimi.it/entities"

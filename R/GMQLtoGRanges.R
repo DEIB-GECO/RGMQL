@@ -50,8 +50,25 @@ import_gmql <- function(dataset_path, is_gtf) {
     if(length(regions)) {
         name_samples <- lapply(regions, function(x) {
             gsub("*.gtf", "", basename(x))})
-        sampleList <- lapply(regions, function(x) {
-            rtracklayer::import(con = x, format = "gtf")} )
+        
+        sampleList <- tryCatch(
+            expr = {
+                lapply(regions, function(x) {
+                    rtracklayer::import(con = x, format = "gtf")
+                })
+            },
+            error = function(e) { 
+                lapply(regions, function(x) {
+                    rtracklayer::import(con = x, format = "gff", version = "3")
+                })
+            },
+            warning = function(w) {
+                lapply(regions, function(x) {
+                    rtracklayer::import(con = x, format = "gff", version = "3")
+                })
+            }
+        )
+
         names(sampleList) <- name_samples
         gRange_list <- GenomicRanges::GRangesList(sampleList)
         

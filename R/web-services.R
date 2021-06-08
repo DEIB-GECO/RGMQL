@@ -1273,7 +1273,17 @@ sample_region <- function(url, datasetName,sampleName) {
             row.names = FALSE
         )
         if (identical(schema_type, "gtf")) {
-            samples <- rtracklayer::import(temp, format = "gtf")
+            samples <- tryCatch(
+                expr = {
+                    rtracklayer::import(temp, format = "gtf")
+                },
+                error = function(e){ 
+                    rtracklayer::import(temp, format = "gff", version = "3")
+                },
+                warning = function(w){
+                    rtracklayer::import(temp, format = "gff", version = "3")
+                }
+            )
         } else {
             vector_field <- vapply(
                 list$fields, function(x) x$name, character(1)
