@@ -331,7 +331,24 @@ filter_and_extract <- function(
     suffixes,
     vector_field
 ) {
-    g1 <- rtracklayer::import(con = gtf_region_files[1], format = "gtf")
+    g1 <- tryCatch(
+        expr = {
+            rtracklayer::import(con = gtf_region_files[1], format = "gtf")
+        },
+        error = function(e){ 
+            rtracklayer::import(
+                gtf_region_files[1], 
+                format = "gff",
+                version = "3")
+        },
+        warning = function(w){
+            rtracklayer::import(
+                gtf_region_files[1], 
+                format = "gff", 
+                version = "3")
+        }
+    )
+  
     elementMetadata(g1) <- NULL
     if (is.null(suffixes)) {
         suffixes <- ""
@@ -360,7 +377,17 @@ filter_and_extract <- function(
     
     if (!is.null(regions)) {
         DF_list <- mapply(function(x, header) {
-            g_x <- rtracklayer::import(con = x, format = "gtf")
+            g_x <- tryCatch(
+                expr = {
+                    rtracklayer::import(x, format = "gtf")
+                },
+                error = function(e){ 
+                    rtracklayer::import(x, format = "gff", version = "3")
+                },
+                warning = function(w){
+                    rtracklayer::import(x, format = "gff", version = "3")
+                }
+            )
             meta <- elementMetadata(g_x)[regions]
             if (header != "") {
                 names(meta) <- paste(regions, header, sep = ".")

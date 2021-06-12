@@ -59,7 +59,7 @@ java.io.IOException: (null) entry in command string: null chmod 0644
 may arise.
 
 This happens because some Hadoop binary files are missing in Windows 64Bits.
-In this case we need to:
+In this case you need to:
 
 * Open [DownGit](https://minhaskamal.github.io/DownGit/#/home)
 * Paste the url `https://github.com/steveloughran/winutils/tree/master/hadoop-2.8.1` and download the **winutil-hadoop2.8.1**

@@ -1273,7 +1273,17 @@ sample_region <- function(url, datasetName,sampleName) {
             row.names = FALSE
         )
         if (identical(schema_type, "gtf")) {
-            samples <- rtracklayer::import(temp, format = "gtf")
+            samples <- tryCatch(
+                expr = {
+                    rtracklayer::import(temp, format = "gtf")
+                },
+                error = function(e){ 
+                    rtracklayer::import(temp, format = "gff", version = "3")
+                },
+                warning = function(w){
+                    rtracklayer::import(temp, format = "gff", version = "3")
+                }
+            )
         } else {
             vector_field <- vapply(
                 list$fields, function(x) x$name, character(1)
@@ -1352,3 +1362,25 @@ serialize_query <- function(url,output_gtf,base64) {
     schema
 }
 
+.metadata_matrix <- function(url, datasetName) {
+  url <- sub("/*[/]$", "", url)
+  URL <- paste0(url, "/metadata/", datasetName, "/", "dataset/matrix")
+  authToken = GMQL_credentials$authToken
+  h <- c(
+      'X-Auth-Token' = authToken, 
+      'Accpet' = 'application/json',
+      'Content-Type' = 'application/json')
+  req <- httr::POST(
+      URL, 
+      body = '{"attributes": []}' ,
+      httr::add_headers(h), 
+      encode = "json"
+  )
+  content <- httr::content(req,"parsed")
+
+  if (req$status_code != 200) {
+    stop(content)
+  } else {
+    return(content)
+  }
+}
