@@ -16,8 +16,7 @@ output:
   chunk_output_type: inline
 ---
 
-
-In this example we investigate the TCGA messenger and micro RNA gene expression data of patients affected by Adrenal Adenocarcinoma, showing how to to merge and process local data (even possibly private) with remote public data in mixed processing, performing analyses both remotely and on the local R/Bioconductor environment.
+In this example we investigate the TCGA messenger and micro RNA gene expression data of patients affected by Adrenocortical carcinoma, showing how to to merge and process local data (even possibly private) with remote public data in mixed processing, performing analyses both remotely and on the local R/Bioconductor environment.
 
 Load the RGMQL package and initialize the remote GMQL context of scalable data management engine, specifying remote_processing = TRUE, and, possibly, an authenticated login:
 
@@ -27,11 +26,11 @@ remote_url <- "http://www.gmql.eu/gmql-rest"
 init_gmql( url = remote_url, remote_processing = TRUE) # , username = 'XXXX', password = 'XXXX')
 ```
 
-Read the TCGA miRNA gene expression data of adrenal adenocarcinoma aligned to GRCh38 from a local GDM dataset:
+Read the TCGA miRNA gene expression data of Adrenocortical carcinoma aligned to GRCh38 from a local GDM dataset:
 
-```{r, GRCh38_TCGA_miRNA_ACC}
-GRCh38_miRNA_path <- 'GRCh38_TCGA_miRNA_ACC'
-GRCh38_TCGA_miRNA_ACC <- read_gmql(GRCh38_miRNA_path, is_local = TRUE)
+```{r, GRCh38_miRNA_ACC}
+GRCh38_miRNA_path <- 'GRCh38_miRNA_ACC'
+GRCh38_miRNA_ACC <- read_gmql(GRCh38_miRNA_path, is_local = TRUE)
 ```
 
 Download and extract the list of datasets in the curated remote repository and focus on those concerning TCGA:
@@ -43,7 +42,7 @@ list <- unlist(lapply(dataset_list[["datasets"]], function(x) x$name))
 grep(pattern = 'TCGA', x = list, value = TRUE)
 ```
 
-Choose the latest TCGA gene expression dataset of interest, aligned to GRCh38, read it and extract all the samples of patients affected by adrenal adenocarcinoma (ACC) :
+Choose the latest TCGA gene expression dataset of interest, aligned to GRCh38, read it and extract all the samples of patients affected by Adrenocortical carcinoma (ACC) :
 
 ```{r, GRCh38_TCGA_RNAseq_ACC}
 GRCh38_TCGA_RNAseq <- read_gmql(dataset = "public.GRCh38_TCGA_gene_expression_2019_10", is_local = FALSE)
@@ -54,7 +53,7 @@ GRCh38_TCGA_RNAseq_ACC <- filter(GRCh38_TCGA_RNAseq, gdc__project__project_id ==
 Join the two datasets based on the *biospecimen_aliquot\_\_bcr_aliquot_barcode* and keeping for each miRNA region the first gene region at minimum distance ((MD(1)):
 
 ```{r, join}
-ACC_mRNA_miRNA <- merge(GRCh38_TCGA_miRNA_ACC,
+ACC_mRNA_miRNA <- merge(GRCh38_miRNA_ACC,
                   GRCh38_TCGA_RNAseq_ACC,    
                   genometric_predicate = list(MD(1)),
                   region_output = "BOTH",
@@ -85,6 +84,7 @@ download_dataset(remote_url, name_dataset, path = './Results_use_case_2')
 ```
 
 Import mRNA and microRNA gene annotations together with their corresponding raw count values from the dataset just saved in the local File System to the current R environment, within a GRanges object:
+
 ```{r, echo=FALSE}
 name_dataset <- '_20210609_081618_ACC_mRNA_miRNA'
 ```
@@ -92,7 +92,7 @@ name_dataset <- '_20210609_081618_ACC_mRNA_miRNA'
 ```{r, GRanges}
 remote_processing(FALSE)
 path <- paste('./Results_use_case_2', name_dataset, sep = '/')
-GR_TCGA_ACC <- filter_and_extract(path, metadata = NULL, region_attributes = c('right.gene_symbol','right.htseq_count','left.mirna_id','left.read_count'))
+GR_ACC <- filter_and_extract(path, metadata = NULL, region_attributes = c('right.gene_symbol','right.htseq_count','left.mirna_id','left.read_count'))
 ```
 
 Show all metadata to extract sample IDs and clinical annotations:
@@ -115,20 +115,20 @@ logout_gmql(remote_url)
 Extract different samples as rows, considering as features an ordered joint list of raw counts for each mRNA and miRNA gene under analysis
 
 ```{r, rawData}
-all_genes <- c(GR_TCGA_ACC@elementMetadata@listData[['right.gene_symbol...1']],GR_TCGA_ACC@elementMetadata@listData[['left.mirna_id...3']])
+all_genes <- c(GR_ACC@elementMetadata@listData[['right.gene_symbol...1']],GR_ACC@elementMetadata@listData[['left.mirna_id...3']])
 all_genes_ord <- unique(sort(all_genes))
 
 columns <- length(all_genes_ord)
 rawMatrix <- matrix(nrow = 0, ncol = columns)
 
-for (i in seq(1, length(GR_TCGA_ACC@elementMetadata@listData), 4)) {
+for (i in seq(1, length(GR_ACC@elementMetadata@listData), 4)) {
   g <- paste('right.gene_symbol...', toString(i), sep = '')
   m <- paste('left.mirna_id...', toString(i+2), sep = '')
   gr <- paste('right.htseq_count...', toString(i+1), sep = '')
   mr <- paste('left.read_count...', toString(i+3), sep = '')
-  all_genes <- c(GR_TCGA_ACC@elementMetadata@listData[[g]]
-               ,GR_TCGA_ACC@elementMetadata@listData[[m]])
-  all_reads <- as.numeric(c(GR_TCGA_ACC@elementMetadata@listData[[gr]],                      GR_TCGA_ACC@elementMetadata@listData[[mr]]))
+  all_genes <- c(GR_ACC@elementMetadata@listData[[g]]
+               ,GR_ACC@elementMetadata@listData[[m]])
+  all_reads <- as.numeric(c(GR_ACC@elementMetadata@listData[[gr]],                      GR_ACC@elementMetadata@listData[[mr]]))
   names(all_reads) <- all_genes
   all_reads_ord <- all_reads[c(all_genes_ord)]
   rawMatrix <- rbind(rawMatrix, all_reads_ord)
@@ -149,11 +149,11 @@ library(BBmisc)
 dataset_n <- normalize(dataset, 'standardize')
 ```
 
-Use the remaining genes as features of each sample to perform a clustering analysis and identify subgroups of samples through hierarchical clustering.
+Use the remaining genes as features of each sample to perform a clustering analysis and identify subgroups of samples through hierarchical clustering. First, identify the optimal number of clusters based on the average silhouette score:
 
 ```{r, silhouette}
 library(factoextra)
-library(cluster)
+#library(cluster)
 
 #Choice of the number of clusters
 res <- fviz_nbclust(dataset_n, hcut , method = "silhouette", k.max = 10) 
@@ -178,15 +178,16 @@ Plot the so-obtained clusters:
 fviz_cluster(list(data = dataset_n, cluster = clusters),labelsize = 6)
 ```
 
-Now compare by a left join the clusters obtained with this clustering analysis and the consensus clustering results published by the TCGA consortium in their Comprehensive Pan-Genomic Characterization of Adrenocortical Carcinoma :
+Now compare by a left join the clusters obtained with this clustering analysis and the clustering results published by the TCGA consortium in their Comprehensive Pan-Genomic Characterization of Adrenocortical Carcinoma:
 
 ```{r}
 clustering_results <- data.frame('sample' = sample_IDs , 'cluster' = clusters)
 rownames(clustering_results)<- NULL
-library(readr)
-CONSENSUS_CLUSTERS_TCGA_ACC <- read_delim("Results_use_case_2/CONSENSUS_CLUSTERS_TCGA_ACC.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
-comparison<-merge(x = clustering_results, y = CONSENSUS_CLUSTERS_TCGA_ACC,  by = 'sample', all.x = TRUE)
+library(readr)
+ CLUSTERS_TCGA_ACC <- read_delim("Results_use_case_2/CLUSTERS_TCGA_ACC.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+
+comparison<-merge(x = clustering_results, y =  CLUSTERS_TCGA_ACC,  by = 'sample', all.x = TRUE)
 
 library('xlsx')
 write.xlsx(comparison, file='Results_use_case_2/Comparison_clusterings.xlsx', col.names = TRUE, row.names = FALSE, append = FALSE)
@@ -203,8 +204,43 @@ for(i in 3:dim(comparison)[2]){
            las = 1)
 }
 
+```
+
+Similarly we compare the clusters obtained with this clustering analysis and the available TCGA survival annotations:
+
+```{r}
+clustering_results <- data.frame('sample' = sample_IDs , 'cluster' = clusters)
+rownames(clustering_results)<- NULL
+
+library(readr)
+SURVIVAL_TCGA_ACC <- read_delim("Results_use_case_2/SURVIVAL_TCGA_ACC.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+
+comparison_s<-merge(x = clustering_results, y =  SURVIVAL_TCGA_ACC,  by = 'sample', all.x = TRUE)
+
+library('xlsx')
+# write.xlsx(comparison_s, file='Results_use_case_2/Comparison_clustering_survival.xlsx', col.names = TRUE, row.names = FALSE, append = FALSE)
+
+  comparison_table <- table(comparison_s$cluster, comparison_s$OS_STATUS)
+  subt<-'comparison with overall survival status annotations'
+
+  mosaicplot(comparison_table, color = TRUE, main = 'Mosaic plot of two alternative patient stratifications',
+           sub = subt,
+           xlab = 'Hierachical Clustering results on mRNA and miRNA genes:',
+           ylab = 'Overall survival status',
+           las = 1)
+  
+    comparison_table2 <- table(comparison_s$cluster, comparison_s$DFS_STATUS)
+  subt<-'comparison with disease-free survival status annotations'
+
+  mosaicplot(comparison_table2, color = TRUE, main = 'Mosaic plot of two alternative patient stratifications',
+           sub = subt,
+           xlab = 'Hierachical Clustering results on mRNA and miRNA genes:',
+           ylab = 'Disease-free survival status',
+           las = 1)
 
 ```
+
+Eventually,
 
 Eventually, evaluate how clinical annotations, like status and stages, are distributed within the clusters obtained with this clustering analysis:
 
