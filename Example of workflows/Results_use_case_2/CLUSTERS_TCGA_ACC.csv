@@ -1,0 +1,92 @@
+sample;Histology;mRNA_K4;Methylation Level;miRNA;Cluster of Clusters
+TCGA-OR-A5J1;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_1;COC3
+TCGA-OR-A5J2;Usual Type;steroid-phenotype-high+proliferation;CIMP-low;miRNA_1;COC3
+TCGA-OR-A5J3;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5J4;Usual Type;NA;CIMP-high;miRNA_6;NA
+TCGA-OR-A5J5;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_2;COC2
+TCGA-OR-A5J6;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5J7;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_6;COC3
+TCGA-OR-A5J8;Sarcomatoid Type;steroid-phenotype-low+proliferation;CIMP-intermediate;miRNA_2;COC2
+TCGA-OR-A5J9;Usual Type;steroid-phenotype-high;CIMP-high;miRNA_1;COC3
+TCGA-OR-A5JA;Usual Type;steroid-phenotype-high;CIMP-high;miRNA_5;COC1
+TCGA-OR-A5JB;Sarcomatoid Type;steroid-phenotype-low+proliferation;CIMP-low;miRNA_2;COC2
+TCGA-OR-A5JC;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_5;COC1
+TCGA-OR-A5JD;Oncocytic Type;steroid-phenotype-low ;CIMP-low;miRNA_6;COC1
+TCGA-OR-A5JE;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_4;COC3
+TCGA-OR-A5JF;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5JG;Usual Type;steroid-phenotype-high;CIMP-high;miRNA_4;COC3
+TCGA-OR-A5JH;Oncocytic Type;NA;NA;NA;NA
+TCGA-OR-A5JI;Usual Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_2;COC2
+TCGA-OR-A5JJ;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_4;COC2
+TCGA-OR-A5JK;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5JL;Usual Type;steroid-phenotype-high;CIMP-low;miRNA_4;COC1
+TCGA-OR-A5JM;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_3;COC3
+TCGA-OR-A5JO;Usual Type;steroid-phenotype-low+proliferation;CIMP-low;miRNA_2;COC2
+TCGA-OR-A5JP;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_1;COC3
+TCGA-OR-A5JQ;Myxoid Type;steroid-phenotype-low ;CIMP-low;miRNA_6;COC1
+TCGA-OR-A5JR;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5JS;Usual Type;steroid-phenotype-high+proliferation;CIMP-intermediate;miRNA_6;COC3
+TCGA-OR-A5JT;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5JU;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5JV;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5JW;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5JX;Usual Type;steroid-phenotype-high;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5JY;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_2;COC3
+TCGA-OR-A5JZ;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5K0;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_3;COC3
+TCGA-OR-A5K1;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5K2;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_6;COC3
+TCGA-OR-A5K3;Oncocytic Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_6;COC1
+TCGA-OR-A5K4;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_4;COC1
+TCGA-OR-A5K5;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_3;COC3
+TCGA-OR-A5K6;Usual Type;steroid-phenotype-high+proliferation;CIMP-intermediate;miRNA_1;COC3
+TCGA-OR-A5K8;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_1;COC1
+TCGA-OR-A5K9;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_1;COC3
+TCGA-OR-A5KB;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5KO;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_5;COC1
+TCGA-OR-A5KP;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5KQ;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5KS;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5KT;Usual Type;steroid-phenotype-low+proliferation;CIMP-low;miRNA_6;COC2
+TCGA-OR-A5KU;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_2;COC2
+TCGA-OR-A5KV;Usual Type;steroid-phenotype-high;CIMP-low;miRNA_3;COC3
+TCGA-OR-A5KW;Usual Type;steroid-phenotype-high;CIMP-low;miRNA_4;COC1
+TCGA-OR-A5KX;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_3;COC3
+TCGA-OR-A5KY;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5KZ;Usual Type;steroid-phenotype-high+proliferation;CIMP-intermediate;miRNA_4;COC2
+TCGA-OR-A5L1;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5L2;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5L3;Usual Type;steroid-phenotype-high+proliferation;CIMP-low;miRNA_6;COC2
+TCGA-OR-A5L4;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_4;COC1
+TCGA-OR-A5L5;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5L6;Usual Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_2;COC2
+TCGA-OR-A5L8;Usual Type;steroid-phenotype-high;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5L9;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5LA;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5LB;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5LC;Usual Type;steroid-phenotype-high+proliferation;CIMP-intermediate;miRNA_1;COC2
+TCGA-OR-A5LD;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_1;COC3
+TCGA-OR-A5LE;Usual Type;steroid-phenotype-high+proliferation;CIMP-high;miRNA_4;COC3
+TCGA-OR-A5LF;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5LG;Usual Type;steroid-phenotype-high+proliferation;CIMP-low;miRNA_1;COC3
+TCGA-OR-A5LH;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-OR-A5LI;Usual Type;NA;NA;NA;NA
+TCGA-OR-A5LJ;Usual Type;steroid-phenotype-high+proliferation;CIMP-intermediate;miRNA_1;COC3
+TCGA-OR-A5LK;Oncocytic Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_5;COC1
+TCGA-OR-A5LL;Usual Type;steroid-phenotype-high+proliferation;CIMP-low;miRNA_6;COC3
+TCGA-OR-A5LM;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_1;COC1
+TCGA-OR-A5LN;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_6;COC1
+TCGA-OR-A5LO;Usual Type;steroid-phenotype-high;CIMP-high;miRNA_4;COC3
+TCGA-OR-A5LP;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_6;COC1
+TCGA-OR-A5LR;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_1;COC1
+TCGA-OR-A5LS;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_6;COC2
+TCGA-OR-A5LT;Usual Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_5;COC1
+TCGA-OU-A5PI;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_1;COC2
+TCGA-P6-A5OF;Usual Type;steroid-phenotype-high;CIMP-intermediate;miRNA_1;NA
+TCGA-P6-A5OH;Usual Type;NA;NA;NA;NA
+TCGA-PA-A5YG;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_6;COC1
+TCGA-PK-A5H8;Usual Type;steroid-phenotype-low ;CIMP-intermediate;miRNA_5;NA
+TCGA-PK-A5H9;Usual Type;steroid-phenotype-low ;CIMP-low;miRNA_5;COC1
+TCGA-PK-A5HA;Usual Type;steroid-phenotype-low ;CIMP-high;miRNA_5;COC1
+TCGA-PK-A5HB;Usual Type;steroid-phenotype-high;CIMP-high;miRNA_6;COC3
+TCGA-PK-A5HC;Usual Type;NA;NA;NA;NA
