@@ -178,6 +178,14 @@ Plot the so-obtained clusters:
 fviz_cluster(list(data = dataset_n, cluster = clusters),labelsize = 6)
 ```
 
+Plot the number of samples in each cluster:
+
+```{r}
+hist(clusters, breaks = c(0.5,1.5,2.5,3.5), labels = c('first cluster', 'second cluster', 'third cluster'), xaxt = 'n', ylab = 'Number of patients', ylim=c(0,55))
+axis(side = 1, at=seq(1:3))
+
+```
+
 Now compare by a left join the clusters obtained with this clustering analysis and the clustering results published by the TCGA consortium in their Comprehensive Pan-Genomic Characterization of Adrenocortical Carcinoma:
 
 ```{r}
