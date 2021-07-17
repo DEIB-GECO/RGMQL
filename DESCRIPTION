@@ -1,7 +1,7 @@
 Package: RGMQL
 Type: Package
 Title: GenoMetric Query Language for R/Bioconductor
-Version: 1.12.2
+Version: 1.12.3
 Authors@R: c(person(given = "Simone",
            family = "Pallotta",
            role = c("aut", "cre"),

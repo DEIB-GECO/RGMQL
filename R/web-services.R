@@ -1272,22 +1272,20 @@ sample_region <- function(url, datasetName,sampleName) {
             col.names = FALSE,
             row.names = FALSE
         )
+        vector_field <- vapply(
+            list$fields, function(x) x$name, character(1)
+        )
         if (identical(schema_type, "gtf")) {
-            samples <- tryCatch(
-                expr = {
-                    rtracklayer::import(temp, format = "gtf")
-                },
-                error = function(e){ 
-                    rtracklayer::import(temp, format = "gff", version = "3")
-                },
-                warning = function(w){
-                    rtracklayer::import(temp, format = "gff", version = "3")
-                }
+            attr_col_names <- vector_field[
+              !vector_field %in% c(
+                "seqname", "seqid", "start", "end", "strand"
+              )]
+            samples <- rtracklayer::import(
+                temp, 
+                format = "gtf",
+                colnames = attr_col_names
             )
         } else {
-            vector_field <- vapply(
-                list$fields, function(x) x$name, character(1)
-            )
             df <- data.table::fread(temp, header = FALSE, sep = "\t")
             a <- df[1, 2]
             if(is.na(as.numeric(a)))
