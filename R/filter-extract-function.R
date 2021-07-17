@@ -232,10 +232,6 @@ filter_and_extract <- function(
         else
             all_values[!all_values %in% except_values]
         names(regions) <- NULL
-        # since import convert this value from GMQL schema to GTF format
-        # we need to convert it back
-        regions <- replace(regions, regions == "feature", "type")
-        regions <- replace(regions, regions == "frame", "phase")
     }
     
     elementMetadata(g1) <- NULL
@@ -318,7 +314,7 @@ filter_and_extract <- function(
         })
         ## we would like that manage more index from grep
         found <- as.logical(length(unlist(a)))
-        # if found retrieve samples that has at least one choosen metadata
+        # if found retrieve samples that has at least one chosen metadata
         if (found) {
             x
         }
@@ -331,24 +327,15 @@ filter_and_extract <- function(
     suffixes,
     vector_field
 ) {
-    g1 <- tryCatch(
-        expr = {
-            rtracklayer::import(con = gtf_region_files[1], format = "gtf")
-        },
-        error = function(e){ 
-            rtracklayer::import(
-                gtf_region_files[1], 
-                format = "gff",
-                version = "3")
-        },
-        warning = function(w){
-            rtracklayer::import(
-                gtf_region_files[1], 
-                format = "gff", 
-                version = "3")
-        }
+    attr_col_names <- vector_field[
+      !vector_field %in% c("seqname", "seqid", "start", "end", "strand")]
+    
+    g1 <- rtracklayer::import(
+        con = gtf_region_files[1], 
+        format = "gtf",
+        colnames = attr_col_names
     )
-  
+    
     elementMetadata(g1) <- NULL
     if (is.null(suffixes)) {
         suffixes <- ""
@@ -377,16 +364,10 @@ filter_and_extract <- function(
     
     if (!is.null(regions)) {
         DF_list <- mapply(function(x, header) {
-            g_x <- tryCatch(
-                expr = {
-                    rtracklayer::import(x, format = "gtf")
-                },
-                error = function(e){ 
-                    rtracklayer::import(x, format = "gff", version = "3")
-                },
-                warning = function(w){
-                    rtracklayer::import(x, format = "gff", version = "3")
-                }
+            g_x <- rtracklayer::import(
+                x, 
+                format = "gtf", 
+                colnames = attr_col_names
             )
             meta <- elementMetadata(g_x)[regions]
             if (header != "") {

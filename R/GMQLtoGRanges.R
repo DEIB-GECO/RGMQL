@@ -46,29 +46,22 @@ import_gmql <- function(dataset_path, is_gtf) {
     if(!length(list.files(datasetName)))
         stop("no samples present in this dataset")
     
+    attr_col_names <- .schema_header(datasetName)
+    attr_col_names <- attr_col_names[
+        !attr_col_names %in% c("seqname", "seqid", "start", "end", "strand")]
     regions <- list.files(datasetName, pattern = "*.gtf$",full.names = TRUE)
     if(length(regions)) {
         name_samples <- lapply(regions, function(x) {
             gsub("*.gtf", "", basename(x))})
         
-        sampleList <- tryCatch(
-            expr = {
-                lapply(regions, function(x) {
-                    rtracklayer::import(con = x, format = "gtf")
-                })
-            },
-            error = function(e) { 
-                lapply(regions, function(x) {
-                    rtracklayer::import(con = x, format = "gff", version = "3")
-                })
-            },
-            warning = function(w) {
-                lapply(regions, function(x) {
-                    rtracklayer::import(con = x, format = "gff", version = "3")
-                })
-            }
-        )
-
+        sampleList <- lapply(regions, function(x) {
+            rtracklayer::import(
+                con = x, 
+                format = "gtf", 
+                colnames = attr_col_names
+            )
+        })
+        
         names(sampleList) <- name_samples
         gRange_list <- GenomicRanges::GRangesList(sampleList)
         

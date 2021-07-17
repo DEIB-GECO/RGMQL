@@ -278,6 +278,9 @@ gmql_take <- function(input_data, rows) {
         #levels(x$start)[x$start] = start_numeric
         g <- GenomicRanges::makeGRangesFromDataFrame(
             x,
+            seqnames.field = c("seqnames", "seqname",
+                               "chromosome", "chrom",
+                               "chr", "chromosome_name"),
             keep.extra.columns = TRUE,
             start.field = "start",
             end.field = "end")
