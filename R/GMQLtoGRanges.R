@@ -104,6 +104,9 @@ import_gmql <- function(dataset_path, is_gtf) {
                 g <- GenomicRanges::makeGRangesFromDataFrame(
                     df,
                     keep.extra.columns = TRUE,
+                    seqnames.field = c("seqnames", "seqname",
+                                       "chromosome", "chrom",
+                                       "chr", "chromosome_name"),
                     start.field = "left",
                     end.field = "right")
             })
@@ -114,6 +117,9 @@ import_gmql <- function(dataset_path, is_gtf) {
                 g <- GenomicRanges::makeGRangesFromDataFrame(
                     df,
                     keep.extra.columns = TRUE,
+                    seqnames.field = c("seqnames", "seqname",
+                                       "chromosome", "chrom",
+                                       "chr", "chromosome_name"),
                     start.field = "left",
                     end.field = "right")
                 })

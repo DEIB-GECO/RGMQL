@@ -443,12 +443,18 @@ filter_and_extract <- function(
         g <- GenomicRanges::makeGRangesFromDataFrame(
             complete_df,
             keep.extra.columns = TRUE,
+            seqnames.field = c("seqnames", "seqname",
+                               "chromosome", "chrom",
+                               "chr", "chromosome_name"),
             start.field = "left",
             end.field = "right")
     } else {
         g <- GenomicRanges::makeGRangesFromDataFrame(
             df,
             keep.extra.columns = TRUE,
+            seqnames.field = c("seqnames", "seqname",
+                               "chromosome", "chrom",
+                               "chr", "chromosome_name"),
             start.field = "left",
             end.field = "right")
     }
