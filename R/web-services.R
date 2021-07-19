@@ -1294,6 +1294,9 @@ sample_region <- function(url, datasetName,sampleName) {
             samples <- GenomicRanges::makeGRangesFromDataFrame(
                 df,
                 keep.extra.columns = TRUE,
+                seqnames.field = c("seqnames", "seqname",
+                                   "chromosome", "chrom",
+                                   "chr", "chromosome_name"),
                 start.field = "left",
                 end.field = "right",
                 strand.field="strand"
