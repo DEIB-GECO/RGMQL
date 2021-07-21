@@ -12,6 +12,43 @@ The library requires the following:
 
 It is recommended the use ot the latest version of RStudio.
 
+## Structure
+```
+RGMQL/
+|-- Example of workflows/
+|-- R/
+|-- inst/
+|   |-- example/
+|   |-- NEWS
+|-- man/
+|-- vignettes/
+|   |-- RGMQL-vignette.R
+|   |-- RGMQL-vignette.Rmd
+|   |-- RGMQL-vignette.html
+|   |-- american-medical-association-no-et-al.csl
+|   |-- bibliography.bib
+|   |-- ....
+|-- DESCRIPTION
+|-- NAMESPACE
+|-- README.md
+```
+
+- [Example of workflows](Example%20of%20workflows)/ folder containig various use cases
+- [R](R)/ folder containing all the script files
+- [inst](inst)/ folder containing all files that should be copied into the installed R package folder.
+- [inst/example](inst/example) folder containing the datasets and other files in order to run correctly all the test.
+- [inst/NEWS](inst/NEWS) file report the feature/changes/bugfix for each version. 
+- [man](man)/ folder containing R documentation files
+- [vignettes](vignettes)/ folder containing all the files used to generate correctly the vignette
+- [vignettes/RGMQL-vignette.R](vignettes/RGMQL-vignette.R) long-form guide to your package
+- [vignettes/RGMQL-vignette.Rmd](vignettes/RGMQL-vignette.Rmd) the vignettes in markup language
+- [vignettes/RGMQL-vignette.html](vignettes/RGMQL-vignette.html) the vignettes in html
+- [vignettes/bibliography.bib](vignettes/bibliography.bib) the bibliographic or list of reference file used in vignette
+- [vignettes/american-medical-association-no-et-al.csl](vignettes/american-medical-association-no-et-al.csl) the citation style language used in vignette
+- [DESCRIPTION](DESCRIPTION) this file store important/mandatory metadata about RGMQL package.
+- [NAMESPACE](NAMESPACE) this file make your packages self-contained, ensuring that other packages won’t interfere with your code, that your code won’t interfere with other packages, and that your package works regardless of the environment in which it’s run.
+
+
 ## OSX Settings
 
 #### before Catalina
