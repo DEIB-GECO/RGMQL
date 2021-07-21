@@ -3,6 +3,13 @@ API for calling interactively the GMQL Engine from R-Bioconductor
 
 [RGMQL on Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/RGMQL.html)
 
+## About
+
+RGMQL is a R/Bioconductor package conceived to provide a set of specialized functions to extract, combine, process
+and compare omics datasets and their metadata from different and differently localized sources. 
+RGMQL is built over the GenoMetric Query Language (GMQL) data management and computational engine, and can leverage its open curated
+repository as well as its cloud-based resources, with the possibility of outsourcing computational tasks to GMQL remote services. Furthermore, it overcomes the limits of the GMQL declarative syntax, by guaranteeing a procedural approach in dealing with omics data within the R/Bioconductor environment. But mostly, it provides full interoperability with other packages of the R/Bioconductor framework and extensibility over the most used genomic data structures and processing functions.
+
 ## Requirements
 
 The library requires the following:
@@ -33,7 +40,7 @@ RGMQL/
 |-- README.md
 ```
 
-- [Example of workflows](Example%20of%20workflows)/ folder containig various use cases
+- [Examples of workflows](Example%20of%20workflows)/ folder containing various use cases
 - [R](R)/ folder containing all the script files
 - [inst](inst)/ folder containing all files that should be copied into the installed R package folder.
 - [inst/example](inst/example) folder containing the datasets and other files in order to run correctly all the test.
@@ -41,12 +48,13 @@ RGMQL/
 - [man](man)/ folder containing R documentation files
 - [vignettes](vignettes)/ folder containing all the files used to generate correctly the vignette
 - [vignettes/RGMQL-vignette.R](vignettes/RGMQL-vignette.R) long-form guide to your package
-- [vignettes/RGMQL-vignette.Rmd](vignettes/RGMQL-vignette.Rmd) the vignettes in markup language
-- [vignettes/RGMQL-vignette.html](vignettes/RGMQL-vignette.html) the vignettes in html
-- [vignettes/bibliography.bib](vignettes/bibliography.bib) the bibliographic or list of reference file used in vignette
-- [vignettes/american-medical-association-no-et-al.csl](vignettes/american-medical-association-no-et-al.csl) the citation style language used in vignette
-- [DESCRIPTION](DESCRIPTION) this file store important/mandatory metadata about RGMQL package.
-- [NAMESPACE](NAMESPACE) this file make your packages self-contained, ensuring that other packages won’t interfere with your code, that your code won’t interfere with other packages, and that your package works regardless of the environment in which it’s run.
+- [vignettes/RGMQL-vignette.Rmd](vignettes/RGMQL-vignette.Rmd) vignettes in markup language
+- [vignettes/RGMQL-vignette.html](vignettes/RGMQL-vignette.html) vignettes in html
+- [vignettes/bibliography.bib](vignettes/bibliography.bib) the bibliographic file with list of references used in vignettes
+- [vignettes/american-medical-association-no-et-al.csl](vignettes/american-medical-association-no-et-al.csl) the citation style language used in vignettes
+- [DESCRIPTION](DESCRIPTION) this file stores important/mandatory metadata about RGMQL package.
+- [NAMESPACE](NAMESPACE) this file makes your packages self-contained, ensuring that other packages do not interfere with your code, that your code does not interfere with other packages, and that your package works regardless of the environment in which it is running.
+- [README](README.md) the current file
 
 
 ## OSX Settings
