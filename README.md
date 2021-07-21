@@ -42,9 +42,9 @@ RGMQL/
 
 - [Examples of workflows](Example%20of%20workflows)/ folder containing various use cases
 - [R](R)/ folder containing all the script files
-- [inst](inst)/ folder containing all files that should be copied into the installed R package folder.
-- [inst/example](inst/example) folder containing the datasets and other files in order to run correctly all the test.
-- [inst/NEWS](inst/NEWS) file report the feature/changes/bugfix for each version. 
+- [inst](inst)/ folder containing all files that should be copied into the installed R package folder
+- [inst/example](inst/example) folder containing the datasets and other files in order to run correctly all the test
+- [inst/NEWS](inst/NEWS) file report the feature/changes/bugfix for each version 
 - [man](man)/ folder containing R documentation files
 - [vignettes](vignettes)/ folder containing all the files used to generate correctly the vignette
 - [vignettes/RGMQL-vignette.R](vignettes/RGMQL-vignette.R) long-form guide to your package
@@ -52,8 +52,8 @@ RGMQL/
 - [vignettes/RGMQL-vignette.html](vignettes/RGMQL-vignette.html) vignettes in html
 - [vignettes/bibliography.bib](vignettes/bibliography.bib) the bibliographic file with list of references used in vignettes
 - [vignettes/american-medical-association-no-et-al.csl](vignettes/american-medical-association-no-et-al.csl) the citation style language used in vignettes
-- [DESCRIPTION](DESCRIPTION) this file stores important/mandatory metadata about RGMQL package.
-- [NAMESPACE](NAMESPACE) this file makes your packages self-contained, ensuring that other packages do not interfere with your code, that your code does not interfere with other packages, and that your package works regardless of the environment in which it is running.
+- [DESCRIPTION](DESCRIPTION) this file stores important/mandatory metadata about RGMQL package
+- [NAMESPACE](NAMESPACE) this file makes your packages self-contained, ensuring that other packages do not interfere with your code, that your code does not interfere with other packages, and that your package works regardless of the environment in which it is running
 - [README](README.md) the current file
 
 
