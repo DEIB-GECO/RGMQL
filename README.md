@@ -1,5 +1,5 @@
 # RGMQL
-API for calling interactively the GMQL Engine from R-Bioconductor
+API for calling interactively the GMQL Engine from R/Bioconductor
 
 [RGMQL on Bioconductor](https://www.bioconductor.org/packages/release/bioc/html/RGMQL.html)
 
