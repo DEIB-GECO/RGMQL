@@ -93,7 +93,7 @@ Create environment variable `JAVA_HOME`:
 
 ### Errors
 
-Be aware that during a local-processing execution an error message
+Be aware that during a local-processing execution the following error message may arise:
 ```{
 Error in .jcall("RJavaTools", "Ljava/lang/Object;", "invokeMethod", cl, 
 : org.apache.spark.SparkException: Job aborted due to stage failure: 
@@ -101,21 +101,20 @@ Task 0 in stage 7.0 failed 1 times, most recent failure:
 Lost task 0.0 in stage 7.0 (TID 59, localhost, executor driver): 
 java.io.IOException: (null) entry in command string: null chmod 0644
 ```
-may arise.
 
-This happens because some Hadoop binary files are missing in Windows 64Bits.
+This happens because some Hadoop binary files are missing in Windows 64 bits.
 In this case you need to:
 
 * Open [DownGit](https://minhaskamal.github.io/DownGit/#/home)
 * Paste the url `https://github.com/steveloughran/winutils/tree/master/hadoop-2.8.1` and download the **winutil-hadoop2.8.1**
-* Create a directory (for example at ```C:\Program Files\hadoop\bin```. Use a path you wish
-* Copy the files from the repository folder **hadoop-2.8.1** into the folder earlier created.
-* Create environment variable HADOOP_HOME with value equal to the folder path you copied the binaries.
+* Create a folder (for example at ```C:\Program Files\hadoop\bin```), using a path you wish
+* Copy the files from the repository folder **hadoop-2.8.1** into the folder earlier created
+* Create the environment variable HADOOP_HOME with value equal to the folder path where you copied the binaries.
 
 or
 
 * Go to [https://github.com/steveloughran/winutils](https://github.com/steveloughran/winutils), download the repository
-* Create a directory (for example at ```C:\Program Files\hadoop\bin```. Use a path you wish
-* Copy the files from the repository folder **hadoop-2.8.1** into the folder earlier created.
-* Create environment variable HADOOP_HOME with value equal to the folder path you copied the binaries.
+* Create a folder (for example at ```C:\Program Files\hadoop\bin```), using a path you wish
+* Copy the files from the repository folder **hadoop-2.8.1** into the folder earlier created
+* Create the environment variable HADOOP_HOME with value equal to the folder path where you copied the binaries.
 
