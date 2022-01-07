@@ -86,7 +86,7 @@ download_dataset(remote_url, name_dataset, path = './Results_use_case_2')
 Import mRNA and microRNA gene annotations together with their corresponding raw count values from the dataset just saved in the local File System to the current R environment, within a GRanges object:
 
 ```{r, echo=FALSE}
-name_dataset <- '_20210609_081618_ACC_mRNA_miRNA'
+name_dataset <- '_20220105_090918_ACC_mRNA_miRNA' #specify the name of the just downloaded dataset
 ```
 
 ```{r, GRanges}
@@ -153,7 +153,6 @@ Use the remaining genes as features of each sample to perform a clustering analy
 
 ```{r, silhouette}
 library(factoextra)
-#library(cluster)
 
 #Choice of the number of clusters
 res <- fviz_nbclust(dataset_n, hcut , method = "silhouette", k.max = 10) 
@@ -226,6 +225,7 @@ SURVIVAL_TCGA_ACC <- read_delim("Results_use_case_2/SURVIVAL_TCGA_ACC.csv", ";",
 comparison_s<-merge(x = clustering_results, y =  SURVIVAL_TCGA_ACC,  by = 'sample', all.x = TRUE)
 
 library('xlsx')
+#uncomment to create an excel file from comparison_s
 # write.xlsx(comparison_s, file='Results_use_case_2/Comparison_clustering_survival.xlsx', col.names = TRUE, row.names = FALSE, append = FALSE)
 
   comparison_table <- table(comparison_s$cluster, comparison_s$OS_STATUS)

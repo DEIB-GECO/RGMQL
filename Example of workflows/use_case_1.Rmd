@@ -1,0 +1,284 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+---
+title: 'RGMQL Example R Notebook: Use case 1'
+author: "Silvia Cascianelli"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_notebook: default
+  html_document: default
+  BiocStyle::html_document:
+  chunk_output_type: inline
+---
+
+In this example we investigate the TCGA mutational data, extracted from the GMQL remote repository, to evaluate the most mutated gene regions in patients affected by Kidney Renal Clear Cell Carcinoma and younger than 65 years.
+
+Load the RGMQL package and initialize the remote GMQL context of scalable data management engine, specifying remote_processing = TRUE, and, possibly, an authenticated login:
+
+```{r, initialization}
+library(RGMQL)
+remote_url <- "http://www.gmql.eu/gmql-rest"
+init_gmql( url = remote_url, remote_processing = TRUE) # , username = 'XXXX', password = 'XXXX')
+```
+
+Download and extract the list of datasets in the curated remote repository and focus on those concerning mutation events:
+
+```{r, available_datasets}
+dataset_list <- show_datasets_list(remote_url)
+list <- unlist(lapply(dataset_list[["datasets"]], function(x) x$name))
+grep(pattern = 'mutation', x = list, value = TRUE)
+
+```
+
+Choose one dataset of interest and explore its schema and metadata:
+
+```{r,schema_and_metadata}
+schema<-show_schema(remote_url,datasetName = "public.GRCh38_TCGA_somatic_mutation_masked_2019_10")
+all_metadata <- show_all_metadata(dataset = "public.GRCh38_TCGA_somatic_mutation_masked_2019_10")
+```
+
+Once the dataset is chosen, read it together with the dataset containing the *RefSeq* gene annotations of the GRCh38 reference genome:
+
+```{r, read_datasets}
+GRCh38_TCGA_mut <- read_gmql(dataset = "public.GRCh38_TCGA_somatic_mutation_masked_2019_10", is_local = FALSE)
+RefSeq_GRCh38 <- read_gmql(dataset = "public.GRCh38_ANNOTATION_REFSEQ", is_local = FALSE)
+```
+
+Filter GRCh38_TCGA_mut based on a metadata predicate to keep Kidney Renal Clear Cell Carcinoma mutations only, and based on patient age:
+
+```{r, mut_stratification}
+mut_under65 <- filter(GRCh38_TCGA_mut, clinical__clin_shared__age_at_initial_pathologic_diagnosis < 65 & 
+                       biospecimen__admin__disease_code == "KIRC")
+```
+
+Filter out RefSeq_GRCh38 based on a metadata predicate to keep *RefSeq* gene regions only:
+
+```{r, RefSeq_GRCh38}
+genes = filter(RefSeq_GRCh38, annotation_type == 'gene' & 
+                provider == 'RefSeq')
+```
+
+For each mutation sample, map the mutations to the involved genes using the map() function and count mutations within each gene region storing automatically the value in the default region attribute renamed as  *'mut_count':*
+
+```{r, map}
+geneMut_data1_under65 <- map(genes, mut_under65, count_name = "mut_count")
+```
+
+In each sample, remove the genes that do not contain mutations:
+
+```{r, removal}
+geneMut_data2_under65 <- filter(geneMut_data1_under65, r_predicate = mut_count >= 1)
+```
+
+Using the *extend()* function, count how many genes remain in each sample and store the result as a new attribute named '*geneMut_count'*:
+
+```{r, geneMut_count}
+geneMut_data3_under65 <- extend(geneMut_data2_under65, geneMut_count = COUNT())
+```
+
+Order samples in descending order of *geneMut_count:*
+
+```{r, sorting}
+geneMut_data_res_under65 = arrange(geneMut_data3_under65, list(DESC("geneMut_count")))
+```
+
+Launch the remote processing execution to materialize resulting datasets:
+
+```{r, job_execution, eval=FALSE}
+collect(geneMut_data_res_under65, name = "geneMut_data_res_under65")
+JOB<-execute()
+```
+
+Monitor the job status:
+
+```{r, job_monitoring, eval=FALSE}
+trace_job(remote_url, JOB$id)
+```
+
+Once the job status is 'SUCCESS' download the resulting datasets obtained remotely in the working directory of the local File System:
+
+```{r, download_in_FS, eval=FALSE}
+name_dataset_under <- JOB$datasets[[1]]$name
+download_dataset(remote_url, name_dataset_under, path='./Results_use_case_1')
+
+```
+
+Download the resulting datasets as GRangesList objects also in the current R environment:
+
+```{r, GRangesList, eval=FALSE}
+grl_mut_under_D <- download_as_GRangesList(remote_url, name_dataset_under)
+
+```
+
+Log out from remote engine:
+
+```{r, logout}
+logout_gmql(remote_url)
+```
+
+```{r, echo=FALSE}  
+# Uncomment to load previously obtained results, specifying the path until the downloaded folder:
+#grl_mut_under_D <- import_gmql('./Results_use_case_1/_20220104_181132_geneMut_data_res_under65', TRUE)
+
+```
+Compute the main statistics related to the *geneMut_count* values distribution:
+
+```{r, statistics}
+summary(as.numeric(grl_mut_under_D@unlistData@elementMetadata@listData[["mut_count"]]))
+quantile(as.numeric(grl_mut_under_D@unlistData@elementMetadata@listData[["mut_count"]]), c(.90, .95, .99))
+```
+
+Plot distributions of *geneMut_count,* i.e. number of mutated genes per patient, and compute main statistics:
+
+```{r, geneMut_count_distributions}
+
+meta_lst <- grl_mut_under_D@metadata
+
+
+mut_lst <- lapply(meta_lst, function(x) as.numeric(x[["geneMut_count"]]))
+mut_ord <- mut_lst[order(unlist(mut_lst), decreasing = FALSE)]
+
+library(ggplot2)
+p1 <- plot(x = seq(1,5*length(mut_ord), 5), mut_ord, xlab = '', ylab= 'Number of mutated genes', xaxt = "n")
+title(xlab="Patient samples", line=-1, cex.lab=1)
+
+xtick <- seq(1, 5*length(mut_ord), 5)
+xlabels <- names(mut_ord)
+axis(side = 1, at = xtick, labels = xlabels, las = 2, cex.axis = 0.5)
+
+
+summary(unlist(mut_lst))
+```
+
+```{r, results = 'hide'}
+library(GenomicRanges)
+
+final <- list()
+for (n in names(grl_mut_under_D@metadata)){  #for each of the 217 Granges
+  gr <- grl_mut_under_D[[n]]
+  final[[n]] <- data.frame('gene' = gr@elementMetadata@listData[["gene_symbol"]], 'mut_count' = as.numeric(gr@elementMetadata@listData[["mut_count"]]), 'width'  = width(ranges(grl_mut_under_D[[n]])))
+}
+
+
+```
+
+Compute and plot the distributions of all the mutational events occurring on each patient:
+
+```{r}
+tot_mut_pat <- list()
+max_mut_pat <- list()
+mut_pat <- sapply(final, '[[', 'mut_count')
+
+for (i in 1:length(mut_pat)){
+  tot_mut_pat[[i]] <- sum(as.numeric(mut_pat[[i]]))
+  max_mut_pat[[i]] <-max(as.numeric(mut_pat[[i]]))
+}
+names(tot_mut_pat) <- names(mut_pat)
+tot_mut_pat_ord <- tot_mut_pat[order(unlist(tot_mut_pat), decreasing = FALSE)]
+
+library(ggplot2)
+p2 <- plot(x = seq(1,5*length(tot_mut_pat_ord), 5), tot_mut_pat_ord, xlab = '', ylab= 'Number of mutational events', xaxt = "n")
+title(xlab="Patient samples", line = -1, cex.lab = 1)
+
+xtick <- seq(1, 5*length(mut_ord), 5)
+xlabels <- names(tot_mut_pat_ord)
+axis(side = 1, at = xtick, labels = xlabels, las = 2, cex.axis = 0.5)
+```
+
+```{r}
+genes <- unlist(sapply(final, '[[', "gene"))
+lengths <- unlist(sapply(final, '[[', "width"))
+mapping <- data.frame('gene' = genes, 'gene_length' = lengths, row.names = NULL)
+all_genes <- unique(genes)
+all_genes_len <- mapping[which(!duplicated(mapping[,1])),]
+
+gene_m <- matrix(nrow = length(all_genes), ncol = 6)
+gene_df <- data.frame(gene_m)
+colnames(gene_df) <-  c('Gene', 'Length', 'Mutated_Patients', 'Mutation_counts', 'Mutation_counts_norm', 'Mutation_counts_div_len')
+gene_df[,1] <- all_genes_len[,1]
+gene_df[,2] <- all_genes_len[,2]
+for (i in 1:length(all_genes)){ #for each gene
+  counter_pt <- 0
+  counter_mut <- 0
+  counter_mut_norm_pat <- 0
+  counter_mut_norm_len <- 0
+  for(j in 1:length(final)){ #for each patient
+    f <- final[[j]]
+    if (gene_df[i,1] %in% f[["gene"]]){
+      counter_pt <- counter_pt+1
+      counter_mut <- counter_mut + as.numeric(f[["mut_count"]][which(f[["gene"]] == gene_df[i,1])[1]]) #[1] to avoid issues when there are multiple regions of the same gene and duplicated symbols
+      counter_mut_norm_len <- counter_mut / gene_df[i,2]
+      counter_mut_norm_pat <- counter_mut_norm_pat + as.numeric(f[["mut_count"]][which(f[["gene"]] == gene_df[i,1])[1]]) / tot_mut_pat[[j]]
+    }
+  gene_df[i,3] <- counter_pt
+  gene_df[i,4] <- counter_mut
+  gene_df[i,5] <- counter_mut_norm_pat
+  gene_df[i,6] <- counter_mut_norm_len
+      
+  }
+  
+}
+
+```
+
+Compute and plot the distributions of all the mutational events across patients occurring for top mutated genes:
+
+```{r}
+gene_df <- gene_df[order(gene_df$Mutation_counts, decreasing=TRUE),] 
+summary(gene_df)
+
+library(ggplot2)
+p<-plot(x=seq(1:20), y = gene_df[1:20,4], main='Mutation counts in top mutated genes', ylab = 'Number of mutations across patient samples', xlab = NA, xaxt="n")
+
+xtick <- seq(1, 20)
+axis(side = 1, at = xtick, labels = gene_df[1:20,1], las = 2, cex.axis = 0.75)
+
+```
+
+Compute and plot the number of mutational events across patients occurring for top mutated genes, ordering genes by gene length:
+
+```{r}
+library(ggplot2)
+p <- plot(x = gene_df[1:20,2], y = gene_df[1:20,4], ylab = 'Number of mutations across samples', xlab = '', main='Mutation counts compared to gene lengths in top mutated genes', xaxt="n") #xlab = 'Genes'
+title(xlab="Gene length", line = -1, cex.lab = 1)
+xtick <- gene_df[1:20,2]
+axis(side = 1, at = xtick, labels = gene_df[1:20,1], las = 2, cex.axis = 0.75)
+```
+
+Compute and plot the top genes based on mutation count per gene length:
+
+```{r}
+gene_df <- gene_df[order(gene_df$Mutation_counts_div_len, decreasing=TRUE),] #descending geneMut_count_order
+summary(gene_df)
+library(ggplot2)
+p <- plot(x = seq(1:20),  y = gene_df[1:20,6], main = 'Top mutated genes based on mutation count divided by gene length', ylab = 'Mutation counts per gene length', xlab = NA, xaxt = "n") #xlab = 'Genes'
+
+xtick <- seq(1:20)
+axis(side = 1, at = xtick, labels = gene_df[1:20,1], las = 2, cex.axis = 0.7)
+```
+
+Compute and plot the percentages of patients having mutations on top mutated genes:
+
+```{r}
+gene_df <- gene_df[order(gene_df$Mutated_Patients, decreasing=TRUE),] #descending gene_mut_count_order
+summary(gene_df)
+library(ggplot2)
+p <- plot(x = seq(1:20),  y = gene_df[1:20,3]/217*100, ylab = 'Percentage of patients (%)', xlab = NA, main = 'Top mutated genes based on percentage of mutated patients', xaxt = "n") #xlab = 'Genes'
+
+xtick <- seq(1:20)
+axis(side = 1, at = xtick, labels = gene_df[1:20,1], las = 2, cex.axis = 0.75)
+```
+
+Save all the computed results in an excel file:
+
+```{r, end}
+library('xlsx')
+# uncomment to save in KIRC_MUTATIONS.xlsx excel file
+#write.xlsx(gene_df, file='KIRC_MUTATIONS.xlsx', sheetName = "mut", 
+#  col.names = TRUE, row.names = FALSE, append = FALSE)
+```
