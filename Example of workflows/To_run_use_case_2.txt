@@ -4,7 +4,7 @@ To run use case 2:
 
 -Alternatively, download the same miRNA dataset from GMQL web-interface (http://www.gmql.eu/gmql-rest/), using the following query:
 
-  DATA_SET_2 = SELECT(biospecimen__admin__disease_code == "ACC") GRCh38_TCGA_miRNA_expression_2019_10;
+  DATA_SET_2 = SELECT(gdc__project__project_id == "TCGA-ACC") GRCh38_TCGA_miRNA_expression_2019_10;
   MATERIALIZE DATA_SET_2 INTO GRCh38_miRNA_ACC;
  
  and move it in the 'Example of workflows' folder before use.
