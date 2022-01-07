@@ -23,6 +23,14 @@ It is recommended the use ot the latest version of RStudio.
 ```
 RGMQL/
 |-- Example of workflows/
+|   |-- EXAMPLES.Rproj
+|   |-- use_case_1.Rmd
+|   |-- use_case_2.Rmd
+|   |-- use_case_3.Rmd
+|   |-- use_case_1.html
+|   |-- use_case_2.html
+|   |-- use_case_3.html
+|   |-- ....
 |-- R/
 |-- inst/
 |   |-- example/
