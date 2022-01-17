@@ -86,7 +86,8 @@ download_dataset(remote_url, name_dataset, path = './Results_use_case_2')
 Import mRNA and microRNA gene annotations together with their corresponding raw count values from the dataset just saved in the local File System to the current R environment, within a GRanges object:
 
 ```{r, echo=FALSE}
-name_dataset <- '_20220105_090918_ACC_mRNA_miRNA' #specify the name of the just downloaded dataset
+# Uncomment to load previously obtained results, specifying the path until the downloaded dataset:
+#name_dataset <- '_20220105_090918_ACC_mRNA_miRNA' 
 ```
 
 ```{r, GRanges}
