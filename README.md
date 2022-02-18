@@ -89,6 +89,21 @@ At the end, in both cases, edit the `/etc/paths` and add:
 
 `$JAVA_HOME/bin`
 
+### Errors
+
+Be aware that using a too recent Java version (e.g., the Java version 17) on **macOS Mojave** currently gives issues in running RGMQL; conversely, macOS Big Sur runs smoothly RGMQL also with the last Java version 17.
+To overcome this issue, we suggest macOS Mojave users to configure rJava to use an older version, like the Java version 11, by running the following command:   
+
+`sudo R CMD javareconf JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.13.jdk/Contents/Home`
+
+Also, please check the Java version in use is actually the 11, and then check the used rJava version in R, by running:
+
+`library(rJava)`
+
+`.jinit()`
+
+`.jcall("java/lang/System", "S", "getProperty", "java.runtime.version")`
+
 
 ## Windows Settings
 
