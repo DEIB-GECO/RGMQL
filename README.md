@@ -98,7 +98,7 @@ To overcome this issue, we suggest macOS Mojave users to configure rJava to use 
 
 `sudo R CMD javareconf JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.13.jdk/Contents/Home`
 
-Also, please check the Java version in use is actually the 11, and then check the used rJava version in R, by running:
+Also, check that Java in use is actually version 11 and, then, check the rJava version used in R, by running:
 
 `library(rJava)`
 
