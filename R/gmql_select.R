@@ -2,7 +2,9 @@ filter.GMQLDateset <- function(
     .data, 
     m_predicate = NULL, 
     r_predicate = NULL, 
-    semijoin = NULL
+    semijoin = NULL,
+    .by = NULL, 
+    .preserve = NULL
 ) {
     val <- value(.data)
     meta_pred <- substitute(m_predicate)
@@ -52,7 +54,8 @@ filter.GMQLDateset <- function(
 #' 
 #' @param semijoin \code{\link{semijoin}} function to define filter method 
 #' with semijoin condition (see examples).
-#' 
+#' @param .by parameters inherited, unused with GMQLDateset data object
+#' @param .preserve parameters inherited, unused with GMQLDateset data object
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
@@ -73,7 +76,7 @@ filter.GMQLDateset <- function(
 #' ## than 70 years old, based on filtering on sample metadata attribute 
 #' ## 'patient_age'
 #' 
-#' filter_data <- filter(data, patient_age < 70)
+#' filter_data <- filter(data, patient_age < 70, NULL)
 #' 
 #' ## This statement defines the path to the folder "DATASET_GDM" in the 
 #' ## subdirectory "example" of the package "RGMQL" and opens such folder 

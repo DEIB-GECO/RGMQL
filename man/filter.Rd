@@ -6,7 +6,14 @@
 \alias{filter-method}
 \title{Method filter}
 \usage{
-\S4method{filter}{GMQLDataset}(.data, m_predicate = NULL, r_predicate = NULL, semijoin = NULL)
+\S4method{filter}{GMQLDataset}(
+  .data,
+  m_predicate = NULL,
+  r_predicate = NULL,
+  semijoin = NULL,
+  .by = NULL,
+  .preserve = NULL
+)
 }
 \arguments{
 \item{.data}{GMQLDataset class object}
@@ -21,6 +28,10 @@ Only !, |, ||, &, && are admitted.}
 
 \item{semijoin}{\code{\link{semijoin}} function to define filter method 
 with semijoin condition (see examples).}
+
+\item{.by}{parameters inherited, unused with GMQLDateset data object}
+
+\item{.preserve}{parameters inherited, unused with GMQLDateset data object}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
@@ -55,7 +66,7 @@ data <- read_gmql(test_path)
 ## than 70 years old, based on filtering on sample metadata attribute 
 ## 'patient_age'
 
-filter_data <- filter(data, patient_age < 70)
+filter_data <- filter(data, patient_age < 70, NULL)
 
 ## This statement defines the path to the folder "DATASET_GDM" in the 
 ## subdirectory "example" of the package "RGMQL" and opens such folder 

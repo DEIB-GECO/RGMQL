@@ -357,12 +357,12 @@ mut_ds <- read_gmql(mut_path)
 # mutations only
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
-                clinical_patient__tumor_tissue_site == 'breast')
+                clinical_patient__tumor_tissue_site == 'breast', NULL)
 
 # Filter out exon_ds based on a metadata predicate to keep Refseq exons only
 
 exon = filter(exon_ds, annotation_type == 'exons' & 
-                    original_provider == 'RefSeq')
+                    original_provider == 'RefSeq', NULL)
 
 # For each mutation sample, map the mutations to the exon regions using 
 # the map() function and count mutations within each exon storing the value
@@ -372,7 +372,7 @@ exon1 <- map(exon, mut)
 
 # Remove exons in each sample that do not contain mutations
 
-exon2 <- filter(exon1, r_predicate = count_left_right >= 1)
+exon2 <- filter(exon1, r_predicate = count_left_right >= 1, NULL)
 
 # Using the extend() function, count how many exons remain in each sample and
 # store the result in the sample metadata as a new attribute-value pair, 
@@ -607,12 +607,12 @@ HG19_bed_ann <- read_gmql("public.HG19_BED_ANNOTATION", is_local = FALSE)
 # mutations only
 
 mut = filter(TCGA_dnaseq, manually_curated__dataType == 'dnaseq' & 
-                clinical_patient__tumor_tissue_site == 'breast')
+                clinical_patient__tumor_tissue_site == 'breast', NULL)
 
 # Filter out exon_ds based on a metadata predicate to keep Refseq exons only 
 
 exon = filter(HG19_bed_ann, annotation_type == 'exons' & 
-                    original_provider == 'RefSeq')
+                    original_provider == 'RefSeq', NULL)
 
 # For each mutation sample, map the mutations to the exon regions using 
 # the map() function and count mutations within each exon storing the value
@@ -622,7 +622,7 @@ exon1 <- map(exon, mut)
 
 # Remove exons in each sample that do not contain mutations
 
-exon2 <- filter(exon1, r_predicate = count_left_right >= 1)
+exon2 <- filter(exon1, r_predicate = count_left_right >= 1, NULL)
 
 # Using the extend() function, count how many exons remain in each sample and
 # store the result in the sample metadata as a new attribute-value pair, 
@@ -715,12 +715,12 @@ HG19_bed_ann <- read_gmql("public.HG19_BED_ANNOTATION", is_local = FALSE)
 # mutations only
 
 mut = filter(mut_ds, manually_curated__dataType == 'dnaseq' & 
-                clinical_patient__tumor_tissue_site == 'breast')
+                clinical_patient__tumor_tissue_site == 'breast', NULL)
 
 # Filter out exon_ds based on a metadata predicate to keep Refseq exons only 
 
 exon = filter(HG19_bed_ann, annotation_type == 'exons' & 
-                    original_provider == 'RefSeq')
+                    original_provider == 'RefSeq', NULL)
 
 # For each mutation sample, map the mutations to the exon regions using 
 # the map() function and count mutations within each exon storing the value
@@ -730,7 +730,7 @@ exon1 <- map(exon, mut)
 
 # Remove exons in each sample that do not contain mutations
 
-exon2 <- filter(exon1, r_predicate = count_left_right >= 1)
+exon2 <- filter(exon1, r_predicate = count_left_right >= 1, NULL)
 
 # Using the extend() function, count how many exons remain in each sample and
 # store the result in the sample metadata as a new attribute-value pair, 

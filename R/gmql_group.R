@@ -3,7 +3,9 @@ group_by.GMQLDateset <- function(
     groupBy_meta = conds(), 
     groupBy_regions = c(""), 
     region_aggregates = NULL, 
-    meta_aggregates = NULL
+    meta_aggregates = NULL,
+    .add = NULL,
+    .drop = NULL
 ) {
     ptr_data = value(.data)
     gmql_group(
@@ -102,6 +104,9 @@ group_by.GMQLDateset <- function(
 #' \item list of values: e.g. SUM("pvalue")
 #' }
 #' "mixed style" is not allowed
+#' @param region_aggregates It accepts a list of aggregate functions on 
+#' @param .add parameters inherited, unused with GMQLDateset data object
+#' @param .drop parameters inherited, unused with GMQLDateset data object
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method

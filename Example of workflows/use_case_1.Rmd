@@ -53,7 +53,7 @@ Filter GRCh38_TCGA_mut based on a metadata predicate to keep Kidney Renal Clear 
 
 ```{r, mut_stratification}
 mut_under65 <- filter(GRCh38_TCGA_mut, clinical__clin_shared__age_at_initial_pathologic_diagnosis < 65 & 
-                       biospecimen__admin__disease_code == "KIRC")
+                       biospecimen__admin__disease_code == "KIRC", NULL)
 ```
 
 Filter out RefSeq_GRCh38 based on a metadata predicate to keep *RefSeq* gene regions only:
@@ -72,7 +72,7 @@ geneMut_data1_under65 <- map(genes, mut_under65, count_name = "mut_count")
 In each sample, remove the genes that do not contain mutations:
 
 ```{r, removal}
-geneMut_data2_under65 <- filter(geneMut_data1_under65, r_predicate = mut_count >= 1)
+geneMut_data2_under65 <- filter(geneMut_data1_under65, r_predicate = mut_count >= 1, NULL)
 ```
 
 Using the *extend()* function, count how many genes remain in each sample and store the result as a new attribute named '*geneMut_count'*:
@@ -122,8 +122,8 @@ logout_gmql(remote_url)
 ```
 
 ```{r, echo=FALSE}  
-# Uncomment to load previously obtained results, specifying the path until the downloaded folder:
-#grl_mut_under_D <- import_gmql('./Results_use_case_1/_20220104_181132_geneMut_data_res_under65', TRUE)
+# Uncomment to load previously obtained results:
+#grl_mut_under_D <- import_gmql('./Results_use_case_1/_20210722_152608_geneMut_data_res_under65- compatible with GRL', TRUE)
 
 ```
 Compute the main statistics related to the *geneMut_count* values distribution:
@@ -278,7 +278,6 @@ Save all the computed results in an excel file:
 
 ```{r, end}
 library('xlsx')
-# uncomment to save in KIRC_MUTATIONS.xlsx excel file
 #write.xlsx(gene_df, file='KIRC_MUTATIONS.xlsx', sheetName = "mut", 
 #  col.names = TRUE, row.names = FALSE, append = FALSE)
 ```

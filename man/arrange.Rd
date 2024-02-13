@@ -13,7 +13,8 @@
   fetch_opt = "",
   num_fetch = 0L,
   reg_fetch_opt = "",
-  reg_num_fetch = 0L
+  reg_num_fetch = 0L,
+  .by_group = NULL
 )
 }
 \arguments{
@@ -53,6 +54,8 @@ if NULL, \emph{reg_num_fetch} is not considered}
 
 \item{reg_num_fetch}{integer value identifying the number of regions to 
 fetch; by default it is 0, that means all regions are fetched}
+
+\item{.by_group}{parameters inherited, unused with GMQLDateset data object}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 

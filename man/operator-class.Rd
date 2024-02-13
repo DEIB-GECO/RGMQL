@@ -52,7 +52,7 @@ exp = read_gmql(test_path)
 ## for which the region attribute score has a value which is greater 
 ## than the metadata attribute value "avg_score" in their sample.
 
-data = filter(exp, r_predicate = score > META("avg_score"))
+data = filter(exp, r_predicate = score > META("avg_score"), NULL)
 
 ## This statement defines new numeric region attributes with "null" value. 
 ## The syntax for creating a new attribute with null value is 

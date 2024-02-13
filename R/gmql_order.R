@@ -5,7 +5,8 @@ arrange.GMQLDataset <- function(
     fetch_opt = "", 
     num_fetch = 0L, 
     reg_fetch_opt = "", 
-    reg_num_fetch = 0L
+    reg_num_fetch = 0L,
+    .by_group = NULL
 ) {
     ptr_data <- value(.data)
     gmql_order(
@@ -15,7 +16,8 @@ arrange.GMQLDataset <- function(
         fetch_opt, 
         num_fetch, 
         reg_fetch_opt, 
-        reg_num_fetch
+        reg_num_fetch,
+        NULL
     )
 }
 
@@ -69,6 +71,7 @@ arrange.GMQLDataset <- function(
 #' 
 #' @param reg_num_fetch integer value identifying the number of regions to 
 #' fetch; by default it is 0, that means all regions are fetched
+#' @param .by_group parameters inherited, unused with GMQLDateset data object
 #' 
 #' @return GMQLDataset object. It contains the value to use as input 
 #' for the subsequent GMQLDataset method
@@ -105,7 +108,8 @@ gmql_order <- function(
     fetch_opt, 
     num_fetch, 
     reg_fetch_opt, 
-    reg_num_fetch
+    reg_num_fetch,
+    .by_group = NULL
 ) {
     if(!is.null(fetch_opt) && !identical(fetch_opt,""))
         fetch_opt <- .check_option(fetch_opt)

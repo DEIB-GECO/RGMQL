@@ -11,7 +11,9 @@
   groupBy_meta = conds(),
   groupBy_regions = c(""),
   region_aggregates = NULL,
-  meta_aggregates = NULL
+  meta_aggregates = NULL,
+  .add = NULL,
+  .drop = NULL
 )
 }
 \arguments{
@@ -22,24 +24,7 @@ groupBy or JoinBy input parameter}
 
 \item{groupBy_regions}{vector of strings made up by region attribute names}
 
-\item{region_aggregates}{It accepts a list of aggregate functions on 
-region attribute. 
-All the elements in the form \emph{key} = \emph{aggregate}.
-The \emph{aggregate} is an object of class AGGREGATES.
-The aggregate functions available are: \code{\link{SUM}}, 
-\code{\link{COUNT}}, \code{\link{MIN}}, \code{\link{MAX}}, 
-\code{\link{AVG}}, \code{\link{MEDIAN}}, \code{\link{STD}}, 
-\code{\link{BAG}}, \code{\link{BAGD}}, \code{\link{Q1}}, 
-\code{\link{Q2}}, \code{\link{Q3}}.
-Every aggregate accepts a string value, except for COUNT, which does 
-not have any value.
-Argument of 'aggregate function' must exist in schema, i.e. among region 
-attributes. Two styles are allowed:
-\itemize{
-\item list of key-value pairs: e.g. sum = SUM("pvalue")
-\item list of values: e.g. SUM("pvalue")
-}
-"mixed style" is not allowed}
+\item{region_aggregates}{It accepts a list of aggregate functions on}
 
 \item{meta_aggregates}{It accepts a list of aggregate functions on 
 metadata attribute.
@@ -59,6 +44,10 @@ attributes. Two styles are allowed:
 \item list of values: e.g. SUM("cell")
 }
 "mixed style" is not allowed}
+
+\item{.add}{parameters inherited, unused with GMQLDateset data object}
+
+\item{.drop}{parameters inherited, unused with GMQLDateset data object}
 }
 \value{
 GMQLDataset object. It contains the value to use as input 
